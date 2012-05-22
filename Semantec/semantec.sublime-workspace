@@ -1,0 +1,186 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"est",
+				"est_color"
+			],
+			[
+				"cli",
+				"cli_nombre"
+			],
+			[
+				"sql",
+				"sql0"
+			],
+			[
+				"fila",
+				"fila0"
+			],
+			[
+				"ord",
+				"ord_id"
+			],
+			[
+				"sq",
+				"sql2"
+			],
+			[
+				"mysql_in",
+				"mysql_insert_id"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 267.0,
+		"selected_items":
+		[
+			[
+				"Package Control: ",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 449.0
+	},
+	"console":
+	{
+		"height": 125.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Volumes/KINGSTON/Package Control.sublime-package",
+		"/Applications/XAMPP/xamppfiles/htdocs/sitios/semantec/css/estilos.css",
+		"/Applications/XAMPP/xamppfiles/htdocs/sitios/semantec/lista-ordenes.php",
+		"/Users/Marcos/Desktop/Login.php",
+		"/Users/Marcos/Desktop/Usuarios.php",
+		"/Applications/XAMPP/xamppfiles/htdocs/sitios/pruebas/prueba.php",
+		"/Applications/XAMPP/xamppfiles/htdocs/sitios/semantec/funciones.php",
+		"/Applications/XAMPP/xamppfiles/htdocs/sitios/semantec/alta-ordenes.php",
+		"/Applications/XAMPP/xamppfiles/htdocs/sitios/semantec/ver-alta-ordenes.php",
+		"/Applications/XAMPP/xamppfiles/htdocs/sitios/semantec/index-admin.php",
+		"/Applications/XAMPP/xamppfiles/htdocs/sitios/semantec/rpc-rubro2.php",
+		"/Applications/XAMPP/xamppfiles/htdocs/sitios/semantec/form-alta-proveedores.php",
+		"/Applications/XAMPP/xamppfiles/htdocs/sitios/semantec/ver-alta-clientes.php",
+		"/Applications/XAMPP/xamppfiles/htdocs/sitios/semantec/css/jquery.datepick.css",
+		"/Applications/XAMPP/xamppfiles/htdocs/sitios/semantec/form-alta-clientes.php",
+		"/Applications/XAMPP/xamppfiles/htdocs/sitios/semantec/ver-alta-proveedores.php",
+		"/Applications/XAMPP/xamppfiles/htdocs/sitios/semantec/alta-proveedores.php",
+		"/Applications/XAMPP/xamppfiles/htdocs/sitios/prueba.php",
+		"/Users/Marcos/Library/Application Support/Sublime Text 2/Packages/User/Preferences.sublime-settings",
+		"/Users/Marcos/Documents/sublime/install-PackageControl.txt"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			">",
+			"\";"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"replace":
+	{
+		"height": 0.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 114.0,
+	"status_bar_visible": true
+}
