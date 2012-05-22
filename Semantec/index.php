@@ -1,5 +1,5 @@
 <?php
-    $titulo = "Semantec by BRUNOO - Servicio de Mantenimiento T&eacute;cnico."
+    $titulo = "Semantec - Servicio de Mantenimiento T&eacute;cnico."
 ?>
 <!doctype html>
 <html>  
