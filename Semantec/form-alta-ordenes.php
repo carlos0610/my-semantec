@@ -7,8 +7,11 @@
         $resultado1 = mysql_query($sql);
         $sql = "SELECT  prv_id, prv_nombre FROM proveedores";
         $resultado2 = mysql_query($sql);
-        $sql = "SELECT  est_id, est_nombre, est_color FROM estados";
+        // BORRAR
+        $sql = "SELECT  est_id, est_nombre, est_color FROM estados WHERE est_id=1";
         $resultado3 = mysql_query($sql);
+        $fila3 = mysql_fetch_array($resultado3);
+        // ---
 
 ?>
 <!doctype html>
@@ -66,12 +69,12 @@
           </tr>
           <tr>
             <td>C&oacute;digo de Orden</td>
-            <td><input type="text" class="campos" id="ord_codigo" name="ord_codigo" /></td>
+            <td><input type="number" class="campos" id="ord_codigo" name="ord_codigo" required min="0" /></td>
             <td></td>
           </tr>
           <tr>
             <td>Descripci&oacute;n de Orden</td>
-            <td><textarea class="campos" id="ord_descripcion" name="ord_descripcion" rows="9"></textarea></td>
+            <td><textarea class="campos" id="ord_descripcion" name="ord_descripcion" rows="9" required ></textarea></td>
             <td></td>
           </tr>
           <tr>
@@ -107,29 +110,22 @@
           <tr>
             <td>Estado</td>
             <td>
-                <select name="est_id" id="est_id" class="campos">
-    <?php
-          while($fila3 = mysql_fetch_array($resultado3)){
-    ?>
-                    <option style="background-color:<?php echo($fila3["est_color"]); ?>" value="<?php echo($fila3["est_id"]); ?>"><?php echo(utf8_encode($fila3["est_nombre"])); ?></option>
-    <?php
-          }
-    ?>
-                </select>
+                <?php echo($fila3["est_nombre"]); ?>
+                <input type="hidden" value=" <?php echo($fila3["est_id"]); ?>" name="est_id"  id="est_id">
             </td>
             <td></td>
           </tr>
           <tr>
             <td>Plazo de Finalización</td>
-            <td><input type="text" class="campos" id="ord_plazo" name="ord_plazo" /></td>
+            <td><input type="text" class="campos" id="ord_plazo" name="ord_plazo"  /></td>
             <td></td>
           </tr>          <tr>
             <td>Valor Costo de la Orden</td>
-            <td><input type="text" class="campos" id="ord_costo" name="ord_costo" /></td>
+            <td><input type="number" class="campos" id="ord_costo" name="ord_costo" required min="0"  /></td>
             <td></td>
           </tr>          <tr>
             <td>Valor Venta de la Orden</td>
-            <td><input type="text" class="campos" id="ord_venta" name="ord_venta" /></td>
+            <td><input type="number" class="campos" id="ord_venta" name="ord_venta" required  min="0" /></td>
             <td></td>
           </tr>
           <tr>

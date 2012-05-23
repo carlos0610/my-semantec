@@ -23,6 +23,7 @@
         				cli_id = $cli_id,
         				prv_id = $prv_id,
         				est_id = $est_id,
+                                        ord_alta= '$ord_alta',
         				ord_plazo = '$ord_plazo',
         				ord_costo = $ord_costo,
                                         ord_venta = $ord_venta
@@ -30,17 +31,6 @@
 
 	mysql_query($sql);//modificacion de la orden
 
-
-        $sql2 = "INSERT INTO requerimientos VALUES (
-                                                        NULL,
-                                                        '$ord_descripcion',
-                                                        '$ord_id',
-                                                        $cli_id,
-                                                        $prv_id,
-                                                        '$ord_alta',
-                                                        0 
-                                                )";
-        mysql_query($sql2);
 
 	$_SESSION["ord_id"] = $ord_id;
 

@@ -23,7 +23,6 @@
 	$sql = "SELECT  est_id, est_nombre, est_color FROM estados WHERE est_id = $est_id"; //datos del estado
         $resultado4 = mysql_query($sql);
         $fila4 = mysql_fetch_array($resultado4);
-        
 
 ?>
 <!doctype html>
@@ -71,7 +70,7 @@
 
       <form action="edit-ordenes.php" method="post" id="frm" >
           
-      <input type="hidden" value="<?php echo($fila0["ord_codigo"]); ?>" name="ord_id2" >
+      <input type="hidden" value="<?php echo($fila0["ord_id"]); ?>" name="ord_id2" >
       <table class="forms" cellpadding="5">
           <tr class="titulo">
             <td colspan="2"> <?php echo($titulo)?> </td>
@@ -125,17 +124,8 @@
             <td>Estado</td>
             <td>
                  <?php echo($fila4["est_nombre"]); ?> 
-	         <input type="button" value="Cambiar" class="botones" onclick="editarRequerimiento(<?php echo($fila0["ord_codigo"]); ?>)"/> 
-                
-                <select name="est_id" id="est_id" class="campos">
-    <?php
-          while($fila3 = mysql_fetch_array($resultado3)){
-    ?>
-                    <option style="background-color:<?php echo($fila3["est_color"]); ?>" value="<?php echo($fila3["est_id"]); ?>"<?php if($fila0["est_id"]==$fila3["est_id"]){echo(" selected=\"selected\"");} ?>><?php echo(utf8_encode($fila3["est_nombre"])); ?></option>
-    <?php
-          }
-    ?>
-                </select>
+                <input type="hidden" value="<?php echo($est_id); ?>" name="est_id" id="est_id" />
+	         <input type="button" value="Cambiar" class="botones" onclick="editarOrdenDetalle(<?php echo($fila0["ord_id"]); ?>)"/> 
             </td>
             <td></td>
           </tr>
