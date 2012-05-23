@@ -3,10 +3,17 @@
         include("validar.php");
 
         include("conexion.php");
-        $sql = "SELECT  iva_id, iva_nombre FROM iva_tipo";
-        $resultado1 = mysql_query($sql);
-        $sql = "SELECT  zon_id, zon_nombre FROM zonas";
-        $resultado2 = mysql_query($sql);
+        $sql    = "SELECT  iva_id, iva_nombre FROM iva_tipo";
+        $iva    = mysql_query($sql);
+        $sql    = "SELECT  zon_id, zon_nombre FROM zonas";
+        $zonas  = mysql_query($sql);
+        $sql    = "SELECT rub_id,rub_nombre FROM rubros";
+        $rubros = mysql_query($sql);
+        
+        
+        
+        
+        
 
 ?>
 <!doctype html>
@@ -75,12 +82,12 @@
           </tr>
           <tr>
             <td>Raz&oacute;n Social</td>
-            <td><input type="text" class="campos" id="cli_nombre" name="cli_nombre" /></td>
+            <td><input type="text" class="campos" id="cli_nombre" name="cli_nombre" required/></td>
             <td></td>
           </tr>
           <tr>
             <td>CUIT</td>
-            <td><input type="text" class="campos" id="cli_cuit" name="cli_cuit" /></td>
+            <td><input type="text" class="campos" id="cli_cuit" name="cli_cuit" required /></td>
             <td></td>
           </tr>
           <tr>
@@ -88,7 +95,7 @@
             <td>
                 <select name="iva_id" id="iva_id" class="campos">
     <?php
-          while($fila = mysql_fetch_array($resultado1)){
+          while($fila = mysql_fetch_array($iva)){
     ?>
                     <option value="<?php echo($fila["iva_id"]); ?>"><?php echo($fila["iva_nombre"]); ?></option>
     <?php
@@ -101,10 +108,17 @@
           <tr>
             <td>Rubro</td>
             <td>
-                <input type="text" class="campos" id="cli_rubro" name="cli_rubro" onkeyup="lookup(this.value);" onblur="fill();"  />
-                  <div class="suggestionsBox" id="suggestions" style="display: none;">
-                    <img src="images/upArrow.png" style="position: relative; top: -12px; left: 30px;" alt="upArrow" />
-                    <div class="suggestionList" id="autoSuggestionsList">
+                <select name="rub_id" id="rub_id" class="campos">
+                <?php
+          while($fila = mysql_fetch_array($rubros)){
+                ?>
+                    <option value="<?php echo($fila["rub_id"]); ?>"><?php echo($fila["rub_nombre"]); ?></option>
+                <?php
+                    }
+                    ?>          
+                </select>
+                
+                
                       &nbsp;
                     </div>
                   </div>
@@ -116,7 +130,7 @@
             <td>
                 <select name="zon_id" id="zon_id" class="campos">
     <?php
-          while($fila = mysql_fetch_array($resultado2)){
+          while($fila = mysql_fetch_array($zonas)){
     ?>
                     <option value="<?php echo($fila["zon_id"]); ?>"><?php echo(utf8_encode($fila["zon_nombre"])); ?></option>
     <?php
@@ -128,7 +142,7 @@
           </tr>
           <tr>
             <td>Direcci&oacute;n</td>
-            <td><input type="text" class="campos" id="cli_direccion" name="cli_direccion" /></td>
+            <td><input type="text" class="campos" id="cli_direccion" name="cli_direccion" required/></td>
             <td></td>
           </tr>
           <tr>

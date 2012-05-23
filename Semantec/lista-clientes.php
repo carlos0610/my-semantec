@@ -73,7 +73,10 @@
                   <img src="images/editar.png" alt="editar" title="Modificar cliente" width="32" height="32" border="none" />
                 </a>  
               </td>
-            <td><img src="images/eliminar.png" alt="eliminar" title="Eliminar cliente" width="32" height="32" border="none" /></td>
+            <td><a href="#" onclick="eliminarCliente(<?php echo($fila["cli_id"]);?>,'<?php echo($fila["cli_nombre"]);?>')">
+                    <img src="images/eliminar.png" alt="eliminar" title="Eliminar cliente" width="32" height="32" border="none" />
+                </a></td>
+          
           </tr>
   <?php
             $i++;

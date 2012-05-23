@@ -11,17 +11,18 @@
         include("conexion.php");
         $cli_id = $_SESSION["cli_id"];
         unset($_SESSION["cli_id"]);
-        $sql = "SELECT cli_nombre, cli_cuit, iva_id, cli_rubro, zon_id, cli_direccion, cli_telefono, cli_notas FROM clientes WHERE cli_id = $cli_id";
+        
+        
+        $sql = "SELECT cli_nombre, cli_cuit, iva_tipo.iva_nombre, rubros.rub_nombre, zonas.zon_nombre, cli_direccion, cli_telefono, cli_notas 
+        FROM clientes,rubros,iva_tipo,zonas 
+        WHERE cli_id = $cli_id and clientes.cli_rubro = rubros.rub_id
+        and clientes.zon_id = zonas.zon_id
+        and clientes.iva_id = iva_tipo.iva_id";
+        
+        
         $resultado0 = mysql_query($sql);
-        $fila0 = mysql_fetch_array($resultado0);
-        $iva_id = $fila0["iva_id"];
-        $sql = "SELECT  iva_id, iva_nombre FROM iva_tipo WHERE iva_id = $iva_id";
-        $resultado1 = mysql_query($sql);
-        $fila1 = mysql_fetch_array($resultado1);
-        $zon_id = $fila0["zon_id"];
-        $sql = "SELECT  zon_id, zon_nombre FROM zonas WHERE zon_id = $zon_id";
-        $resultado2 = mysql_query($sql);
-        $fila2 = mysql_fetch_array($resultado2);
+        $cliente = mysql_fetch_array($resultado0);
+    
 
 ?>
 <!doctype html>
@@ -68,42 +69,42 @@
           </tr>
           <tr>
             <td>Razón Social</td>
-            <td><?php echo(utf8_encode($fila0["cli_nombre"])); ?></td>
+            <td><?php echo(utf8_encode($cliente["cli_nombre"])); ?></td>
             <td></td>
           </tr>
           <tr>
             <td>CUIT</td>
-            <td><?php echo($fila0["cli_cuit"]); ?></td>
+            <td><?php echo($cliente["cli_cuit"]); ?></td>
             <td></td>
           </tr>
           <tr>
             <td>Condici&oacute;n de IVA</td>
-            <td><?php echo($fila1["iva_nombre"]); ?></td>
+            <td><?php echo($cliente["iva_nombre"]); ?></td>
             <td></td>
           </tr>
           <tr>
             <td>Rubro</td>
-            <td><?php echo(utf8_encode($fila0["cli_rubro"])); ?></td>
+            <td><?php echo(utf8_encode($cliente["rub_nombre"])); ?></td>
             <td></td>
           </tr>
           <tr>
             <td>Provincia/Zona</td>
-            <td><?php echo($fila2["zon_nombre"]); ?></td>
+            <td><?php echo($cliente["zon_nombre"]); ?></td>
             <td></td>
           </tr>
           <tr>
             <td>Direcci&oacute;n</td>
-            <td><?php echo(utf8_encode($fila0["cli_direccion"])); ?></td>
+            <td><?php echo(utf8_encode($cliente["cli_direccion"])); ?></td>
             <td></td>
           </tr>
           <tr>
             <td>Tel&eacute;fono</td>
-            <td><?php echo($fila0["cli_telefono"]); ?></td>
+            <td><?php echo($cliente["cli_telefono"]); ?></td>
             <td></td>
           </tr>
           <tr>
             <td>Notas</td>
-            <td><?php echo(utf8_encode($fila0["cli_notas"])); ?></td>
+            <td><?php echo(utf8_encode($cliente["cli_notas"])); ?></td>
             <td></td>
           </tr>
           <tr>
