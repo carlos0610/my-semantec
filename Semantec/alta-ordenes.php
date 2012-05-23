@@ -26,7 +26,8 @@
         							'$ord_alta',
         							'$ord_plazo',
         							 $ord_costo,
-                                                                 $ord_venta
+                                                                 $ord_venta,
+                                                                 1
         				    )";
 	mysql_query($sql);//alta de la orden
         $ord_id = mysql_insert_id();
@@ -34,11 +35,12 @@
         $sql2 = "INSERT INTO requerimientos VALUES (
                                                         NULL,
                                                         '$ord_descripcion',
+                                                        0,
                                                         '$ord_id',
-                                                        $cli_id,
-                                                        $prv_id,
                                                         '$ord_alta',
-                                                        0 
+                                                        NULL,
+                                                        0,
+                                                        1
                                                 )";
         mysql_query($sql2);
 

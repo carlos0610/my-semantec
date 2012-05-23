@@ -18,6 +18,12 @@
         $resultado2 = mysql_query($sql);
         $sql = "SELECT  est_id, est_nombre, est_color FROM estados";
         $resultado3 = mysql_query($sql);
+        // busqueda para  imprimir el nombre del estado.
+	$est_id= $fila0["est_id"];		
+	$sql = "SELECT  est_id, est_nombre, est_color FROM estados WHERE est_id = $est_id"; //datos del estado
+        $resultado4 = mysql_query($sql);
+        $fila4 = mysql_fetch_array($resultado4);
+        
 
 ?>
 <!doctype html>
@@ -30,12 +36,13 @@
   <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
   <script type="text/javascript" src="js/jquery.datepick.js"></script>
   <script type="text/javascript" src="js/jquery.datepick-es.js"></script>
+  <script type="text/javascript" src="js/funciones.js"></script>
   <script type="text/javascript">
   $(function() {
       $('#ord_plazo').datepick();
   });
   </script>    
-
+  
   </head>
   <body>
 	
@@ -60,10 +67,11 @@
    <!--start contenedor-->
    <div id="contenedor" style="height:auto;">
 
-
       <h2>Panel de control</h2>
 
-      <form action="edit-ordenes.php" method="post">
+      <form action="edit-ordenes.php" method="post" id="frm" >
+          
+      <input type="hidden" value="<?php echo($fila0["ord_codigo"]); ?>" name="ord_id2" >
       <table class="forms" cellpadding="5">
           <tr class="titulo">
             <td colspan="2"> <?php echo($titulo)?> </td>
@@ -116,6 +124,9 @@
           <tr>
             <td>Estado</td>
             <td>
+                 <?php echo($fila4["est_nombre"]); ?> 
+	         <input type="button" value="Cambiar" class="botones" onclick="editarRequerimiento(<?php echo($fila0["ord_codigo"]); ?>)"/> 
+                
                 <select name="est_id" id="est_id" class="campos">
     <?php
           while($fila3 = mysql_fetch_array($resultado3)){
