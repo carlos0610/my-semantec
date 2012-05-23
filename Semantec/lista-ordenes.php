@@ -15,7 +15,9 @@
                   WHERE o.cli_id = c.cli_id
                     AND o.est_id = e.est_id
                     AND o.prv_id = p.prv_id  
-                    AND o.estado = 1";
+                    AND o.estado = 1 
+                    ORDER BY o.ord_alta DESC
+                    ";
                 $sql .= " LIMIT ".$limitInf.",".$tamPag; 
         $resultado = mysql_query($sql);
         $cantidad = mysql_num_rows($resultado);
@@ -59,6 +61,7 @@
       <table class="listados" cellpadding="5">
           <tr class="titulo">
             <td width="70">C&oacute;digo</td>
+            <td width="100">Fecha</td>
             <td width="100">Cliente</td>
             <td>Descripci&oacute;n</td>
             <td width="100">Proveedor</td>
@@ -76,6 +79,7 @@
   ?>
           <tr class="lista" bgcolor="<?php echo($colores[$i]);?>">
             <td><?php echo($fila["ord_codigo"]);?></td>
+            <td><?php echo($fila["ord_alta"]);?></td>
             <td><?php echo($fila["cli_nombre"]);?></td>
             <td><?php echo(nl2br(utf8_encode($fila["ord_descripcion"])));?></td>
             <td><?php echo($fila["prv_nombre"]);?></td>
@@ -85,7 +89,7 @@
             </td>
             <td width="32"><a href="ver-alta-ordenes.php?ord_id=<?php echo($fila["ord_id"]); ?>&action=0"><img src="images/detalles.png" alt="editar" title="Ver detalle" width="32" height="32" border="none" /></a></td>            
             <td><a href="form-edit-ordenes.php?ord_id=<?php echo($fila["ord_id"]); ?>"><img src="images/editar.png" alt="editar" title="Modificar orden" width="32" height="32" border="none" /></a></td>
-            <td><a  onclick="eliminarOrden(<?php echo($fila["ord_id"]);?>,'<?php echo($fila["ord_codigo"]);?>')">
+            <td><a href="#" onclick="eliminarOrden(<?php echo($fila["ord_id"]);?>,'<?php echo($fila["ord_codigo"]);?>')">
                 <img src="images/eliminar.png" alt="eliminar" title="Eliminar orden" width="32" height="32" border="none" /></a></td>
           </tr>
   <?php
