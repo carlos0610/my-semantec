@@ -5,8 +5,13 @@
 
         include("conexion.php");
 /* CALCULO PAGINADO */  ###############################################################################
-    $sql0 = "SELECT ord_id, ord_codigo, ord_descripcion, cli_id, prv_id, est_id, ord_alta, ord_plazo, ord_costo, ord_venta
-                  FROM ordenes ";
+    $sql0 = "SELECT ord_id, ord_codigo, ord_descripcion, cli_nombre, prv_nombre, est_nombre, est_color, ord_alta, ord_plazo, ord_costo, ord_venta
+                  FROM ordenes o, clientes c, estados e, proveedores p
+                  WHERE o.cli_id = c.cli_id
+                    AND o.est_id = e.est_id
+                    AND o.prv_id = p.prv_id  
+                    AND o.estado = 1 
+                    ORDER BY o.ord_alta DESC ";
     $tamPag=20;
     
     include("paginado.php");        
@@ -32,7 +37,7 @@
 <?php
     include("encabezado-main.php");
 ?>  
-  <script type="text/javascript" src="js/funciones.js"></script>    
+      
   </head>
   <body>
 	
