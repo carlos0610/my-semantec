@@ -82,7 +82,7 @@
           </tr>
           <tr>
             <td>Descripci&oacute;n de Requerimiento</td>
-            <td><textarea class="campos" id="ord_descripcion" name="ord_descripcion" rows="9"></textarea></td>
+            <td><textarea class="campos" id="ord_descripcion" name="ord_descripcion" rows="9" required ></textarea></td>
             <td></td>
           </tr>
           <tr>
@@ -121,7 +121,7 @@
           </tr>
           <tr>
             <td>Monto</td>
-            <td><input type="text" class="campos" id="ord_det_monto" name="ord_det_monto" /></td>
+            <td><input type="number" class="campos" id="ord_det_monto" name="ord_det_monto" min="0" /></td>
             <td></td>
           </tr>
           <tr>
