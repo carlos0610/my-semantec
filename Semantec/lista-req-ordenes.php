@@ -5,8 +5,13 @@
 
         include("conexion.php");
 /* CALCULO PAGINADO */  ###############################################################################
-    $sql0 = "SELECT ord_id, ord_codigo, ord_descripcion, cli_id, prv_id, est_id, ord_alta, ord_plazo, ord_costo, ord_venta
-                  FROM ordenes";
+    $sql0 =  "SELECT ord_id, ord_codigo, ord_descripcion, cli_nombre, prv_nombre, est_nombre, est_color, ord_alta, ord_plazo, ord_costo, ord_venta
+                  FROM ordenes o, clientes c, estados e, proveedores p
+                  WHERE o.cli_id = c.cli_id
+                    AND o.est_id = e.est_id
+                    AND o.prv_id = p.prv_id
+                    AND o.estado = 1 
+                    ORDER BY o.ord_alta DESC ";
     $tamPag=20;
     
     include("paginado.php");        
@@ -14,7 +19,10 @@
                   FROM ordenes o, clientes c, estados e, proveedores p
                   WHERE o.cli_id = c.cli_id
                     AND o.est_id = e.est_id
-                    AND o.prv_id = p.prv_id";
+                    AND o.prv_id = p.prv_id
+                    AND o.estado = 1 
+                    ORDER BY o.ord_alta DESC ";
+                    
                 $sql .= " LIMIT ".$limitInf.",".$tamPag; 
         $resultado = mysql_query($sql);
         $cantidad = mysql_num_rows($resultado);
@@ -101,7 +109,7 @@
             <td><?php echo($fila["prv_nombre"]);?></td>
             <td>
                   <img src="images/estado.png" alt="estado" style="background-color:<?php echo($fila["est_color"]);?>">
-                  <?php echo($fila["est_nombre"]);?>
+                  <?php echo(utf8_encode($fila["est_nombre"]));?>
             </td>
             <td>&nbsp;</td>
           </tr>
@@ -118,14 +126,16 @@
                     <tr class="titulo" style="background-color:#cdcdcd">
                       <td width="700">Descripci&oacute;n</td>
                       <td width="100">Fecha</td>
-                      <td width="100"> e </td>
+                      <td width="100">Monto</td>
+                      <td width="100">Usuario </td>
                     </tr>
               <?php
                 $orden = $fila["ord_id"];
-                $sql_req = "SELECT ord_det_id, ord_id, ord_det_descripcion, ord_det_fecha, arc_id
+                $sql_req = "SELECT ord_det_id, ord_id, ord_det_descripcion, ord_det_fecha, usu_nombre, ord_det_monto
                               FROM ordenes_detalle
                               WHERE ord_id = $orden
-                              ORDER BY ord_det_id";
+                              AND   estado = 1 
+                              ORDER BY ord_det_fecha DESC";
                 $result_req = mysql_query($sql_req);
                 while($fila_req = mysql_fetch_array($result_req)){
 
@@ -134,7 +144,8 @@
                     <tr class="lista" bgcolor="<?php echo($colores2[$j]);?>">
                       <td width="70"><?php echo(utf8_encode($fila_req["ord_det_descripcion"])); ?></td>
                       <td width="100"><?php echo(mfecha($fila_req["ord_det_fecha"])); ?></td>
-                      <td width="100">Estado</td>
+                      <td width="100"><?php echo(($fila_req["ord_det_monto"])); ?></td>
+                      <td width="100"><?php echo(utf8_encode($fila_req["usu_nombre"])); ?></td>
                     </tr>
 
               <?php

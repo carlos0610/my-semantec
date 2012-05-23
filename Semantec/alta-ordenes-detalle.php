@@ -11,8 +11,8 @@
         $ord_alta = date("Y-m-d");
         $ord_plazo = gfecha($_POST["ord_plazo"]); 
         $ord_costo = $_POST["ord_costo"];
-        $ord_venta = $_POST["ord_venta"];
-
+        $ord_venta = $_POST["ord_venta"];        
+        $usu_nombre = $_SESSION["usu_nombre"];
 
         
 
@@ -31,7 +31,7 @@
                                                         $ord_id,
                                                         '$ord_alta',
                                                         NULL,
-                                                        0,
+                                                        '$usu_nombre',
                                                         1
                                                 )";
         mysql_query($sql2);

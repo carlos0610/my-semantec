@@ -119,7 +119,7 @@
           <tr>
             <td>Estado</td>
             <td>
-                <?php echo($fila3["est_nombre"]); ?>
+                <?php echo(utf8_encode($fila3["est_nombre"])); ?>
             </td>
             <td></td>
           </tr>

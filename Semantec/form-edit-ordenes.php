@@ -125,7 +125,7 @@
           <tr>
             <td>Estado</td>
             <td>
-                 <?php echo($fila4["est_nombre"]); ?> 
+                 <?php echo(utf8_encode($fila4["est_nombre"])); ?> 
                 <input type="hidden" value="<?php echo($est_id); ?>" name="est_id" id="est_id" />
                 <a href="form-alta-ordenes-detalle.php?ord_id=<?php echo($ord_id); ?>"><input type="button" value="Cambiar" class="botones" /></a> &nbsp; &nbsp; 
             </td>

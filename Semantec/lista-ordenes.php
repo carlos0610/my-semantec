@@ -90,7 +90,7 @@
             <td><?php echo($fila["prv_nombre"]);?></td>
             <td>
                   <img src="images/estado.png" alt="estado" style="background-color:<?php echo($fila["est_color"]);?>">
-                  <?php echo($fila["est_nombre"]);?>
+                  <?php echo(utf8_encode($fila["est_nombre"]));?>
             </td>
             <td width="32"><a href="ver-alta-ordenes.php?ord_id=<?php echo($fila["ord_id"]); ?>&action=0"><img src="images/detalles.png" alt="editar" title="Ver detalle" width="32" height="32" border="none" /></a></td>            
             <td><a href="form-edit-ordenes.php?ord_id=<?php echo($fila["ord_id"]); ?>"><img src="images/editar.png" alt="editar" title="Modificar orden" width="32" height="32" border="none" /></a></td>
