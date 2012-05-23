@@ -82,12 +82,12 @@
           </tr>
           <tr>
             <td>C&oacute;digo de Orden</td>
-            <td><input type="text" value="<?php echo($fila0["ord_codigo"]); ?>" class="campos" id="ord_codigo" name="ord_codigo" /></td>
+            <td><input type="number" value="<?php echo($fila0["ord_codigo"]); ?>" class="campos" id="ord_codigo" name="ord_codigo" min="0" required/></td>
             <td></td>
           </tr>
           <tr>
             <td>Descripci&oacute;n de Orden</td>
-            <td><textarea class="campos" id="ord_descripcion" name="ord_descripcion" rows="9"><?php echo(utf8_encode($fila0["ord_descripcion"])); ?></textarea></td>
+            <td><textarea class="campos" id="ord_descripcion" name="ord_descripcion" rows="9" required><?php echo(utf8_encode($fila0["ord_descripcion"])); ?></textarea></td>
             <td></td>
           </tr>
           <tr>
@@ -125,7 +125,7 @@
             <td>
                  <?php echo($fila4["est_nombre"]); ?> 
                 <input type="hidden" value="<?php echo($est_id); ?>" name="est_id" id="est_id" />
-	         <input type="button" value="Cambiar" class="botones" onclick="editarOrdenDetalle(<?php echo($fila0["ord_id"]); ?>)"/> 
+                <a href="form-alta-ordenes-detalle.php?ord_id=<?php echo($ord_id); ?>"><input type="button" value="Cambiar" class="botones" /></a> &nbsp; &nbsp; 
             </td>
             <td></td>
           </tr>
@@ -135,11 +135,11 @@
             <td></td>
           </tr>          <tr>
             <td>Valor Costo de la Orden</td>
-            <td><input type="text" value="<?php echo($fila0["ord_costo"]); ?>" class="campos" id="ord_costo" name="ord_costo" /></td>
+            <td><input type="number" value="<?php echo($fila0["ord_costo"]); ?>" class="campos" id="ord_costo" name="ord_costo" required /></td>
             <td></td>
           </tr>          <tr>
             <td>Valor Venta de la Orden</td>
-            <td><input type="text" value="<?php echo($fila0["ord_venta"]); ?>" class="campos" id="ord_venta" name="ord_venta" /></td>
+            <td><input type="number" value="<?php echo($fila0["ord_venta"]); ?>" class="campos" id="ord_venta" name="ord_venta"  required/></td>
             <td></td>
           </tr>
           <tr>
