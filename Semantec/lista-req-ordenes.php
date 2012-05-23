@@ -122,18 +122,18 @@
                     </tr>
               <?php
                 $orden = $fila["ord_id"];
-                $sql_req = "SELECT req_id, ord_id, req_descripcion, cli_id, prv_id, req_fecha, arc_id
-                              FROM requerimientos
+                $sql_req = "SELECT ord_det_id, ord_id, ord_det_descripcion, ord_det_fecha, arc_id
+                              FROM ordenes_detalle
                               WHERE ord_id = $orden
-                              ORDER BY req_id";
+                              ORDER BY ord_det_id";
                 $result_req = mysql_query($sql_req);
                 while($fila_req = mysql_fetch_array($result_req)){
 
                   //  echo("<hr />". $sql_req ."<hr />");
           ?>
                     <tr class="lista" bgcolor="<?php echo($colores2[$j]);?>">
-                      <td width="70"><?php echo(utf8_encode($fila_req["req_descripcion"])); ?></td>
-                      <td width="100"><?php echo(mfecha($fila_req["req_fecha"])); ?></td>
+                      <td width="70"><?php echo(utf8_encode($fila_req["ord_det_descripcion"])); ?></td>
+                      <td width="100"><?php echo(mfecha($fila_req["ord_det_fecha"])); ?></td>
                       <td width="100">Estado</td>
                     </tr>
 

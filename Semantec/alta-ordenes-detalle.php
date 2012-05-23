@@ -40,6 +40,6 @@
 
 	mysql_close();
 
-	header("location:ver-alta-ordenes.php?action=1");
+	header("location:ver-alta-ordenes.php?action=2");
 
 ?>

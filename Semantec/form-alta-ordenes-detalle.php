@@ -115,11 +115,6 @@
             <td></td>
           </tr>
           <tr>
-            <td>Fecha</td>
-            <td><input type="text" class="campos" id="ord_plazo" name="ord_plazo" /></td>
-            <td></td>
-          </tr>
-          <tr>
             <td>Monto</td>
             <td><input type="number" class="campos" id="ord_det_monto" name="ord_det_monto" min="0" /></td>
             <td></td>

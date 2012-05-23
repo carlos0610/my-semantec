@@ -6,7 +6,7 @@
         include("conexion.php");
 /* CALCULO PAGINADO */  ###############################################################################
     $sql0 = "SELECT ord_id, ord_codigo, ord_descripcion, cli_id, prv_id, est_id, ord_alta, ord_plazo, ord_costo, ord_venta
-                  FROM ordenes";
+                  FROM ordenes ";
     $tamPag=20;
     
     include("paginado.php");        
@@ -14,7 +14,8 @@
                   FROM ordenes o, clientes c, estados e, proveedores p
                   WHERE o.cli_id = c.cli_id
                     AND o.est_id = e.est_id
-                    AND o.prv_id = p.prv_id";
+                    AND o.prv_id = p.prv_id  
+                    AND o.estado = 1";
                 $sql .= " LIMIT ".$limitInf.",".$tamPag; 
         $resultado = mysql_query($sql);
         $cantidad = mysql_num_rows($resultado);
@@ -28,7 +29,8 @@
   <head>
 <?php
     include("encabezado-main.php");
-?>    
+?>  
+  <script type="text/javascript" src="js/funciones.js"></script>    
   </head>
   <body>
 	
@@ -83,7 +85,8 @@
             </td>
             <td width="32"><a href="ver-alta-ordenes.php?ord_id=<?php echo($fila["ord_id"]); ?>&action=0"><img src="images/detalles.png" alt="editar" title="Ver detalle" width="32" height="32" border="none" /></a></td>            
             <td><a href="form-edit-ordenes.php?ord_id=<?php echo($fila["ord_id"]); ?>"><img src="images/editar.png" alt="editar" title="Modificar orden" width="32" height="32" border="none" /></a></td>
-            <td><img src="images/eliminar.png" alt="eliminar" title="Eliminar orden" width="32" height="32" border="none" /></td>
+            <td><a  onclick="eliminarOrden(<?php echo($fila["ord_id"]);?>,'<?php echo($fila["ord_codigo"]);?>')">
+                <img src="images/eliminar.png" alt="eliminar" title="Eliminar orden" width="32" height="32" border="none" /></a></td>
           </tr>
   <?php
             $i++;
