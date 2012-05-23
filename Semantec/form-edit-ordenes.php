@@ -82,7 +82,9 @@
           </tr>
           <tr>
             <td>C&oacute;digo de Orden</td>
-            <td><input type="number" value="<?php echo($fila0["ord_codigo"]); ?>" class="campos" id="ord_codigo" name="ord_codigo" min="0" required/></td>
+            <td>
+                <?php echo($fila0["ord_codigo"]); ?>
+                <input type="hidden" value="<?php echo($fila0["ord_codigo"]); ?>" class="campos" id="ord_codigo" name="ord_codigo" min="0" required/></td>
             <td></td>
           </tr>
           <tr>
