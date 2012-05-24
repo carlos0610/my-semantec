@@ -112,7 +112,7 @@
           </tr>
           <tr>
             <td>CUIT</td>
-            <td><input value="<?php echo($fila0["prv_cuit"]); ?>" type="text" class="campos" id="prv_cuit" name="prv_cuit" /></td>
+            <td><input value="<?php echo($fila0["prv_cuit"]); ?>" type="number" maxlength="11" class="campos" id="prv_cuit" name="prv_cuit" /></td>
             <td></td>
           </tr>
           <tr>

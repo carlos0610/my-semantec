@@ -85,7 +85,7 @@
           </tr>
           <tr>
             <td>CUIT</td>
-            <td><input type="text" class="campos" id="prv_cuit" name="prv_cuit" /></td>
+            <td><input type="number" class="campos" id="prv_cuit" name="prv_cuit" maxlength="11"/></td>
             <td></td>
           </tr>
           <tr>

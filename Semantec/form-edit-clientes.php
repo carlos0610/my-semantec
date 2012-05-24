@@ -90,7 +90,7 @@
           </tr>
           <tr>
             <td>CUIT</td>
-            <td><input type="text" maxlength="11" value="<?php echo($fila_clientes["cli_cuit"]); ?>" id="cli_cuit" name="cli_cuit" class="campos" /></td>
+            <td><input type="number" maxlength="11" value="<?php echo($fila_clientes["cli_cuit"]); ?>" id="cli_cuit" name="cli_cuit" class="campos" /></td>
             <td></td>
           </tr>
           <tr>
@@ -107,25 +107,7 @@
                 </select>
             </td>
             <td></td>
-          </tr>
-          <tr>
-            <td>Rubro</td>
-            <td>
-                <select name="rub_id" id="rub_id" class="campos">
-                <?php
-          while($fila = mysql_fetch_array($rubros)){
-                    
-                ?>
-                    <option value="<?php echo($fila["rub_id"]); ?>" <?php if($fila_clientes["cli_rubro"]==$fila["rub_id"]){echo(" selected=\"selected\"");} ?>><?php echo($fila["rub_nombre"]); ?></option>
-                                   
-                    <?php  
-                    
-                    }?>
-                              
-                </select>
-            </td>
-            <td></td>
-          </tr>
+          </tr>          
           <tr>
             <td>Provincia/Zona</td>
             <td>
