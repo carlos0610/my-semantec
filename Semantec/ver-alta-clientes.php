@@ -10,6 +10,7 @@
 
         include("conexion.php");
         $cli_id = $_SESSION["cli_id"];
+        //$query = $_SESSION["query"];
         unset($_SESSION["cli_id"]);
         
         
@@ -82,12 +83,7 @@
             <td>Condici&oacute;n de IVA</td>
             <td><?php echo($cliente["iva_nombre"]); ?></td>
             <td></td>
-          </tr>
-          <tr>
-            <td>Rubro</td>
-            <td><?php echo(utf8_encode($cliente["rub_nombre"])); ?></td>
-            <td></td>
-          </tr>
+          </tr>          
           <tr>
             <td>Provincia/Zona</td>
             <td><?php echo($cliente["zon_nombre"]); ?></td>

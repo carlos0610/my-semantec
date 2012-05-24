@@ -87,7 +87,7 @@
           </tr>
           <tr>
             <td>CUIT</td>
-            <td><input type="text" maxlength="11" class="campos" id="cli_cuit" name="cli_cuit" required /></td>
+            <td><input type="number" maxlength="11" class="campos" id="cli_cuit" name="cli_cuit" required /></td>
             <td></td>
           </tr>
           <tr>
@@ -127,7 +127,7 @@
           </tr>
           <tr>
             <td>Tel&eacute;fono</td>
-            <td><input type="text" class="campos" id="cli_telefono" name="cli_telefono" /></td>
+            <td><input type="text" class="campos" id="cli_telefono" name="cli_telefono" required/></td>
             <td></td>
           </tr>
           <tr>

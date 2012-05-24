@@ -8,6 +8,7 @@
         $cli_direccion = utf8_decode($_POST["cli_direccion"]);
         $cli_telefono = $_POST["cli_telefono"];
         $cli_notas = utf8_decode($_POST["cli_notas"]);
+        
 
         include("conexion.php");
         $sql = "INSERT INTO clientes (cli_nombre,cli_cuit,iva_id,cli_rubro,zon_id,cli_direccion,cli_telefono,cli_notas,estado)VALUES (
@@ -23,6 +24,7 @@
                                                                                         1        
         										)";
 		mysql_query($sql);
+                //$_SESSION["query"] = $sql;
 		$_SESSION["cli_id"] = mysql_insert_id();
 
 		mysql_close();

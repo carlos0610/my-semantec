@@ -9,7 +9,7 @@
         $zonas = mysql_query($sql);
         $sql = "SELECT rub_id, rub_nombre FROM rubros";
         $rubros =  mysql_query($sql);
-        $sql = "select cut_id,cut_nombre FROM cuentaTipo";
+        $sql = "select cut_id,cut_nombre FROM cuentatipo";
         $tipocuenta = mysql_query($sql);
         
 
@@ -85,7 +85,7 @@
           </tr>
           <tr>
             <td>CUIT</td>
-            <td><input type="number" class="campos" id="prv_cuit" name="prv_cuit" maxlength="11"/></td>
+            <td><input type="number" class="campos" id="prv_cuit" name="prv_cuit" maxlength="11" required/></td>
             <td></td>
           </tr>
           <tr>
@@ -135,12 +135,12 @@
           </tr>
           <tr>
             <td>Direcci&oacute;n</td>
-            <td><input type="text" class="campos" id="prv_direccion" name="prv_direccion" /></td>
+            <td><input type="text" class="campos" id="prv_direccion" name="prv_direccion" required/></td>
             <td></td>
           </tr>
           <tr>
             <td>Tel&eacute;fono</td>
-            <td><input type="text" class="campos" id="prv_telefono" name="prv_telefono" /></td>
+            <td><input type="text" class="campos" id="prv_telefono" name="prv_telefono" required/></td>
             <td></td>
           </tr>
           <tr>

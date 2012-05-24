@@ -17,8 +17,8 @@
         
 
         include("conexion.php");
-        $sql = "INSERT INTO ordenes VALUES (
-        							NULL,
+        $sql = "INSERT INTO ordenes (ord_codigo,ord_descripcion,cli_id,prv_id,est_id,ord_alta,ord_plazo,ord_costo,ord_venta,estado) VALUES (
+        							
 								'$ord_codigo',
         							'$ord_descripcion',
         						         $cli_id,
@@ -31,6 +31,7 @@
                                                                  1
         				    )";
 	mysql_query($sql);//alta de la orden
+        $_SESSION["query"] = $sql;
         echo $sql;
         
         $ord_id = mysql_insert_id();
@@ -49,8 +50,7 @@
         mysql_query($sql2);
         echo $sql2;
 	$_SESSION["ord_id"] = $ord_id;
-
-	mysql_close();
+        mysql_close();
 	header("location:ver-alta-ordenes.php?action=1");
 
 ?>

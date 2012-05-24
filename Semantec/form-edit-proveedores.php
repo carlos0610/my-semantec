@@ -107,12 +107,12 @@
           </tr>
           <tr>
             <td>Raz&oacute;n Social</td>
-            <td><input type="text" value="<?php echo(utf8_encode($fila0["prv_nombre"])); ?>" class="campos" id="prv_nombre" name="prv_nombre" /></td>
+            <td><input type="text" value="<?php echo(utf8_encode($fila0["prv_nombre"])); ?>" class="campos" id="prv_nombre" name="prv_nombre" required/></td>
             <td></td>
           </tr>
           <tr>
             <td>CUIT</td>
-            <td><input value="<?php echo($fila0["prv_cuit"]); ?>" type="number" maxlength="11" class="campos" id="prv_cuit" name="prv_cuit" /></td>
+            <td><input value="<?php echo($fila0["prv_cuit"]); ?>" type="number" maxlength="11" class="campos" id="prv_cuit" name="prv_cuit" required/></td>
             <td></td>
           </tr>
           <tr>
