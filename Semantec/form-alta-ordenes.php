@@ -112,6 +112,7 @@
             <td>
                 <?php echo($fila3["est_nombre"]); ?>
                 <input type="hidden" value=" <?php echo($fila3["est_id"]); ?>" name="est_id"  id="est_id">
+                <input type="hidden" value=" <?php echo($fila3["est_nombre"]); ?>" name="est_nombre"  id="est_id">
             </td>
             <td></td>
           </tr>

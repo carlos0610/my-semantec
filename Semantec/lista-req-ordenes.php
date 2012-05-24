@@ -129,11 +129,12 @@
                     <tr class="titulo" style="background-color:#cdcdcd">
                       <td width="700">Descripci&oacute;n</td>
                       <td width="100">Fecha</td>
+                      <td width="100">Estado</td>
                       <td width="100">Usuario </td>
                     </tr>
               <?php
                 $orden = $fila["ord_id"];
-                $sql_req = "SELECT ord_det_id, ord_id, ord_det_descripcion, ord_det_fecha, usu_nombre, ord_det_monto
+                $sql_req = "SELECT ord_det_id, ord_id, ord_det_descripcion, ord_det_fecha, usu_nombre, ord_det_monto ,nombre_estado
                               FROM ordenes_detalle
                               WHERE ord_id = $orden
                               AND   estado = 1 
@@ -146,6 +147,7 @@
                     <tr class="lista" bgcolor="<?php echo($colores2[$j]);?>">
                       <td width="70"><?php echo(utf8_encode($fila_req["ord_det_descripcion"])); ?></td>
                       <td width="100"><?php echo(mfecha($fila_req["ord_det_fecha"])); ?></td>
+                      <td width="100"><?php echo(utf8_encode($fila_req["nombre_estado"])); ?></td>
                       <td width="100"><?php echo(utf8_encode($fila_req["usu_nombre"])); ?></td>
                     </tr>
 

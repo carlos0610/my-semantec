@@ -13,10 +13,14 @@
         $ord_costo = $_POST["ord_costo"];
         $ord_venta = $_POST["ord_venta"];        
         $usu_nombre = $_SESSION["usu_nombre"];
-
-        
-
         include("conexion.php");
+        // buscar nombre del estado
+        $sql = "SELECT  est_id, est_nombre, est_color FROM estados WHERE est_id = $est_id ";
+        $resultado3 = mysql_query($sql);
+        $fila3 = mysql_fetch_array($resultado3);
+        $est_nombre= $fila3["est_nombre"];
+        echo $est_nombre;
+        
         $sql =  "UPDATE ordenes SET 
         						est_id = $est_id
                                                         WHERE ord_id = $ord_id";
@@ -32,7 +36,8 @@
                                                         '$ord_alta',
                                                         NULL,
                                                         '$usu_nombre',
-                                                        1
+                                                        1,
+                                                        '$est_nombre'
                                                 )";
         echo $sql2;
         mysql_query($sql2);

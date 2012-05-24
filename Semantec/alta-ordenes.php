@@ -11,8 +11,8 @@
         $ord_plazo = gfecha($_POST["ord_plazo"]); 
         $ord_costo = $_POST["ord_costo"];
         $ord_venta = $_POST["ord_venta"];
-        $usu_nombre = $_SESSION["usu_nombre"];
-
+        $usu_nombre = $_SESSION["usu_nombre"]; 
+        $est_nombre = $_POST["est_nombre"];
 
         
 
@@ -43,7 +43,8 @@
                                                         '$ord_alta',
                                                         NULL,
                                                         '$usu_nombre',
-                                                        1
+                                                        1,
+                                                        '$est_nombre'
                                                 )";
         mysql_query($sql2);
         echo $sql2;
