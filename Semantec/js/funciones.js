@@ -16,3 +16,14 @@ function eliminarCliente(id,nombre){
         window.location="delete-clientes.php?cli_id="+id;
     }
 }
+
+
+function eliminarProveedor(id,nombre){
+    
+    if(confirm('Confirma eliminar proveedor: '+nombre+' ?')==true)
+    {
+        window.location="delete-proveedores.php?prv_id="+id;
+    }
+}
+
+

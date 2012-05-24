@@ -6,7 +6,12 @@
         $sql = "SELECT  iva_id, iva_nombre FROM iva_tipo";
         $resultado1 = mysql_query($sql);
         $sql = "SELECT  zon_id, zon_nombre FROM zonas";
-        $resultado2 = mysql_query($sql);
+        $zonas = mysql_query($sql);
+        $sql = "SELECT rub_id, rub_nombre FROM rubros";
+        $rubros =  mysql_query($sql);
+        $sql = "select cut_id,cut_nombre FROM cuentatipo";
+        $tipocuenta = mysql_query($sql);
+        
 
 ?>
 <!doctype html>
@@ -101,13 +106,15 @@
           <tr>
             <td>Rubro</td>
             <td>
-                <input type="text" class="campos" id="prv_rubro" name="prv_rubro" onkeyup="lookup(this.value);" onblur="fill();"  />
-                  <div class="suggestionsBox" id="suggestions" style="display: none;">
-                    <img src="images/upArrow.png" style="position: relative; top: -12px; left: 30px;" alt="upArrow" />
-                    <div class="suggestionList" id="autoSuggestionsList">
-                      &nbsp;
-                    </div>
-                  </div>
+                <select name="rub_id" id="rub_id" class="campos">
+                <?php
+          while($fila = mysql_fetch_array($rubros)){
+                ?>
+                    <option value="<?php echo($fila["rub_id"]); ?>"><?php echo($fila["rub_nombre"]); ?></option>
+                <?php
+                    }
+                    ?>          
+                </select>
             </td>
             <td></td>
           </tr>
@@ -116,7 +123,7 @@
             <td>
                 <select name="zon_id" id="zon_id" class="campos">
     <?php
-          while($fila = mysql_fetch_array($resultado2)){
+          while($fila = mysql_fetch_array($zonas)){
     ?>
                     <option value="<?php echo($fila["zon_id"]); ?>"><?php echo(utf8_encode($fila["zon_nombre"])); ?></option>
     <?php
@@ -136,6 +143,64 @@
             <td><input type="text" class="campos" id="prv_telefono" name="prv_telefono" /></td>
             <td></td>
           </tr>
+          <tr>
+            <td>Fax</td>
+            <td><input type="text" class="campos" id="prv_fax" name="prv_fax" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Cel</td>
+            <td><input type="text" class="campos" id="prv_cel" name="prv_cel" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Alternativo</td>
+            <td><input type="text" class="campos" id="prv_alternativo" name="prv_alternativo" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Urgencia</td>
+            <td><input type="text" class="campos" id="prv_urgencia" name="prv_urgencia" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Web</td>
+            <td><input type="text" class="campos" id="prv_web" name="prv_web" value="http://"/></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Email</td>
+            <td><input type="text" class="campos" id="prv_email" name="prv_email" value="ejemplo@email.com"/></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Tiene cuenta bancaria?</td>
+            <td>Sí<input type="radio" class="" id="rbt_cuenta" name="rbt_cuenta" value="1"/>&nbsp;No<input type="radio" class="" id="rbt_cuenta" name="rbt_cuenta" value="0" checked/></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Nro.Cuenta bancaria</td>
+            <td><input type="text" class="campos" id="cue_nrobancaria" name="cue_nrobancaria"/></td>
+            <td></td>
+          </tr>
+          <tr>
+              <td>Tipo de cuenta</td><td>
+          <select name="cut_id" id="cut_id" class="campos">
+    <?php
+          while($fila = mysql_fetch_array($tipocuenta)){
+    ?>
+                    <option value="<?php echo($fila["cut_id"]); ?>"><?php echo(utf8_encode($fila["cut_nombre"])); ?></option>
+    <?php
+          }
+    ?>
+                </select>
+                  </td>          
+          </tr>
+          <tr>
+            <td>CBU</td>
+            <td><input type="text" class="campos" id="cue_cbu" name="cue_cbu"/></td>
+            <td></td>
+          </tr> 
           <tr>
             <td>Notas</td>
             <td><textarea class="campos" id="prv_notas" name="prv_notas" rows="9"></textarea></td>

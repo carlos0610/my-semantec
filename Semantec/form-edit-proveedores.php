@@ -4,16 +4,41 @@
 
         include("conexion.php");
         $prv_id = $_GET["prv_id"];
-        $sql0 = "SELECT prv_nombre, prv_cuit, iva_id, prv_rubro, zon_id, prv_direccion, prv_telefono, prv_notas
-                  FROM proveedores p
-                  WHERE p.prv_id=$prv_id";
+        $sql0 = "SELECT prv_nombre, prv_cuit, iva_tipo.iva_nombre, rubros.rub_nombre, zonas.zon_nombre, prv_direccion, prv_telefono,prv_fax,prv_cel,prv_alternativo,prv_urgencia,prv_web,prv_email,prv_notas FROM proveedores,rubros,iva_tipo,zonas WHERE prv_id = $prv_id and proveedores.iva_id = iva_tipo.iva_id
+        and proveedores.rub_id = rubros.rub_id
+        and proveedores.zon_id = zonas.zon_id";
+    
         $resultado0 = mysql_query($sql0);
         $fila0 = mysql_fetch_array($resultado0);
 
         $sql = "SELECT  iva_id, iva_nombre FROM iva_tipo";
-        $resultado1 = mysql_query($sql);
+        $iva = mysql_query($sql);
+        
+                    
         $sql = "SELECT  zon_id, zon_nombre FROM zonas";
-        $resultado2 = mysql_query($sql);
+        $zonas = mysql_query($sql);       
+             
+        $sql    = "SELECT rub_id,rub_nombre FROM rubros";
+        $rubros = mysql_query($sql);
+               
+        $sql = "select cut_id,cut_nombre FROM cuentatipo";
+        $tipocuenta = mysql_query($sql);
+        
+        
+        
+        $sql ="SELECT cue.cue_nrobancaria,cut.cut_nombre,cue.cue_cbu FROM cuentabanco_prv cue,cuentatipo cut
+               WHERE prv_id = $prv_id
+               AND cue.cut_id = cut.cut_id";
+        $banco = mysql_query($sql);
+        $filas =  mysql_num_rows($banco);
+        
+        if($filas > 0){
+            $fila_banco = mysql_fetch_array($banco);
+            $_SESSION["tienecuenta"] = true;
+        }else{
+            $_SESSION["tienecuenta"] = false;         
+        }
+        
 
 ?>
 <!doctype html>
@@ -95,9 +120,9 @@
             <td>
                 <select name="iva_id" id="iva_id" class="campos">
     <?php
-          while($fila = mysql_fetch_array($resultado1)){
+          while($fila = mysql_fetch_array($iva)){
     ?>
-                    <option value="<?php echo($fila["iva_id"]); ?>"<?php if($fila0["iva_id"]==$fila["iva_id"]){echo(" selected=\"selected\"");} ?>><?php echo($fila["iva_nombre"]); ?></option>
+                    <option value="<?php echo($fila["iva_id"]); ?>"<?php if($fila0["iva_nombre"]==$fila["iva_nombre"]){echo(" selected=\"selected\"");} ?>><?php echo($fila["iva_nombre"]); ?></option>
     <?php
           }
     ?>
@@ -108,13 +133,15 @@
           <tr>
             <td>Rubro</td>
             <td>
-                <input type="text" value="<?php echo($fila0["prv_rubro"]); ?>" class="campos" id="prv_rubro" name="prv_rubro" onkeyup="lookup(this.value);" onblur="fill();"  />
-                  <div class="suggestionsBox" id="suggestions" style="display: none;">
-                    <img src="images/upArrow.png" style="position: relative; top: -12px; left: 30px;" alt="upArrow" />
-                    <div class="suggestionList" id="autoSuggestionsList">
-                      &nbsp;
-                    </div>
-                  </div>
+                <select name="rub_id" id="rub_id" class="campos">
+                <?php
+          while($fila = mysql_fetch_array($rubros)){
+                ?>
+                    <option value="<?php echo($fila["rub_id"]); ?>" <?php if($fila0["rub_nombre"]==$fila["rub_nombre"]){echo(" selected=\"selected\"");} ?>><?php echo($fila["rub_nombre"]); ?></option>
+                <?php
+                    }
+                    ?>          
+                </select>
             </td>
             <td></td>
           </tr>
@@ -123,9 +150,9 @@
             <td>
                 <select name="zon_id" id="zon_id" class="campos">
     <?php
-          while($fila = mysql_fetch_array($resultado2)){
+          while($fila = mysql_fetch_array($zonas)){
     ?>
-                    <option value="<?php echo($fila["zon_id"]); ?>"<?php if($fila0["zon_id"]==$fila["zon_id"]){echo(" selected=\"selected\"");} ?>><?php echo(utf8_encode($fila["zon_nombre"])); ?></option>
+                    <option value="<?php echo($fila["zon_id"]); ?>"<?php if($fila0["zon_nombre"]==$fila["zon_nombre"]){echo(" selected=\"selected\"");} ?>><?php echo(utf8_encode($fila["zon_nombre"])); ?></option>
     <?php
           }
     ?>
@@ -144,6 +171,82 @@
             <td></td>
           </tr>
           <tr>
+            <td>Fax</td>
+            <td>
+            <input type="text" value="<?php echo($fila0["prv_fax"]); ?>" class="campos" id="prv_fax" name="prv_fax" />
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Cel</td>
+            <td><input type="text" value="<?php echo($fila0["prv_cel"]); ?>" class="campos" id="prv_cel" name="prv_cel" /></td>
+         <td></td>
+          </tr>
+          <tr>
+            <td>Alternativo</td>
+            <td><input type="text" value="<?php echo($fila0["prv_alternativo"]); ?>" class="campos" id="prv_alternativo" name="prv_alternativo" /></td>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Urgencia</td>
+            <td><input type="text" value="<?php echo($fila0["prv_urgencia"]); ?>" class="campos" id="prv_urgencia" name="prv_urgencia" />
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Web</td>
+            <td>
+            <input type="text" value="<?php echo($fila0["prv_web"]); ?>" class="campos" id="prv_web" name="prv_web" />           
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Email</td>
+            <td>
+            <input type="text" value="<?php echo($fila0["prv_email"]); ?>" class="campos" id="prv_email" name="prv_email" />
+            </td>
+            <td></td>
+          </tr>
+          <td>Tiene cuenta bancaria?</td>
+            <td><?php if($filas>0) 
+                        echo "Sí"; 
+                       else echo 
+                           "No"; ?></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Nro.Cuenta bancaria</td>
+            <td><input type="text" class="campos" id="cue_nrobancaria" name="cue_nrobancaria" value="<? if($filas>0) 
+                                                                                                    echo $fila_banco["cue_nrobancaria"];
+                                                                                                    else
+                                                                                                    echo 0;    ?>"/></td>
+            <td></td>
+          </tr>
+          <tr>
+              <td>Tipo de cuenta</td><td>
+          <select name="cut_id" id="cut_id" class="campos">
+    <?php
+          while($fila = mysql_fetch_array($tipocuenta)){
+    ?>
+                    <option value="<?php echo($fila["cut_id"]); ?>" <?php if($fila["cut_nombre"]==$fila_banco["cut_nombre"]){echo(" selected=\"selected\"");} ?>><?php echo(utf8_encode($fila["cut_nombre"])); ?></option>
+                    
+                    
+    <?php
+          }
+    ?>
+                </select>
+                  </td>          
+          </tr>
+          <tr>
+            <td>CBU</td>
+            <td><input type="text" class="campos" id="cue_cbu" name="cue_cbu" value="<? if($filas>0){ 
+                                                                                                   echo $fila_banco["cue_cbu"];
+                                                                                                   }else{
+                                                                                                    echo 0;}?>"/></td>
+            <td></td>
+          </tr> 
+            <tr>
             <td>Notas</td>
             <td><textarea class="campos" id="prv_notas" name="prv_notas" rows="9"><?php echo(utf8_encode($fila0["prv_notas"])); ?></textarea></td>
             <td></td>

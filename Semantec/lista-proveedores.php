@@ -2,8 +2,8 @@
     $titulo = "Listado de proveedores.";
         include("validar.php");
         include("funciones.php");
-
         include("conexion.php");
+        
 /* CALCULO PAGINADO */  ###############################################################################
     $sql0="SELECT prv_id, prv_nombre, prv_cuit, prv_telefono FROM proveedores";
     $tamPag=20;
@@ -74,7 +74,10 @@
                   <img src="images/editar.png" alt="editar" title="Modificar proveedor" width="32" height="32" border="none" />
                 </a>
             </td>
-            <td><img src="images/eliminar.png" alt="eliminar" title="Eliminar proveedor" width="32" height="32" border="none" /></td>
+            <td>
+                <a href="#" onclick="eliminarProveedor(<?php echo($fila["prv_id"]);?>,'<?php echo($fila["prv_nombre"]);?>')">
+                    <img src="images/eliminar.png" alt="eliminar" title="Eliminar proveedor" width="32" height="32" border="none" />
+                </a></td>
           </tr>
   <?php
             $i++;

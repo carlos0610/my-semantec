@@ -15,7 +15,8 @@
         
         $sql = "SELECT cli_nombre, cli_cuit, iva_tipo.iva_nombre, rubros.rub_nombre, zonas.zon_nombre, cli_direccion, cli_telefono, cli_notas 
         FROM clientes,rubros,iva_tipo,zonas 
-        WHERE cli_id = $cli_id and clientes.cli_rubro = rubros.rub_id
+        WHERE cli_id = $cli_id 
+        and clientes.cli_rubro = rubros.rub_id
         and clientes.zon_id = zonas.zon_id
         and clientes.iva_id = iva_tipo.iva_id";
         
