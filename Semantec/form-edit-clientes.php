@@ -90,7 +90,7 @@
           </tr>
           <tr>
             <td>CUIT</td>
-            <td><input type="text" value="<?php echo($fila_clientes["cli_cuit"]); ?>" id="cli_cuit" name="cli_cuit" class="campos" /></td>
+            <td><input type="text" maxlength="11" value="<?php echo($fila_clientes["cli_cuit"]); ?>" id="cli_cuit" name="cli_cuit" class="campos" /></td>
             <td></td>
           </tr>
           <tr>
