@@ -40,14 +40,8 @@
      <h3>Ordenes</h3>
       <p><a href="lista-ordenes.php" class="current">ir al listado</a></p>
       <p><a href="form-alta-ordenes.php" class="current">nueva orden</a></p>
+      <p><a href=lista-req-ordenes.php class="current">seguimiento de ordenes</a></p>
      </section>
-
-
-     <section class="cajas">
-     <h3>Requerimientos</h3>
-      <p><a href=lista-req-ordenes.php class="current">ir al listado</a></p>
-      <p><a href="#" class="current">nuevo requerimiento</a></p>
-     </section> 
 
 
      <section class="cajas">
@@ -62,7 +56,28 @@
       <p><a href="lista-clientes.php" class="current">ir al listado</a></p>
       <p><a href="form-alta-clientes.php" class="current">nuevo cliente</a></p>
      </section>
-
+      
+           
+     <section class="cajas">
+     <h3>Cuenta corriente</h3>
+      <p><a href="" class="current">ir al listado</a></p>
+      <p><a href="" class="current">nueva cuenta</a></p>
+     </section>
+      
+      <section class="cajas">
+     <h3>Facturación</h3>
+      <p><a href="" class="current">ir al listado</a></p>
+     </section>
+      
+      <section class="cajas">
+     <h3>Compras</h3>
+      <p><a href="" class="current">ir al listado</a></p>
+      <p><a href="" class="current">nueva compra</a></p>
+     </section>
+      
+      
+      
+      
      <div class="clear"></div>
    </div>
    <!--end contenedor-->

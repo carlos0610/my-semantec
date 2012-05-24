@@ -9,7 +9,7 @@
         $zonas = mysql_query($sql);
         $sql = "SELECT rub_id, rub_nombre FROM rubros";
         $rubros =  mysql_query($sql);
-        $sql = "select cut_id,cut_nombre FROM cuentatipo";
+        $sql = "select cut_id,cut_nombre FROM cuentaTipo";
         $tipocuenta = mysql_query($sql);
         
 

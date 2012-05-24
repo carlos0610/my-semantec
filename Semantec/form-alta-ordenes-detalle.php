@@ -115,9 +115,14 @@
             <td></td>
           </tr>
           <tr>
-            <td>Monto</td>
+            <td>Adelanto</td>
             <td><input type="number" class="campos" id="ord_det_monto" name="ord_det_monto" min="0" required value="0"/></td>
             <td></td>
+          </tr>
+          <tr>
+              <td>Adjuntar archivo</td><td>
+                  <input type="file" class="" id="ord_det_file" name="ord_det_file" />
+              </td>
           </tr>
           <tr>
             <td>&nbsp;</td>
