@@ -187,6 +187,7 @@ nav ul li a.current{
 		#contenedor .cajas {
 			float: left;
 			width: 260px;
+                        height:218px;
 			position: relative;
 			background:#fff;
 			padding:15px;

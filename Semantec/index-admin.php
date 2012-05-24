@@ -34,7 +34,7 @@
 
    <!--start contenedor-->
    <div id="contenedor" style="height:auto;">
-      <h2>Panel de control</h2>
+      <h2></h2>
    
      <section class="cajas">
      <h3>Ordenes</h3>
