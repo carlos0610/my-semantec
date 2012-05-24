@@ -142,6 +142,10 @@
                 <a href="lista-ordenes.php"><input type="button" value="Ir al Listado" class="botones" /></a> &nbsp; &nbsp; 
                 <a href="form-edit-ordenes.php?ord_id=<?php echo($ord_id)?>"><input type="button" value="Modificar datos" class="botones" /></a> &nbsp; &nbsp; 
                 <a href="form-alta-ordenes.php"><input type="button" value="Agregar otra orden" class="botones" /></a>
+                <?php 
+                if($est_id > 10){ ?>
+                    <input type="button" value="Facturación" class="botones" />                
+                 <?php } ?>
             </td>
             <td></td>
           </tr>          
