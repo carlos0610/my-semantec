@@ -12,7 +12,7 @@
                     AND o.prv_id = p.prv_id
                     AND o.estado = 1 
                     ORDER BY o.ord_alta DESC ";
-    $tamPag=20;
+    $tamPag=10;
     
     include("paginado.php");        
         $sql = "SELECT ord_id, ord_codigo, ord_descripcion, cli_nombre, prv_nombre, est_nombre, est_color, ord_alta, ord_plazo, ord_costo, ord_venta
@@ -33,6 +33,7 @@
         $j = 0;
         $colores2 = array("#fefefe","#efefef");
         $cant2 = count($colores2);
+        $numeroDeTablaDesplegable=0;
 ?>
 <!doctype html>
 <html>  
@@ -101,6 +102,7 @@
           </tr>
   <?php
           while($fila = mysql_fetch_array($resultado)){
+             $numeroDeTablaDesplegable++;   
   ?>
           <tr class="lista" bgcolor="<?php echo($colores[$i]);?>">
             <td><?php echo($fila["ord_codigo"]);?></td>
@@ -114,19 +116,19 @@
             <td>&nbsp;</td>
           </tr>
           <tr>
-              <td colspan="6"><div id="flecha<?php echo($fila["ord_id"]);?>" onclick="mostrar('ver<?php echo($fila["ord_id"]);?>', 'flecha<?php echo($fila["ord_id"]);?>')">  </div>
-              <?php
+             <td colspan="6"><div id="flecha<?php echo($numeroDeTablaDesplegable);?>" onclick="mostrar('ver<?php echo($numeroDeTablaDesplegable);?>', 'flecha<?php echo($numeroDeTablaDesplegable);?>')">  </div>
+            
+             <?php
               // listado de requerimientos  // listado de requerimientos  // listado de requerimientos
               // listado de requerimientos  // listado de requerimientos  // listado de requerimientos
               ?>
-                <div id="ver<?php echo($fila["ord_id"]);?>" style="display:none;"> 
-                  <!-- id <?php echo($fila["ord_id"]);?> -->
-                  <!-- id <?php echo($fila["ord_id"]);?> -->
+                <div id="ver<?php echo($numeroDeTablaDesplegable);?>" style="display:none;"> 
+                  <!-- id <?php echo($numeroDeTablaDesplegable);?> -->
+                  <!-- id <?php echo($numeroDeTablaDesplegable);?> -->
                   <table class="listados" cellpadding="5">
                     <tr class="titulo" style="background-color:#cdcdcd">
                       <td width="700">Descripci&oacute;n</td>
                       <td width="100">Fecha</td>
-                      <td width="100">Monto</td>
                       <td width="100">Usuario </td>
                     </tr>
               <?php
@@ -144,7 +146,6 @@
                     <tr class="lista" bgcolor="<?php echo($colores2[$j]);?>">
                       <td width="70"><?php echo(utf8_encode($fila_req["ord_det_descripcion"])); ?></td>
                       <td width="100"><?php echo(mfecha($fila_req["ord_det_fecha"])); ?></td>
-                      <td width="100"><?php echo(($fila_req["ord_det_monto"])); ?></td>
                       <td width="100"><?php echo(utf8_encode($fila_req["usu_nombre"])); ?></td>
                     </tr>
 

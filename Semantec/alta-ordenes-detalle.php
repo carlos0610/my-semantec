@@ -34,6 +34,7 @@
                                                         '$usu_nombre',
                                                         1
                                                 )";
+        echo $sql2;
         mysql_query($sql2);
 
 	$_SESSION["ord_id"] = $ord_id;
