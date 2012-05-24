@@ -7,8 +7,8 @@
         $iva    = mysql_query($sql);
         $sql    = "SELECT  zon_id, zon_nombre FROM zonas";
         $zonas  = mysql_query($sql);
-        $sql    = "SELECT rub_id,rub_nombre FROM rubros";
-        $rubros = mysql_query($sql);
+        //$sql    = "SELECT rub_id,rub_nombre FROM rubros";
+        //$rubros = mysql_query($sql);
         
         
         
@@ -104,27 +104,7 @@
                 </select>
             </td>
             <td></td>
-          </tr>
-          <tr>
-            <td>Rubro</td>
-            <td>
-                <select name="rub_id" id="rub_id" class="campos">
-                <?php
-          while($fila = mysql_fetch_array($rubros)){
-                ?>
-                    <option value="<?php echo($fila["rub_id"]); ?>"><?php echo($fila["rub_nombre"]); ?></option>
-                <?php
-                    }
-                    ?>          
-                </select>
-                
-                
-                      &nbsp;
-                    </div>
-                  </div>
-            </td>
-            <td></td>
-          </tr>
+          </tr>          
           <tr>
             <td>Provincia/Zona</td>
             <td>
