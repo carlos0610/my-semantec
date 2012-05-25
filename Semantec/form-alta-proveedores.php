@@ -68,7 +68,7 @@
 
       <h2>Panel de control</h2>
 
-      <form action="alta-proveedores.php" method="post">
+      <form action="alta-proveedores.php" method="post" name="frmAltaPrv">
       <table class="forms" cellpadding="5">
           <tr class="titulo">
             <td colspan="2"> <?php echo($titulo)?> </td>
@@ -80,7 +80,7 @@
           </tr>
           <tr>
             <td>Raz&oacute;n Social</td>
-            <td><input type="text" class="campos" id="prv_nombre" name="prv_nombre" /></td>
+            <td><input type="text" class="campos" id="prv_nombre" name="prv_nombre" required/></td>
             <td></td>
           </tr>
           <tr>
@@ -174,18 +174,18 @@
             <td></td>
           </tr>
           <tr>
-            <td>Tiene cuenta bancaria?</td>
-            <td>Sí<input type="radio" class="" id="rbt_cuenta" name="rbt_cuenta" value="1"/>&nbsp;No<input type="radio" class="" id="rbt_cuenta" name="rbt_cuenta" value="0" checked/></td>
+            <td>¿Tiene cuenta bancaria?</td>
+            <td>Sí<input type="radio" class="" id="rbt_cuenta" name="rbt_cuenta" value="1" onclick="disableTxt(1,'S')"/>&nbsp;No<input type="radio" class="" id="rbt_cuenta" name="rbt_cuenta" value="0" onclick="disableTxt(1,'N')" checked/></td>
             <td></td>
           </tr>
           <tr>
             <td>Nro.Cuenta bancaria</td>
-            <td><input type="text" class="campos" id="cue_nrobancaria" name="cue_nrobancaria"/></td>
+            <td><input type="text" class="campos" id="cue_nrobancaria" name="cue_nrobancaria" disabled/></td>
             <td></td>
           </tr>
           <tr>
               <td>Tipo de cuenta</td><td>
-          <select name="cut_id" id="cut_id" class="campos">
+          <select name="cut_id" id="cut_id" class="campos" disabled>
     <?php
           while($fila = mysql_fetch_array($tipocuenta)){
     ?>
@@ -198,7 +198,7 @@
           </tr>
           <tr>
             <td>CBU</td>
-            <td><input type="text" class="campos" id="cue_cbu" name="cue_cbu"/></td>
+            <td><input type="text" class="campos" id="cue_cbu" name="cue_cbu" disabled/></td>
             <td></td>
           </tr> 
           <tr>

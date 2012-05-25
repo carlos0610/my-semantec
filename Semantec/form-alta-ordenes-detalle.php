@@ -81,7 +81,7 @@
             </td>
           </tr>
           <tr>
-            <td>Descripci&oacute;n de Requerimiento</td>
+            <td>Descripci&oacute;n de actualización</td>
             <td><textarea class="campos" id="ord_descripcion" name="ord_descripcion" rows="9" required ></textarea></td>
             <td></td>
           </tr>

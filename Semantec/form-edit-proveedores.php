@@ -32,8 +32,9 @@
         $banco = mysql_query($sql);
         $filas =  mysql_num_rows($banco);
         
-        if($filas > 0){
-            $fila_banco = mysql_fetch_array($banco);
+        $fila_banco = mysql_fetch_array($banco);
+        
+        if($filas > 0){            
             $_SESSION["tienecuenta"] = true;
         }else{
             $_SESSION["tienecuenta"] = false;         
@@ -95,7 +96,7 @@
 
       <h2>Panel de control</h2>
 
-      <form action="edit-proveedores.php" method="post">
+      <form action="edit-proveedores.php" method="post" name="frmEditPrv">
       <table class="forms" cellpadding="5">
           <tr class="titulo">
             <td colspan="2"> <?php echo($titulo)?> </td>
@@ -209,27 +210,28 @@
             <td></td>
           </tr>
           <td>Tiene cuenta bancaria?</td>
-            <td><?php if($filas>0) 
-                        echo "Sí"; 
-                       else echo 
-                           "No"; ?></td>
+            <td>Sí<input type="radio" class="" id="rbt_cuenta" name="rbt_cuenta" value="1" onclick="disableTxt(2,'S')" <? if($filas>0) echo "checked"?>/>&nbsp;No<input type="radio" class="" id="rbt_cuenta" name="rbt_cuenta" value="0" onclick="disableTxt(2,'N')" <? if($filas==0) echo "checked"?>/></td>
             <td></td>
           </tr>
           <tr>
             <td>Nro.Cuenta bancaria</td>
             <td><input type="text" class="campos" id="cue_nrobancaria" name="cue_nrobancaria" value="<? if($filas>0) 
                                                                                                     echo $fila_banco["cue_nrobancaria"];
-                                                                                                    else
-                                                                                                    echo 0;    ?>"/></td>
+                                                                                                        
+                                                                                                        ?>" <? if($filas==0)
+                                                                                                            echo " disabled";?>/></td>
+            
+            
             <td></td>
           </tr>
           <tr>
               <td>Tipo de cuenta</td><td>
-          <select name="cut_id" id="cut_id" class="campos">
+          <select name="cut_id" id="cut_id" class="campos" <? if($filas==0) echo " disabled";?>>
     <?php
           while($fila = mysql_fetch_array($tipocuenta)){
+              
     ?>
-                    <option value="<?php echo($fila["cut_id"]); ?>" <?php if($fila["cut_nombre"]==$fila_banco["cut_nombre"]){echo(" selected=\"selected\"");} ?>><?php echo(utf8_encode($fila["cut_nombre"])); ?></option>
+                    <option value="<?php echo($fila["cut_id"]); ?>" <?php if($fila["cut_nombre"]==$fila_banco["cut_nombre"]){echo(" selected=\"selected\"");} ?> ><?php echo(utf8_encode($fila["cut_nombre"])); ?></option>
                     
                     
     <?php
@@ -242,8 +244,8 @@
             <td>CBU</td>
             <td><input type="text" class="campos" id="cue_cbu" name="cue_cbu" value="<? if($filas>0){ 
                                                                                                    echo $fila_banco["cue_cbu"];
-                                                                                                   }else{
-                                                                                                    echo 0;}?>"/></td>
+                                                                                                   }?>" <? if($filas==0)
+                                                                                                            echo " disabled";?>/></td>
             <td></td>
           </tr> 
             <tr>

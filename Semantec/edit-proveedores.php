@@ -16,6 +16,7 @@
         $prv_email = $_POST["prv_email"];
         
         
+        
         $prv_notas = utf8_decode($_POST["prv_notas"]);
         
         include("conexion.php");
@@ -37,16 +38,24 @@
         		WHERE prv_id = $prv_id";
 		mysql_query($sql);
 		$_SESSION["prv_id"] = $prv_id;
-                
-                if ($_SESSION["tienecuenta"]==true){
+                               
+                $rbt_cuenta = $_POST["rbt_cuenta"];
+                if ($rbt_cuenta == "1"){
                     
                     $cut_id = $_POST["cut_id"];
                     $cue_nrobancaria = $_POST["cue_nrobancaria"];
                     $cue_cbu = $_POST["cue_cbu"];
                     $sql = "UPDATE cuentabanco_prv set cut_id =$cut_id,cue_nrobancaria =$cue_nrobancaria,cue_cbu = $cue_cbu where prv_id = $prv_id";
+                    $_SESSION["tienecuenta"]=true;
                     mysql_query($sql);
                     
+                    $actualizo = mysql_affected_rows();
                     
+                        //Si no actualizo es porque es una cuenta nueva, entonces la insertamos
+                    if ($actualizo == 0){
+                        $sql = "INSERT INTO cuentabanco_prv (prv_id,cut_id,cue_nrobancaria,cue_cbu) VALUES ($prv_id,$cut_id,$cue_nrobancaria,$cue_cbu)";
+                        mysql_query($sql);
+                    }
                 }
 
 		mysql_close();
