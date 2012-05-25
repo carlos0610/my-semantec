@@ -13,7 +13,8 @@ function eliminarCliente(id,nombre){
     
     if(confirm('Confirma eliminar Cliente: '+nombre+' ?')==true)
     {
-        window.location="delete-clientes.php?cli_id="+id;
+        window.location="delete-clientes.php?cli_id="+id;       
+       
     }
 }
 

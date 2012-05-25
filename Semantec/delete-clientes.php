@@ -2,7 +2,7 @@
         include("validar.php");
         include("funciones.php");
 
-        $ord_id = $_GET["orden_id"];
+        $cli_id = $_GET["cli_id"];
 
         include("conexion.php");
         $sql = "UPDATE clientes SET 
@@ -13,8 +13,7 @@
 	mysql_query($sql);//modificacion de la orden
 
         echo $sql;
-	$_SESSION["ord_id"] = $ord_id;
-
+	$_SESSION["cli_id"] = $cli_id;
 	mysql_close();
 	header("location:lista-clientes.php");
 

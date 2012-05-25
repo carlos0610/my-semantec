@@ -5,11 +5,11 @@
 
         include("conexion.php");
 /* CALCULO PAGINADO */  ###############################################################################
-    $sql0="SELECT cli_id, cli_nombre, cli_cuit, cli_telefono FROM clientes";
+    $sql0="SELECT cli_id, cli_nombre, cli_cuit, cli_telefono FROM clientes where estado = 1";
     $tamPag=20;
     
     include("paginado.php");        
-        $sql = "SELECT cli_id, cli_nombre, cli_cuit, cli_telefono FROM clientes";
+        $sql = "SELECT cli_id, cli_nombre, cli_cuit, cli_telefono FROM clientes where estado = 1";
                 $sql .= " LIMIT ".$limitInf.",".$tamPag; 
         $resultado = mysql_query($sql);
         $cantidad = mysql_num_rows($resultado);
