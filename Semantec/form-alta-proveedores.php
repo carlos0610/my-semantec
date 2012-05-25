@@ -67,7 +67,7 @@ $titulo = "Formulario de alta de un proveedor.";
    <div id="contenedor" style="height:auto;">
 
 
-      <h2>Panel de control</h2>
+      <h2>Panel de control 2</h2>
 
       <form action="alta-proveedores.php" method="post">
       <table class="forms" cellpadding="5">
