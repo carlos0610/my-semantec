@@ -3,9 +3,9 @@
     $titulo = "Formulario de alta de una Orden de Servicio.";
         include("validar.php");
         include("conexion.php");
-        $sql = "SELECT  cli_id, cli_nombre FROM clientes";
+        $sql = "SELECT  cli_id, cli_nombre FROM clientes WHERE estado=1";
         $resultado1 = mysql_query($sql);
-        $sql = "SELECT  prv_id, prv_nombre FROM proveedores";
+        $sql = "SELECT  prv_id, prv_nombre FROM proveedores WHERE estado=1";
         $resultado2 = mysql_query($sql);
         // BORRAR
         $sql = "SELECT  est_id, est_nombre, est_color FROM estados WHERE est_id=1";
@@ -69,7 +69,7 @@
           </tr>
           <tr>
             <td>C&oacute;digo de Orden</td>
-            <td><input type="number" class="campos" id="ord_codigo" name="ord_codigo" required min="0" /></td>
+            <td><input type="number" align="right" class="campos" id="ord_codigo" name="ord_codigo" required min="0" /></td>
             <td></td>
           </tr>
           <tr>
@@ -80,7 +80,7 @@
           <tr>
             <td>Cliente</td>
             <td>
-                <select name="cli_id" id="cli_id" class="campos">
+                <select name="cli_id" id="cli_id" class="campos" required >
     <?php
           while($fila = mysql_fetch_array($resultado1)){
     ?>
@@ -95,7 +95,7 @@
           <tr>
             <td>Proveedor</td>
             <td>
-                <select name="prv_id" id="prv_id" class="campos">
+                <select name="prv_id" id="prv_id" class="campos" required>
     <?php
           while($fila2 = mysql_fetch_array($resultado2)){
     ?>
