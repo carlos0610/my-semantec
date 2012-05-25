@@ -19,7 +19,7 @@
         
         include("conexion.php");
         
-        $query = $_SESSION["query"];
+        
         $sql0 = "SELECT ord_codigo, ord_descripcion, cli_id, prv_id, est_id, ord_alta, ord_plazo, ord_costo, ord_venta
                   FROM ordenes WHERE ord_id = $ord_id";
         $resultado0 = mysql_query($sql0);
