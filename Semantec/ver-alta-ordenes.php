@@ -107,7 +107,7 @@
           <tr>
             <td>Cliente</td>
             <td>
-                <?php echo($fila1["cli_nombre"]); ?>
+                <?php echo($fila1["cli_nombre"]);?>
             </td>
             <td></td>
           </tr>
