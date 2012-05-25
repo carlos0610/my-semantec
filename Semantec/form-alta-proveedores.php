@@ -1,7 +1,5 @@
 <?php
-//Fijate si lo recibis Bruno   
-
-$titulo = "Formulario de alta de un proveedor.";
+    $titulo = "Formulario de alta de un proveedor.";
         include("validar.php");
 
         include("conexion.php");
@@ -14,6 +12,7 @@ $titulo = "Formulario de alta de un proveedor.";
         $sql = "select cut_id,cut_nombre FROM cuentatipo";
         $tipocuenta = mysql_query($sql);
         
+
 ?>
 <!doctype html>
 <html>  
@@ -67,7 +66,7 @@ $titulo = "Formulario de alta de un proveedor.";
    <div id="contenedor" style="height:auto;">
 
 
-      <h2>Panel de control 2</h2>
+      <h2>Panel de control</h2>
 
       <form action="alta-proveedores.php" method="post">
       <table class="forms" cellpadding="5">
