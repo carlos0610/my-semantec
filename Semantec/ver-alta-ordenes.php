@@ -11,7 +11,7 @@
           $ord_id = $_SESSION["ord_id"];
     }
     else{ // 2
-          $titulo = "Se han modificado los datos del siguiente la siguiente Orden de Servicio"; 
+          $titulo = "Se han modificado los datos del la siguiente Orden de Servicio"; 
           $ord_id = $_SESSION["ord_id"];
     }
         include("funciones.php");
