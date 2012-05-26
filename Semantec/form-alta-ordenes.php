@@ -29,7 +29,7 @@
       $('#ord_plazo').datepick();
   });
   </script>    
-
+  <script type="text/javascript" src="js/validador.js"></script>
   </head>
   <body>
 	
@@ -69,7 +69,9 @@
           </tr>
           <tr>
             <td>C&oacute;digo de Orden</td>
-            <td><input type="number" align="right" class="campos" id="ord_codigo" name="ord_codigo" required min="0" /></td>
+            <td><input type="number" align="right" class="campos" id="ord_codigo" name="ord_codigo" required min="0" onChange="return autentica();" />
+                <span id="error" style="font-family: Verdana, Arial, Helvetica,sans-serif;font-size: 9pt;color: #CC3300;position:relative;visibility:hidden;">N° Repetido</span>
+            </td>
             <td></td>
           </tr>
           <tr>
@@ -133,7 +135,7 @@
             <td>&nbsp;</td>
             <td>
                 <input type="reset" value="Restablecer" class="botones" /> &nbsp; &nbsp; 
-                <input type="submit" value="Agregar Orden" class="botones" />
+                <input type="submit" value="Agregar Orden" class="botones" style="visibility:visible" id="botonAgregarOrden" />
             </td>
             <td></td>
           </tr>
