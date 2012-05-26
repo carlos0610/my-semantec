@@ -35,6 +35,10 @@
         $cant2 = count($colores2);
         $numeroDeTablaDesplegable=0;
 ?>
+
+
+
+
 <!doctype html>
 <html>  
   <head>
@@ -127,14 +131,15 @@
                   <!-- id <?php echo($numeroDeTablaDesplegable);?> -->
                   <table class="listados" cellpadding="5">
                     <tr class="titulo" style="background-color:#cdcdcd">
-                      <td width="700">Descripci&oacute;n</td>
+                      <td width="600">Descripci&oacute;n</td>
                       <td width="100">Fecha</td>
                       <td width="100">Estado</td>
                       <td width="100">Usuario </td>
+                      <td witdh="100">Archivo</td>
                     </tr>
               <?php
                 $orden = $fila["ord_id"];
-                $sql_req = "SELECT ord_det_id, ord_id, ord_det_descripcion, ord_det_fecha, usu_nombre, ord_det_monto ,nombre_estado
+                $sql_req = "SELECT ord_det_id, ord_id, ord_det_descripcion, ord_det_fecha, usu_nombre, ord_det_monto ,nombre_estado,files_id
                               FROM ordenes_detalle
                               WHERE ord_id = $orden
                               AND   estado = 1 
@@ -145,10 +150,13 @@
                   //  echo("<hr />". $sql_req ."<hr />");
           ?>
                     <tr class="lista" bgcolor="<?php echo($colores2[$j]);?>">
-                      <td width="70"><?php echo(utf8_encode($fila_req["ord_det_descripcion"])); ?></td>
-                      <td width="100"><?php echo(mfecha($fila_req["ord_det_fecha"])); ?></td>
+                      <td width="600"><?php echo(utf8_encode($fila_req["ord_det_descripcion"])); ?></td>
+                      <td width="100"><?php echo($fila_req["ord_det_fecha"]); ?></td>
                       <td width="100"><?php echo(utf8_encode($fila_req["nombre_estado"])); ?></td>
                       <td width="100"><?php echo(utf8_encode($fila_req["usu_nombre"])); ?></td>
+                      <?php //echo(utf8_encode($fila_req["files_id"]));
+                         $id = $fila_req["files_id"] ?>
+                      <td width="100"><?php if ($id!=null) echo "<a href=descargar.php?id=$id><img src=images/download.png /></a>";?></td>
                     </tr>
 
               <?php

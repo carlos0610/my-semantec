@@ -68,7 +68,7 @@
 
 	
       <h2>Panel de control</h2>
-      <form action="alta-ordenes-detalle.php" method="post">
+      <form action="alta-ordenes-detalle.php" method="post" enctype="multipart/form-data">
           
       <input type="hidden" value="<?php echo $orden_id; ?>" name="ord_id"  id="ord_id">
       <table class="forms" cellpadding="5">
@@ -121,7 +121,7 @@
           </tr>
           <tr>
               <td>Adjuntar archivo</td><td>
-                  <input type="file" class="" id="ord_det_file" name="ord_det_file" />
+                  <input type="file" class="" id="userfile" name="userfile" />
               </td>
           </tr>
           <tr>
@@ -131,6 +131,7 @@
                 <input type="button" value="  Volver   " class="botones" /></a> &nbsp; &nbsp;
                 <input type="reset"  value="Restablecer" class="botones" /> &nbsp; &nbsp; 
                 <input type="submit" value="  Guardar  " class="botones" />
+                <input type="hidden" name="MAX_FILE_SIZE" value="200000000000">
             </td>
             <td></td>
           </tr>

@@ -39,6 +39,7 @@
         $sql = "SELECT  est_id, est_nombre, est_color FROM estados WHERE est_id = $est_id"; //datos del estado
         $resultado3 = mysql_query($sql);
         $fila3 = mysql_fetch_array($resultado3);
+        
 
 ?>
 <!doctype html>
