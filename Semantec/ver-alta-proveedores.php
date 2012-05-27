@@ -1,13 +1,21 @@
 <?php
+    include("validar.php");  
     $action = $_GET["action"];
-    if($action == 1){
-      $titulo = "Se ha dado de alta el siguiente proveedor.";
-    }else{ // 2
-      $titulo = "Se han modificado los datod del siguiente proveedor.";
+    if($action == 0){
+          $titulo = "Datos de Orden de Servicio";
+          $prv_id = $_GET["prv_id"];
     }
-        include("validar.php");
+    else if($action == 1){
+      $titulo = "Se ha dado de alta el siguiente proveedor.";
+      $prv_id = $_SESSION["prv_id"];
+    }
+      else{ // 2
+      $titulo = "Se han modificado los datod del siguiente proveedor.";
+      $prv_id = $_SESSION["prv_id"];
+    }
+       
         include("conexion.php");
-        $prv_id = $_SESSION["prv_id"];
+        
         //$query = $_SESSION["query"];
         $tienecuenta = $_SESSION["tienecuenta"];
         unset($_SESSION["prv_id"]);

@@ -124,18 +124,18 @@
             <td></td>
           </tr>          <tr>
             <td>Valor Costo de la Orden</td>
-            <td><input type="number" class="campos" id="ord_costo" name="ord_costo" required min="0"  /></td>
+            <td><input type="number" class="campos" id="ord_costo" name="ord_costo" value="0"  min="0" required /></td>
             <td></td>
           </tr>          <tr>
             <td>Valor Venta de la Orden</td>
-            <td><input type="number" class="campos" id="ord_venta" name="ord_venta" required  min="0" /></td>
+            <td><input type="number" class="campos" id="ord_venta" name="ord_venta" value="0"  min="0" required /></td>
             <td></td>
           </tr>
           <tr>
             <td>&nbsp;</td>
             <td>
                 <input type="reset" value="Restablecer" class="botones" /> &nbsp; &nbsp; 
-                <input type="submit" value="Agregar Orden" class="botones" style="visibility:visible" id="botonAgregarOrden" />
+                <input type="submit" value="Agregar Orden" class="botones" style="visibility:visible" id="botonAgregar" />
             </td>
             <td></td>
           </tr>

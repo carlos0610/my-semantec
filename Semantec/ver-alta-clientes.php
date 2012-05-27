@@ -1,19 +1,25 @@
 <?php
+    include("validar.php");
     $action = $_GET["action"];
+    if($action == 0){
+          $titulo = "Datos de Orden de Servicio";
+          $cli_id = $_GET["cli_id"];
+    }
+    else 
     if($action == 1){
           $titulo = "Se ha dado de alta el siguiente cliente.";
+          $cli_id = $_SESSION["cli_id"];
     }
     else{ // 2
           $titulo = "Se han modificado los datos del siguiente cliente."; 
+          $cli_id = $_SESSION["cli_id"];
     }
-        include("validar.php");
+       
 
         include("conexion.php");
-        $cli_id = $_SESSION["cli_id"];
+        
         //$query = $_SESSION["query"];
-        unset($_SESSION["cli_id"]);
-        
-        
+        unset($_SESSION["cli_id"]);        
         $sql = "SELECT cli_nombre, cli_cuit, iva_tipo.iva_nombre, rubros.rub_nombre, zonas.zon_nombre, cli_direccion, cli_telefono, cli_notas 
         FROM clientes,rubros,iva_tipo,zonas 
         WHERE cli_id = $cli_id 

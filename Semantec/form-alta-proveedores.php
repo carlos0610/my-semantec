@@ -40,6 +40,7 @@
         setTimeout("$('#suggestions').hide();", 200);
       }
     </script>
+    
     <link rel="stylesheet" href="css/suggestionsBox.css" type="text/css" />
   </head>
   <body>
@@ -85,7 +86,10 @@
           </tr>
           <tr>
             <td>CUIT</td>
-            <td><input type="number" class="campos" id="prv_cuit" name="prv_cuit" maxlength="11" required/></td>
+            <td>
+                <input type="number" min="10000000000" class="campos" id="prv_cuit" name="prv_cuit" maxlength="11" onChange="return autenticaCUIT();" required/>
+                <span id="error" style="font-family: Verdana, Arial, Helvetica,sans-serif;font-size: 9pt;color: #CC3300;position:relative;visibility:hidden;">N° Repetido</span>
+            </td>
             <td></td>
           </tr>
           <tr>
@@ -210,7 +214,7 @@
             <td>&nbsp;</td>
             <td>
                 <input type="reset" value="Restablecer" class="botones" /> &nbsp; &nbsp; 
-                <input type="submit" value="Agregar proveedor" class="botones" />
+                <input type="submit" value="Agregar proveedor" class="botones" style="visibility:visible" id="botonAgregar" />
             </td>
             <td></td>
           </tr>

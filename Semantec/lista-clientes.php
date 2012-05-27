@@ -55,6 +55,7 @@
             <td width="90">CUIT</td>
             <td width="90">Tel&eacute;fono</td>
             <td width="32">&nbsp;</td>
+            <td width="32">&nbsp;</td>
             <td width="32">
                 <a href="index-admin.php">
                     <img src="images/home.png"  alt="inicio" title="Volver al panel" width="32" height="32" border="none" />
@@ -68,6 +69,11 @@
             <td><?php echo($fila["cli_nombre"]);?></td>
             <td><?php echo(verCUIT($fila["cli_cuit"]));?></td>
             <td><?php echo($fila["cli_telefono"]);?></td>
+            <td>
+                <a href="ver-alta-clientes.php?cli_id=<?php echo($fila["cli_id"]);?>&action=0">
+                  <img src="images/detalles.png" alt="editar" title="ver detalle" width="32" height="32" border="none" />
+                </a>  
+            </td>       
             <td>
                 <a href="form-edit-clientes.php?cli_id=<?php echo($fila["cli_id"]);?>">
                   <img src="images/editar.png" alt="editar" title="Modificar cliente" width="32" height="32" border="none" />

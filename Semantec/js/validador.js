@@ -28,24 +28,35 @@ function leer_doc(url) {
  
 }
 
-function autentica(){
- usuario = document.getElementById("ord_codigo").value;
- url = "existeNumeroOrden.php?usuario=" + usuario;
- leer_doc(url);
-}
-
 function procesarRespuesta(){
  respuesta = req.responseXML;
  var existe = respuesta.getElementsByTagName('existe').item(0).firstChild.data;
    if (existe=="true")
    {
     document.getElementById("error").style.visibility = "visible";
-    document.getElementById("botonAgregarOrden").style.visibility = "hidden";
+    document.getElementById("botonAgregar").style.visibility = "hidden";
    }
    else
        {
             document.getElementById("error").style.visibility = "hidden";
-            document.getElementById("botonAgregarOrden").style.visibility = "visible";
+            document.getElementById("botonAgregar").style.visibility = "visible";
        }
 }
+// Funciones llamdas del Form
+function autentica(){
+ usuario = document.getElementById("ord_codigo").value;
+ url = "existeNumeroOrden.php?usuario=" + usuario;
+ leer_doc(url);
+}
 
+function autenticaCUIT(){
+ usuario = document.getElementById("prv_cuit").value;
+ url = "existeNumeroCuit.php?usuario=" + usuario;
+ leer_doc(url);
+}
+
+function autenticaClienteCUIT(){
+ usuario = document.getElementById("cli_cuit").value;
+ url = "existeNumeroCuitCliente.php?usuario=" + usuario;
+ leer_doc(url);
+}

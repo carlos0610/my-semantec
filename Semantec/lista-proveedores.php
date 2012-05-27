@@ -56,6 +56,7 @@
             <td width="90">CUIT</td>
             <td width="90">Tel&eacute;fono</td>
             <td width="32">&nbsp;</td>
+            <td width="32">&nbsp;</td>
             <td width="32">
                 <a href="index-admin.php">
                     <img src="images/home.png"  alt="inicio" title="Volver al panel" width="32" height="32" border="none" />
@@ -70,6 +71,11 @@
             <td><?php echo(verCUIT($fila["prv_cuit"]));?></td>
             <td><?php echo($fila["prv_telefono"]);?></td>
             <td>
+                <a href="ver-alta-proveedores.php?prv_id=<?php echo($fila["prv_id"]);?>&action=0">
+                  <img src="images/detalles.png" alt="editar" title="ver detalle" width="32" height="32" border="none" />
+                </a>
+            </td>
+            <td>
                 <a href="form-edit-proveedores.php?prv_id=<?php echo($fila["prv_id"]);?>">
                   <img src="images/editar.png" alt="editar" title="Modificar proveedor" width="32" height="32" border="none" />
                 </a>
@@ -77,7 +83,8 @@
             <td>
                 <a href="#" onclick="eliminarProveedor(<?php echo($fila["prv_id"]);?>,'<?php echo($fila["prv_nombre"]);?>')">
                     <img src="images/eliminar.png" alt="eliminar" title="Eliminar proveedor" width="32" height="32" border="none" />
-                </a></td>
+                </a>
+            </td>
           </tr>
   <?php
             $i++;
