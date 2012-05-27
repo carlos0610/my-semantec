@@ -10,7 +10,7 @@
       $prv_id = $_SESSION["prv_id"];
     }
       else{ // 2
-      $titulo = "Se han modificado los datod del siguiente proveedor.";
+      $titulo = "Se han modificado los dato del siguiente proveedor.";
       $prv_id = $_SESSION["prv_id"];
     }
        
@@ -18,7 +18,7 @@
         
         //$query = $_SESSION["query"];
         $tienecuenta = $_SESSION["tienecuenta"];
-        unset($_SESSION["prv_id"]);
+        //unset($_SESSION["prv_id"]);
         
         
         $sql = "SELECT prv_nombre, prv_cuit, iva_tipo.iva_nombre, rubros.rub_nombre, zonas.zon_nombre, prv_direccion, prv_telefono,prv_fax,prv_cel,prv_alternativo,prv_urgencia,prv_web,prv_email,prv_notas FROM proveedores,rubros,iva_tipo,zonas WHERE prv_id = $prv_id and proveedores.iva_id = iva_tipo.iva_id

@@ -144,7 +144,7 @@
           </tr>
           <tr>
             <td>Tel&eacute;fono</td>
-            <td><input type="text" class="campos" id="prv_telefono" name="prv_telefono" required/></td>
+            <td><input type="tel" class="campos" id="prv_telefono" name="prv_telefono" required/></td>
             <td></td>
           </tr>
           <tr>
@@ -154,7 +154,7 @@
           </tr>
           <tr>
             <td>Cel</td>
-            <td><input type="text" class="campos" id="prv_cel" name="prv_cel" /></td>
+            <td><input type="tel" class="campos" id="prv_cel" name="prv_cel" /></td>
             <td></td>
           </tr>
           <tr>
@@ -169,12 +169,12 @@
           </tr>
           <tr>
             <td>Web</td>
-            <td><input type="text" class="campos" id="prv_web" name="prv_web" value="http://"/></td>
+            <td><input type="url" class="campos" id="prv_web" name="prv_web" value="http://"/></td>
             <td></td>
           </tr>
           <tr>
             <td>Email</td>
-            <td><input type="text" class="campos" id="prv_email" name="prv_email" value="ejemplo@email.com"/></td>
+            <td><input type="email" class="campos" id="prv_email" name="prv_email" value="ejemplo@email.com"/></td>
             <td></td>
           </tr>
           <tr>

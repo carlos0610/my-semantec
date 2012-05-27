@@ -19,7 +19,7 @@
         include("conexion.php");
         
         //$query = $_SESSION["query"];
-        unset($_SESSION["cli_id"]);        
+      //  unset($_SESSION["cli_id"]);        
         $sql = "SELECT cli_nombre, cli_cuit, iva_tipo.iva_nombre, rubros.rub_nombre, zonas.zon_nombre, cli_direccion, cli_telefono, cli_notas 
         FROM clientes,rubros,iva_tipo,zonas 
         WHERE cli_id = $cli_id 
