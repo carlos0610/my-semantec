@@ -8,7 +8,7 @@
         $cli_id = $_POST["cli_id"];
         $prv_id = $_POST["prv_id"];
         $est_id = $_POST["est_id"];
-        $ord_alta = date("Y-m-d");
+        //$ord_alta = date("Y-m-d");
         $ord_plazo = gfecha($_POST["ord_plazo"]); 
         $ord_costo = $_POST["ord_costo"];
         $ord_venta = $_POST["ord_venta"];        
@@ -72,7 +72,7 @@
                                                         ('$ord_descripcion',
                                                         $ord_det_monto,
                                                         $ord_id,
-                                                        '$ord_alta',
+                                                        NOW(),
                                                         '$usu_nombre',
                                                         1,
                                                         '$est_nombre')";
@@ -86,7 +86,7 @@
                                                         '$ord_descripcion',
                                                         $ord_det_monto,
                                                         $ord_id,
-                                                        '$ord_alta',
+                                                        NOW(),
                                                         '$usu_nombre',
                                                         1,
                                                         '$est_nombre'

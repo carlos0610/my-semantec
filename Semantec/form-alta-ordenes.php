@@ -57,7 +57,7 @@
 
       <h2>Panel de control</h2>
 
-      <form action="alta-ordenes.php" method="post">
+      <form action="alta-ordenes.php" method="post" enctype="multipart/form-data" >
       <table class="forms" cellpadding="5">
           <tr class="titulo">
             <td colspan="2"> <?php echo($titulo)?> </td>
@@ -126,10 +126,16 @@
             <td>Valor Costo de la Orden</td>
             <td><input type="number" class="campos" id="ord_costo" name="ord_costo" value="0"  min="0" required /></td>
             <td></td>
-          </tr>          <tr>
+          </tr>          
+          <tr>
             <td>Valor Venta de la Orden</td>
             <td><input type="number" class="campos" id="ord_venta" name="ord_venta" value="0"  min="0" required /></td>
             <td></td>
+          </tr>
+          <tr>
+              <td>Adjuntar archivo</td><td>
+                  <input type="file" class="" id="userfile" name="userfile" />
+              </td>
           </tr>
           <tr>
             <td>&nbsp;</td>

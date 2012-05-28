@@ -40,6 +40,8 @@
         $resultado3 = mysql_query($sql);
         $fila3 = mysql_fetch_array($resultado3);
         
+        $query = $_SESSION["query"];
+        
 
 ?>
 <!doctype html>
