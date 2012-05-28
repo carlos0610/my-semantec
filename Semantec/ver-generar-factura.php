@@ -21,7 +21,7 @@
         include("funciones.php");
         include("conexion.php");
         
-        $sql = "SELECT c.cli_nombre as Cliente,c.cli_direccion as Dirección,z.zon_nombre,i.iva_nombre,c.cli_cuit 
+        $sql = "SELECT c.cli_nombre,c.cli_direccion,z.zon_nombre,i.iva_nombre,c.cli_cuit 
                 FROM ordenes o,clientes c,zonas z,iva_tipo i
                     WHERE 
                     o.cli_id = c.cli_id
@@ -51,18 +51,14 @@
   $(function() {
       $('#ord_plazo').datepick();
   });
-  </script>    
-
-  </head>
+  </script></head>
   <body>
 	
   <!-- start main --><!-- start main --><!-- start main --><!-- start main --><!-- start main -->
   <div id="main">
 
     <!--start header-->
-    <header>
-    <a href="#" id="logo"><img src="images/semantec-logo.jpg" width="470" height="100" alt="logo" /></a>
-	  <!-- form login -->
+    <header><!-- form login -->
 
     <div id ="login">
          <span id="mensaje_top" style="text-align:right;"><?php echo($_SESSION["usu_nombre"]); ?>
@@ -75,30 +71,59 @@
 
 
    <!--start contenedor-->
-   <div id="contenedor" style="height:auto;">
-	 <table width="100%" border="0">
-          <tr>
-            <td width="15%">Señores:</td>
-            <td colspan="3"><?php echo $sql?></td>
+   <div id="contenido1" style="height:auto";>
+   <table width="100%" border="0">
+  <tr>
+    <td rowspan="3"><a href="#" id="logo2"><img src="images/semantec-logo.jpg" width="401" height="71" alt="logo" /></a></td>
+    <td width="51%" class="titulo">FACTURA N° 0001- xxxx-xxxx</td>
+    <td width="1%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td class="titulo">Buenos Aires , <?php echo date("d/m/Y") ?></td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td class="titulo">CUIT: 30-70877618-8</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td class="titulo"> <div align="center">Dr. Aleu 3139 (1651) - 1er piso of 11 - San Andrés <br>
+      Provincia de Buenos Aires</div></td>
+    <td class="titulo">Ing.Brutos : 902-820067 -3</td>
+    <td rowspan="2">&nbsp;</td>
+  </tr>
+  <tr>
+    <td class="titulo"><div align="center"><strong>I.V.A Responsable inscripto</strong></div></td>
+    <td bgcolor="#F0F0F0" class="titulo">Inicio de actividades: 01/06/2004</td>
+  </tr>
+</table>
+
+   
+   </div>
+   <div id="contenedor2" style="height:auto;">
+	 <table width="100%" border="0" id="dataTable">
+<tr>
+            <td width="15%" class="titulo">Señores:</td>
+            <td colspan="3" style="background-color:#cbeef5"><?php echo $fila_datos_cliente["cli_nombre"]?></td>
        </tr>
           <tr>
-            <td>Domiclio:</td>
-            <td width="8%"><?php echo $fila_datos_cliente["cli_direccion"]?></td>
-            <td width="6%">Localidad:</td>
-            <td width="71%"><?php echo $fila_datos_cliente["zon_nombre"]?></td>
-          </tr>
+            <td class="titulo">Domiclio:</td>
+            <td width="24%" style="background-color:#cbeef5"><?php echo $fila_datos_cliente["cli_direccion"]?></td>
+            <td width="9%" class="titulo">Localidad:</td>
+            <td width="52%"><?php echo $fila_datos_cliente["zon_nombre"]?></td>
+       </tr>
           <tr>
-            <td>IVA:</td>
+            <td class="titulo">IVA:</td>
             <td><?php echo $fila_datos_cliente["iva_nombre"]?></td>
-            <td>Cuit:</td>
+            <td class="titulo">Cuit:</td>
             <td>&nbsp;</td>
           </tr>
           <tr>
-            <td>Condiciones de venta:</td>
+            <td class="titulo">Condiciones de venta:</td>
             <td>&nbsp;</td>
-            <td>Remito:</td>
+            <td class="titulo">Remito:</td>
             <td>
-              <input type="text" name="txtRemito" id="txtRemito">
+              <input name="txtRemito" type="text" id="txtRemito" size="12">
             </td>
           </tr>
           <tr>
@@ -107,9 +132,71 @@
             <td>&nbsp;</td>
             <td>&nbsp;</td>
           </tr>
-        </table>   
+     </table>   
    
-	 <div class="clear"></div>
+	 <div class="contenido_descripcion"><form><table width="100%" border="0">
+  <tr>
+    <td>&nbsp;</td>
+    <td><div align="center"><input type="image" src="images/add.png" onclick="addRow('dataTable')"><img src="images/eliminar.png" width="32" height="32"></div></td>
+  </tr>
+  <tr>
+    <td width="82%" class="titulo"><div align="center">Descripción</div></td>
+    <td width="18%" class="titulo"><div align="center">Total</div></td>
+  </tr>
+  <tr>
+    <td><label>
+      
+        <div align="left">
+          <input name="txtDescripcionItem" type="text" id="txtDescripcionItem" size="110">
+        </div>
+    </label></td>
+    <td><label>
+      <div align="center">
+        <input type="text" name="txtTotalItem" id="txtTotalItem">
+        </div>
+    </label></td>
+  </tr>
+  <tr>
+    <td><input name="txtDescripcionItem2" type="text" id="txtDescripcionItem2" size="110"></td>
+    <td><div align="center">
+      <input type="text" name="txtTotalItem2" id="txtTotalItem2">
+    </div></td>
+  </tr>
+  <tr>
+    <td><input name="txtDescripcionItem3" type="text" id="txtDescripcionItem3" size="110"></td>
+    <td><div align="center">
+      <input type="text" name="txtTotalItem3" id="txtTotalItem3">
+    </div></td>
+  </tr>
+  <tr>
+    <td><input name="txtDescripcionItem4" type="text" id="txtDescripcionItem4" size="110"></td>
+    <td><div align="center">
+      <input type="text" name="txtTotalItem4" id="txtTotalItem4">
+    </div></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+	 </form>
+</div>
 
    </div>
    <!--end contenedor-->

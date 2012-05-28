@@ -10,5 +10,6 @@
 <link type="text/css" href="css/css3.css" rel="stylesheet" />
 <script type="text/javascript" src="js/funciones.js"></script>
 <script type="text/javascript" src="js/validador.js"></script>
+<script type="text/javascript" src="js/addTableRow.js"></script>
 
 

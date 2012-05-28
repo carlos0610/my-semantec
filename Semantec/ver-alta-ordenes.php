@@ -42,6 +42,12 @@
         
         $pendienteFacturacion = 11;
         
+        
+        
+        
+        
+        
+        
 
 ?>
 <!doctype html>
@@ -98,7 +104,7 @@
           <tr>
             <td width="157">C&oacute;digo de Orden</td>
             <td width="309"><?php echo($fila0["ord_codigo"]);?></td>
-            <td rowspan="8" align="center"><a href="ver-generar-factura.php?ord_id=<?php echo($ord_id)?>"><img src="images/generarFactura2.png" /></a><br><b>Generar factura</b></br></td>
+            <td rowspan="8" align="center"><?php if ($est_id == $pendienteFacturacion) {?><a href="ver-generar-factura.php?ord_id=<?php echo($ord_id)?>"><img src="images/generarFactura2.png" /></a><br><b>Generar factura</b></br></td><?php }?>
           </tr>
           <tr>
             <td>Descripci&oacute;n de Orden</td>
@@ -117,7 +123,7 @@
           <tr>
             <td>Estado</td>
             <td>
-                <?php echo(utf8_encode($fila3["est_nombre"])); ?>            </td>
+                <?php echo(utf8_encode($fila3["est_nombre"])); ?>            <?echo $fila_datos_cliente["cli_nombre"]?></td>
           </tr>
           <tr>
             <td>Plazo de Finalización</td>
@@ -127,7 +133,7 @@
             <td><?php echo($fila0["ord_costo"]);?></td>
             </tr>          
           <tr>
-            <td>Valor Venta de la Orden</td>
+            <td>Valor Venta de la Orden   </td>
             <td><?php echo($fila0["ord_venta"]);?></td>
           </tr>
           <tr>
