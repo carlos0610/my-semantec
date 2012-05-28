@@ -74,7 +74,7 @@
 
 
    <!--start contenedor-->
-   <div id="contenido1" style="height:auto";>
+   <div id="contenido1" style="height:auto">
    <table width="100%" border="0">
   <tr>
     <td rowspan="3"><a href="#" id="logo2"><img src="images/semantec-logo.jpg" width="401" height="71" alt="logo" /></a></td>
@@ -160,7 +160,7 @@
     </label></td>
     <td><label>
       <div align="center">
-        <input type="text" align="left" name="txtTotalItem<?php echo($numeroDescripcion);?>" id="txtTotalItem<?php echo($numeroDescripcion);?>" value="0.00" onChange="return ActulizarTotal(<?php echo($totalDescripcion);?>);" >
+        <input type="text" align="left" name="txtTotalItem<?php echo($numeroDescripcion);?>" id="txtTotalItem<?php echo($numeroDescripcion);?>" value="0.00" onChange="return ActualizarTotal(<?php echo($totalDescripcion);?>);" >
         </div>
     </label></td>
   </tr>

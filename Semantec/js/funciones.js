@@ -63,7 +63,7 @@ function disableTxt(formulario,id){
 
 }
 
-function ActulizarTotal(cantidadDescripciones){
+function ActualizarTotal(cantidadDescripciones){
     total = 0;
     numeroDescripcion=0;
     while(numeroDescripcion < cantidadDescripciones)
