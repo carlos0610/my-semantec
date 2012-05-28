@@ -40,7 +40,7 @@
         $resultado3 = mysql_query($sql);
         $fila3 = mysql_fetch_array($resultado3);
         
-        $query = $_SESSION["query"];
+        $pendienteFacturacion = 11;
         
 
 ?>
@@ -90,71 +90,56 @@
 
       <table class="forms" cellpadding="5">
           <tr class="titulo">
-            <td colspan="2"> <?php echo($titulo)?> </td>
-            <td width="32">
+            <td colspan="2" align="center"> <?php echo($titulo)?> </td>
+            <td width="89" align="center">
                 <a href="index-admin.php">
-                    <img src="images/home.png"  alt="inicio" title="Volver al panel" width="32" height="32" border="none" />
-                </a>
-            </td>
+                    <img src="images/home.png"  alt="inicio" title="Volver al panel" width="32" height="32" border="none" />                </a>            </td>
           </tr>
           <tr>
-            <td>C&oacute;digo de Orden</td>
-            <td><?php echo($fila0["ord_codigo"]);?></td>
-            <td></td>
+            <td width="157">C&oacute;digo de Orden</td>
+            <td width="309"><?php echo($fila0["ord_codigo"]);?></td>
+            <td rowspan="8" align="center"><img src="images/generarFactura.png" /><br><b>Generar factura</b></br></td>
           </tr>
           <tr>
             <td>Descripci&oacute;n de Orden</td>
             <td><?php echo(nl2br(utf8_encode($fila0["ord_descripcion"])));?></td>
-            <td></td>
           </tr>
           <tr>
             <td>Cliente</td>
             <td>
-                <?php echo($fila1["cli_nombre"]);?>
-            </td>
-            <td></td>
+                <?php echo($fila1["cli_nombre"]);?>            </td>
           </tr>
           <tr>
             <td>Proveedor</td>
             <td>
-                <?php echo($fila2["prv_nombre"]); ?>
-            </td>
-            <td></td>
+                <?php echo($fila2["prv_nombre"]); ?>            </td>
           </tr>
           <tr>
             <td>Estado</td>
             <td>
-                <?php echo(utf8_encode($fila3["est_nombre"])); ?>
-            </td>
-            <td></td>
+                <?php echo(utf8_encode($fila3["est_nombre"])); ?>            </td>
           </tr>
           <tr>
             <td>Plazo de Finalización</td>
-            <td><?php echo(mfecha($fila0["ord_plazo"]));?></td>
-            <td></td>
+            <td><?php echo(tfecha($fila0["ord_plazo"]));?></td>
           </tr>          <tr>
             <td>Valor Costo de la Orden</td>
             <td><?php echo($fila0["ord_costo"]);?></td>
-            <td></td>
-          </tr>          
+            </tr>          
           <tr>
             <td>Valor Venta de la Orden</td>
             <td><?php echo($fila0["ord_venta"]);?></td>
-            <td></td>
           </tr>
           <tr>
-            <td>                
-                <?php 
-                if($est_id == 11){ ?>
-                    <input type="button" value="Generar factura" class="botones" />                
-                 <?php } ?>
-            </td>
-            <td>
-                <a href="lista-ordenes.php"><input type="button" value="Ir al Listado" class="botones" /></a> &nbsp; &nbsp; 
-                <a href="form-edit-ordenes.php?ord_id=<?php echo($ord_id)?>"><input type="button" value="Modificar datos" class="botones" /></a> &nbsp; &nbsp; 
-                <a href="form-alta-ordenes.php"><input type="button" value="Agregar otra orden" class="botones" /></a>
-
-            </td>
+            <td><a href="form-alta-ordenes.php">
+               <input type="button" value="Agregar otra orden" class="botones" />
+            </a></td>
+          <td>&nbsp;&nbsp; 
+                <a href="form-alta-ordenes.php"></a>            <a href="lista-ordenes.php">
+                <input type="button" value="Ir al Listado" class="botones" />
+                </a><a href="form-edit-ordenes.php?ord_id=<?php echo($ord_id)?>">
+                <input type="button" value="Modificar datos" class="botones" />
+                </a></td>
             <td></td>
           </tr>          
           <tr>
@@ -162,7 +147,7 @@
           </tr>
       </table>
       
-      <div class="clear"></div>
+     <div class="clear"></div>
 
    </div>
    <!--end contenedor-->
