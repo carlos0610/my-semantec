@@ -29,15 +29,15 @@ function eliminarProveedor(id,nombre){
 
 
 function disableTxt(formulario,id){
-var check = (id=="S") ? true : false;
+    var check = (id=="S") ? true : false;
 
-var nombre
-if (formulario == 1)
-     nombre = "frmAltaPrv";
-else
-     nombre = "frmEditPrv";
+    var nombre
+    if (formulario == 1)
+        nombre = "frmAltaPrv";
+    else
+        nombre = "frmEditPrv";
 
-if(check){
+    if(check){
         
         //Si seleccionó que 'S' tiene cuenta bancaria, activamos campo de nro de cuenta ,combo Tipo cuenta y campode CBU
         //Como el estado original es disabled, le enviamos un false para activarlos.
@@ -51,7 +51,7 @@ if(check){
         
         
         
-}else{
+    }else{
         document.forms[nombre].cue_nrobancaria.disabled=true;
         document.forms[nombre].cut_id.disabled=true;              //Deshabilitamos combobox Tipo cuenta
         document.forms[nombre].cue_cbu.disabled=true;             //Deshabilitamos campo de texto CBU
@@ -59,8 +59,19 @@ if(check){
         document.forms[nombre].cue_nrobancaria.value="";
         document.forms[nombre].cue_cbu.value="";
         
+    }
+
 }
 
+function ActulizarTotal(cantidadDescripciones){
+    total = 0;
+    numeroDescripcion=0;
+    while(numeroDescripcion < cantidadDescripciones)
+    {
+        numeroDescripcion++;
+        total += parseFloat(document.getElementById("txtTotalItem"+numeroDescripcion).value); 
+    }
+    document.getElementById("total").value =total;  
 }
 
 

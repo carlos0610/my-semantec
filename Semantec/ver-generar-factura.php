@@ -33,9 +33,12 @@
        $fila_datos_cliente = mysql_fetch_array($cliente); 
        mysql_close();
         //$nro = mysql_num_rows($datos_cliente);
+       
+       //+++++configuracion  de descripciones a imprimir en pantalla+++++
+       $numeroDescripcion=0;
+       $totalDescripcion=3;
         
-        
-
+       
 ?>
 <!doctype html>
 <html>  
@@ -137,63 +140,41 @@
 	 <div class="contenido_descripcion"><form><table width="100%" border="0">
   <tr>
     <td>&nbsp;</td>
-    <td><div align="center"><input type="image" src="images/add.png" onclick="addRow('dataTable')"><img src="images/eliminar.png" width="32" height="32"></div></td>
+    <td><div align="center"><input type="hidden" src="images/add.png" onclick="addRow('dataTable')"><img src="images/eliminar.png" width="32" height="32"></div></td>
   </tr>
   <tr>
     <td width="82%" class="titulo"><div align="center">Descripción</div></td>
     <td width="18%" class="titulo"><div align="center">Total</div></td>
   </tr>
+  
+  <?php while($numeroDescripcion < $totalDescripcion){
+      $numeroDescripcion++;
+  ?>
+  
+  
   <tr>
-    <td><label>
-      
+    <td><label>   
         <div align="left">
-          <input name="txtDescripcionItem" type="text" id="txtDescripcionItem" size="110">
+          <input name="txtDescripcionItem<?php echo($numeroDescripcion);?>" type="text" id="txtDescripcionItem<?php echo($numeroDescripcion);?>" size="110">
         </div>
     </label></td>
     <td><label>
       <div align="center">
-        <input type="text" name="txtTotalItem" id="txtTotalItem">
+        <input type="text" align="left" name="txtTotalItem<?php echo($numeroDescripcion);?>" id="txtTotalItem<?php echo($numeroDescripcion);?>" value="0.00" onChange="return ActulizarTotal(<?php echo($totalDescripcion);?>);" >
         </div>
     </label></td>
   </tr>
-  <tr>
-    <td><input name="txtDescripcionItem2" type="text" id="txtDescripcionItem2" size="110"></td>
+  <?php } ?>
+  
+
+    <tr>
+    <td>TOTAL</td>
+    
     <td><div align="center">
-      <input type="text" name="txtTotalItem2" id="txtTotalItem2">
+      <input type="text" name="total" id="total" value="0.00">
     </div></td>
   </tr>
-  <tr>
-    <td><input name="txtDescripcionItem3" type="text" id="txtDescripcionItem3" size="110"></td>
-    <td><div align="center">
-      <input type="text" name="txtTotalItem3" id="txtTotalItem3">
-    </div></td>
-  </tr>
-  <tr>
-    <td><input name="txtDescripcionItem4" type="text" id="txtDescripcionItem4" size="110"></td>
-    <td><div align="center">
-      <input type="text" name="txtTotalItem4" id="txtTotalItem4">
-    </div></td>
-  </tr>
-  <tr>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-  </tr>
+  
 </table>
 	 </form>
 </div>

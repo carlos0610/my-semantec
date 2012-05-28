@@ -68,3 +68,4 @@ function VerificarProveedor(){
  url = "esProveedorSinAsignar.php?usuario=" + usuario;
  leer_doc(url);
 }
+
