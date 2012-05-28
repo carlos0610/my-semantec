@@ -98,7 +98,7 @@
           <tr>
             <td width="157">C&oacute;digo de Orden</td>
             <td width="309"><?php echo($fila0["ord_codigo"]);?></td>
-            <td rowspan="8" align="center"><img src="images/generarFactura.png" /><br><b>Generar factura</b></br></td>
+            <td rowspan="8" align="center"><a href="ver-generar-factura.php?ord_id=<?php echo($ord_id)?>"><img src="images/generarFactura2.png" /></a><br><b>Generar factura</b></br></td>
           </tr>
           <tr>
             <td>Descripci&oacute;n de Orden</td>
