@@ -30,12 +30,4 @@ if ($num_rows>0) {
     echo("<?xml version=\"1.0\" ?><existe>false</existe>");
 }
 
-
-
-
-
-
-
-
-//header("location:ver-alta-ordenes.php?action=1");
 ?>

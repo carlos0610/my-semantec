@@ -12,9 +12,9 @@
         $resultado0 = mysql_query($sql0);
         $fila0 = mysql_fetch_array($resultado0);
 
-        $sql = "SELECT  cli_id, cli_nombre FROM clientes";
+        $sql = "SELECT  cli_id, cli_nombre FROM clientes WHERE estado=1";
         $resultado1 = mysql_query($sql);
-        $sql = "SELECT  prv_id, prv_nombre FROM proveedores";
+        $sql = "SELECT  prv_id, prv_nombre FROM proveedores WHERE estado=1";
         $resultado2 = mysql_query($sql);
         $sql = "SELECT  est_id, est_nombre, est_color FROM estados";
         $resultado3 = mysql_query($sql);
@@ -110,7 +110,7 @@
           <tr>
             <td>Proveedor</td>
             <td>
-                <select name="prv_id" id="prv_id" class="campos">
+                <select name="prv_id" id="prv_id" class="campos" onChange="return VerificarProveedor();">
     <?php
           while($fila2 = mysql_fetch_array($resultado2)){
     ?>
@@ -127,7 +127,8 @@
             <td>
                  <?php echo(utf8_encode($fila4["est_nombre"])); ?> 
                 <input type="hidden" value="<?php echo($est_id); ?>" name="est_id" id="est_id" />
-                <a href="form-alta-ordenes-detalle.php?ord_id=<?php echo($ord_id); ?>"><input type="button" value="Cambiar" class="botones" /></a> &nbsp; &nbsp; 
+                <a href="form-alta-ordenes-detalle.php?ord_id=<?php echo($ord_id); ?>"><input type="button" value="Cambiar" class="botones" id="botonAgregar" style="visibility:<?php if($fila0["prv_id"]==1){echo "hidden";}else{ echo "visible";} ?>" />
+                </a> &nbsp; &nbsp; 
             </td>
             <td></td>
           </tr>
@@ -147,6 +148,7 @@
           <tr>
             <td>&nbsp;</td>
             <td>
+                <a href="lista-ordenes.php"><input type="button" value="Ir al Listado" class="botones" /></a> &nbsp; &nbsp; 
                 <input type="reset" value="Restablecer" class="botones" /> &nbsp; &nbsp; 
                 <input type="submit" value="Modificar Orden" class="botones" />
                 <input type="hidden" value="<?php echo($ord_id); ?>" name="ord_id" id="ord_id" />

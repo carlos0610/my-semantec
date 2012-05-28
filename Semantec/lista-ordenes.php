@@ -81,10 +81,11 @@
           </tr>
   <?php
           while($fila = mysql_fetch_array($resultado)){
+              //echo($fila["ord_alta"]);
   ?>
           <tr class="lista" bgcolor="<?php echo($colores[$i]);?>">
             <td><?php echo($fila["ord_codigo"]);?></td>
-            <td><?php echo($fila["ord_alta"]);?></td>
+            <td><?php echo(tfecha($fila["ord_alta"]));?></td>
             <td><?php echo($fila["cli_nombre"]);?></td>
             <td><?php echo(nl2br(utf8_encode($fila["ord_descripcion"])));?></td>
             <td><?php echo($fila["prv_nombre"]);?></td>

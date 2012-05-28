@@ -151,7 +151,7 @@
           ?>
                     <tr class="lista" bgcolor="<?php echo($colores2[$j]);?>">
                       <td width="600"><?php echo(utf8_encode($fila_req["ord_det_descripcion"])); ?></td>
-                      <td width="100"><?php echo($fila_req["ord_det_fecha"]); ?></td>
+                      <td width="100"><?php echo(tfecha($fila_req["ord_det_fecha"])); ?></td>
                       <td width="100"><?php echo(utf8_encode($fila_req["nombre_estado"])); ?></td>
                       <td width="100"><?php echo(utf8_encode($fila_req["usu_nombre"])); ?></td>
                       <?php //echo(utf8_encode($fila_req["files_id"]));

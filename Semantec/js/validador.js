@@ -29,19 +29,21 @@ function leer_doc(url) {
 }
 
 function procesarRespuesta(){
+    //NOTA: para q funcione correctamente no olvidarse q deben existir los id
  respuesta = req.responseXML;
  var existe = respuesta.getElementsByTagName('existe').item(0).firstChild.data;
    if (existe=="true")
-   {
-    document.getElementById("error").style.visibility = "visible";
+   { 
     document.getElementById("botonAgregar").style.visibility = "hidden";
+    document.getElementById("error").style.visibility = "visible";   
    }
    else
-       {
-            document.getElementById("error").style.visibility = "hidden";
-            document.getElementById("botonAgregar").style.visibility = "visible";
-       }
+   {
+     document.getElementById("botonAgregar").style.visibility = "visible";
+     document.getElementById("error").style.visibility = "hidden";
+   }
 }
+
 // Funciones llamdas del Form
 function autentica(){
  usuario = document.getElementById("ord_codigo").value;
@@ -58,5 +60,11 @@ function autenticaCUIT(){
 function autenticaClienteCUIT(){
  usuario = document.getElementById("cli_cuit").value;
  url = "existeNumeroCuitCliente.php?usuario=" + usuario;
+ leer_doc(url);
+}
+
+function VerificarProveedor(){
+ usuario = document.getElementById("prv_id").value;
+ url = "esProveedorSinAsignar.php?usuario=" + usuario;
  leer_doc(url);
 }

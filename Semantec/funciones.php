@@ -15,4 +15,9 @@
 			$salida = substr($fecha, -2)."/".substr($fecha, 5,2)."/".substr($fecha, 0,4);
 			return $salida;
 		}
+                function tfecha($fecha){
+			//2012-04-04 00:00:00-> 04/04/2012
+			$salida = substr($fecha, 8,2)."/".substr($fecha, 5,2)."/".substr($fecha, 0,4);
+			return $salida;
+		}
 ?>
