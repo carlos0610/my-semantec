@@ -134,7 +134,7 @@
           </tr>
           <tr>
             <td>Plazo de Finalización</td>
-            <td><input type="text" value="<?php echo(mfecha($fila0["ord_plazo"])); ?>" class="campos" id="ord_plazo" name="ord_plazo" /></td>
+            <td><input type="text" value="<?php echo(tfecha($fila0["ord_plazo"])); ?>" class="campos" id="ord_plazo" name="ord_plazo" /></td>
             <td></td>
           </tr>          <tr>
             <td>Valor Costo de la Orden</td>
