@@ -97,7 +97,7 @@
       <table class="forms" cellpadding="5">
           <tr class="titulo">
             <td colspan="2" align="center"> <?php echo($titulo)?> </td>
-            <td width="89" align="center">
+            <td width="39" align="center">
                 <a href="index-admin.php">
                     <img src="images/home.png"  alt="inicio" title="Volver al panel" width="32" height="32" border="none" />                </a>            </td>
           </tr>
@@ -137,15 +137,20 @@
             <td><?php echo($fila0["ord_venta"]);?></td>
           </tr>
           <tr>
-            <td><a href="form-alta-ordenes.php">
-               <input type="button" value="Agregar otra orden" class="botones" />
-            </a></td>
+            <td>
+                
+            </td>
           <td>&nbsp;&nbsp; 
-                <a href="form-alta-ordenes.php"></a>            <a href="lista-ordenes.php">
+                <a href="form-alta-ordenes.php">
+               <input type="button" value="Agregar otra orden" class="botones" />
+                </a>            
+                <a href="lista-ordenes.php">
                 <input type="button" value="Ir al Listado" class="botones" />
-                </a><a href="form-edit-ordenes.php?ord_id=<?php echo($ord_id)?>">
+                </a>
+                <a href="form-edit-ordenes.php?ord_id=<?php echo($ord_id)?>">
                 <input type="button" value="Modificar datos" class="botones" />
-                </a></td>
+                </a>
+          </td>
             <td></td>
           </tr>          
           <tr>

@@ -84,7 +84,7 @@
             <td>C&oacute;digo de Orden</td>
             <td>
                 <?php echo($fila0["ord_codigo"]); ?>
-                <input type="hidden" value="<?php echo($fila0["ord_codigo"]); ?>" class="campos" id="ord_codigo" name="ord_codigo" min="0" required/></td>
+                <input type="hidden" value="<?php echo($fila0["ord_codigo"]); ?>" class="campos" style="text-align:right" id="ord_codigo" name="ord_codigo" min="0" required/></td>
             <td></td>
           </tr>
           <tr>
@@ -138,11 +138,11 @@
             <td></td>
           </tr>          <tr>
             <td>Valor Costo de la Orden</td>
-            <td><input type="number" value="<?php echo($fila0["ord_costo"]); ?>" class="campos" id="ord_costo" name="ord_costo" required /></td>
+            <td><input type="number" style="text-align:right" value="<?php echo($fila0["ord_costo"]); ?>" class="campos" id="ord_costo" name="ord_costo" required /></td>
             <td></td>
           </tr>          <tr>
             <td>Valor Venta de la Orden</td>
-            <td><input type="number" value="<?php echo($fila0["ord_venta"]); ?>" class="campos" id="ord_venta" name="ord_venta"  required/></td>
+            <td><input type="number" style="text-align:right" value="<?php echo($fila0["ord_venta"]); ?>" class="campos" id="ord_venta" name="ord_venta"  required/></td>
             <td></td>
           </tr>
           <tr>

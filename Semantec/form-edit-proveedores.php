@@ -113,7 +113,7 @@
           </tr>
           <tr>
             <td>CUIT</td>
-            <td><input value="<?php echo($fila0["prv_cuit"]); ?>" type="number" maxlength="11" class="campos" id="prv_cuit" name="prv_cuit" required/></td>
+            <td><input value="<?php echo($fila0["prv_cuit"]); ?>" style="text-align:right" type="number" maxlength="11" class="campos" id="prv_cuit" name="prv_cuit" required/></td>
             <td></td>
           </tr>
           <tr>
@@ -168,30 +168,30 @@
           </tr>
           <tr>
             <td>Tel&eacute;fono</td>
-            <td><input type="text" value="<?php echo($fila0["prv_telefono"]); ?>" class="campos" id="prv_telefono" name="prv_telefono" /></td>
+            <td><input type="text" style="text-align:right" value="<?php echo($fila0["prv_telefono"]); ?>" class="campos" id="prv_telefono" name="prv_telefono" /></td>
             <td></td>
           </tr>
           <tr>
             <td>Fax</td>
             <td>
-            <input type="text" value="<?php echo($fila0["prv_fax"]); ?>" class="campos" id="prv_fax" name="prv_fax" />
+            <input type="text" style="text-align:right" value="<?php echo($fila0["prv_fax"]); ?>" class="campos" id="prv_fax" name="prv_fax" />
             </td>
             <td></td>
           </tr>
           <tr>
             <td>Cel</td>
-            <td><input type="text" value="<?php echo($fila0["prv_cel"]); ?>" class="campos" id="prv_cel" name="prv_cel" /></td>
+            <td><input type="text" style="text-align:right" value="<?php echo($fila0["prv_cel"]); ?>" class="campos" id="prv_cel" name="prv_cel" /></td>
          <td></td>
           </tr>
           <tr>
             <td>Alternativo</td>
-            <td><input type="text" value="<?php echo($fila0["prv_alternativo"]); ?>" class="campos" id="prv_alternativo" name="prv_alternativo" /></td>
+            <td><input type="text" style="text-align:right" value="<?php echo($fila0["prv_alternativo"]); ?>" class="campos" id="prv_alternativo" name="prv_alternativo" /></td>
             </td>
             <td></td>
           </tr>
           <tr>
             <td>Urgencia</td>
-            <td><input type="text" value="<?php echo($fila0["prv_urgencia"]); ?>" class="campos" id="prv_urgencia" name="prv_urgencia" />
+            <td><input type="text" style="text-align:right" value="<?php echo($fila0["prv_urgencia"]); ?>" class="campos" id="prv_urgencia" name="prv_urgencia" />
             </td>
             <td></td>
           </tr>
@@ -215,7 +215,7 @@
           </tr>
           <tr>
             <td>Nro.Cuenta bancaria</td>
-            <td><input type="text" class="campos" id="cue_nrobancaria" name="cue_nrobancaria" value="<? if($filas>0) 
+            <td><input type="text" style="text-align:right" class="campos" id="cue_nrobancaria" name="cue_nrobancaria" value="<? if($filas>0) 
                                                                                                     echo $fila_banco["cue_nrobancaria"];
                                                                                                         
                                                                                                         ?>" <? if($filas==0)
@@ -242,7 +242,7 @@
           </tr>
           <tr>
             <td>CBU</td>
-            <td><input type="text" class="campos" id="cue_cbu" name="cue_cbu" value="<? if($filas>0){ 
+            <td><input type="text" style="text-align:right" class="campos" id="cue_cbu" name="cue_cbu" value="<? if($filas>0){ 
                                                                                                    echo $fila_banco["cue_cbu"];
                                                                                                    }?>" <? if($filas==0)
                                                                                                             echo " disabled";?>/></td>
