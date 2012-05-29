@@ -31,7 +31,6 @@
     //$fecha  = 'NOW()';
     $estado = 1;
     $idFile = -1;
-    
     if($_FILES['userfile']['size']>0){      //SI ELIGIO UN ARCHIVO
         
                                 $fileName = $_FILES['userfile']['name'];
@@ -53,7 +52,6 @@
         "VALUES ('$fileName', '$fileSize', '$fileType', '$content','detalles_ordenes')";
 
         mysql_query($sql_file);
-        echo "<br>File $fileName uploaded<br>";
         $idFile = mysql_insert_id();
         
                                                         }
@@ -64,27 +62,22 @@
     else
     $query = "INSERT INTO factura_venta (ord_id,fav_fecha,estado) VALUES ($idOrden,NOW(),1)";
         //$query = "CALL usp_registrar_factura($idFile,$idOrden,NOW(),$estado,$adjunta)";
-        $inserto = mysql_query($query);
-        echo "EL QUERY ES: ".$query;
-        if ($inserto)
-            echo "INSERTO PROCEDURO";
-        else
-            echo "INSERTO PROCEDURO";
-        
+        $inserto = mysql_query($query);      
         $nro_factura = mysql_insert_id();
         
        echo "ITEMS : ".$items; 
        
-       $i=0;
+       $i=1;
         do{
-            $columnaDesc = "txtDescripcion".$i;
-            $columnaPrec = "txtPrecio".$i;
+            $columnaDesc = "txtDescripcionItem".$i;
+            $columnaPrec = "txtTotalItem".$i;
             $descripcion = $_POST[$columnaDesc];
             $precio = $_POST[$columnaPrec];    
-            $query = "INSERT INTO detalle_factura_venta (iva_idiva,factura_venta_fav_id,det_fav_descripcion,det_fav_precio) VALUES (2,$nro_factura,$descripcion,$precio)";
+            $query = "INSERT INTO detalle_factura_venta (fav_id,iva_idiva,det_fav_descripcion,det_fav_precio) VALUES ($nro_factura,2,'$descripcion',$precio)";
             mysql_query($query);
+            echo  $query;
             $i++;
-        }while($i < $items);
+        }while($i <= $items);
         
 
             //$sth = $dbh->prepare('CALL usp_registrar_factura(?,?,?,?,?)');

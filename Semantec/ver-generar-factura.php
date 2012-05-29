@@ -81,26 +81,26 @@
    <table width="100%" border="0">
   <tr>
     <td rowspan="3"><a href="#" id="logo2"><img src="images/semantec-logo.jpg" width="401" height="71" alt="logo" /></a></td>
-    <td width="51%" class="titulo">FACTURA N° 0001- xxxx-xxxx</td>
+    <td width="51%" class="titulo"><span id="ocultarParaImpresion">FACTURA N° 0001- </span> xxxx-xxxx</td>
     <td width="1%">&nbsp;</td>
   </tr>
   <tr>
-    <td class="titulo">Buenos Aires , <?php echo date("d/m/Y") ?></td>
+    <td class="titulo"><span id="ocultarParaImpresion">Buenos Aires,</span> <?php echo date("d/m/Y") ?></td>
     <td>&nbsp;</td>
   </tr>
   <tr>
-    <td class="titulo">CUIT: 30-70877618-8</td>
+    <td class="titulo"><span id="ocultarParaImpresion">CUIT: 30-70877618-8</span></td>
     <td>&nbsp;</td>
   </tr>
   <tr>
-    <td class="titulo"> <div align="center">Dr. Aleu 3139 (1651) - 1er piso of 11 - San Andrés <br>
+    <td class="titulo"> <div id="ocultarParaImpresion" align="center">Dr. Aleu 3139 (1651) - 1er piso of 11 - San Andrés <br>
       Provincia de Buenos Aires</div></td>
-    <td class="titulo">Ing.Brutos : 902-820067 -3</td>
+    <td class="titulo"><span id="ocultarParaImpresion">Ing.Brutos : 902-820067 -3</span></td>
     <td rowspan="2">&nbsp;</td>
   </tr>
   <tr>
-    <td class="titulo"><div align="center"><strong>I.V.A Responsable inscripto</strong></div></td>
-    <td bgcolor="#F0F0F0" class="titulo">Inicio de actividades: 01/06/2004</td>
+    <td class="titulo"><div align="center" id="ocultarParaImpresion"><strong>I.V.A Responsable inscripto</strong></div></td>
+    <td bgcolor="#F0F0F0" class="titulo"><span id="ocultarParaImpresion">Inicio de actividades: 01/06/2004</span></td>
   </tr>
 </table>
 
@@ -143,7 +143,9 @@
        
    <!-- DESCRIPCION DE FACTURA  -->
    
-	 <div class="contenido_descripcion"><form><table width="100%" border="0">
+<div class="contenido_descripcion">
+  <form name="frmGenerarFactura" method="post" enctype="multipart/form-data" action="alta-factura.php?ord_id=<?php echo $ord_id ?>&items=<?php echo $totalDescripcion?>">
+  <table width="100%" border="0">
   <tr>
     <td>&nbsp;</td>
     <td><div align="center"><input type="hidden" src="images/add.png" onClick="addRow('dataTable')"><img src="images/eliminar.png" width="32" height="32"></div></td>
@@ -174,9 +176,9 @@
   
 
 </table>
-	 </form>
-</div><div id="footer_factura.php">
-  <form name="frmGenerarFactura" method="post" enctype="multipart/form-data" action="alta-factura.php?ord_id=<?php echo $ord_id ?>&items=<?php echo $totalDescripcion?>">
+
+</div><div id="footer_factura">
+  
   <table width="100%" border="0">
     <tr>
       <td width="12%">VENCIMIENTO: <?php echo $ord_id ?></td>
@@ -232,7 +234,7 @@
       <td>&nbsp;</td>
     </tr>
   </table>
-  </form>
+</form>
 </div>
 
    </div>
