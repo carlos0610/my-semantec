@@ -180,7 +180,7 @@
       <td width="39%"><div align="right">SUBTOTAL:</div></td>
       <td width="18%"><label>
         <div align="center">
-          <input type="text" name="txtSubtotal" id="txtSubtotal">
+          <input type="text" name="txtSubtotal" id="txtSubtotal" readonly>
           </div>
       </label></td>
     </tr>
@@ -192,7 +192,7 @@
       <td><div align="right">I.V.A INSCRIP.........%</div></td>
       <td><label>
         <div align="center">
-          <input type="text" name="txtIva_Ins" id="txtIva_Ins">
+          <input type="text" name="txtIva_Ins" id="txtIva_Ins" readonly>
           </div>
       </label></td>
     </tr>
@@ -200,14 +200,16 @@
       <td><div align="right">I.V.A NO INSCRIP.........%</div></td>
       <td><label>
         <div align="center">
-          <input type="text" name="txtIva_No" id="txtIva_No">
+          <input type="text" name="txtIva_No" id="txtIva_No" readonly>
           </div>
       </label></td>
     </tr>
     <tr>
       <td><div align="right">TOTAL</div></td>
       <td><label>
-        <input type="text" name="txtTotalFactura" id="txtTotalFactura">
+        <div align="center">
+          <input type="text" name="txtTotalFactura" id="txtTotalFactura" readonly>
+          </div>
       </label></td>
     </tr>
   </table>
