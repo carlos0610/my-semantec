@@ -75,7 +75,7 @@
         if ($idFile == -1)  {
         $sql2 =  "INSERT INTO ordenes_detalle (ord_det_descripcion,ord_det_monto,ord_id,ord_det_fecha,usu_nombre,estado,nombre_estado) VALUES 
                                                         ('$ord_descripcion',
-                                                        $ord_det_monto,
+                                                        0,
                                                         $ord_id,
                                                         NOW(),
                                                         '$usu_nombre',
@@ -99,10 +99,10 @@
                                                 }
  
         mysql_query($sql2);
-        
+        echo $sql2;
 	$_SESSION["ord_id"] = $ord_id;
         $_SESSION["query"] = $sql2;
         mysql_close();
-	header("location:ver-alta-ordenes.php?action=1");
+//	header("location:ver-alta-ordenes.php?action=1");
 
 ?>

@@ -6,7 +6,8 @@
   <![endif]-->
 
 <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon"/> 
-<link rel="stylesheet" type="text/css" href="css/estilos.css"/>
+<link rel="stylesheet" type="text/css" media="screen"  href="css/estilos.css"/>
+<link href="css/impresion.css" media="print" rel="stylesheet" type="text/css" />
 <link type="text/css" href="css/css3.css" rel="stylesheet" />
 <script type="text/javascript" src="js/funciones.js"></script>
 <script type="text/javascript" src="js/validador.js"></script>
