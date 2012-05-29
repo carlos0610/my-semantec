@@ -69,7 +69,7 @@
           </tr>
           <tr>
             <td>C&oacute;digo de Orden</td>
-            <td><input type="number" align="right" style="text-align:right" class="campos" id="ord_codigo" name="ord_codigo" required min="0" onChange="return autentica();" />
+            <td><input type="number"  style="text-align:right" class="campos" id="ord_codigo" name="ord_codigo" required min="0" onChange="return autentica();" />
                 <span id="error" style="font-family: Verdana, Arial, Helvetica,sans-serif;font-size: 9pt;color: #CC3300;position:relative;visibility:hidden;">N° Repetido</span>
             </td>
             <td></td>

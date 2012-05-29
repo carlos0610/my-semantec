@@ -158,12 +158,12 @@
   <tr>
     <td><label>   
         <div align="left">
-          <input name="txtDescripcionItem<?php echo($numeroDescripcion);?>" type="text" id="txtDescripcionItem<?php echo($numeroDescripcion);?>" size="110">
+          <input name="txtDescripcionItem<?php echo($numeroDescripcion);?>"  type="text" id="txtDescripcionItem<?php echo($numeroDescripcion);?>" size="110">
         </div>
     </label></td>
     <td><label>
       <div align="center">
-        <input type="text" align="left" name="txtTotalItem<?php echo($numeroDescripcion);?>" id="txtTotalItem<?php echo($numeroDescripcion);?>" value="0.00" onChange="return ActualizarTotal(<?php echo($totalDescripcion);?>);" >
+        <input type="text" align="left" name="txtTotalItem<?php echo($numeroDescripcion);?>" style="text-align:right"  id="txtTotalItem<?php echo($numeroDescripcion);?>" value="0.00" onChange="return ActualizarTotal(<?php echo($totalDescripcion);?>);" >
         </div>
     </label></td>
   </tr>
@@ -180,7 +180,7 @@
       <td width="39%"><div align="right">SUBTOTAL:</div></td>
       <td width="18%"><label>
         <div align="center">
-          <input type="text" name="txtSubtotal" id="txtSubtotal" readonly>
+          <input type="text" name="txtSubtotal" style="text-align:right" value="0.00" id="txtSubtotal" readonly>
           </div>
       </label></td>
     </tr>
@@ -192,7 +192,7 @@
       <td><div align="right">I.V.A INSCRIP.........%</div></td>
       <td><label>
         <div align="center">
-          <input type="text" name="txtIva_Ins" id="txtIva_Ins" readonly>
+          <input type="text" style="text-align:right" value="0.00"  name="txtIva_Ins" id="txtIva_Ins" readonly>
           </div>
       </label></td>
     </tr>
@@ -200,7 +200,7 @@
       <td><div align="right">I.V.A NO INSCRIP.........%</div></td>
       <td><label>
         <div align="center">
-          <input type="text" name="txtIva_No" id="txtIva_No" readonly>
+          <input type="text" style="text-align:right" value="0.00"  name="txtIva_No" id="txtIva_No" readonly>
           </div>
       </label></td>
     </tr>
@@ -208,7 +208,7 @@
       <td><div align="right">TOTAL</div></td>
       <td><label>
         <div align="center">
-          <input type="text" name="txtTotalFactura" id="txtTotalFactura" readonly>
+          <input type="text" style="text-align:right" value="0.00"  name="txtTotalFactura" id="txtTotalFactura" readonly>
           </div>
       </label></td>
     </tr>
