@@ -176,10 +176,10 @@
 </table>
 	 </form>
 </div><div id="footer_factura.php">
-  <form name="frmGenerarFactura" method="post" enctype="multipart/form-data" action="alta-factura.php">
+  <form name="frmGenerarFactura" method="post" enctype="multipart/form-data" action="alta-factura.php?ord_id=<?php echo $ord_id ?>&items=<?php echo $totalDescripcion?>">
   <table width="100%" border="0">
     <tr>
-      <td width="12%">VENCIMIENTO: </td>
+      <td width="12%">VENCIMIENTO: <?php echo $ord_id ?></td>
       <td width="31%">&nbsp;</td>
       <td width="39%"><div align="right">SUBTOTAL:</div></td>
       <td width="18%"><label>
@@ -219,16 +219,16 @@
     <tr>
       <td>&nbsp;</td>
       <td colspan="2"><div align="center">
-        <label>
-        <input type="submit" name="btnConfirma" id="btnConfirma" value="Confirmar">
-        </label>
+        Adjuntar archivo <input type="file" class="" id="userfile" name="userfile" />
       </div></td>
       <td>&nbsp;</td>
     </tr>
     <tr>
       <td>&nbsp;</td>
       <td>&nbsp;</td>
-      <td>&nbsp;</td>
+      <td><input type="submit" name="btnConfirma" id="btnConfirma" value="Confirmar">
+          <input type="hidden" name="accion" id="id" value=<?php ?>>
+      </td>
       <td>&nbsp;</td>
     </tr>
   </table>
