@@ -113,19 +113,19 @@
             <td class="titulo">Domiclio:</td>
             <td width="24%" style="background-color:#cbeef5"><?php echo $fila_datos_cliente["cli_direccion"]?></td>
             <td width="9%" class="titulo">Localidad:</td>
-            <td width="52%"><?php echo $fila_datos_cliente["zon_nombre"]?></td>
+            <td width="52%" style="background-color:#cbeef5"><?php echo $fila_datos_cliente["zon_nombre"]?></td>
        </tr>
           <tr>
             <td class="titulo">IVA:</td>
-            <td><?php echo $fila_datos_cliente["iva_nombre"]?></td>
+            <td style="background-color:#cbeef5"><?php echo $fila_datos_cliente["iva_nombre"]?></td>
             <td class="titulo">Cuit:</td>
-            <td>&nbsp;</td>
+            <td style="background-color:#cbeef5">&nbsp;</td>
           </tr>
           <tr>
             <td class="titulo">Condiciones de venta:</td>
-            <td>&nbsp;</td>
+            <td style="background-color:#cbeef5">&nbsp;</td>
             <td class="titulo">Remito:</td>
-            <td>
+            <td style="background-color:#cbeef5">
               <input name="txtRemito" type="text" id="txtRemito" size="12">
             </td>
           </tr>
@@ -211,6 +211,21 @@
           <input type="text" style="text-align:right" value="0.00"  name="txtTotalFactura" id="txtTotalFactura" readonly>
           </div>
       </label></td>
+    </tr>
+    <tr>
+      <td>&nbsp;</td>
+      <td colspan="2"><div align="center">
+        <label>
+        <input type="submit" name="btnConfirma" id="btnConfirma" value="Confirmar">
+        </label>
+      </div></td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
     </tr>
   </table>
 </div>
