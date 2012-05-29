@@ -69,7 +69,7 @@
           </tr>
           <tr>
             <td>C&oacute;digo de Orden</td>
-            <td><input type="number" align="right" class="campos" id="ord_codigo" name="ord_codigo" required min="0" onChange="return autentica();" />
+            <td><input type="number" align="right" style="text-align:right" class="campos" id="ord_codigo" name="ord_codigo" required min="0" onChange="return autentica();" />
                 <span id="error" style="font-family: Verdana, Arial, Helvetica,sans-serif;font-size: 9pt;color: #CC3300;position:relative;visibility:hidden;">N° Repetido</span>
             </td>
             <td></td>
@@ -124,12 +124,12 @@
             <td></td>
           </tr>          <tr>
             <td>Valor Costo de la Orden</td>
-            <td><input type="number" class="campos" id="ord_costo" name="ord_costo" value="0"  min="0" required /></td>
+            <td><input type="number" style="text-align:right" class="campos" id="ord_costo" name="ord_costo" value="0"  min="0" required /></td>
             <td></td>
           </tr>          
           <tr>
             <td>Valor Venta de la Orden</td>
-            <td><input type="number" class="campos" id="ord_venta" name="ord_venta" value="0"  min="0" required /></td>
+            <td><input type="number" style="text-align:right" class="campos" id="ord_venta" name="ord_venta" value="0"  min="0" required /></td>
             <td></td>
           </tr>
           <tr>

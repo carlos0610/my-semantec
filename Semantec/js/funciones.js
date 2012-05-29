@@ -70,15 +70,18 @@ function ActualizarTotal(cantidadDescripciones){
     
     while(numeroDescripcion < cantidadDescripciones)
     {
+        
         numeroDescripcion++;
         subtotal += parseFloat(document.getElementById("txtTotalItem"+numeroDescripcion).value); 
     }
-    document.getElementById("txtSubTotal").value = subtotal;
+    alert("hola");
+    document.getElementById("txtSubtotal").value = subtotal;
     
     total_iva = subtotal * iva;
     
     document.getElementById("txtIva_Ins").value = total_iva;
-    document.getElementById("txtTotalFactura").value = total_iva + subtotal
+    
+    document.getElementById("txtTotalFactura").value = total_iva + subtotal;
 }
 
 

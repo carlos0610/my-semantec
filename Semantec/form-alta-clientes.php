@@ -88,7 +88,7 @@
           <tr>
             <td>CUIT</td>
             <td>
-                <input type="number" min="10000000000" class="campos" id="cli_cuit" name="cli_cuit" maxlength="11" onChange="return autenticaClienteCUIT();"  required />
+                <input type="number" style="text-align:right" min="10000000000" class="campos" id="cli_cuit" name="cli_cuit" maxlength="11" onChange="return autenticaClienteCUIT();"  required />
                 <span id="error" style="font-family: Verdana, Arial, Helvetica,sans-serif;font-size: 9pt;color: #CC3300;position:relative;visibility:hidden;">N° Repetido</span>
             </td>
             <td></td>
@@ -130,7 +130,7 @@
           </tr>
           <tr>
             <td>Tel&eacute;fono</td>
-            <td><input type="text" class="campos" id="cli_telefono" name="cli_telefono" required/></td>
+            <td><input type="text" class="campos" id="cli_telefono" name="cli_telefono" style="text-align:right" required/></td>
             <td></td>
           </tr>
           <tr>

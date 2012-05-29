@@ -116,7 +116,7 @@
           </tr>
           <tr>
             <td>Adelanto</td>
-            <td><input type="number" class="campos" id="ord_det_monto" name="ord_det_monto" min="0" required value="0"/></td>
+            <td><input type="number" class="campos" id="ord_det_monto" name="ord_det_monto" min="0" required value="0" style="text-align:right" /></td>
             <td></td>
           </tr>
           <tr>

@@ -87,7 +87,7 @@
           <tr>
             <td>CUIT</td>
             <td>
-                <input type="number" min="10000000000" class="campos" id="prv_cuit" name="prv_cuit" maxlength="11" onChange="return autenticaCUIT();" required/>
+                <input type="number" min="10000000000" style="text-align:right" class="campos" id="prv_cuit" name="prv_cuit" maxlength="11" onChange="return autenticaCUIT();" required/>
                 <span id="error" style="font-family: Verdana, Arial, Helvetica,sans-serif;font-size: 9pt;color: #CC3300;position:relative;visibility:hidden;">N° Repetido</span>
             </td>
             <td></td>
@@ -144,27 +144,27 @@
           </tr>
           <tr>
             <td>Tel&eacute;fono</td>
-            <td><input type="tel" class="campos" id="prv_telefono" name="prv_telefono" required/></td>
+            <td><input type="tel" style="text-align:right" class="campos" id="prv_telefono" name="prv_telefono" required/></td>
             <td></td>
           </tr>
           <tr>
             <td>Fax</td>
-            <td><input type="text" class="campos" id="prv_fax" name="prv_fax" /></td>
+            <td><input type="text" style="text-align:right" class="campos" id="prv_fax" name="prv_fax" /></td>
             <td></td>
           </tr>
           <tr>
             <td>Cel</td>
-            <td><input type="tel" class="campos" id="prv_cel" name="prv_cel" /></td>
+            <td><input type="tel" style="text-align:right" class="campos" id="prv_cel" name="prv_cel" /></td>
             <td></td>
           </tr>
           <tr>
             <td>Alternativo</td>
-            <td><input type="text" class="campos" id="prv_alternativo" name="prv_alternativo" /></td>
+            <td><input type="text" style="text-align:right" class="campos" id="prv_alternativo" name="prv_alternativo" /></td>
             <td></td>
           </tr>
           <tr>
             <td>Urgencia</td>
-            <td><input type="text" class="campos" id="prv_urgencia" name="prv_urgencia" /></td>
+            <td><input type="text" style="text-align:right" class="campos" id="prv_urgencia" name="prv_urgencia" /></td>
             <td></td>
           </tr>
           <tr>
@@ -184,7 +184,7 @@
           </tr>
           <tr>
             <td>Nro.Cuenta bancaria</td>
-            <td><input type="text" class="campos" id="cue_nrobancaria" name="cue_nrobancaria" disabled/></td>
+            <td><input type="text" style="text-align:right" class="campos" id="cue_nrobancaria" name="cue_nrobancaria" disabled/></td>
             <td></td>
           </tr>
           <tr>
@@ -202,7 +202,7 @@
           </tr>
           <tr>
             <td>CBU</td>
-            <td><input type="text" class="campos" id="cue_cbu" name="cue_cbu" disabled/></td>
+            <td><input type="text" style="text-align:right" class="campos" id="cue_cbu" name="cue_cbu" disabled/></td>
             <td></td>
           </tr> 
           <tr>
