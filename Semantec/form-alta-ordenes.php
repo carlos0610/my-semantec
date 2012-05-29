@@ -57,7 +57,7 @@
 
       <h2>Panel de control</h2>
 
-      <form action="alta-ordenes.php" method="post" enctype="multipart/form-data" >
+      <form action="alta-ordenes.php" method="post" enctype="multipart/form-data" enctype="multipart/form-data" >
       <table class="forms" cellpadding="5">
           <tr class="titulo">
             <td colspan="2"> <?php echo($titulo)?> </td>

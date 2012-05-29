@@ -37,6 +37,9 @@
        //+++++configuracion  de descripciones a imprimir en pantalla+++++
        $numeroDescripcion=0;
        $totalDescripcion=5;
+       
+       
+       $_SESSION["ord_id"] = $ord_id;
         
        
 ?>
@@ -173,6 +176,7 @@
 </table>
 	 </form>
 </div><div id="footer_factura.php">
+  <form name="frmGenerarFactura" method="post" enctype="multipart/form-data" action="alta-factura.php">
   <table width="100%" border="0">
     <tr>
       <td width="12%">VENCIMIENTO: </td>
@@ -228,6 +232,7 @@
       <td>&nbsp;</td>
     </tr>
   </table>
+  </form>
 </div>
 
    </div>
