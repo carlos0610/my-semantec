@@ -103,6 +103,6 @@
 	$_SESSION["ord_id"] = $ord_id;
         $_SESSION["query"] = $sql2;
         mysql_close();
-//	header("location:ver-alta-ordenes.php?action=1");
+	header("location:ver-alta-ordenes.php?action=1");
 
 ?>

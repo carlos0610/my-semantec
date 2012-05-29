@@ -1,7 +1,7 @@
 <?php
     header('Content-Type: text/html; charset=utf-8');
     $titulo = "Semantec - Servicio de Mantenimiento T&eacute;cnico.";
-        include("validar.php");
+    include("validar.php");
 ?>
 <!doctype html>
 <html>  
@@ -66,7 +66,7 @@
       
       <section class="cajas">
      <h3>Facturación</h3>
-      <p><a href="" class="current">ir al listado</a></p>
+      <p><a href="lista-facturas.php" class="current">ir al listado</a></p>
      </section>
       
       <section class="cajas">

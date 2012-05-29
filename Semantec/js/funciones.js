@@ -26,6 +26,14 @@ function eliminarProveedor(id,nombre){
         window.location="delete-proveedores.php?prv_id="+id;
     }
 }
+// BAJA Factura
+function eliminarFactura(id){
+    
+    if(confirm('Confirma eliminar Factura: '+id+' ?')==true)
+    {
+        window.location="delete-factura.php?fav_id="+id;
+    }
+}
 
 
 function disableTxt(formulario,id){
