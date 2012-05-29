@@ -177,9 +177,11 @@
     <tr>
       <td width="12%">VENCIMIENTO: </td>
       <td width="31%">&nbsp;</td>
-      <td width="38%"><div align="right">SUBTOTAL:</div></td>
-      <td width="19%"><label>
-        <input type="text" name="txtSubtotal" id="txtSubtotal">
+      <td width="39%"><div align="right">SUBTOTAL:</div></td>
+      <td width="18%"><label>
+        <div align="center">
+          <input type="text" name="txtSubtotal" id="txtSubtotal">
+          </div>
       </label></td>
     </tr>
     <tr>
@@ -189,13 +191,17 @@
       </label></td>
       <td><div align="right">I.V.A INSCRIP.........%</div></td>
       <td><label>
-        <input type="text" name="txtIva_Ins" id="txtIva_Ins">
+        <div align="center">
+          <input type="text" name="txtIva_Ins" id="txtIva_Ins">
+          </div>
       </label></td>
     </tr>
     <tr>
       <td><div align="right">I.V.A NO INSCRIP.........%</div></td>
       <td><label>
-        <input type="text" name="txtIva_No" id="txtIva_No">
+        <div align="center">
+          <input type="text" name="txtIva_No" id="txtIva_No">
+          </div>
       </label></td>
     </tr>
     <tr>

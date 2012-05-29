@@ -74,7 +74,9 @@ function ActualizarTotal(cantidadDescripciones){
         subtotal += parseFloat(document.getElementById("txtTotalItem"+numeroDescripcion).value); 
     }
     document.getElementById("txtSubTotal").value = subtotal;
-    total_iva = total * iva;
+    
+    total_iva = subtotal * iva;
+    
     document.getElementById("txtIva_Ins").value = total_iva;
     document.getElementById("txtTotalFactura").value = total_iva + subtotal
 }
