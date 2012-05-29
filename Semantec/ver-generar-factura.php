@@ -36,7 +36,7 @@
        
        //+++++configuracion  de descripciones a imprimir en pantalla+++++
        $numeroDescripcion=0;
-       $totalDescripcion=3;
+       $totalDescripcion=5;
         
        
 ?>
@@ -136,11 +136,14 @@
             <td>&nbsp;</td>
           </tr>
      </table>   
+       
+       
+   <!-- DESCRIPCION DE FACTURA  -->
    
 	 <div class="contenido_descripcion"><form><table width="100%" border="0">
   <tr>
     <td>&nbsp;</td>
-    <td><div align="center"><input type="hidden" src="images/add.png" onclick="addRow('dataTable')"><img src="images/eliminar.png" width="32" height="32"></div></td>
+    <td><div align="center"><input type="hidden" src="images/add.png" onClick="addRow('dataTable')"><img src="images/eliminar.png" width="32" height="32"></div></td>
   </tr>
   <tr>
     <td width="82%" class="titulo"><div align="center">Descripción</div></td>
@@ -167,16 +170,41 @@
   <?php } ?>
   
 
-    <tr>
-    <td>TOTAL</td>
-    
-    <td><div align="center">
-      <input type="text" name="total" id="total" value="0.00">
-    </div></td>
-  </tr>
-  
 </table>
 	 </form>
+</div><div id="footer_factura.php">
+  <table width="100%" border="0">
+    <tr>
+      <td width="12%">VENCIMIENTO: </td>
+      <td width="31%">&nbsp;</td>
+      <td width="38%"><div align="right">SUBTOTAL:</div></td>
+      <td width="19%"><label>
+        <input type="text" name="txtSubtotal" id="txtSubtotal">
+      </label></td>
+    </tr>
+    <tr>
+      <td rowspan="3">Nota</td>
+      <td rowspan="3"><label>
+        <textarea name="txtArea" id="txtArea" cols="45" rows="5"></textarea>
+      </label></td>
+      <td><div align="right">I.V.A INSCRIP.........%</div></td>
+      <td><label>
+        <input type="text" name="txtIva_Ins" id="txtIva_Ins">
+      </label></td>
+    </tr>
+    <tr>
+      <td><div align="right">I.V.A NO INSCRIP.........%</div></td>
+      <td><label>
+        <input type="text" name="txtIva_No" id="txtIva_No">
+      </label></td>
+    </tr>
+    <tr>
+      <td><div align="right">TOTAL</div></td>
+      <td><label>
+        <input type="text" name="txtTotalFactura" id="txtTotalFactura">
+      </label></td>
+    </tr>
+  </table>
 </div>
 
    </div>

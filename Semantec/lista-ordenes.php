@@ -12,7 +12,7 @@
                     AND o.prv_id = p.prv_id  
                     AND o.estado = 1 
                     ORDER BY o.ord_alta DESC ";
-    $tamPag=20;
+    $tamPag=10;
     
     include("paginado.php");        
         $sql = "SELECT ord_id, ord_codigo, ord_descripcion, cli_nombre, prv_nombre, est_nombre, est_color, ord_alta, ord_plazo, ord_costo, ord_venta

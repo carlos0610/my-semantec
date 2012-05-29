@@ -123,7 +123,7 @@
           <tr>
             <td>Estado</td>
             <td>
-                <?php echo(utf8_encode($fila3["est_nombre"])); ?>            <?echo $fila_datos_cliente["cli_nombre"]?></td>
+                <?php echo(utf8_encode($fila3["est_nombre"])); ?></td>
           </tr>
           <tr>
             <td>Plazo de Finalización</td>

@@ -64,14 +64,19 @@ function disableTxt(formulario,id){
 }
 
 function ActualizarTotal(cantidadDescripciones){
-    total = 0;
+    iva = 0.21;
+    subtotal = 0;
     numeroDescripcion=0;
+    
     while(numeroDescripcion < cantidadDescripciones)
     {
         numeroDescripcion++;
-        total += parseFloat(document.getElementById("txtTotalItem"+numeroDescripcion).value); 
+        subtotal += parseFloat(document.getElementById("txtTotalItem"+numeroDescripcion).value); 
     }
-    document.getElementById("total").value =total;  
+    document.getElementById("txtSubTotal").value = subtotal;
+    total_iva = total * iva;
+    document.getElementById("txtIva_Ins").value = total_iva;
+    document.getElementById("txtTotalFactura").value = total_iva + subtotal
 }
 
 
