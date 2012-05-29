@@ -26,6 +26,8 @@
     //$idOrden = $_POST["ord_id"];
     $idOrden = $_GET["ord_id"];
     $items   = $_GET["items"];
+    $nota    = $_POST["txtNota"];
+    $iva     = $_POST["comboIva"];   
     //$idOrden = 22;
     //echo $idOrden;
     //$fecha  = 'NOW()';
@@ -58,14 +60,15 @@
     
         
     if ($idFile != -1)
-    $query = "INSERT INTO factura_venta (files_id,ord_id,fav_fecha,estado) VALUES ($idFile,$idOrden,NOW(),$estado)";
+        $query = "INSERT INTO factura_venta (files_id,ord_id,fav_fecha,fav_nota,estado) VALUES ($idFile,$idOrden,NOW(),'$nota',$estado)";
     else
-    $query = "INSERT INTO factura_venta (ord_id,fav_fecha,estado) VALUES ($idOrden,NOW(),1)";
+        $query = "INSERT INTO factura_venta (ord_id,fav_fecha,fav_nota,estado) VALUES ($idOrden,NOW(),'$nota',1)";
         //$query = "CALL usp_registrar_factura($idFile,$idOrden,NOW(),$estado,$adjunta)";
         $inserto = mysql_query($query);      
         $nro_factura = mysql_insert_id();
         
-       echo "ITEMS : ".$items; 
+       echo "<br>QUERY : ".$query;
+        echo "<br>NOTA : ".$nota; 
        
        $i=1;
         do{
@@ -73,7 +76,7 @@
             $columnaPrec = "txtTotalItem".$i;
             $descripcion = $_POST[$columnaDesc];
             $precio = $_POST[$columnaPrec];    
-            $query = "INSERT INTO detalle_factura_venta (fav_id,iva_idiva,det_fav_descripcion,det_fav_precio) VALUES ($nro_factura,2,'$descripcion',$precio)";
+            $query = "INSERT INTO detalle_factura_venta (fav_id,iva_idiva,det_fav_descripcion,det_fav_precio) VALUES ($nro_factura,$iva,'$descripcion',$precio)";
             mysql_query($query);
             echo  $query;
             $i++;
@@ -90,5 +93,6 @@
             mysql_close();
             
   //}
+  header("location:ver-alta-factura.php?ord_id=$idOrden");
 
 ?>

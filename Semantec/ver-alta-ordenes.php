@@ -137,20 +137,15 @@
             <td><?php echo($fila0["ord_venta"]);?></td>
           </tr>
           <tr>
-            <td>
-                
-            </td>
-          <td>&nbsp;&nbsp; 
-                <a href="form-alta-ordenes.php">
-               <input type="button" value="Agregar otra orden" class="botones" />
-                </a>            
-                <a href="lista-ordenes.php">
-                <input type="button" value="Ir al Listado" class="botones" />
+            <td><a href="form-alta-ordenes.php">
+              <input type="button" value="Agregar otra orden" class="botones" />
+            </a>            </td>
+          <td>&nbsp;&nbsp;<a href="lista-ordenes.php">
+    <input type="button" value="Ir al Listado" class="botones" />
                 </a>
                 <a href="form-edit-ordenes.php?ord_id=<?php echo($ord_id)?>">
                 <input type="button" value="Modificar datos" class="botones" />
-                </a>
-          </td>
+                </a>          </td>
             <td></td>
           </tr>          
           <tr>

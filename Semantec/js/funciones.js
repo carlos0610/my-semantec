@@ -72,7 +72,15 @@ function disableTxt(formulario,id){
 }
 
 function ActualizarTotal(cantidadDescripciones){
-    iva = 0.21;
+    iva = document.getElementById("comboIva").value;
+    
+    if (iva == 1){
+         iva = 0.21;
+    }else{
+         iva = 0.105;   
+         } 
+     
+    
     subtotal = 0;
     numeroDescripcion=0;
     
@@ -91,4 +99,21 @@ function ActualizarTotal(cantidadDescripciones){
     document.getElementById("txtTotalFactura").value = total_iva + subtotal;
 }
 
+function actualizarIva(){
+    iva = document.getElementById("comboIva").value;
+    
+    if (iva == 1){
+         iva = 0.21;
+    }else{
+         iva = 0.105;   
+         } 
+         
+         subtotal = document.getElementById("txtSubtotal").value;
+         total_iva = subtotal * iva;
+         document.getElementById("txtIva_Ins").value = total_iva;
+         document.getElementById("txtTotalFactura").value = parseFloat(total_iva) + parseFloat(subtotal);
+         
+         
+  
+}
 

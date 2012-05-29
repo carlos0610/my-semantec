@@ -39,16 +39,18 @@
        $totalDescripcion=5;
        
        
-       $_SESSION["ord_id"] = $ord_id;
-        
-       $sql = "SELECT idiva,valor from IVA";
-       $iva = mysql_query($sql);
+       $sql = "select fav_fecha,fav_nota from factura_venta where ord_id = $ord_id";
+       $fecha_factura = mysql_query($sql);
+       $fila_fecha_factura = mysql_fetch_array($fecha_factura);
        
        
        
-       
-       
+       $sql = "select * from detalle_factura_venta where fav_id = (select fav_id from factura_venta where ord_id = $ord_id)";
+       $descripcion_factura = mysql_query($sql);
        mysql_close();
+       
+       //$_SESSION["ord_id"] = $ord_id;
+        $subtotal = 0;
        
 ?>
 <!doctype html>
@@ -93,7 +95,7 @@
     <td width="1%">&nbsp;</td>
   </tr>
   <tr>
-    <td class="titulo"><span id="ocultarParaImpresion">Buenos Aires,</span> <?php echo date("d/m/Y") ?></td>
+    <td class="titulo"><span id="ocultarParaImpresion">Buenos Aires,</span> <?php echo $fila_fecha_factura["fav_fecha"]; ?></td>
     <td>&nbsp;</td>
   </tr>
   <tr>
@@ -111,9 +113,9 @@
     <td bgcolor="#F0F0F0" class="titulo"><span id="ocultarParaImpresion">Inicio de actividades: 01/06/2004</span></td>
   </tr>
 </table>
-
-   
    </div>
+   
+   
    <div id="contenedor2" style="height:auto;">
 	 <table width="100%" border="0" id="dataTable">
 <tr>
@@ -141,14 +143,14 @@
             </td>
           </tr>
           <tr>
-            <td>&nbsp;</td>
+            <td></td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
           </tr>
      </table>   
        
-       
+   </div>
    <!-- DESCRIPCION DE FACTURA  -->
    
 <div class="contenido_descripcion">
@@ -163,58 +165,60 @@
     <td width="18%" class="titulo"><div align="center">Total</div></td>
   </tr>
   
-  <?php while($numeroDescripcion < $totalDescripcion){
-      $numeroDescripcion++;
+  <?php //while($numeroDescripcion < $totalDescripcion){
+      //$numeroDescripcion++;
+      
+      while($item = mysql_fetch_array($descripcion_factura)){
+          $precio_item = $item["det_fav_precio"]
   ?>
   
   
   <tr>
     <td><label>   
         <div align="left">
-          <input name="txtDescripcionItem<?php echo($numeroDescripcion);?>"  type="text" id="txtDescripcionItem<?php echo($numeroDescripcion);?>" size="110">
+          <?echo $item["det_fav_descripcion"]; ?>
         </div>
     </label></td>
     <td><label>
       <div align="center">
-        <input type="text" align="left" name="txtTotalItem<?php echo($numeroDescripcion);?>" style="text-align:right"  id="txtTotalItem<?php echo($numeroDescripcion);?>" value="0.00" onChange="return ActualizarTotal(<?php echo($totalDescripcion);?>);" >
+        <?echo $item["det_fav_precio"]; ?>
         </div>
     </label></td>
   </tr>
-  <?php } ?>
+  <?php 
+  
+  $subtotal += $precio_item;
+  } ?>
   
 
 </table>
+</div>
 
-</div><div id="footer_factura">
+<div id="footer_factura">
   
   <table width="100%" border="0">
     <tr>
-      <td width="12%">VENCIMIENTO: <?php echo $ord_id ?></td>
+      <td width="12%">VENCIMIENTO:</td>
       <td width="31%">&nbsp;</td>
       <td width="39%"><div align="right">SUBTOTAL:</div></td>
       <td width="18%"><label>
         <div align="center">
-          <input type="text" name="txtSubtotal" style="text-align:right" value="0.00" id="txtSubtotal" readonly>
+          <?php echo $subtotal ;?>
           </div>
       </label></td>
     </tr>
     <tr>
       <td rowspan="3">Nota</td>
       <td rowspan="3"><label>
-        <textarea name="txtNota" id="txtNota" cols="45" rows="5"></textarea>
+        <?php echo $fila_fecha_factura["fav_nota"]; ?>
       </label></td>
-      <td><div align="right">I.V.A INSCRIP
-        <label>
-            <select name="comboIva" id="comboIva" onchange="return actualizarIva()">
-            <?php while ($fila_iva = mysql_fetch_array($iva)){  ?>
-                <option value="<?php echo $fila_iva["idiva"]?>"><?php echo $fila_iva["valor"] ?></option>
-                <?php }?>
-        </select>
-        </label>
-        %</div></td>
+      <td><div align="right">I.V.A INSCRIP.........%</div></td>
       <td><label>
         <div align="center">
-          <input type="text" style="text-align:right" value="0.00"  name="txtIva_Ins" id="txtIva_Ins" readonly>
+          <?php 
+          $iva_total = $subtotal*0.21;
+          echo $iva_total;
+          ?>
           </div>
       </label></td>
     </tr>
@@ -222,7 +226,7 @@
       <td><div align="right">I.V.A NO INSCRIP.........%</div></td>
       <td><label>
         <div align="center">
-          <input type="text" style="text-align:right" value="0.00"  name="txtIva_No" id="txtIva_No" readonly>
+          0.00
           </div>
       </label></td>
     </tr>
@@ -230,21 +234,15 @@
       <td><div align="right">TOTAL</div></td>
       <td><label>
         <div align="center">
-          <input type="text" style="text-align:right" value="0.00"  name="txtTotalFactura" id="txtTotalFactura" readonly>
+          <?php echo $iva_total + $subtotal?>
           </div>
       </label></td>
     </tr>
-    <tr>
-      <td>&nbsp;</td>
-      <td colspan="2"><div align="center">
-        Adjuntar archivo <input type="file" class="" id="userfile" name="userfile" />
-      </div></td>
-      <td>&nbsp;</td>
-    </tr>
+    
     <tr>
       <td>&nbsp;</td>
       <td>&nbsp;</td>
-      <td><input type="submit" name="btnConfirma" id="btnConfirma" value="Confirmar">
+      <td><a href="javascript:window.print()"><img src="images/imprimir.png" heigth="48" width="48"/></a>
           
       </td>
       <td>&nbsp;</td>
@@ -258,8 +256,8 @@
 
 
 
-  </div>
-   <!-- fin main --><!-- fin main --><!-- fin main --><!-- fin main --><!-- fin main -->
+  
+  <!-- fin main --><!-- fin main --><!-- fin main --><!-- fin main --><!-- fin main -->
    
    <!--start footer-->
    <footer>
@@ -271,3 +269,4 @@
 
    </body>
 </html>
+
