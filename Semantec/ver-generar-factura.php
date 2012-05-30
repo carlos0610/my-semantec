@@ -41,7 +41,7 @@
        
        $_SESSION["ord_id"] = $ord_id;
         
-       $sql = "SELECT idiva,valor from IVA";
+       $sql = "SELECT idiva,valor from iva";
        $iva = mysql_query($sql);
        
        
