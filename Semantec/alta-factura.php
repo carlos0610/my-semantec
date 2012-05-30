@@ -93,6 +93,6 @@
             mysql_close();
             
   //}
-  header("location:ver-alta-factura.php?ord_id=$idOrden");
+  header("location:ver-alta-factura.php?ord_id=$idOrden&fav_id=$nro_factura");
 
 ?>

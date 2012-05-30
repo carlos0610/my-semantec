@@ -20,12 +20,16 @@ BODY {
    display: none;
 } 
 
-#login{
+.botones{
    visibility:hidden;
    display: none;
 } 
 
-#login{
+footer{
+   visibility:hidden;
+   display: none;
+} 
+#logoImpresora{
    visibility:hidden;
    display: none;
 } 

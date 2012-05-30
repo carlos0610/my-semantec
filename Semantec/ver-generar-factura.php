@@ -130,14 +130,14 @@
             <td class="titulo">IVA:</td>
             <td style="background-color:#cbeef5"><?php echo $fila_datos_cliente["iva_nombre"]?></td>
             <td class="titulo">Cuit:</td>
-            <td style="background-color:#cbeef5">&nbsp;</td>
+            <td style="background-color:#cbeef5"><?php echo (verCUIT($fila_datos_cliente["cli_cuit"]))?></td>
           </tr>
           <tr>
             <td class="titulo">Condiciones de venta:</td>
             <td style="background-color:#cbeef5">&nbsp;</td>
             <td class="titulo">Remito:</td>
             <td style="background-color:#cbeef5">
-              <input name="txtRemito" type="text" id="txtRemito" size="12">
+              <input name="txtRemito" type="number" id="txtRemito" size="12">
             </td>
           </tr>
           <tr>

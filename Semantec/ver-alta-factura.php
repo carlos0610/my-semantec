@@ -18,6 +18,7 @@
      
      */
         $ord_id = $_GET["ord_id"];
+        $fav_id = $_GET["fav_id"];
         include("funciones.php");
         include("conexion.php");
         
@@ -39,16 +40,17 @@
        $totalDescripcion=5;
        
        
-       $sql = "select fav_fecha,fav_nota from factura_venta where ord_id = $ord_id";
+      //DIOGETE $sql = "select fav_fecha,fav_nota from factura_venta where ord_id = $ord_id";
+       $sql = "select fav_fecha,fav_nota from factura_venta where fav_id = $fav_id";
        $fecha_factura = mysql_query($sql);
        $fila_fecha_factura = mysql_fetch_array($fecha_factura);
        
        
        
-       $sql = "select * from detalle_factura_venta where fav_id = (select fav_id from factura_venta where ord_id = $ord_id)";
+     //DIEGOTE  $sql = "select * from detalle_factura_venta where fav_id = (select fav_id from factura_venta where ord_id = $ord_id)";
+       $sql = "select * from detalle_factura_venta where fav_id = $fav_id";
        $descripcion_factura = mysql_query($sql);
        mysql_close();
-       
        //$_SESSION["ord_id"] = $ord_id;
         $subtotal = 0;
        
@@ -95,7 +97,7 @@
     <td width="1%">&nbsp;</td>
   </tr>
   <tr>
-    <td class="titulo"><span id="ocultarParaImpresion">Buenos Aires,</span> <?php echo $fila_fecha_factura["fav_fecha"]; ?></td>
+    <td class="titulo"><span id="ocultarParaImpresion">Buenos Aires,</span> <?php echo (tfecha($fila_fecha_factura["fav_fecha"])); ?></td>
     <td>&nbsp;</td>
   </tr>
   <tr>
@@ -132,14 +134,14 @@
             <td class="titulo">IVA:</td>
             <td style="background-color:#cbeef5"><?php echo $fila_datos_cliente["iva_nombre"]?></td>
             <td class="titulo">Cuit:</td>
-            <td style="background-color:#cbeef5">&nbsp;</td>
+            <td style="background-color:#cbeef5"><?php echo (verCUIT($fila_datos_cliente["cli_cuit"]))?></td>
           </tr>
           <tr>
             <td class="titulo">Condiciones de venta:</td>
             <td style="background-color:#cbeef5">&nbsp;</td>
             <td class="titulo">Remito:</td>
             <td style="background-color:#cbeef5">
-              <input name="txtRemito" type="text" id="txtRemito" size="12">
+              
             </td>
           </tr>
           <tr>
@@ -158,7 +160,7 @@
   <table width="100%" border="0">
   <tr>
     <td>&nbsp;</td>
-    <td><div align="center"><input type="hidden" src="images/add.png" onClick="addRow('dataTable')"><img src="images/eliminar.png" width="32" height="32"></div></td>
+    <td></td>
   </tr>
   <tr>
     <td width="82%" class="titulo"><div align="center">Descripción</div></td>
@@ -241,8 +243,10 @@
     
     <tr>
       <td>&nbsp;</td>
-      <td>&nbsp;</td>
-      <td><a href="javascript:window.print()"><img src="images/imprimir.png" heigth="48" width="48"/></a>
+      <td><a href="lista-facturas.php">
+    <input type="button" value="Ir al Listado"s class="botones" />
+                </a>  </td>
+      <td><a href="javascript:window.print()"><img id="logoImpresora" src="images/imprimir.png" heigth="48" width="48"/></a>
           
       </td>
       <td>&nbsp;</td>
