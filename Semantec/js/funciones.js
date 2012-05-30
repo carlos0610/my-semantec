@@ -73,7 +73,7 @@ function disableTxt(formulario,id){
 
 function ActualizarTotal(cantidadDescripciones){
     iva = document.getElementById("comboIva").value;
-    
+    document.getElementById("btnConfirma").style.visibility = "visible"; // giladita fea dps arreglar
     if (iva == 1){
          iva = 0.21;
     }else{

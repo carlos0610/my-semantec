@@ -41,7 +41,7 @@
        
        
       //DIOGETE $sql = "select fav_fecha,fav_nota from factura_venta where ord_id = $ord_id";
-       $sql = "select fav_fecha,fav_nota from factura_venta where fav_id = $fav_id";
+       $sql = "select fav_fecha,fav_nota, fav_remito, fav_condicion_vta from factura_venta where fav_id = $fav_id";
        $fecha_factura = mysql_query($sql);
        $fila_fecha_factura = mysql_fetch_array($fecha_factura);
        
@@ -50,6 +50,14 @@
      //DIEGOTE  $sql = "select * from detalle_factura_venta where fav_id = (select fav_id from factura_venta where ord_id = $ord_id)";
        $sql = "select * from detalle_factura_venta where fav_id = $fav_id";
        $descripcion_factura = mysql_query($sql);
+       $descripcion_factura2 = mysql_query($sql);
+       $fila_descripcion = mysql_fetch_array($descripcion_factura2);
+       
+       $idiva=$fila_descripcion["iva_idiva"];
+       $sql = "select * from iva where idiva = $idiva";
+       $descrio_iva = mysql_query($sql);
+       $fila_iva = mysql_fetch_array($descrio_iva);
+       
        mysql_close();
        //$_SESSION["ord_id"] = $ord_id;
         $subtotal = 0;
@@ -134,14 +142,14 @@
             <td class="titulo">IVA:</td>
             <td style="background-color:#cbeef5"><?php echo $fila_datos_cliente["iva_nombre"]?></td>
             <td class="titulo">Cuit:</td>
-            <td style="background-color:#cbeef5"><?php echo (verCUIT($fila_datos_cliente["cli_cuit"]))?></td>
+            <td style="background-color:#cbeef5"><?php echo (verCUIT($fila_datos_cliente["cli_cuit"]));?></td>
           </tr>
           <tr>
             <td class="titulo">Condiciones de venta:</td>
-            <td style="background-color:#cbeef5">&nbsp;</td>
+            <td style="background-color:#cbeef5">&<?php echo $fila_fecha_factura["fav_condicion_vta"];?></td>
             <td class="titulo">Remito:</td>
             <td style="background-color:#cbeef5">
-              
+              <?php echo $fila_fecha_factura["fav_remito"];?>
             </td>
           </tr>
           <tr>
@@ -163,15 +171,14 @@
     <td></td>
   </tr>
   <tr>
-    <td width="82%" class="titulo"><div align="center">Descripción</div></td>
-    <td width="18%" class="titulo"><div align="center">Total</div></td>
+    <td width="82%" class="titulo"><div id="ocultarParaImpresion" align="center">Descripción</div></td>
+    <td width="18%" class="titulo"><div id="ocultarParaImpresion" align="center">Total</div></td>
   </tr>
   
   <?php //while($numeroDescripcion < $totalDescripcion){
       //$numeroDescripcion++;
-      
       while($item = mysql_fetch_array($descripcion_factura)){
-          $precio_item = $item["det_fav_precio"]
+          $precio_item = $item["det_fav_precio"];
   ?>
   
   
@@ -200,7 +207,7 @@
   
   <table width="100%" border="0">
     <tr>
-      <td width="12%">VENCIMIENTO:</td>
+      <td width="12%"><span>VENCIMIENTO:</span></td>
       <td width="31%">&nbsp;</td>
       <td width="39%"><div align="right">SUBTOTAL:</div></td>
       <td width="18%"><label>
@@ -214,7 +221,7 @@
       <td rowspan="3"><label>
         <?php echo $fila_fecha_factura["fav_nota"]; ?>
       </label></td>
-      <td><div align="right">I.V.A INSCRIP.........%</div></td>
+      <td><div align="right">I.V.A INSCRIP&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $fila_iva["valor"]; ?> %</div></td>
       <td><label>
         <div align="center">
           <?php 
@@ -225,7 +232,7 @@
       </label></td>
     </tr>
     <tr>
-      <td><div align="right">I.V.A NO INSCRIP.........%</div></td>
+      <td><div id="ocultarParaImpresion" align="right">I.V.A NO INSCRIP.........%</div></td>
       <td><label>
         <div align="center">
           0.00
@@ -233,7 +240,7 @@
       </label></td>
     </tr>
     <tr>
-      <td><div align="right">TOTAL</div></td>
+      <td><div  id="ocultarParaImpresion" align="right">TOTAL</div></td>
       <td><label>
         <div align="center">
           <?php echo $iva_total + $subtotal?>

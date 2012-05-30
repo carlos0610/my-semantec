@@ -36,7 +36,7 @@
        
        //+++++configuracion  de descripciones a imprimir en pantalla+++++
        $numeroDescripcion=0;
-       $totalDescripcion=5;
+       $totalDescripcion=7;
        
        
        $_SESSION["ord_id"] = $ord_id;
@@ -114,6 +114,7 @@
 
    
    </div>
+   <form name="frmGenerarFactura" method="post" enctype="multipart/form-data" action="alta-factura.php?ord_id=<?php echo $ord_id ?>&items=<?php echo $totalDescripcion?>" >
    <div id="contenedor2" style="height:auto;">
 	 <table width="100%" border="0" id="dataTable">
 <tr>
@@ -134,10 +135,12 @@
           </tr>
           <tr>
             <td class="titulo">Condiciones de venta:</td>
-            <td style="background-color:#cbeef5">&nbsp;</td>
+            <td style="background-color:#cbeef5">
+                <input name="condicion_venta" type="text" id="condicion_venta" size="25" required>
+            </td>
             <td class="titulo">Remito:</td>
             <td style="background-color:#cbeef5">
-              <input name="txtRemito" type="number" id="txtRemito" size="12">
+              <input name="txtRemito" type="number" id="txtRemito" size="12" required>
             </td>
           </tr>
           <tr>
@@ -152,7 +155,7 @@
    <!-- DESCRIPCION DE FACTURA  -->
    
 <div class="contenido_descripcion">
-  <form name="frmGenerarFactura" method="post" enctype="multipart/form-data" action="alta-factura.php?ord_id=<?php echo $ord_id ?>&items=<?php echo $totalDescripcion?>" >
+  
   <table width="100%" border="0">
   <tr>
     <td>&nbsp;</td>
@@ -189,7 +192,7 @@
   
   <table width="100%" border="0">
     <tr>
-      <td width="12%">VENCIMIENTO: <?php echo $ord_id ?></td>
+      <td width="12%">VENCIMIENTO: </td>
       <td width="31%">&nbsp;</td>
       <td width="39%"><div align="right">SUBTOTAL:</div></td>
       <td width="18%"><label>
@@ -244,7 +247,7 @@
     <tr>
       <td>&nbsp;</td>
       <td>&nbsp;</td>
-      <td><input type="submit" name="btnConfirma" id="btnConfirma" value="Confirmar">
+      <td><input type="submit" name="btnConfirma" id="btnConfirma" style="visibility:hidden" value="Confirmar">
           
       </td>
       <td>&nbsp;</td>

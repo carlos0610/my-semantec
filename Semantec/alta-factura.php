@@ -1,23 +1,5 @@
 <?php
 
-
-/*$con = mysql_connect("localhost:3306","root","");
-  if (!$con)
-  {
-    echo '<b>Could not connect.</b>';
-    die(mysql_error()); // TODO: better error handling
-  }
-  else
-  {
-      //echo "CONECTOOOO";
-      $conecto = mysql_select_db("semantec", $con);
-      
-      if ($conecto)
-          echo "SELECCIONO BD";
-      else
-          echo "NO PASA NADA";
-*/
-
     include ("conexion.php");
 
 
@@ -25,7 +7,8 @@
     $items   = $_GET["items"];
     $nota    = $_POST["txtNota"];
     $iva     = $_POST["comboIva"];   
-    
+    $Remito= $_POST["txtRemito"]; 
+    $condicion_venta= $_POST["condicion_venta"]; 
     
     
     $estado = 1;
@@ -57,39 +40,34 @@
     
         
     if ($idFile != -1)
-        $query = "INSERT INTO factura_venta (files_id,ord_id,fav_fecha,fav_nota,estado) VALUES ($idFile,$idOrden,NOW(),'$nota',$estado)";
+        $query = "INSERT INTO factura_venta (files_id,ord_id,fav_fecha,fav_nota,    fav_remito, fav_condicion_vta ,fav_vencimiento,   estado) VALUES ($idFile,$idOrden,NOW(),'$nota',$Remito,'$condicion_venta','aca agregar el vencimiento',$estado)";
     else
-        $query = "INSERT INTO factura_venta (ord_id,fav_fecha,fav_nota,estado) VALUES ($idOrden,NOW(),'$nota',1)";
-        //$query = "CALL usp_registrar_factura($idFile,$idOrden,NOW(),$estado,$adjunta)";
+        $query = "INSERT INTO factura_venta (ord_id,fav_fecha,fav_nota,  fav_remito, fav_condicion_vta ,fav_vencimiento, estado) VALUES ($idOrden,NOW(),'$nota',$Remito,'$condicion_venta','aca agregar el vencimiento',1)";
         $inserto = mysql_query($query);      
         $nro_factura = mysql_insert_id();
-        
-       //echo "<br>QUERY DE FACTURA_VENTA : ".$query;
+   
         
        
        $i=1;
-        do{
             $columnaDesc = "txtDescripcionItem".$i;
             $columnaPrec = "txtTotalItem".$i;
             $descripcion = $_POST[$columnaDesc];
-            $precio = $_POST[$columnaPrec];    
+            $precio = $_POST[$columnaPrec]; 
+            
+        while(($i <= $items)&($descripcion != '')){   
             $query = "INSERT INTO detalle_factura_venta (fav_id,iva_idiva,det_fav_descripcion,det_fav_precio) VALUES ($nro_factura,$iva,'$descripcion',$precio)";
             mysql_query($query);
-            echo  $query;
-            $i++;
-        }while($i <= $items);
-        
-
-            //$sth = $dbh->prepare('CALL usp_registrar_factura(?,?,?,?,?)');
-            //$sth->bindParam(1, $idFile, PDO::PARAM_INT|PDO::PARAM_INPUT_OUTPUT, 11);
-            //$sth->bindParam(2, $idOrden, PDO::PARAM_INT|PDO::PARAM_INPUT_OUTPUT, 11);
-            //$sth->bindParam(3, $fecha, PDO::PARAM_STR|PDO::PARAM_INPUT_OUTPUT, 20);
-            //$sth->bindParam(4, $estado, PDO::PARAM_INT|PDO::PARAM_INPUT_OUTPUT, 11);
-            //$sth->bindParam(5, $adjunta, PDO::PARAM_INT|PDO::PARAM_INPUT_OUTPUT, 11);
-            //$sth->execute();
-            mysql_close();
             
-  //}
+            $i++;
+            $columnaDesc = "txtDescripcionItem".$i;
+            $columnaPrec = "txtTotalItem".$i;
+            $descripcion = $_POST[$columnaDesc];
+            $precio = $_POST[$columnaPrec]; 
+            echo  $query;
+        };
+
+            mysql_close();
+
   header("location:ver-alta-factura.php?ord_id=$idOrden&fav_id=$nro_factura");
 
 ?>
