@@ -61,7 +61,7 @@
      <section class="cajas">
      <h3>Cuenta corriente</h3>
       <p><a href="form-seleccionar-cliente.php" class="current">de cliente</a></p>
-      <p><a href="" class="current">nueva cuenta</a></p>
+      <p><a href="" class="current">de proveedor</a></p>
      </section>
       
       <section class="cajas">

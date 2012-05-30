@@ -4,7 +4,7 @@ por cada orden -> una operación enc uenta corriente de cliente y otra en la de p
 
 
 PROVEEDORES> se les adelanta, y se les paga facturas de compra.
-Facturas de compra asociadas . 
+Facturas de compra asociadas. 
 
 Valor costo -> 500 -> Semantec le debe al proveedor.
 Valor venta-> Clientes -> + Dinero positivo, cliente le debe a Semantec.
