@@ -152,7 +152,7 @@
    <!-- DESCRIPCION DE FACTURA  -->
    
 <div class="contenido_descripcion">
-  <form name="frmGenerarFactura" method="post" enctype="multipart/form-data" action="alta-factura.php?ord_id=<?php echo $ord_id ?>&items=<?php echo $totalDescripcion?>">
+  <form name="frmGenerarFactura" method="post" enctype="multipart/form-data" action="alta-factura.php?ord_id=<?php echo $ord_id ?>&items=<?php echo $totalDescripcion?>" >
   <table width="100%" border="0">
   <tr>
     <td>&nbsp;</td>

@@ -20,21 +20,18 @@
 
     include ("conexion.php");
 
-//$colour = 'red';
 
-    //$idFile = 5;
-    //$idOrden = $_POST["ord_id"];
     $idOrden = $_GET["ord_id"];
     $items   = $_GET["items"];
     $nota    = $_POST["txtNota"];
     $iva     = $_POST["comboIva"];   
-    //$idOrden = 22;
-    //echo $idOrden;
-    //$fecha  = 'NOW()';
+    
+    
+    
     $estado = 1;
     $idFile = -1;
     if($_FILES['userfile']['size']>0){      //SI ELIGIO UN ARCHIVO
-        
+                                
                                 $fileName = $_FILES['userfile']['name'];
                                 $tmpName  = $_FILES['userfile']['tmp_name'];
                                 $fileSize = $_FILES['userfile']['size'];
@@ -51,10 +48,10 @@
                         $fileName = addslashes($fileName);
                         }
         $sql_file = "INSERT INTO files (file_name, file_size, file_type, file_content,tabla ) ".
-        "VALUES ('$fileName', '$fileSize', '$fileType', '$content','detalles_ordenes')";
+        "VALUES ('$fileName', '$fileSize', '$fileType', '$content','factura_venta')";
 
         mysql_query($sql_file);
-        $idFile = mysql_insert_id();
+        $idFile = mysql_insert_id(); // HAY QUE VALIDAR SI SE ROMPE LA TRANSACCIÓN DEL FILE
         
                                                         }
     
@@ -67,8 +64,8 @@
         $inserto = mysql_query($query);      
         $nro_factura = mysql_insert_id();
         
-       echo "<br>QUERY : ".$query;
-        echo "<br>NOTA : ".$nota; 
+       //echo "<br>QUERY DE FACTURA_VENTA : ".$query;
+        
        
        $i=1;
         do{

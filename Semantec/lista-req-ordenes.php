@@ -109,7 +109,7 @@
              $numeroDeTablaDesplegable++;   
   ?>
           <tr class="lista" bgcolor="<?php echo($colores[$i]);?>">
-            <td><?php echo($fila["ord_codigo"]);?></td>
+              <td><a href=form-edit-ordenes.php?ord_id=<?php echo($fila["ord_id"]);?>><?php echo($fila["ord_codigo"]);?></a></td>
             <td><?php echo($fila["cli_nombre"]);?></td>
             <td><?php echo(nl2br(utf8_encode($fila["ord_descripcion"])));?></td>
             <td><?php echo($fila["prv_nombre"]);?></td>
