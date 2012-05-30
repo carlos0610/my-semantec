@@ -60,7 +60,7 @@
            
      <section class="cajas">
      <h3>Cuenta corriente</h3>
-      <p><a href="" class="current">ir al listado</a></p>
+      <p><a href="form-seleccionar-cliente.php" class="current">de cliente</a></p>
       <p><a href="" class="current">nueva cuenta</a></p>
      </section>
       
@@ -72,7 +72,7 @@
       <section class="cajas">
      <h3>Compras</h3>
       <p><a href="" class="current">ir al listado</a></p>
-      <p><a href="" class="current">nueva compra</a></p>
+      <p><a href="form-alta-compra.php" class="current">nueva compra</a></p>
      </section>
       
       

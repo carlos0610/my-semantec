@@ -25,7 +25,15 @@
         										)";
 		mysql_query($sql);
                 //$_SESSION["query"] = $sql;
-		$_SESSION["cli_id"] = mysql_insert_id();
+                
+                $idCliente = mysql_insert_id();
+		$_SESSION["cli_id"] = $idCliente;
+                
+                /* CREAMOS UNA CUENTA CORRIENTE PARA EL CLIENTE INGRESADO */
+                
+                $sql = "INSERT INTO cuentacorriente_cliente  (cli_id,estado) VALUES ($idCliente,1)";
+                mysql_query($sql);
+     
 
 		mysql_close();
 		header("location:ver-alta-clientes.php?action=1");

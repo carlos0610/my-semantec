@@ -1,0 +1,17 @@
+CUENTA CORRIENTE 
+por cada orden -> una operación enc uenta corriente de cliente y otra en la de proveedor.
+
+
+
+PROVEEDORES> se les adelanta, y se les paga facturas de compra.
+Facturas de compra asociadas . 
+
+Valor costo -> 500 -> Semantec le debe al proveedor.
+Valor venta-> Clientes -> + Dinero positivo, cliente le debe a Semantec.
+
+Facturas de venta 
+
+facturas de venta de - iva
+facturas de compras + iva compra
+
+

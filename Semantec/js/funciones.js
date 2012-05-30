@@ -117,3 +117,13 @@ function actualizarIva(){
   
 }
 
+
+function mostrarCuenta(id,nombre){
+    
+    if(confirm('Confirma eliminar Cliente: '+nombre+' ?')==true)
+    {
+        window.location="delete-clientes.php?cli_id="+id;       
+       
+    }
+}
+

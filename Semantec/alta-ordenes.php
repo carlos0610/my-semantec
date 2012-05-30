@@ -99,10 +99,27 @@
                                                 }
  
         mysql_query($sql2);
-        echo $sql2;
+        
+        
+        
+        /* INSERTAMOS ORDEN EN DETALLE DE CUENTA CORRIENTE */
+        
+        
+        $sql = "SELECT ccc_id from cuentacorriente_cliente where cli_id = $cli_id";
+        
+        $cuenta_corriente = mysql_query($sql);
+        $id_cuenta = mysql_fetch_row($cuenta_corriente);
+         
+        $sql = "INSERT INTO detalle_corriente_cliente (ord_id,ccc_id) VALUES ($ord_id,$id_cuenta[0])";
+        mysql_query($sql);
+    
+        
+        //echo $sql2;
 	$_SESSION["ord_id"] = $ord_id;
         $_SESSION["query"] = $sql2;
         mysql_close();
+        
+        echo "MI AMIGO EL QUERY: ".$sql;
 	header("location:ver-alta-ordenes.php?action=1");
 
 ?>
