@@ -51,7 +51,7 @@
       <form name="frmSeleccionarProveedor" action="<?php if ($action == 1) echo "ver-corriente-proveedor.php"; else echo "form-alta-compra.php";?>" method="post" ><table class="listados" cellpadding="5">
           <tr class="titulo">
             <td width="149">Seleccione proveedor</td>
-            <td colspan="3"><div align="left"><a href="index-admin.php"><img src="images/home.png"  alt="inicio" title="Volver al panel" width="32" height="32" border="none" /></a>
+            <td colspan="3"><div align="right"><a href="index-admin.php"><img src="images/home.png"  alt="inicio" title="Volver al panel" width="32" height="32" border="none" /></a>
                 <a href="index-admin.php"></a> </div></td>
           </tr>
   

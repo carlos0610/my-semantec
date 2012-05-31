@@ -44,7 +44,7 @@
       <form name="frmSeleccionarCliente" action="ver-corriente-clientes.php" method="post" ><table class="listados" cellpadding="5">
           <tr class="titulo">
             <td width="149">Seleccione cliente</td>
-            <td colspan="3"><div align="left"><a href="index-admin.php"><img src="images/home.png"  alt="inicio" title="Volver al panel" width="32" height="32" border="none" /></a>
+            <td colspan="3"><div align="right"><a href="index-admin.php"><img src="images/home.png"  alt="inicio" title="Volver al panel" width="32" height="32" border="none" /></a>
                 <a href="index-admin.php"></a> </div></td>
           </tr>
   

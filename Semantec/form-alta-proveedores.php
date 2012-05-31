@@ -169,7 +169,7 @@
           </tr>
           <tr>
             <td>Web</td>
-            <td><input type="url" class="campos" id="prv_web" name="prv_web" value="http://"/></td>
+            <td><input type="url" class="campos" id="prv_web" name="prv_web" value=""/></td>
             <td></td>
           </tr>
           <tr>

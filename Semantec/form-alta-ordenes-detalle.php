@@ -5,18 +5,19 @@
 
         include("conexion.php");
 
-		
-        $sql = "SELECT  prv_id, prv_nombre FROM proveedores";
+	$provedor_id=$_POST['provedor_id'];	
+        $sql = "SELECT  prv_id, prv_nombre FROM proveedores WHERE prv_id=$provedor_id ";
         $resultado2 = mysql_query($sql);
 		$proveedor = mysql_fetch_array($resultado2);
 		
         $sql = "SELECT  est_id, est_nombre, est_color FROM estados";
         $resultado3 = mysql_query($sql);
-        
+        // LOS PARAMETROS
         $orden_id=$_GET['ord_id'];
         $ord_costo=$_GET['ord_costo'];
         $orden_venta=$_GET['ord_venta'];
         
+        //----------------------------------
         $sql0 = "SELECT ord_codigo, ord_descripcion, cli_id, prv_id, est_id, ord_alta, ord_plazo, ord_costo, ord_venta 
                     FROM ordenes 
                     WHERE ord_id = $orden_id";       

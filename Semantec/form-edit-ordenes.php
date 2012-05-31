@@ -68,9 +68,9 @@
 
       <h2>Panel de control</h2>
 
-      <form action="edit-ordenes.php" method="post" id="frm" >
+      
           
-      <input type="hidden" value="<?php echo($fila0["ord_id"]); ?>" name="ord_id2" >
+      
       <table class="forms" cellpadding="5">
           <tr class="titulo">
             <td colspan="2"> <?php echo($titulo)?> </td>
@@ -84,10 +84,34 @@
             <td>C&oacute;digo de Orden</td>
             <td>
                 <?php echo($fila0["ord_codigo"]); ?>
-                <input type="hidden" value="<?php echo($fila0["ord_codigo"]); ?>" class="campos" style="text-align:right" id="ord_codigo" name="ord_codigo" min="0" required/></td>
+             </td>   
+            <td>
+                          
+               
+            
+            </td>
+          </tr>
+  
+          
+          <tr>
+            <td>Estado</td>
+            <td><!--Guardo proveedor oculto y cambio de estado-->
+                <form action="form-alta-ordenes-detalle.php?ord_id=<?php echo($ord_id); ?>&ord_costo=<?php echo($fila0["ord_costo"]); ?>&ord_venta=<?php echo($fila0["ord_venta"]); ?>&cli_id=" method="post" id="frm" >
+                 <?php echo(utf8_encode($fila4["est_nombre"])); ?> 
+                <input type="hidden" value="<?php echo($est_id); ?>" name="provedor_id" id="provedor_id" />
+                <input type="submit" value="Cambiar" class="botones" id="botonAgregar" style="visibility:<?php if($fila0["prv_id"]==1){echo "hidden";}else{ echo "visible";} ?>"  />
+                </form>
+            </td>
             <td></td>
           </tr>
+          
+          
+        
           <tr>
+            <form action="edit-ordenes.php" method="post" id="frm" >
+              <input type="hidden" value="<?php echo($fila0["ord_codigo"]); ?>" class="campos" style="text-align:right" id="ord_codigo" name="ord_codigo" min="0" required/>  
+             <input type="hidden" value="<?php echo($est_id); ?>" name="est_id" id="est_id" />
+             <input type="hidden" value="<?php echo($fila0["ord_id"]); ?>" name="ord_id2" >
             <td>Descripci&oacute;n de Orden</td>
             <td><textarea class="campos" id="ord_descripcion" name="ord_descripcion" rows="9" required><?php echo(utf8_encode($fila0["ord_descripcion"])); ?></textarea></td>
             <td></td>
@@ -122,17 +146,7 @@
             </td>
             <td></td>
           </tr>
-          <tr>
-            <td>Estado</td>
-            <td>
-                 <?php echo(utf8_encode($fila4["est_nombre"])); ?> 
-                <input type="hidden" value="<?php echo($est_id); ?>" name="est_id" id="est_id" />
-                <a href="form-alta-ordenes-detalle.php?ord_id=<?php echo($ord_id); ?>&ord_costo=<?php echo($fila0["ord_costo"]); ?>&ord_venta=<?php echo($fila0["ord_venta"]); ?>">
-                <input type="button" value="Cambiar" class="botones" id="botonAgregar" style="visibility:<?php if($fila0["prv_id"]==1){echo "hidden";}else{ echo "visible";} ?>" />
-                </a> &nbsp; &nbsp; 
-            </td>
-            <td></td>
-          </tr>
+
           <tr>
             <td>Plazo de Finalización</td>
             <td><input type="text" value="<?php echo(tfecha($fila0["ord_plazo"])); ?>" class="campos" id="ord_plazo" name="ord_plazo" /></td>

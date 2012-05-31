@@ -64,8 +64,11 @@ function autenticaClienteCUIT(){
 }
 
 function VerificarProveedor(){
+    
  usuario = document.getElementById("prv_id").value;
  url = "esProveedorSinAsignar.php?usuario=" + usuario;
+
+ document.getElementById("provedor_id").value = usuario;
  leer_doc(url);
 }
 //---------------------------ALTA COMPRA-------------------------------------
