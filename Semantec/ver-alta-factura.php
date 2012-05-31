@@ -253,7 +253,8 @@
       <td><a href="lista-facturas.php">
     <input type="button" value="Ir al Listado"s class="botones" />
                 </a>  </td>
-      <td><a href="javascript:window.print()"><img id="logoImpresora" src="images/imprimir.png" heigth="48" width="48"/></a>
+      <td><a href="javascript:window.print()">
+              <img id="logoImpresora" src="images/imprimir.png" heigth="48" width="48"/></a>
           
       </td>
       <td>&nbsp;</td>

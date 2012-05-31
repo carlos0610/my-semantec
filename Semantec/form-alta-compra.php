@@ -151,7 +151,7 @@
   <table width="100%" border="0">
   <tr>
     <td>&nbsp;</td>
-    <td><div align="center"><input type="hidden" src="images/add.png" onClick="addRow('dataTable')"><img src="images/eliminar.png" width="32" height="32"></div></td>
+    <td><div align="center"><input type="hidden" src="images/add.png" onClick="addRow('dataTable')"></div></td>
   </tr>
   <tr>
     <td width="82%" class="titulo"><div align="center">Descripción</div></td>

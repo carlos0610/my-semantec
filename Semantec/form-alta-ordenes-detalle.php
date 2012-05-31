@@ -14,6 +14,8 @@
         $resultado3 = mysql_query($sql);
         
         $orden_id=$_GET['ord_id'];
+        $ord_costo=$_GET['ord_costo'];
+        $orden_venta=$_GET['ord_venta'];
         
         $sql0 = "SELECT ord_codigo, ord_descripcion, cli_id, prv_id, est_id, ord_alta, ord_plazo, ord_costo, ord_venta 
                     FROM ordenes 
@@ -102,7 +104,7 @@
           <tr>
             <td>Estado</td>
             <td>
-                <select name="est_id" id="est_id" class="campos">
+                <select name="est_id" id="est_id" class="campos" onchange="return validarFacturacion(<?php echo $ord_costo ?>,<?php echo $orden_venta ?>)">
     <?php
           while($fila3 = mysql_fetch_array($resultado3)){
     ?>                 
@@ -111,12 +113,15 @@
           }
     ?>
                 </select>
+            <span id="error" style="font-family: Verdana, Arial, Helvetica,sans-serif;font-size: 9pt;color: #CC3300;position:relative;visibility:hidden;">Faltan valores de compra y venta para facturación</span>
             </td>
             <td></td>
           </tr>
           <tr>
             <td>Adelanto</td>
-            <td><input type="number" class="campos" id="ord_det_monto" name="ord_det_monto" min="0" required value="0" style="text-align:right" /></td>
+            <td><input type="number" class="campos" id="ord_det_monto" name="ord_det_monto" min="0" required value="0" style="text-align:right" onchange="return validarAdelanto(<?php echo $ord_costo ?>)"/>
+                <span id="errorAdelanto" style="font-family: Verdana, Arial, Helvetica,sans-serif;font-size: 9pt;color: #CC3300;position:relative;visibility:hidden;">Supera al valor costo</span>
+            </td>
             <td></td>
           </tr>
           <tr>
@@ -130,7 +135,7 @@
                 <a href="form-edit-ordenes.php?ord_id=<?php echo($orden_id)?>">
                 <input type="button" value="  Volver   " class="botones" /></a> &nbsp; &nbsp;
                 <input type="reset"  value="Restablecer" class="botones" /> &nbsp; &nbsp; 
-                <input type="submit" value="  Guardar  " class="botones" />
+                <input type="submit" value="  Guardar  " class="botones" id="guardarDetalle" />
                 <input type="hidden" name="MAX_FILE_SIZE" value="200000000000">
             </td>
             <td></td>

@@ -148,3 +148,31 @@ function mostrarCuenta(id,nombre){
     }
 }
 
+function validarFacturacion(costo,venta){
+
+if((document.getElementById("est_id").value ==11)&(costo==0)&(venta==0))
+    {
+        document.getElementById("error").style.visibility = "visible"; 
+        document.getElementById("guardarDetalle").style.visibility = "hidden";
+    }
+    else
+        {
+           document.getElementById("error").style.visibility = "hidden"; 
+           document.getElementById("guardarDetalle").style.visibility = "visible";
+        }
+}
+
+
+function validarAdelanto(costo){
+
+if((document.getElementById("ord_det_monto").value > costo))
+    {
+        document.getElementById("errorAdelanto").style.visibility = "visible"; 
+        document.getElementById("guardarDetalle").style.visibility = "hidden";
+    }
+    else
+        {
+           document.getElementById("errorAdelanto").style.visibility = "hidden"; 
+           document.getElementById("guardarDetalle").style.visibility = "visible";
+        }
+}

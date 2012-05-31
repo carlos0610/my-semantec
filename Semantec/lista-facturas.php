@@ -88,7 +88,7 @@
             <td><?php echo($fila["cli_nombre"]);?></td>
             <td><?php echo($fila["prv_nombre"]);?></td>
                 <?php //echo(utf8_encode($fila_req["files_id"]));
-                      $id = $fila_req["files_id"] ?>
+                      $id = $fila["files_id"] ?>
             <td width="60"><?php if ($id!=null) echo "<a href=descargar.php?id=$id><img src=images/download.png /></a>";?></td>
             <td width="32"><a href="ver-alta-factura.php?fav_id=<?php echo($fila["fav_id"]); ?>&action=0&ord_id=<?php echo($fila["ord_id"]); ?>"><img src="images/detalles.png" alt="editar" title="Ver detalle" width="32" height="32" border="none" /></a></td>            
             <td><a href="#" onclick="eliminarFactura(<?php echo($fila["fav_id"]);?> )">
