@@ -33,3 +33,10 @@ footer{
    visibility:hidden;
    display: none;
 } 
+
+
+#footer_factura{
+   
+position:relative;  top:250px;
+   
+} 

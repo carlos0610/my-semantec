@@ -129,26 +129,26 @@
    <div id="contenedor2" style="height:auto;">
 	 <table width="100%" border="0" id="dataTable">
 <tr>
-            <td width="15%" class="titulo">Señores:</td>
-            <td colspan="3" style="background-color:#cbeef5"><?php echo $fila_datos_cliente["cli_nombre"]?></td>
+            <td width="15%" class="titulo"><span id="ocultarParaImpresion">Señores:</span></td>
+            <td colspan="3" style="background-color:#cbeef5" align="left"><?php echo $fila_datos_cliente["cli_nombre"]?></td>
        </tr>
           <tr>
-            <td class="titulo">Domiclio:</td>
-            <td width="24%" style="background-color:#cbeef5"><?php echo $fila_datos_cliente["cli_direccion"]?></td>
-            <td width="9%" class="titulo">Localidad:</td>
-            <td width="52%" style="background-color:#cbeef5"><?php echo $fila_datos_cliente["zon_nombre"]?></td>
+            <td class="titulo"><span id="ocultarParaImpresion">Domiclio:</span></td>
+            <td width="24%" style="background-color:#cbeef5"  align="left"><?php echo $fila_datos_cliente["cli_direccion"]?></td>
+            <td width="9%" class="titulo"><span id="ocultarParaImpresion">Localidad:</span></td>
+            <td width="52%" style="background-color:#cbeef5"  align="rigth"><?php echo $fila_datos_cliente["zon_nombre"]?></td>
        </tr>
           <tr>
-            <td class="titulo">IVA:</td>
-            <td style="background-color:#cbeef5"><?php echo $fila_datos_cliente["iva_nombre"]?></td>
-            <td class="titulo">Cuit:</td>
-            <td style="background-color:#cbeef5"><?php echo (verCUIT($fila_datos_cliente["cli_cuit"]));?></td>
+            <td class="titulo"><span id="ocultarParaImpresion">IVA:</span></td>
+            <td style="background-color:#cbeef5"  align="left"><?php echo $fila_datos_cliente["iva_nombre"]?></td>
+            <td class="titulo"><span id="ocultarParaImpresion">Cuit:</span></td>
+            <td style="background-color:#cbeef5"  align="rigth"><?php echo (verCUIT($fila_datos_cliente["cli_cuit"]));?></td>
           </tr>
           <tr>
-            <td class="titulo">Condiciones de venta:</td>
-            <td style="background-color:#cbeef5">&<?php echo $fila_fecha_factura["fav_condicion_vta"];?></td>
-            <td class="titulo">Remito:</td>
-            <td style="background-color:#cbeef5">
+            <td class="titulo"><span id="ocultarParaImpresion">Condiciones de venta:</span></td>
+            <td style="background-color:#cbeef5"  align="left">&<?php echo $fila_fecha_factura["fav_condicion_vta"];?></td>
+            <td class="titulo"><span id="ocultarParaImpresion">Remito:</span></td>
+            <td style="background-color:#cbeef5" align="rigth">
               <?php echo $fila_fecha_factura["fav_remito"];?>
             </td>
           </tr>
@@ -202,14 +202,14 @@
 
 </table>
 </div>
-
+   <br>
 <div id="footer_factura">
   
   <table width="100%" border="0">
     <tr>
-      <td width="12%"><span>VENCIMIENTO:</span></td>
+      <td width="12%"><span id="ocultarParaImpresion">VENCIMIENTO:</span></td>
       <td width="31%">&nbsp;</td>
-      <td width="39%"><div align="right">SUBTOTAL:</div></td>
+      <td width="39%"><div id="ocultarParaImpresion" align="right">SUBTOTAL:</div></td>
       <td width="18%"><label>
         <div align="center">
           <?php echo $subtotal ;?>
@@ -217,11 +217,11 @@
       </label></td>
     </tr>
     <tr>
-      <td rowspan="3">Nota</td>
+      <td rowspan="3"><span id="ocultarParaImpresion">Nota</span></td>
       <td rowspan="3"><label>
         <?php echo $fila_fecha_factura["fav_nota"]; ?>
       </label></td>
-      <td><div align="right">I.V.A INSCRIP&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $fila_iva["valor"]; ?> %</div></td>
+      <td><div align="right"><span id="ocultarParaImpresion">I.V.A INSCRIP&nbsp;&nbsp;&nbsp;&nbsp;</span><?php echo $fila_iva["valor"]; ?><span id="ocultarParaImpresion"> %</span></div></td>
       <td><label>
         <div align="center">
           <?php 
