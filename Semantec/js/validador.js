@@ -101,11 +101,13 @@ function procesarRespuesta2(){
    { 
     document.getElementById("incorrecto").style.visibility = "hidden";
     document.getElementById("correcto").style.visibility = "visible";   
+    document.getElementById("btnConfirma").style.visibility = "visible"; 
    }
    else
    {
      document.getElementById("incorrecto").style.visibility = "visible";
      document.getElementById("correcto").style.visibility = "hidden";
+      document.getElementById("btnConfirma").style.visibility = "hidden"; 
    }
 }
 

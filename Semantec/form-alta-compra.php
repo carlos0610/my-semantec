@@ -129,6 +129,7 @@
             <td class="titulo">Cuit:</td>
             <td style="background-color:#cbeef5"><?php echo (verCUIT($fila_proveedor["prv_cuit"]))?></td>
           </tr>
+          <form name="frmGenerarFactura" method="post" enctype="multipart/form-data" action="alta-compra.php?prv_id=<?php echo $prv_id ?>" >
           <tr>
             <td class="titulo">N° Orden:</td>
             <td style="background-color:#cbeef5"><input name="id_orden"  type="number" id="id_orden" required onChange="return autenticaOrden()">
@@ -150,7 +151,7 @@
    <!-- DESCRIPCION DE FACTURA  -->
    
 <div class="contenido_descripcion">
-  <form name="frmGenerarFactura" method="post" enctype="multipart/form-data" action="alta-compra.php?prv_id=<?php echo $prv_id ?>" >
+  
   <table width="100%" border="0">
   <tr>
     <td>&nbsp;</td>
@@ -174,7 +175,7 @@
     </label></td>
     <td><label>
       <div align="center">
-        <input type="text" align="left" name="txtTotalItem<?php echo($numeroDescripcion);?>" style="text-align:right"  id="txtTotalItem<?php echo($numeroDescripcion);?>" value="0.00" onChange="return ActualizarTotal(<?php echo($totalDescripcion);?>,2);" >
+        <input type="text" align="left" required name="txtTotalItem<?php echo($numeroDescripcion);?>" style="text-align:right"  id="txtTotalItem<?php echo($numeroDescripcion);?>" value="0.00" onChange="return ActualizarTotal(<?php echo($totalDescripcion);?>,2);" >
         </div>
     </label></td>
   </tr>
