@@ -14,4 +14,7 @@ Facturas de venta
 facturas de venta de - iva
 facturas de compras + iva compra
 
+CLIENTE-> FACTURA A
+PROVEEDOR -> PUEDE SER MONOTRIBUTISTA
+
 

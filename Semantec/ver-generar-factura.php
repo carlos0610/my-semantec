@@ -179,7 +179,7 @@
     </label></td>
     <td><label>
       <div align="center">
-        <input type="text" align="left" name="txtTotalItem<?php echo($numeroDescripcion);?>" style="text-align:right"  id="txtTotalItem<?php echo($numeroDescripcion);?>" value="0.00" onChange="return ActualizarTotal(<?php echo($totalDescripcion);?>);" >
+        <input type="text" align="left" name="txtTotalItem<?php echo($numeroDescripcion);?>" style="text-align:right"  id="txtTotalItem<?php echo($numeroDescripcion);?>" value="0.00" onChange="return ActualizarTotal(<?php echo($totalDescripcion);?>,2);" >
         </div>
     </label></td>
   </tr>
@@ -208,7 +208,7 @@
       </label></td>
       <td><div align="right">I.V.A INSCRIP
         <label>
-            <select name="comboIva" id="comboIva" onchange="return actualizarIva()">
+            <select name="comboIva" id="comboIva" onchange="return actualizarIva(1)">
             <?php while ($fila_iva = mysql_fetch_array($iva)){  ?>
                 <option value="<?php echo $fila_iva["idiva"]?>"><?php echo $fila_iva["valor"] ?></option>
                 <?php }?>

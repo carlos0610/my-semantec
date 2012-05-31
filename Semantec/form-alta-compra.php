@@ -17,43 +17,30 @@
     
      
      */
-        $ord_id = $_GET["ord_id"];
+        $prv_id= $_POST["comboProveedor"];
         include("funciones.php");
         include("conexion.php");
+            
+        $sql ="SELECT prv_id,prv_nombre,prv_direccion,prv_cuit,iva_nombre,z.zon_nombre FROM proveedores p ,iva_tipo i,zonas z 
+                WHERE p.estado = 1 
+                AND prv_id = $prv_id
+                AND p.iva_id = i.iva_id
+                and p.zon_id = z.zon_id
+                ORDER BY prv_nombre";
         
-       /* $sql = "SELECT c.cli_nombre,c.cli_direccion,z.zon_nombre,i.iva_nombre,c.cli_cuit 
-                FROM ordenes o,clientes c,zonas z,iva_tipo i
-                    WHERE 
-                    o.cli_id = c.cli_id
-                    and o.ord_id = $ord_id
-                    and c.zon_id = z.zon_id
-                    and c.iva_id = i.iva_id";
-        
-       $cliente = mysql_query($sql); 
-       $fila_datos_cliente = mysql_fetch_array($cliente); */
-       
-        //$nro = mysql_num_rows($datos_cliente);
-       
-       //+++++configuracion  de descripciones a imprimir en pantalla+++++
-        
-        
-        $sql ="SELECT prv_id, prv_nombre,prv_cuit,iva_nombre FROM proveedores where estado = 1 and prv_id > 1 order by prv_nombre"; 
-        $proveedores = mysql_query($sql);
+        $proveedores = mysql_query($sql);       
+        $fila_proveedor = mysql_fetch_array($proveedores);
         
          
+       //+++++configuracion  de descripciones a imprimir en pantalla+++++ 
        $numeroDescripcion=0;
        $totalDescripcion=1;
        
        
-       $_SESSION["ord_id"] = $ord_id;
+       //$_SESSION["ord_id"] = $ord_id;
         
        $sql = "SELECT idiva,valor from IVA";
-       $iva = mysql_query($sql);
-       
-       
-       
-       
-       
+       $iva = mysql_query($sql); 
        mysql_close();
        
 ?>
@@ -123,20 +110,8 @@
    <div id="contenedor2" style="height:auto;">
 	 <table width="100%" border="0" id="dataTable">
 <tr>
-  <td class="titulo">Seleccion proveedor</td>
-  <td colspan="3" style="background-color:#cbeef5"><label>
-          
-          
-    <select name="comboProveedor" id="comboProveedor">
-        <?php while ($fila_proveedor = mysql_fetch_array($proveedores)){ ?>
-            
-        <option value="<?php echo $fila_proveedor["prv_id"]?>" ><?php echo $fila_proveedor["prv_nombre"]?></option>
-            
-            
-        <?php }?>
-        
-    </select>
-  </label></td>
+  <td>&nbsp;</td>
+  <td colspan="3" style="background-color:#cbeef5"><label></label></td>
 </tr>
 <tr>
             <td width="15%" class="titulo">Señores:</td>
@@ -144,23 +119,22 @@
        </tr>
           <tr>
             <td class="titulo">Domiclio:</td>
-            <td width="24%" style="background-color:#cbeef5"><?php echo $fila_proveedor["prv_nombre"]?></td>
+            <td width="24%" style="background-color:#cbeef5"><?php echo $fila_proveedor["prv_direccion"]?></td>
             <td width="9%" class="titulo">Localidad:</td>
-            <td width="52%" style="background-color:#cbeef5"><?php echo $fila_proveedor["prv_nombre"]?></td>
+            <td width="52%" style="background-color:#cbeef5"><?php echo $fila_proveedor["zon_nombre"]?></td>
        </tr>
           <tr>
             <td class="titulo">IVA:</td>
-            <td style="background-color:#cbeef5"><?php echo $fila_proveedor["prv_nombre"]?></td>
+            <td style="background-color:#cbeef5"><?php echo $fila_proveedor["iva_nombre"]?></td>
             <td class="titulo">Cuit:</td>
-            <td style="background-color:#cbeef5"><?php echo (verCUIT($fila_datos_cliente["cli_cuit"]))?></td>
+            <td style="background-color:#cbeef5"><?php echo (verCUIT($fila_proveedor["prv_cuit"]))?></td>
           </tr>
           <tr>
-            <td class="titulo">Condiciones de venta:</td>
+            <td class="titulo">&nbsp;</td>
             <td style="background-color:#cbeef5">&nbsp;</td>
-            <td class="titulo">Remito:</td>
-            <td style="background-color:#cbeef5">
-              <input name="txtRemito" type="number" id="txtRemito" size="12">            </td>
-          </tr>
+            <td class="titulo">&nbsp;</td>
+            <td style="background-color:#cbeef5">&nbsp;</td>
+       </tr>
           <tr>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
@@ -173,7 +147,7 @@
    <!-- DESCRIPCION DE FACTURA  -->
    
 <div class="contenido_descripcion">
-  <form name="frmGenerarFactura" method="post" enctype="multipart/form-data" action="alta-factura.php?ord_id=<?php echo $ord_id ?>&items=<?php echo $totalDescripcion?>" >
+  <form name="frmGenerarFactura" method="post" enctype="multipart/form-data" action="alta-compra.php?prv_id=<?php echo $prv_id ?>" >
   <table width="100%" border="0">
   <tr>
     <td>&nbsp;</td>
@@ -181,7 +155,7 @@
   </tr>
   <tr>
     <td width="82%" class="titulo"><div align="center">Descripción</div></td>
-    <td width="18%" class="titulo"><div align="center">Total</div></td>
+    <td width="18%" class="titulo"><div align="center">Total compra</div></td>
   </tr>
   
   <?php while($numeroDescripcion < $totalDescripcion){
@@ -197,7 +171,7 @@
     </label></td>
     <td><label>
       <div align="center">
-        <input type="text" align="left" name="txtTotalItem<?php echo($numeroDescripcion);?>" style="text-align:right"  id="txtTotalItem<?php echo($numeroDescripcion);?>" value="0.00" onChange="return ActualizarTotal(<?php echo($totalDescripcion);?>);" >
+        <input type="text" align="left" name="txtTotalItem<?php echo($numeroDescripcion);?>" style="text-align:right"  id="txtTotalItem<?php echo($numeroDescripcion);?>" value="0.00" onChange="return ActualizarTotal(<?php echo($totalDescripcion);?>,2);" >
         </div>
     </label></td>
   </tr>
@@ -210,7 +184,7 @@
   
   <table width="100%" border="0">
     <tr>
-      <td width="12%">VENCIMIENTO: </td>
+      <td width="12%">&nbsp;</td>
       <td width="31%">&nbsp;</td>
       <td width="39%"><div align="right">SUBTOTAL:</div></td>
       <td width="18%"><label>
@@ -226,7 +200,7 @@
       </label></td>
       <td><div align="right">I.V.A INSCRIP
         <label>
-            <select name="comboIva" id="comboIva" onChange="return actualizarIva()">
+            <select name="comboIva" id="comboIva" onChange="return actualizarIva(2)">
             <?php while ($fila_iva = mysql_fetch_array($iva)){  ?>
                 <option value="<?php echo $fila_iva["idiva"]?>"><?php echo $fila_iva["valor"] ?></option>
                 <?php }?>
@@ -240,10 +214,10 @@
       </label></td>
     </tr>
     <tr>
-      <td><div align="right">I.V.A NO INSCRIP.........%</div></td>
+      <td><div align="right">PERCEPCIONES</div></td>
       <td><label>
         <div align="center">
-          <input type="text" style="text-align:right" value="0.00"  name="txtIva_No" id="txtIva_No" readonly>
+            <input type="text" style="text-align:right" value="0.00"  name="txtPercepciones" id="txtPercepciones" onChange="return ActualizarTotal(<?php echo($totalDescripcion);?>,2);">
           </div>
       </label></td>
     </tr>

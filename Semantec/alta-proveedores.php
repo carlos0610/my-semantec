@@ -34,9 +34,10 @@
         										'$prv_notas',
                                                                                         1
         										)";
-		//$_SESSION["query"] = $sql;
+		
                 mysql_query($sql);
-                $prv_id = mysql_insert_id();
+                $prv_id = mysql_insert_id(); // <-- Proveedor recién ingresado
+                
 		$_SESSION["prv_id"] = $prv_id;
                 $_SESSION["query"] = $sql;
                 
@@ -49,6 +50,11 @@
                     mysql_query($sql);             
                 } else { $_SESSION["tienecuenta"] = false;}
                 
+                
+                
+                /* REGISTRO CUENTA CORRIENTE DE PROVEEDOR */
+                $sql = "INSERT INTO cuentacorriente_prv (prv_id) VALUES ($prv_id)";
+                mysql_query($sql);
 
 		mysql_close();
 		header("location:ver-alta-proveedores.php?action=1");

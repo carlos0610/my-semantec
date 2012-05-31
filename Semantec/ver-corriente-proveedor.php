@@ -5,31 +5,50 @@
 
         include("conexion.php");
         
-        $cli_id = $_POST["comboCliente"];  
-                        
-        /* OBTENGO DATOS DE CLIENTE */
-        $sql = "SELECT c.cli_nombre,c.cli_direccion,z.zon_nombre,i.iva_nombre,c.cli_cuit,cc.ccc_id 
-                FROM clientes c,zonas z,iva_tipo i,cuentacorriente_cliente cc
-                    WHERE 
-                     c.cli_id = $cli_id
-                    and cc.cli_id = c.cli_id
-                    and c.zon_id = z.zon_id
-                    and c.iva_id = i.iva_id";
+        $prv_id = $_POST["comboProveedor"];
         
-       $cliente = mysql_query($sql); 
-       $fila_datos_cliente = mysql_fetch_array($cliente); 
+        
+                        
+        /* OBTENGO DATOS DE PROVEEDOR */
+        $sql = "SELECT prv_nombre,prv_cuit,prv_direccion,z.zon_nombre,i.iva_nombre,prv_telefono,cc.ccp_id 
+                FROM proveedores p,zonas z,iva_tipo i,cuentacorriente_prv cc
+                WHERE 
+                p.prv_id = $prv_id
+                AND z.zon_id = p.zon_id
+                AND p.iva_id = i.iva_id
+                AND p.prv_id = cc.prv_id
+                AND p.estado = 1";
+        
+       $proveedor = mysql_query($sql); 
+       $fila_datos_proveedor = mysql_fetch_array($proveedor); 
         
         
         
 /* CALCULO PAGINADO */  ###############################################################################
-    $sql0="SELECT o.ord_id,o.ord_descripcion,o.ord_venta,o.est_id from ordenes o,cuentacorriente_cliente cc where cc.cli_id = o.cli_id and cc.cli_id = $cli_id and o.estado = 1 and cc.estado = 1";
+    $sql0="SELECT o.ord_id,ord_codigo,o.ord_descripcion,o.est_id,sum(od.ord_det_monto) as Adelantos,o.ord_costo Presupuesto,o.ord_costo - sum(od.ord_det_monto) as Saldo 
+            FROM ordenes o, ordenes_detalle od
+            WHERE 
+            o.ord_id IN (select ord_id from ordenes where prv_id = $prv_id)
+            AND o.ord_id = od.ord_id
+            GROUP BY o.ord_id";
+    
+    
     $tamPag=100;
     
     include("paginado.php");        
-        $sql = "SELECT o.ord_id,o.ord_descripcion,o.ord_venta,o.est_id from ordenes o,cuentacorriente_cliente cc where cc.cli_id = o.cli_id and cc.cli_id = $cli_id and o.estado = 1 and cc.estado = 1";
-                $sql .= " LIMIT ".$limitInf.",".$tamPag; 
+        $sql = "SELECT o.ord_id,ord_codigo,o.ord_descripcion,o.est_id,sum(od.ord_det_monto) as Adelantos,o.ord_costo Presupuesto,o.ord_costo - sum(od.ord_det_monto) as Saldo 
+            FROM ordenes o, ordenes_detalle od ";
+         
+        $sql .= " WHERE 
+            o.ord_id IN (select ord_id from ordenes where prv_id = $prv_id)
+            AND o.ord_id = od.ord_id
+            GROUP BY o.ord_id";
+        $sql .= " LIMIT ".$limitInf.",".$tamPag;
+                
         $resultado = mysql_query($sql);
         $cantidad = mysql_num_rows($resultado);
+        
+        echo "<br>EL QUERY ES :".$sql;
 
         $i = 0;
         $colores = array("#fff","#e8f7fa");
@@ -77,29 +96,29 @@
    <div id="datos_cliente">
    <table width="100%" border="0" id="dataTable">
 <tr>
-  <td colspan="4"><h2>Datos cliente</h2></td>
+  <td colspan="4"><h2>Datos proveedor</h2></td>
   </tr>
 <tr>
-            <td width="15%" class="titulo">Cliente:</td>
-            <td colspan="3" style="background-color:#cbeef5"><?php echo $fila_datos_cliente["cli_nombre"]?></td>
+            <td width="15%" class="titulo">Proveedor:</td>
+            <td colspan="3" style="background-color:#cbeef5"><?php echo $fila_datos_proveedor["prv_nombre"]?></td>
        </tr>
           <tr>
             <td class="titulo">Domiclio:</td>
-            <td width="24%" style="background-color:#cbeef5"><?php echo $fila_datos_cliente["cli_direccion"]?></td>
+            <td width="24%" style="background-color:#cbeef5"><?php echo $fila_datos_proveedor["prv_direccion"]?></td>
             <td width="9%" class="titulo">Localidad:</td>
-            <td width="52%" style="background-color:#cbeef5"><?php echo $fila_datos_cliente["zon_nombre"]?></td>
+            <td width="52%" style="background-color:#cbeef5"><?php echo $fila_datos_proveedor["zon_nombre"]?></td>
        </tr>
           <tr>
             <td class="titulo">IVA:</td>
-            <td style="background-color:#cbeef5"><?php echo $fila_datos_cliente["iva_nombre"]?></td>
+            <td style="background-color:#cbeef5"><?php echo $fila_datos_proveedor["iva_nombre"]?></td>
             <td class="titulo">Cuit:</td>
-            <td style="background-color:#cbeef5"><?php echo (verCUIT($fila_datos_cliente["cli_cuit"]))?></td>
+            <td style="background-color:#cbeef5"><?php echo (verCUIT($fila_datos_proveedor["prv_cuit"]))?></td>
           </tr>
           <tr>
             <td class="titulo">Nro. Cuenta corriente:</td>
-            <td style="background-color:#cbeef5"><?php echo $fila_datos_cliente["ccc_id"]?></td>
-            <td class="titulo">&nbsp;</td>
-            <td style="background-color:#cbeef5">&nbsp;</td>
+            <td style="background-color:#cbeef5"><?php echo $fila_datos_proveedor["ccp_id"]?></td>
+            <td class="titulo">Teléfono:</td>
+            <td style="background-color:#cbeef5"><?php echo $fila_datos_proveedor["prv_telefono"]?></td>
           </tr>
           <tr>
             <td>&nbsp;</td>
@@ -114,14 +133,15 @@
    
    
    <div id="contenedor" style="height:auto;">
-      <h2>Ordenes realizadas por <?php echo $fila_datos_cliente["cli_nombre"]?></h2>
+      <h2>Cuenta corriente de <?php echo $fila_datos_proveedor["prv_nombre"]?></h2>
 
-  <table class="listados" cellpadding="5">
+<table class="listados" cellpadding="5">
           <tr class="titulo">
             <td width="80">Nro de Orden</td>
-            <td width="487">Descripción</td>
-            <td width="66">Valor venta</td>
-            <td width="67">Cancelada</td>
+            <td width="449">Descripción</td>
+            <td width="88">Presupuesto</td>
+            <td width="83">Cancelado</td>
+            <td width="83">Adelantos</td>
             <td width="73">Saldo</td>
 <td width="35">
                 <a href="index-admin.php">
@@ -133,38 +153,25 @@
           <tr class="lista" bgcolor="<?php echo($colores[$i]);?>">
               <td><a href="ver-alta-ordenes.php?ord_id=<?php echo($fila["ord_id"]);?>&action=0" target="_blank"><?php echo($fila["ord_id"]);?></a></td>
             <td><?php echo($fila["ord_descripcion"]);?></td>
-            <td><?php echo $fila["ord_venta"];?></td>
-            <td><?php if ($fila["est_id"]==$estadoPagado){
-                        echo "Sí";
-                        }
-                    else
-                        {
-                        echo "No";
-                        }
-                ?></td>       
-          <td><?php if ($fila["est_id"]==$estadoPagado){
-                         echo 0;
-                        }
-                    else
-                        {
-                        echo $fila["ord_venta"];
-                        }
-                ?></td>
-    <td>&nbsp;</td>
+            <td><?php echo $fila["Presupuesto"];?></td>
+            <td>&nbsp;</td>
+            <td><?php echo $fila["Adelantos"];?></td>
+    <td><?php echo $fila["Saldo"];?></td>
         </tr>
   <?php
             $i++;
             if($i==$cant){$i=0;}
             
-             if ($fila["est_id"]!=$estadoPagado)   //SI CANCELO ORDEN, SUMAMOS AL $totalDeuda
-            $totalDeuda += $fila["ord_venta"];
+             
+            $totalDeuda += $fila["Saldo"];
+            
           } // FIN_WHILE
           
-          echo "<tr><td colspan=5 align=right>Total deuda cliente: <b>$totalDeuda</b> pesos</td></tr>";
+          echo "<tr><td colspan=5 align=right>Total deuda con proveedor: <b>$totalDeuda</b> pesos</td></tr>";
           
   ?>
           <tr>
-            <td colspan="5" class="pie_lista"><?php 
+            <td colspan="6" class="pie_lista"><?php 
 /* PAGINADO */  ###############################################################################            
             echo(verPaginado($cant_registros, $pagina, $inicio, $final, $numPags)); 
             ?></td>
