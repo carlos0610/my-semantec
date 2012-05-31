@@ -130,8 +130,11 @@
             <td style="background-color:#cbeef5"><?php echo (verCUIT($fila_proveedor["prv_cuit"]))?></td>
           </tr>
           <tr>
-            <td class="titulo">&nbsp;</td>
-            <td style="background-color:#cbeef5">&nbsp;</td>
+            <td class="titulo">N° Orden:</td>
+            <td style="background-color:#cbeef5"><input name="id_orden"  type="number" id="id_orden" required onChange="return autenticaOrden()">
+            <span id="incorrecto" style="font-family: Verdana, Arial, Helvetica,sans-serif;font-size: 9pt;color: #CC3300;position:relative;visibility:hidden;">Incorrecto</span>
+            <span id="correcto" style="font-family: Verdana, Arial, Helvetica,sans-serif;font-size: 9pt;color: green;position:relative;visibility:hidden;">Correcto</span>
+            </td>
             <td class="titulo">&nbsp;</td>
             <td style="background-color:#cbeef5">&nbsp;</td>
        </tr>
@@ -166,7 +169,7 @@
   <tr>
     <td><label>   
         <div align="left">
-          <input name="txtDescripcionItem<?php echo($numeroDescripcion);?>"  type="text" id="txtDescripcionItem<?php echo($numeroDescripcion);?>" size="110">
+          <input name="txtDescripcionItem<?php echo($numeroDescripcion);?>"  type="text" id="txtDescripcionItem<?php echo($numeroDescripcion);?>" size="110" required>
         </div>
     </label></td>
     <td><label>
