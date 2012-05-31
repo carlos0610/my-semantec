@@ -170,8 +170,10 @@
             ?></td>
           </tr>
       </table>   
-
+      
      <div class="clear"></div>
+     <br>
+     <a href="form-seleccionar-cliente.php"><input type="button" value="Volver" class="botones" /></a> &nbsp; &nbsp;
    </div>
    <!--end contenedor-->
 

@@ -241,7 +241,7 @@
       <td>&nbsp;</td>
     </tr>
     <tr>
-      <td>&nbsp;</td>
+      <td><a href="form-seleccionar-proveedor.php?action=2"><input type="button" value="Volver" class="botones" /></a> &nbsp; &nbsp; </td>
       <td>&nbsp;</td>
       <td><input type="submit" name="btnConfirma" id="btnConfirma" value="Confirmar">
           
