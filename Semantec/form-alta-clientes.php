@@ -76,9 +76,7 @@
             <td colspan="2"> <?php echo($titulo)?> </td>
             <td width="32">
                 <a href="index-admin.php">
-                    <img src="images/home.png"  alt="inicio" title="Volver al panel" width="32" height="32" border="none" />
-                </a>
-            </td>
+                    <img src="images/home.png"  alt="inicio" title="Volver al panel" width="32" height="32" border="none" />                </a>            </td>
           </tr>
           <tr>
             <td>Raz&oacute;n Social</td>
@@ -89,8 +87,7 @@
             <td>CUIT</td>
             <td>
                 <input type="number" style="text-align:right" min="10000000000" class="campos" id="cli_cuit" name="cli_cuit" maxlength="11" onChange="return autenticaClienteCUIT();"  required />
-                <span id="error" style="font-family: Verdana, Arial, Helvetica,sans-serif;font-size: 9pt;color: #CC3300;position:relative;visibility:hidden;">Cuit Existente</span>
-            </td>
+                <span id="error" style="font-family: Verdana, Arial, Helvetica,sans-serif;font-size: 9pt;color: #CC3300;position:relative;visibility:hidden;">Cuit Existente</span>            </td>
             <td></td>
           </tr>
           <tr>
@@ -104,8 +101,7 @@
     <?php
           }
     ?>
-                </select>
-            </td>
+                </select>            </td>
             <td></td>
           </tr>          
           <tr>
@@ -119,13 +115,17 @@
     <?php
           }
     ?>
-                </select>
-            </td>
+                </select>            </td>
             <td></td>
           </tr>
           <tr>
             <td>Direcci&oacute;n</td>
             <td><input type="text" class="campos" id="cli_direccion" name="cli_direccion" required/></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Direcci&oacute;n fiscal</td>
+            <td><input type="text" class="campos" id="cli_direccion_fiscal" name="cli_direccion_fiscal" required/></td>
             <td></td>
           </tr>
           <tr>
@@ -142,8 +142,7 @@
             <td>&nbsp;</td>
             <td>
                 <input type="reset" value="Restablecer" class="botones" /> &nbsp; &nbsp; 
-                <input type="submit" value="Agregar cliente" class="botones" style="visibility:visible" id="botonAgregar" />
-            </td>
+                <input type="submit" value="Agregar cliente" class="botones" style="visibility:visible" id="botonAgregar" />            </td>
             <td></td>
           </tr>
           <tr>
@@ -151,7 +150,7 @@
           </tr>
       </table> 
 
-      </form>  
+     </form>  
       
       <div class="clear"></div>
 

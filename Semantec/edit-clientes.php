@@ -7,6 +7,7 @@
         //$cli_rubro = utf8_decode($_POST["rub_id"]);
         $zon_id = $_POST["zon_id"];
         $cli_direccion = utf8_decode($_POST["cli_direccion"]);
+        $cli_direccion_fiscal = utf8_decode($_POST["cli_direccion_fiscal"]);
         $cli_telefono = $_POST["cli_telefono"];
         $cli_notas = utf8_decode($_POST["cli_notas"]);
 
@@ -17,6 +18,7 @@
         				iva_id = $iva_id,
         				zon_id = $zon_id,
         				cli_direccion = '$cli_direccion',
+                                        cli_direccion_fiscal = '$cli_direccion_fiscal',    
         				cli_telefono = $cli_telefono,
         				cli_notas = '$cli_notas'
         		WHERE cli_id = $cli_id";

@@ -4,7 +4,7 @@
 
         include("conexion.php");
         $cli_id = $_GET["cli_id"];
-        $sql0 = "SELECT cli_nombre, cli_cuit, iva_id, cli_rubro, zon_id, cli_direccion, cli_telefono, cli_notas
+        $sql0 = "SELECT cli_nombre, cli_cuit, iva_id, cli_rubro, zon_id, cli_direccion,cli_direccion_fiscal, cli_telefono, cli_notas
                   FROM clientes c
                   WHERE c.cli_id=$cli_id";
         $clientes = mysql_query($sql0);
@@ -125,9 +125,16 @@
           </tr>
           <tr>
             <td>Direcci&oacute;n</td>
-            <td><input value="<?php echo(utf8_encode($fila_clientes["cli_direccion"])); ?>" type="text" class="campos" id="cli_direccion" name="cli_direccion" /></td>
+            <td><input value="<?php echo(utf8_encode($fila_clientes["cli_direccion"])); ?>" type="text" class="campos" id="cli_direccion" name="cli_direccion" required/></td>
             <td></td>
           </tr>
+          <tr>
+            <td>Direcci&oacute;n fiscal</td>
+            <td><input value="<?php echo(utf8_encode($fila_clientes["cli_direccion_fiscal"])); ?>" type="text" class="campos" id="cli_direccion_fiscal" name="cli_direccion_fiscal" required/></td>
+            <td></td>
+          </tr>
+          
+          
           <tr>
             <td>Tel&eacute;fono</td>
             <td><input value="<?php echo($fila_clientes["cli_telefono"]); ?>" type="text" style="text-align:right" class="campos" id="cli_telefono" name="cli_telefono" /></td>

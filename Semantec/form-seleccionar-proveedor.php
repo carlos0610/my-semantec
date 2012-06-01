@@ -10,14 +10,18 @@
         $sql = "SELECT  prv_id, prv_nombre FROM proveedores WHERE estado = 1 and prv_id <> 1";
         $resultado1 = mysql_query($sql);
         
-        if ($action == 1)
+        if ($action == 1){
            $tituloPanel = "Cuenta corriente de clientes";
-        else
+           $botonValue  = "Ver cuenta corriente";
+           
+        }else{
            $tituloPanel = "Registrar factura de compra";
-        
+           $botonValue  = "Registrar factura de compra";
+        }
         
 ?>
 <!doctype html>
+
 <html>  
   <head>
 <?php
@@ -69,7 +73,7 @@
               </select>
             </label></td>
             <td width="473"><label>
-              <input type="submit" name="btnVerCuenta" id="btnVerCuenta" value="Ver cuenta corriente">
+              <input type="submit" name="btnVerCuenta" id="btnVerCuenta" value="<?php echo $botonValue ?>">
             </label></td>
             <td colspan="2">&nbsp;</td>
         </tr>

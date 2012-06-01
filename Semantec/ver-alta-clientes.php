@@ -20,7 +20,7 @@
         
         //$query = $_SESSION["query"];
       //  unset($_SESSION["cli_id"]);        
-        $sql = "SELECT cli_nombre, cli_cuit, iva_tipo.iva_nombre, rubros.rub_nombre, zonas.zon_nombre, cli_direccion, cli_telefono, cli_notas 
+        $sql = "SELECT cli_nombre, cli_cuit, iva_tipo.iva_nombre, rubros.rub_nombre, zonas.zon_nombre, cli_direccion,cli_direccion_fiscal, cli_telefono, cli_notas 
         FROM clientes,rubros,iva_tipo,zonas 
         WHERE cli_id = $cli_id 
         and clientes.cli_rubro = rubros.rub_id
@@ -71,9 +71,7 @@
             <td colspan="2"> <?php echo($titulo)?> </td>
             <td width="32">
                 <a href="index-admin.php">
-                    <img src="images/home.png"  alt="inicio" title="Volver al panel" width="32" height="32" border="none" />
-                </a>
-            </td>
+                    <img src="images/home.png"  alt="inicio" title="Volver al panel" width="32" height="32" border="none" />                </a>            </td>
           </tr>
           <tr>
             <td>Razón Social</td>
@@ -101,6 +99,11 @@
             <td></td>
           </tr>
           <tr>
+            <td>Direcci&oacute;n fiscal</td>
+            <td><?php echo(utf8_encode($cliente["cli_direccion_fiscal"])); ?></td>
+            <td></td>
+          </tr>                 
+          <tr>
             <td>Tel&eacute;fono</td>
             <td><?php echo($cliente["cli_telefono"]); ?></td>
             <td></td>
@@ -115,8 +118,7 @@
             <td>
                 <a href="lista-clientes.php"><input type="button" value="Ir al Listado" class="botones" /></a> &nbsp; &nbsp; 
                 <a href="form-edit-clientes.php?cli_id=<?php echo($cli_id)?>"><input type="button" value="Modificar datos" class="botones" /></a> &nbsp; &nbsp; 
-                <a href="form-alta-clientes.php"><input type="button" value="Agregar otro cliente" class="botones" /></a>
-            </td>
+                <a href="form-alta-clientes.php"><input type="button" value="Agregar otro cliente" class="botones" /></a>            </td>
             <td></td>
           </tr>
           <tr>
@@ -124,7 +126,7 @@
           </tr>
       </table> 
       
-      <div class="clear"></div>
+     <div class="clear"></div>
 
    </div>
    <!--end contenedor-->
