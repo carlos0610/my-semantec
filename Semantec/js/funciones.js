@@ -55,6 +55,7 @@ function disableTxt(formulario,id){
         document.forms[nombre].cue_nrobancaria.focus();
         document.forms[nombre].cut_id.disabled=false;             //Habilitamos combobox Tipo cuenta
         document.forms[nombre].cue_cbu.disabled=false; 
+        document.forms[nombre].ban_id.disabled=false; 
         
         
         
@@ -66,7 +67,7 @@ function disableTxt(formulario,id){
         document.forms[nombre].cut_id.selectedIndex=0;            //Combo vuelve a 'Seleccione'
         document.forms[nombre].cue_nrobancaria.value="";
         document.forms[nombre].cue_cbu.value="";
-        
+        document.forms[nombre].ban_id.disabled=true; 
     }
 
 }

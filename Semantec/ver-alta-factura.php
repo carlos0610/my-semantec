@@ -41,7 +41,7 @@
        
        
       //DIOGETE $sql = "select fav_fecha,fav_nota from factura_venta where ord_id = $ord_id";
-       $sql = "select fav_fecha,fav_nota, fav_remito, fav_condicion_vta from factura_venta where fav_id = $fav_id";
+       $sql = "select fav_fecha,fav_nota, fav_remito, fav_condicion_vta, fav_vencimiento from factura_venta where fav_id = $fav_id";
        $fecha_factura = mysql_query($sql);
        $fila_fecha_factura = mysql_fetch_array($fecha_factura);
        
@@ -208,7 +208,11 @@
   <table width="100%" border="0">
     <tr>
       <td width="12%"><span id="ocultarParaImpresion">VENCIMIENTO:</span></td>
-      <td width="31%">&nbsp;</td>
+      <td width="31%"><label>
+        <div align="center">
+          <?php echo mfecha($fila_fecha_factura["fav_vencimiento"]) ;?>
+          </div>
+      </label></td>
       <td width="39%"><div id="ocultarParaImpresion" align="right">SUBTOTAL:</div></td>
       <td width="18%"><label>
         <div align="center">

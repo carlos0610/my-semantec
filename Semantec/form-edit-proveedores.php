@@ -24,11 +24,15 @@
         $sql = "select cut_id,cut_nombre FROM cuentatipo";
         $tipocuenta = mysql_query($sql);
         
+        $sql = "SELECT ban_id , ban_nombre FROM `banco` ";
+        $bancos = mysql_query($sql);
         
         
-        $sql ="SELECT cue.cue_nrobancaria,cut.cut_nombre,cue.cue_cbu FROM cuentabanco_prv cue,cuentatipo cut
+        $sql ="SELECT cue.cue_nrobancaria,cut.cut_nombre,cue.cue_cbu , b.ban_nombre AS nombreBanco FROM cuentabanco_prv cue,cuentatipo cut , banco b
                WHERE prv_id = $prv_id
-               AND cue.cut_id = cut.cut_id";
+               AND cue.cut_id = cut.cut_id
+               AND cue.ban_id = b.ban_id
+              ";
         $banco = mysql_query($sql);
         $filas =  mysql_num_rows($banco);
         
@@ -247,7 +251,23 @@
                                                                                                    }?>" <? if($filas==0)
                                                                                                             echo " disabled";?>/></td>
             <td></td>
-          </tr> 
+          </tr>        
+          <tr>
+              <td>Banco</td><td>
+          <select name="ban_id" id="ban_id" class="campos" >
+    <?php
+          while($fila = mysql_fetch_array($bancos)){
+    ?>
+                    <option value="<?php echo($fila["ban_id"]); ?>" <?php if($fila["ban_nombre"]==$fila_banco["nombreBanco"]){echo(" selected=\"selected\"");} ?>  > <?php echo(utf8_encode($fila["ban_nombre"])); ?> </option>
+    <?php
+          }
+    ?>
+                </select>
+                  </td>          
+          </tr>
+          
+          
+          
             <tr>
             <td>Notas</td>
             <td><textarea class="campos" id="prv_notas" name="prv_notas" rows="9"><?php echo(utf8_encode($fila0["prv_notas"])); ?></textarea></td>

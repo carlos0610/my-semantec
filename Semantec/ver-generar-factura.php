@@ -63,7 +63,7 @@
   <script type="text/javascript" src="js/jquery.datepick-es.js"></script>
   <script type="text/javascript">
   $(function() {
-      $('#ord_plazo').datepick();
+      $('#vencimiento').datepick();
   });
   </script></head>
   <body>
@@ -192,7 +192,7 @@
   
   <table width="100%" border="0">
     <tr>
-      <td width="12%">VENCIMIENTO: <input name="vencimiento" type="text" id="ord_plazo" required> </td>
+      <td width="12%">VENCIMIENTO: <input name="vencimiento" type="text" id="vencimiento" required> </td>
       <td width="31%">&nbsp;</td>
       <td width="39%"><div align="right">SUBTOTAL:</div></td>
       <td width="18%"><label>

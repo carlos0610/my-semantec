@@ -45,9 +45,11 @@
                     $cue_nrobancaria = $_POST["cue_nrobancaria"];
                     $cut_id          = $_POST["cut_id"];
                     $cue_cbu         = $_POST["cue_cbu"];
-                    $sql = "INSERT INTO cuentabanco_prv (prv_id,cut_id,cue_nrobancaria,cue_cbu) VALUES ($prv_id,$cut_id,$cue_nrobancaria,$cue_cbu)";
+                    $ban_id          = $_POST["ban_id"];
+                    $sql = "INSERT INTO cuentabanco_prv (ban_id,prv_id,cut_id,cue_nrobancaria,cue_cbu) VALUES ($ban_id,$prv_id,$cut_id,$cue_nrobancaria,$cue_cbu)";
                     $_SESSION["tienecuenta"] = true;
-                    mysql_query($sql);             
+                    mysql_query($sql);   
+                    echo $sql;
                 } else { $_SESSION["tienecuenta"] = false;}
                 
                 

@@ -11,6 +11,8 @@
         $rubros =  mysql_query($sql);
         $sql = "select cut_id,cut_nombre FROM cuentatipo";
         $tipocuenta = mysql_query($sql);
+        $sql = "SELECT ban_id , ban_nombre FROM `banco` ";
+        $bancos = mysql_query($sql);
         
 
 ?>
@@ -205,6 +207,21 @@
             <td><input type="text" style="text-align:right" class="campos" id="cue_cbu" name="cue_cbu" disabled/></td>
             <td></td>
           </tr> 
+          
+          <tr>
+              <td>Banco</td><td>
+          <select name="ban_id" id="ban_id" class="campos" disabled>
+    <?php
+          while($fila = mysql_fetch_array($bancos)){
+    ?>
+                    <option value="<?php echo($fila["ban_id"]); ?>"> <?php echo(utf8_encode($fila["ban_nombre"])); ?> </option>
+    <?php
+          }
+    ?>
+                </select>
+                  </td>          
+          </tr>
+          
           <tr>
             <td>Notas</td>
             <td><textarea class="campos" id="prv_notas" name="prv_notas" rows="9"></textarea></td>

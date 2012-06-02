@@ -13,7 +13,7 @@
         $ord_venta = $_POST["ord_venta"];
         $usu_nombre = $_SESSION["usu_nombre"]; 
         $est_nombre = $_POST["est_nombre"];
-        
+        echo $ord_plazo;
         
         include("conexion.php");
         $idFile = -1;
@@ -120,6 +120,6 @@
         mysql_close();
         
         echo "MI AMIGO EL QUERY: ".$sql;
-	header("location:ver-alta-ordenes.php?action=1");
+//	header("location:ver-alta-ordenes.php?action=1");
 
 ?>

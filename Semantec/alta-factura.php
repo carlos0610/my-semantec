@@ -1,5 +1,5 @@
 <?php
-
+    include ("funciones.php");
     include ("conexion.php");
 
 
@@ -8,7 +8,8 @@
     $nota    = $_POST["txtNota"];
     $iva     = $_POST["comboIva"];   
     $Remito= $_POST["txtRemito"]; 
-    $condicion_venta= $_POST["condicion_venta"]; 
+    $vencimiento = gfecha($_POST["vencimiento"]);
+    $condicion_venta= $_POST["condicion_venta"];
     
     
     $estado = 1;
@@ -40,12 +41,12 @@
     
         
     if ($idFile != -1)
-        $query = "INSERT INTO factura_venta (files_id,ord_id,fav_fecha,fav_nota,    fav_remito, fav_condicion_vta ,fav_vencimiento,   estado) VALUES ($idFile,$idOrden,NOW(),'$nota',$Remito,'$condicion_venta','aca agregar el vencimiento',$estado)";
+        $query = "INSERT INTO factura_venta (files_id,ord_id,fav_fecha,fav_nota,    fav_remito, fav_condicion_vta ,fav_vencimiento,   estado) VALUES ($idFile,$idOrden,NOW(),'$nota',$Remito,'$condicion_venta','$vencimiento',$estado)";
     else
-        $query = "INSERT INTO factura_venta (ord_id,fav_fecha,fav_nota,  fav_remito, fav_condicion_vta ,fav_vencimiento, estado) VALUES ($idOrden,NOW(),'$nota',$Remito,'$condicion_venta','aca agregar el vencimiento',1)";
+        $query = "INSERT INTO factura_venta (ord_id,fav_fecha,fav_nota,  fav_remito, fav_condicion_vta ,fav_vencimiento, estado) VALUES ($idOrden,NOW(),'$nota',$Remito,'$condicion_venta','$vencimiento',1)";
         $inserto = mysql_query($query);      
         $nro_factura = mysql_insert_id();
-   
+        ECHO $query;
         
        
        $i=1;
@@ -63,7 +64,7 @@
             $columnaPrec = "txtTotalItem".$i;
             $descripcion = $_POST[$columnaDesc];
             $precio = $_POST[$columnaPrec]; 
-            echo  $query;
+         //   echo  $query;
         };
 
             mysql_close();

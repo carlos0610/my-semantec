@@ -29,9 +29,11 @@
         
         /* Si tiene cuenta obtenemos los datos de su cuenta de la tabla cuentabanco*/
         if ($tienecuenta){
-        $sql   =  "SELECT cue.cue_nrobancaria,cut.cut_nombre,cue.cue_cbu FROM cuentabanco_prv cue,cuentatipo cut
+        $sql   =  "SELECT cue.cue_nrobancaria,cut.cut_nombre,cue.cue_cbu, b.ban_nombre AS nombreBanco FROM cuentabanco_prv cue,cuentatipo cut, banco b
                   WHERE prv_id = $prv_id
-                  AND cue.cut_id = cut.cut_id";
+                  AND cue.cut_id = cut.cut_id
+                  AND cue.ban_id = b.ban_id
+            ";
         $banco = mysql_query($sql);
         $fila_banco = mysql_fetch_array($banco);
         }
@@ -164,9 +166,14 @@
           </tr>
           <tr>
             <td>CBU</td>
-            <td>".$fila_banco["cue_cbu"]."</td>";
-            "<td></td>
-          </tr> 
+            <td>".$fila_banco["cue_cbu"]."</td>
+            <td></td>
+          </tr>
+          <tr>
+             <td>Banco</td>
+             <td>".$fila_banco["nombreBanco"]."</td>
+             <td></td>
+          </tr>
           ";
               
           }?>
