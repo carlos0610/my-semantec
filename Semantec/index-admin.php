@@ -67,6 +67,7 @@
       <section class="cajas">
      <h3>Facturación</h3>
       <p><a href="lista-facturas.php" class="current">ir al listado</a></p>
+      <p><a href="ver-generar-factura-nueva.php" class="current">nueva factura</a></p>
      </section>
       
       <section class="cajas">

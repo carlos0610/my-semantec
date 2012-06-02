@@ -4,11 +4,9 @@
         include("funciones.php");
         include("conexion.php");
 /* CALCULO PAGINADO */  ###############################################################################
-    $sql0 = "SELECT f.ord_id, fav_id, fav_fecha, cli_nombre, prv_nombre, files_id
-                  FROM factura_venta f, ordenes o, clientes c, proveedores p
-                  WHERE f.ord_id = o.ord_id
-                    AND o.prv_id = p.prv_id  
-                    AND o.cli_id = c.cli_id
+    $sql0 = "SELECT f.gru_id, fav_id, fav_fecha, cli_nombre, prv_nombre, f.files_id
+                  FROM factura_venta f, grupo_ordenes g_o, clientes c, proveedores p , ordenes o
+                  WHERE f.gru_id = o.gru_id
                     AND f.estado = 1 
                     ORDER BY f.fav_fecha DESC 
                     ";
@@ -16,13 +14,11 @@
     
     include("paginado.php"); 
     
-        $sql = "SELECT f.ord_id, fav_id, fav_fecha, cli_nombre, prv_nombre, files_id
-                  FROM factura_venta f, ordenes o, clientes c, proveedores p
-                  WHERE f.ord_id = o.ord_id
-                    AND o.prv_id = p.prv_id  
-                    AND o.cli_id = c.cli_id
+        $sql = "SELECT f.gru_id, fav_id, fav_fecha, cli_nombre, prv_nombre, f.files_id
+                  FROM factura_venta f, grupo_ordenes g_o, clientes c, proveedores p , ordenes o
+                  WHERE f.gru_id = o.gru_id
                     AND f.estado = 1 
-                    ORDER BY f.fav_fecha DESC
+                    ORDER BY f.fav_fecha DESC 
                     ";
                 $sql .= " LIMIT ".$limitInf.",".$tamPag; 
         $resultado = mysql_query($sql);

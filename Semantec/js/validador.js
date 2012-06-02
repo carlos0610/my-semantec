@@ -120,3 +120,52 @@ function autenticaOrden(){
  url = "existeNumeroOrden.php?usuario=" + usuario;
  leer_doc2(url);
 }
+
+//---------------------------llenar datos de Cliente en Factura-------------------------------------
+function leer_doc3(url) {
+ req = false;
+ // Llama objeto XMLHttpRequest
+ if (window.XMLHttpRequest) {
+   req = new XMLHttpRequest();
+   if (req.overrideMimeType) {
+     req.overrideMimeType('text/xml'); 
+   }
+ 
+ // Si no funciona intenta utiliar el objeto IE/Windows ActiveX 
+ } else if (window.ActiveXObject) {
+   req = new ActiveXObject("Microsoft.XMLHTTP"); 
+ }
+
+ if(req!=null){
+   req.onreadystatechange = procesarRespuesta3;
+   req.open('GET', url, true);
+   req.send(null);
+ } 
+ 
+}
+
+function procesarRespuesta3(){
+    //NOTA: para q funcione correctamente no olvidarse q deben existir los id
+   
+ respuesta = req.responseXML;
+ var existe = respuesta.getElementsByTagName('senores').item(0).firstChild.data;
+document.getElementById('nombre').innerHTML = existe;
+document.getElementById('domicilio').innerHTML = respuesta.getElementsByTagName('domicilio').item(0).firstChild.data;
+document.getElementById('localidad').innerHTML = respuesta.getElementsByTagName('zona').item(0).firstChild.data;
+document.getElementById('iva').innerHTML = respuesta.getElementsByTagName('iva_nombre').item(0).firstChild.data;
+document.getElementById('cuit').innerHTML = respuesta.getElementsByTagName('cuit').item(0).firstChild.data;
+}
+
+// Funciones llamdas del Form
+function rellenarDatosCliente(){   
+    
+var d = document;
+var val = "ricardo";
+var lab = d.getElementById('nombre');
+lab.innerHTML = val;
+    
+    
+ usuario = document.getElementById("cli_id").value;
+ url = "getDatosDeCliente.php?usuario=" + usuario;
+ leer_doc3(url);
+}

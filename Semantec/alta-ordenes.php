@@ -120,6 +120,6 @@
         mysql_close();
         
         echo "MI AMIGO EL QUERY: ".$sql;
-//	header("location:ver-alta-ordenes.php?action=1");
+	header("location:ver-alta-ordenes.php?action=1");
 
 ?>
