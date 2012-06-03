@@ -18,7 +18,25 @@
        $sql = "SELECT idiva,valor from iva";
        $iva = mysql_query($sql);
        
+       $cli_id = $_GET["cli_id"];
+       $sql = "SELECT c.cli_nombre, c.cli_cuit , i.iva_id , c.cli_rubro , c.zon_id , c.cli_direccion , c.cli_direccion_fiscal , i.iva_nombre ,z.zon_nombre
+        FROM clientes c , iva_tipo i , zonas z
+        WHERE  c.cli_id =$cli_id
+        AND  c.iva_id = i.iva_id 
+        AND  c.zon_id = z.zon_id
+        ";
+
+        $result=mysql_query($sql); 
+        $fila_datos_cliente = mysql_fetch_array($result); 
        
+        $sql="SELECT `gru_id`,`ord_codigo`,`ord_descripcion`,`prv_id`,`est_id` ,ord_id 
+              FROM `ordenes` 
+              WHERE `cli_id` =$cli_id
+              AND    est_id  = 11 
+              AND    estado  = 1
+              AND    ISNULL(gru_id)
+              ";
+        $result_ordenes=mysql_query($sql); 
        
        
        
@@ -89,18 +107,20 @@
 
    
    </div>
-   <form name="frmGenerarFactura" method="post" enctype="multipart/form-data" action="alta-factura.php?ord_id=<?php echo $ord_id ?>&items=<?php echo $totalDescripcion?>" >
-   <div id="contenedor2" style="height:auto;">
-	 <table width="100%" border="0" id="dataTable">
-          
+   <form name="frmGenerarFactura" method="post" enctype="multipart/form-data" action="alta-factura.php?ord_id=<?php echo $ord_id ?>&items=<?php echo $totalDescripcion ?>" >
+       <div id="contenedor2" style="height:auto;">
+           
+
+           
+    <table width="100%" border="0" id="dataTable">      
     <tr>
             <td width="15%" class="titulo">Señores:</td>
             <td colspan="3" style="background-color:#cbeef5">
-             <select name="cli_id" id="cli_id" class="campos" required onChange="return rellenarDatosCliente();" >
+             <select name="cli_id" id="cli_id" class="campos" required onChange="return refrescarDatosDeCliente(value);" >
              <?php
                  while($fila = mysql_fetch_array($resultado1)){
                 ?>
-                    <option value="<?php echo($fila["cli_id"]); ?>"><?php echo($fila["cli_nombre"]); ?></option>
+                    <option value="<?php echo($fila["cli_id"]); ?>"<?php if($fila["cli_id"]==$cli_id){echo(" selected=\"selected\"");} ?>><?php echo($fila["cli_nombre"]); ?></option>
              <?php
                      }
                 ?>
@@ -110,15 +130,15 @@
        </tr>
           <tr>
             <td class="titulo">Domiclio:</td>
-            <td width="24%" style="background-color:#cbeef5"><label id="domicilio"> </label></td>
+            <td width="24%" style="background-color:#cbeef5"><label id="domicilio"><?php echo $fila_datos_cliente["cli_direccion"]?></label></td>
             <td width="9%" class="titulo">Localidad:</td>
-            <td width="52%" style="background-color:#cbeef5"><label id="localidad"> </label></td>
+            <td width="52%" style="background-color:#cbeef5"><label id="localidad"><?php echo $fila_datos_cliente["zon_nombre"]?> </label></td>
        </tr>
           <tr>
             <td class="titulo">IVA:</td>
-            <td style="background-color:#cbeef5"><label id="iva"> </label></td>
+            <td style="background-color:#cbeef5"><label id="iva"><?php echo $fila_datos_cliente["iva_nombre"]?> </label></td>
             <td class="titulo">Cuit:</td>
-            <td style="background-color:#cbeef5"><label id="cuit"> </label></td>
+            <td style="background-color:#cbeef5"><label id="cuit"><?php echo (verCUIT($fila_datos_cliente["cli_cuit"]))?> </label></td>
           </tr>
           <tr>
             <td class="titulo">Condiciones de venta:</td>
@@ -137,7 +157,40 @@
             <td>&nbsp;</td>
           </tr>
      </table>   
-       
+                <table width="100%" border="0" id="dataTableOrdenes">  
+                      <tr>
+                             <td width="5%" class="titulo"><div align="center">Selección</div></td>
+                             <td width="10%" class="titulo"><div align="center">Codigo</div></td>
+                             <td width="18%" class="titulo"><div align="center">descripción</div></td>
+                      </tr>
+               <?php
+               $i=0;
+               while ($item = mysql_fetch_array($result_ordenes)) {
+                   $i++;
+               ?>
+                   <tr>
+                       <td>
+                           <div align="center">
+                              <input type="checkbox" name="checkbox_ord_id<?php echo $i ?>" value="<?php echo $item["ord_id"]; ?>" />
+                          </div>
+                       </td>
+                       <td><label>   
+                               <div align="right">
+                                        <? echo $item["ord_codigo"]; ?>
+                               </div>
+                           </label></td>
+                       <td><label>
+                               <div align="center">
+                                         <? echo $item["ord_descripcion"]; ?>
+                               </div>
+                           </label></td>
+                   </tr>
+                   <?php
+               }
+               ?>
+  
+
+            </table>  
        
    <!-- DESCRIPCION DE FACTURA  -->
    

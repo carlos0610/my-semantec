@@ -177,3 +177,8 @@ if((document.getElementById("ord_det_monto").value > costo))
            document.getElementById("guardarDetalle").style.visibility = "visible";
         }
 }
+
+// PASAR Cli_Id
+function refrescarDatosDeCliente(id){
+   window.location="ver-generar-factura-nueva.php?cli_id="+id;  
+}
