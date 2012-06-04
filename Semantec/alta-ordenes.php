@@ -3,6 +3,7 @@
         include("funciones.php");
 
         $ord_codigo = $_POST["ord_codigo"];
+        echo $ord_codigo;
         $ord_descripcion = utf8_decode($_POST["ord_descripcion"]);
         $cli_id = $_POST["cli_id"];
         $prv_id = $_POST["prv_id"];
@@ -13,7 +14,7 @@
         $ord_venta = $_POST["ord_venta"];
         $usu_nombre = $_SESSION["usu_nombre"]; 
         $est_nombre = $_POST["est_nombre"];
-        echo $ord_plazo;
+  //      echo $ord_plazo;
         
         include("conexion.php");
         $idFile = -1;
@@ -43,16 +44,16 @@
         
         
 
-        echo "<br>File $fileName uploaded<br>";
+  //      echo "<br>File $fileName uploaded<br>";
         $idFile = mysql_insert_id();
         
                                                         } /*FIN DE ADJUNTAR ARCHIVO PARA DETALLE*/
                                                         
         /*INSERTAMOS ORDEN*/
-        
+        echo $ord_codigo;
         $sql = "INSERT INTO ordenes (ord_codigo,ord_descripcion,cli_id,prv_id,est_id,ord_alta,ord_plazo,ord_costo,ord_venta,estado) VALUES (
         							
-								'$ord_codigo',
+								 $ord_codigo,
         							'$ord_descripcion',
         						         $cli_id,
         							 $prv_id,
@@ -119,7 +120,7 @@
         $_SESSION["query"] = $sql2;
         mysql_close();
         
-        echo "MI AMIGO EL QUERY: ".$sql;
+ //       echo "MI AMIGO EL QUERY: ".$sql;
 	header("location:ver-alta-ordenes.php?action=1");
 
 ?>

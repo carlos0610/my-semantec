@@ -182,3 +182,28 @@ if((document.getElementById("ord_det_monto").value > costo))
 function refrescarDatosDeCliente(id){
    window.location="ver-generar-factura-nueva.php?cli_id="+id;  
 }
+
+// verificarCheckBoxs
+function verificarCheckboxs(cantTotalCheckboxs,id){
+    i=0;
+    url="ver-generar-factura-nueva.php?cli_id="+id;
+    elementoOrden=0;
+    condicionveanta=document.getElementById("condicion_venta").value;
+    remito=document.getElementById("txtRemito").value;
+    while (i<cantTotalCheckboxs)
+        {
+            i++;
+            if(eval("document.frmGenerarFactura.checkbox_ord_id"+i+".checked"))
+                {
+                   elementoOrden++; 
+                   url+="&ord_check"+elementoOrden+"="+eval("document.frmGenerarFactura.checkbox_ord_id"+i+".value");   
+                } 
+                else
+                    {
+                        eval("document.frmGenerarFactura.checkbox_ord_id"+i+".style.visibility = 'hidden'")
+                    }
+        }
+        url+="&cant="+elementoOrden+"&condicionventa="+condicionveanta+"&remito="+remito+"&ocultar=si";
+        alert(url); 
+   window.location=url;  
+}

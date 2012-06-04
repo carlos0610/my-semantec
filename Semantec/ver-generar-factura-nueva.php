@@ -37,9 +37,11 @@
               AND    ISNULL(gru_id)
               ";
         $result_ordenes=mysql_query($sql); 
-       
-       
-       
+       //+++++++++++Gets de los checkbox
+        $cantOrdenesChecadas=$_GET["cant"]; 
+        $remito=$_GET["remito"]; 
+        $condicionventa=$_GET["condicionventa"];
+      
        mysql_close();
        
 ?>
@@ -107,11 +109,23 @@
 
    
    </div>
-   <form name="frmGenerarFactura" method="post" enctype="multipart/form-data" action="alta-factura.php?ord_id=<?php echo $ord_id ?>&items=<?php echo $totalDescripcion ?>" >
-       <div id="contenedor2" style="height:auto;">
-           
-
-           
+   <form name="frmGenerarFactura" method="post" enctype="multipart/form-data" action="alta-factura-nueva.php?items=<?php echo $totalDescripcion ?>" >
+    <div id="contenedor2" style="height:auto;">  
+        
+        <input type="hidden"  id="cantidadOrdenesAceptadas" value="<?php echo $cantOrdenesChecadas; ?>">
+        <?php // CARGO LAS ORDENES CHECADAS DE FORMA OCULTA
+        $i=0;
+        while ($i <$cantOrdenesChecadas)
+        { $i++;  ?>
+           <input type="hidden" name="ordenCheck<?php echo $i; ?>"  id="ordenCheck<?php echo $i; ?>" value="<?php echo ($_GET["ord_check$i"]); ?>" >   
+        
+        
+        <?php
+            
+        }       
+        ?>
+        
+        
     <table width="100%" border="0" id="dataTable">      
     <tr>
             <td width="15%" class="titulo">Señores:</td>
@@ -138,16 +152,16 @@
             <td class="titulo">IVA:</td>
             <td style="background-color:#cbeef5"><label id="iva"><?php echo $fila_datos_cliente["iva_nombre"]?> </label></td>
             <td class="titulo">Cuit:</td>
-            <td style="background-color:#cbeef5"><label id="cuit"><?php echo (verCUIT($fila_datos_cliente["cli_cuit"]))?> </label></td>
+            <td style="background-color:#cbeef5"><label id="cuit"><?php echo (verCUIT($fila_datos_cliente["cli_cuit"]));?> </label></td>
           </tr>
           <tr>
             <td class="titulo">Condiciones de venta:</td>
             <td style="background-color:#cbeef5">
-                <input name="condicion_venta" type="text" id="condicion_venta" size="25" required>
+                <input name="condicion_venta" type="text" id="condicion_venta" size="25" required value="<?php echo $condicionventa; ?>">
             </td>
             <td class="titulo">Remito:</td>
             <td style="background-color:#cbeef5">
-              <input name="txtRemito" type="number" id="txtRemito" size="12" required>
+                <input name="txtRemito"      type="number" id="txtRemito" size="12" required value="<?php echo $remito ?>">
             </td>
           </tr>
           <tr>
@@ -191,10 +205,10 @@
   
 
             </table>  
-       
+      <input type="button" name="btnConfirmarCheckboxs" id="btnConfirmarCheckboxs" style="visibility:visible" value="Confirmar" onClick="verificarCheckboxs(<?php echo $i; ?>,<?php echo $cli_id; ?>);">  
    <!-- DESCRIPCION DE FACTURA  -->
    
-<div class="contenido_descripcion">
+<div class="contenido_descripcion" style="visibility:none" enable="true" >
   
   <table width="100%" border="0">
   <tr>
@@ -228,7 +242,8 @@
 
 </table>
 
-</div><div id="footer_factura">
+</div>
+ <div id="footer_factura">
   
   <table width="100%" border="0">
     <tr>
@@ -289,7 +304,7 @@
       <td>&nbsp;</td>
       <td>
          
-          <input type="submit" name="btnConfirma" id="btnConfirma" style="visibility:hidden" value="Confirmar">
+          <input type="submit" name="btnConfirma" id="btnConfirma" style="visibility:hidden" value="Confirmar" >
           
       </td>
       <td>&nbsp;</td>
