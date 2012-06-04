@@ -232,7 +232,7 @@ function verificarCheckboxs(cantTotalCheckboxs,id){
                     }
         }
         url+="&cant="+elementoOrden+"&condicionventa="+condicionveanta+"&remito="+remito+"&ocultar=si";
-        alert(url); 
+        
    window.location=url;  
 }
 

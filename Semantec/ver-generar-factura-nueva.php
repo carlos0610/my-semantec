@@ -112,16 +112,13 @@
    <form name="frmGenerarFactura" method="post" enctype="multipart/form-data" action="alta-factura-nueva.php?items=<?php echo $totalDescripcion ?>" >
     <div id="contenedor2" style="height:auto;">  
         
-        <input type="hidden"  id="cantidadOrdenesAceptadas" value="<?php echo $cantOrdenesChecadas; ?>">
+        
         <?php // CARGO LAS ORDENES CHECADAS DE FORMA OCULTA
         $i=0;
         while ($i <$cantOrdenesChecadas)
         { $i++;  ?>
-           <input type="hidden" name="ordenCheck<?php echo $i; ?>"  id="ordenCheck<?php echo $i; ?>" value="<?php echo ($_GET["ord_check$i"]); ?>" >   
-        
-        
-        <?php
-            
+           <input type="hidden" name="ordenCheck<?php echo $i; ?>"  id="ordenCheck<?php echo $i; ?>" value="<?php echo ($_GET["ord_check$i"]); ?>" >               
+        <?php      
         }       
         ?>
         
@@ -165,7 +162,7 @@
             </td>
           </tr>
           <tr>
-            <td>&nbsp;</td>
+            <td><input type="hidden"  name="cantidadOrdenesAceptadas" id="cantidadOrdenesAceptadas" value="<?php echo $cantOrdenesChecadas; ?>"></td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>

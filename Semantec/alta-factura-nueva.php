@@ -10,7 +10,7 @@
     $Remito= $_POST["txtRemito"]; 
     $vencimiento = gfecha($_POST["vencimiento"]);
     $condicion_venta= $_POST["condicion_venta"];
-    
+
     
     $estado = 1;
     $idFile = -1;
@@ -37,12 +37,27 @@
         mysql_query($sql_file);
         $idFile = mysql_insert_id(); // HAY QUE VALIDAR SI SE ROMPE LA TRANSACCIÓN DEL FILE
         
-                                                   }
+            }
     
         $sql_grupo_ordenes= "INSERT INTO `grupo_ordenes`(`gru_fecha_alta`) VALUES (NOW()) ";
         echo "GRUPO ORDENES: ".$sql_grupo_ordenes;
         mysql_query($sql_grupo_ordenes);
         $id_grupo_ordenes = mysql_insert_id(); 
+        
+        //actualizo las ordenes
+        $i=0;
+        echo $cantidadCheckboxs;
+        while($i<$cantidadCheckboxs)
+        {
+            $i++;
+            $ord_id=$_POST["ordenCheck$i"];
+            $sql="UPDATE `ordenes` 
+                  SET `gru_id`=$id_grupo_ordenes,`est_id`=12 
+                  WHERE `ord_id`= $ord_id
+                ";
+            echo $sql;
+            mysql_query($sql);
+        }
                                                    
     if ($idFile != -1){
         $query = "INSERT INTO factura_venta (gru_id, files_id,ord_id,fav_fecha,fav_nota,    fav_remito, fav_condicion_vta ,fav_vencimiento,   estado) VALUES ($id_grupo_ordenes, $idFile,$idOrden,NOW(),'$nota',$Remito,'$condicion_venta','$vencimiento',$estado)";
@@ -50,7 +65,7 @@
         $query = "INSERT INTO factura_venta (gru_id,fav_fecha,fav_nota,  fav_remito, fav_condicion_vta ,fav_vencimiento, estado) VALUES ($id_grupo_ordenes,NOW(),'$nota',$Remito,'$condicion_venta','$vencimiento',1)";
         $inserto = mysql_query($query);      
         $nro_factura = mysql_insert_id();
-        ECHO $query;
+     
     }
        
        $i=1;
