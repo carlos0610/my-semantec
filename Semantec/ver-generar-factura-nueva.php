@@ -304,7 +304,7 @@
       <td>&nbsp;</td>
       <td>
          
-          <input type="submit" name="btnConfirma" id="btnConfirma" style="visibility:hidden" value="Confirmar" >
+          <input type="submit" name="btnConfirma" id="btnConfirma"  value="Confirmar" >
           
       </td>
       <td>&nbsp;</td>

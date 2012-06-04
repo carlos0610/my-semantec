@@ -10,7 +10,7 @@
     include("encabezado-main.php");
 ?>
   </head>
-  <body>
+  <body onLoad="popup('lista-alertas.php', 'Alerta')">
 	
   <!-- start main --><!-- start main --><!-- start main --><!-- start main --><!-- start main -->
   <div id="main">

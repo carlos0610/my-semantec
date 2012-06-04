@@ -40,18 +40,18 @@
                                                    }
     
         $sql_grupo_ordenes= "INSERT INTO `grupo_ordenes`(`gru_fecha_alta`) VALUES (NOW()) ";
-        echo $sql_grupo_ordenes;
+        echo "GRUPO ORDENES: ".$sql_grupo_ordenes;
         mysql_query($sql_grupo_ordenes);
         $id_grupo_ordenes = mysql_insert_id(); 
                                                    
-    if ($idFile != -1)
+    if ($idFile != -1){
         $query = "INSERT INTO factura_venta (gru_id, files_id,ord_id,fav_fecha,fav_nota,    fav_remito, fav_condicion_vta ,fav_vencimiento,   estado) VALUES ($id_grupo_ordenes, $idFile,$idOrden,NOW(),'$nota',$Remito,'$condicion_venta','$vencimiento',$estado)";
-    else
+    }else{
         $query = "INSERT INTO factura_venta (gru_id,fav_fecha,fav_nota,  fav_remito, fav_condicion_vta ,fav_vencimiento, estado) VALUES ($id_grupo_ordenes,NOW(),'$nota',$Remito,'$condicion_venta','$vencimiento',1)";
         $inserto = mysql_query($query);      
         $nro_factura = mysql_insert_id();
         ECHO $query;
-        
+    }
        
        $i=1;
             $columnaDesc = "txtDescripcionItem".$i;
@@ -73,6 +73,8 @@
 
             mysql_close();
 
+            
+            
 //  header("location:ver-alta-factura.php?ord_id=$idOrden&fav_id=$nro_factura");
 
 ?>

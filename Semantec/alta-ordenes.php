@@ -9,7 +9,7 @@
         $prv_id = $_POST["prv_id"];
         $est_id = $_POST["est_id"];
         //$ord_alta = date("Y-m-d");
-        $ord_plazo = gfecha($_POST["ord_plazo"]); 
+        //$ord_plazo = gfecha($_POST["ord_plazo"]); 
         $ord_costo = $_POST["ord_costo"];
         $ord_venta = $_POST["ord_venta"];
         $usu_nombre = $_SESSION["usu_nombre"]; 
@@ -51,7 +51,7 @@
                                                         
         /*INSERTAMOS ORDEN*/
         echo $ord_codigo;
-        $sql = "INSERT INTO ordenes (ord_codigo,ord_descripcion,cli_id,prv_id,est_id,ord_alta,ord_plazo,ord_costo,ord_venta,estado) VALUES (
+        $sql = "INSERT INTO ordenes (ord_codigo,ord_descripcion,cli_id,prv_id,est_id,ord_alta,ord_costo,ord_venta,estado) VALUES (
         							
 								 $ord_codigo,
         							'$ord_descripcion',
@@ -59,7 +59,6 @@
         							 $prv_id,
         							 $est_id,
         							 NOW(),
-        							'$ord_plazo',
         							 $ord_costo,
                                                                  $ord_venta,
                                                                  1

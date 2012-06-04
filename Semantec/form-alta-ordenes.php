@@ -117,12 +117,8 @@
                 <input type="hidden" value=" <?php echo($fila3["est_nombre"]); ?>" name="est_nombre"  id="est_id">
             </td>
             <td></td>
-          </tr>
+          </tr>                    
           <tr>
-            <td>Plazo de Finalización</td>
-            <td><input type="text" class="campos" id="ord_plazo" name="ord_plazo"  /></td>
-            <td></td>
-          </tr>          <tr>
             <td>Valor Costo de la Orden</td>
             <td><input type="number" style="text-align:right" class="campos" id="ord_costo" name="ord_costo" value="0"  min="0" required /></td>
             <td></td>

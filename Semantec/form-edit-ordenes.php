@@ -6,7 +6,7 @@
 
         include("conexion.php");
         $ord_id = $_GET["ord_id"];
-        $sql0 = "SELECT ord_codigo, ord_descripcion, cli_id, prv_id, est_id, ord_alta, ord_plazo, ord_costo, ord_venta 
+        $sql0 = "SELECT ord_codigo, ord_descripcion, cli_id, prv_id, est_id, ord_alta, ord_plazo,ord_plazo_proveedor, ord_costo, ord_venta 
                     FROM ordenes 
                     WHERE ord_id = $ord_id";
         $resultado0 = mysql_query($sql0);
@@ -38,7 +38,7 @@
   <script type="text/javascript" src="js/funciones.js"></script>
   <script type="text/javascript">
   $(function() {
-      $('#ord_plazo').datepick();
+      $('#fecha').datepick();
   });
   </script>    
   
@@ -146,12 +146,23 @@
             </td>
             <td></td>
           </tr>
-
+          <?php if ($fila0["est_id"] ==  2){ ?>  
           <tr>
-            <td>Plazo de Finalización</td>
-            <td><input type="text" value="<?php echo(tfecha($fila0["ord_plazo"])); ?>" class="campos" id="ord_plazo" name="ord_plazo" /></td>
+              <td><label id="texto_respuesta"><?php echo "Fecha respuesta proveedor" ?></label></td>
+              <td><input type="text" class="campos" id="fecha" name="fecha" value="<?php echo mfecha($fila0["ord_plazo_proveedor"])?>"/></td>
             <td></td>
-          </tr>          <tr>
+          </tr>
+          
+          <?php  } else if ($fila0["est_id"] ==  9) { ?>
+          
+          <tr>
+              <td><label id="texto_respuesta"><?php echo "Plazo de finalización" ?></label></td>
+            <td><input type="text" class="campos" id="fecha" name="fecha" value="<?php echo mfecha($fila0["ord_plazo"])?>"/></td>
+            <td></td>
+          </tr>
+          <?php } ?>
+          
+           <tr>
             <td>Valor Costo de la Orden</td>
             <td><input type="number" style="text-align:right" value="<?php echo($fila0["ord_costo"]); ?>" class="campos" id="ord_costo" name="ord_costo" required /></td>
             <td></td>
