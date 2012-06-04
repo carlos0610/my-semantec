@@ -29,6 +29,8 @@
         $resultado1 = mysql_query($sql);
         $cliente = mysql_fetch_array($resultado1);
         
+        $mostrar = false;
+        
 ?>
 <!doctype html>
 <html>  
@@ -42,9 +44,11 @@
   <script type="text/javascript" src="js/jquery.datepick-es.js"></script>
   <script type="text/javascript">
   $(function() {
-      $('#ord_plazo').datepick();
+      $('#fecha').datepick();
   });
   </script>    
+  
+  
 
   </head>
   <body>
@@ -79,9 +83,7 @@
             <td colspan="2"> <?php echo($titulo)?> </td>
             <td width="32">
                 <a href="index-admin.php">
-                    <img src="images/home.png"  alt="inicio" title="Volver al panel" width="32" height="32" border="none" />
-                </a>
-            </td>
+                    <img src="images/home.png"  alt="inicio" title="Volver al panel" width="32" height="32" border="none" />                </a>            </td>
           </tr>
           <tr>
             <td>Descripci&oacute;n de actualización</td>
@@ -91,38 +93,44 @@
           <tr>
             <td>Cliente</td>
             <td>                
-				<?php echo($cliente["cli_nombre"]); ?> 
-            </td>
+				<?php echo($cliente["cli_nombre"]); ?>            </td>
             <td></td>
           </tr>
           <tr>
             <td>Proveedor</td>
             <td>
-					<?php echo($proveedor["prv_nombre"]); ?> 
-            </td>
+					<?php echo($proveedor["prv_nombre"]); ?>            </td>
             <td></td>
           </tr>
           <tr>
             <td>Estado</td>
             <td>
-                <select name="est_id" id="est_id" class="campos" onchange="return validarFacturacion(<?php echo $ord_costo ?>,<?php echo $orden_venta ?>)">
+                <select name="est_id" id="est_id" class="campos" onChange="return validarFacturacion(<?php echo $ord_costo ?>,<?php echo $orden_venta ?>)">
     <?php
           while($fila3 = mysql_fetch_array($resultado3)){
     ?>                 
                       <option style="background-color:<?php echo($fila3["est_color"]); ?>" value="<?php echo($fila3["est_id"]); ?>"<?php if($fila0["est_id"]==$fila3["est_id"]){echo(" selected=\"selected\"");} ?>><?php echo(utf8_encode($fila3["est_nombre"])); ?></option>
     <?php
+                if ($fila3["est_id"] == 2){
+                    $mostrar = true;
+                }   
           }
     ?>
                 </select>
-            <span id="error" style="font-family: Verdana, Arial, Helvetica,sans-serif;font-size: 9pt;color: #CC3300;position:relative;visibility:hidden;">Faltan valores de compra y venta para facturación</span>
-            </td>
+            <span id="error" style="font-family: Verdana, Arial, Helvetica,sans-serif;font-size: 9pt;color: #CC3300;position:relative;visibility:hidden;">Faltan valores de compra y venta para facturación</span>            </td>
             <td></td>
           </tr>
+                      
+          <tr>
+              <td><label id="texto_respuesta"></label></td>
+            <td><input type="text" class="campos" id="fecha" name="fecha" style="visibility: hidden"/></td>
+            <td></td>
+          </tr>
+      
           <tr>
             <td>Adelanto</td>
-            <td><input type="number" class="campos" id="ord_det_monto" name="ord_det_monto" min="0" required value="0" style="text-align:right" onchange="return validarAdelanto(<?php echo $ord_costo ?>)"/>
-                <span id="errorAdelanto" style="font-family: Verdana, Arial, Helvetica,sans-serif;font-size: 9pt;color: #CC3300;position:relative;visibility:hidden;">Supera al valor costo</span>
-            </td>
+            <td><input type="number" class="campos" id="ord_det_monto" name="ord_det_monto" min="0" required value="0" style="text-align:right" onChange="return validarAdelanto(<?php echo $ord_costo ?>)"/>
+                <span id="errorAdelanto" style="font-family: Verdana, Arial, Helvetica,sans-serif;font-size: 9pt;color: #CC3300;position:relative;visibility:hidden;">Supera al valor costo</span>            </td>
             <td></td>
           </tr>
           <tr>
@@ -137,15 +145,14 @@
                 <input type="button" value="  Volver   " class="botones" /></a> &nbsp; &nbsp;
                 <input type="reset"  value="Restablecer" class="botones" /> &nbsp; &nbsp; 
                 <input type="submit" value="  Guardar  " class="botones" id="guardarDetalle" />
-                <input type="hidden" name="MAX_FILE_SIZE" value="200000000000">
-            </td>
+                <input type="hidden" name="MAX_FILE_SIZE" value="200000000000">            </td>
             <td></td>
           </tr>
           <tr>
             <td colspan="3" class="pie_lista">&nbsp;</td>
           </tr>
       </table> 
-      </form>  
+     </form>  
       
       <div class="clear"></div>
 

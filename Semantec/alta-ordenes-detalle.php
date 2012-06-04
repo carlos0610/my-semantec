@@ -2,16 +2,13 @@
         include("validar.php");
         include("funciones.php");
 
+        
+        /* RECUPERAMOS DATOS DEL FORMULARIO*/
         $ord_id = $_POST["ord_id"];
         $ord_descripcion = utf8_decode($_POST["ord_descripcion"]);
         $ord_det_monto=$_POST["ord_det_monto"];
-        $cli_id = $_POST["cli_id"];
-        $prv_id = $_POST["prv_id"];
         $est_id = $_POST["est_id"];
-        //$ord_alta = date("Y-m-d");
-        $ord_plazo = gfecha($_POST["ord_plazo"]); 
-        $ord_costo = $_POST["ord_costo"];
-        $ord_venta = $_POST["ord_venta"];        
+        $fecha =  gfecha($_POST["fecha"]);
         $usu_nombre = $_SESSION["usu_nombre"];
         $idFile = -1;
         include("conexion.php");
@@ -56,7 +53,7 @@
         $resultado3 = mysql_query($sql);
         $fila3 = mysql_fetch_array($resultado3);
         $est_nombre= $fila3["est_nombre"];
-        echo $est_nombre;
+        //echo $est_nombre;
        
         $sql =  "UPDATE ordenes SET 
         						est_id = $est_id
@@ -93,17 +90,23 @@
                                                 )";
         
                                                 }
-                                                
-                                                
-                                                
-        echo $sql2;
+       // echo $sql2;
         mysql_query($sql2);
+        
+        
+        
 
 	$_SESSION["ord_id"] = $ord_id;
-        //$_SESSION["file"] = $sql_file;
-        //$_SESSION["detalle"] = $sql2;
         
-	mysql_close();
+        /* UPDATEAR PLAZO DE PROVEEDOR */
+        
+        if ($est_id == 2){
+        $sql = "UPDATE ordenes SET ord_plazo_proveedor = '$fecha' where ord_id = $ord_id";
+        }else{
+        $sql = "UPDATE ordenes SET ord_plazo = '$fecha' where ord_id = $ord_id";   
+        }
+        mysql_query($sql);
+        mysql_close();
 
 	header("location:ver-alta-ordenes.php?action=2");
 

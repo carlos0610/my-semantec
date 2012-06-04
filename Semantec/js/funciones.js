@@ -109,7 +109,7 @@ function ActualizarTotal(cantidadDescripciones,factura){
     
     if(factura == 1){
     document.getElementById("txtTotalFactura").value = total_iva + subtotal;
-    }   else {
+    } else {
     percepciones = parseFloat(document.getElementById("txtPercepciones").value);
     document.getElementById("txtTotalFactura").value = total_iva + subtotal + percepciones;      
     }
@@ -151,7 +151,7 @@ function mostrarCuenta(id,nombre){
 
 function validarFacturacion(costo,venta){
 
-if((document.getElementById("est_id").value ==11)&(costo==0)&(venta==0))
+if((document.getElementById("est_id").value == 11)&(costo==0)&(venta==0))
     {
         document.getElementById("error").style.visibility = "visible"; 
         document.getElementById("guardarDetalle").style.visibility = "hidden";
@@ -161,6 +161,34 @@ if((document.getElementById("est_id").value ==11)&(costo==0)&(venta==0))
            document.getElementById("error").style.visibility = "hidden"; 
            document.getElementById("guardarDetalle").style.visibility = "visible";
         }
+        
+   
+   
+   /* SI EL ESTADO SELECCIONADO ES 'ENVIADO A PROVEEDOR' */
+   if((document.getElementById("est_id").value == 2)){
+       
+       
+            document.getElementById("fecha").style.visibility = "visible";
+            document.getElementById("texto_respuesta").style.visibility = "visible";
+            document.getElementById("texto_respuesta").textContent = "Fecha respuesta proveedor";
+        }else if((document.getElementById("est_id").value != 9)) {
+            document.getElementById("fecha").style.visibility = "hidden";
+            document.getElementById("texto_respuesta").style.visibility = "hidden";           
+        }  
+        
+        
+        /* SI EL ESTADO SELECCIONADO ES 'APROBADO' */
+   if((document.getElementById("est_id").value == 9)){
+            document.getElementById("fecha").style.visibility = "visible";
+            document.getElementById("texto_respuesta").style.visibility = "visible";
+            document.getElementById("texto_respuesta").textContent = "Plazo de finalización";
+        }else if((document.getElementById("est_id").value != 2)){
+            document.getElementById("fecha").style.visibility = "hidden";
+            document.getElementById("texto_respuesta").style.visibility = "hidden"; 
+            
+        }       
+        
+       
 }
 
 

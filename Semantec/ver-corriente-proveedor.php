@@ -180,7 +180,7 @@
 
      <div class="clear"></div>
           <br>
-     <a href="form-seleccionar-cliente.php"><input type="button" value="Volver" class="botones" /></a> &nbsp; &nbsp;
+     <a href="form-seleccionar-proveedor.php?action=1"><input type="button" value="Volver" class="botones" /></a> &nbsp; &nbsp;
    </div>
    <!--end contenedor-->
 
