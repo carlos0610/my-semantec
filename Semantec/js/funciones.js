@@ -36,6 +36,14 @@ function eliminarFactura(id){
 }
 
 
+function pagarFactura(id){
+    
+    if(confirm('Confirma el pago de la factura nro: '+id+' ?')==true)
+    {
+        window.location="pagar-factura.php?fav_id="+id;
+    }
+}
+
 function disableTxt(formulario,id){
     var check = (id=="S") ? true : false;
 

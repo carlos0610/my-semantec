@@ -75,7 +75,7 @@
             $precio = $_POST[$columnaPrec]; 
             
         while(($i <= $items)&($descripcion != '')){   
-            $query = "INSERT INTO detalle_factura_venta (fav_id,iva_idiva,det_fav_descripcion,det_fav_precio) VALUES ($nro_factura,$iva,'$descripcion',$precio)";
+            $query = "INSERT INTO detalle_factura_venta (fav_id,idiva,det_fav_descripcion,det_fav_precio) VALUES ($nro_factura,$iva,'$descripcion',$precio)";
             mysql_query($query);
             
             $i++;
@@ -83,13 +83,11 @@
             $columnaPrec = "txtTotalItem".$i;
             $descripcion = $_POST[$columnaDesc];
             $precio = $_POST[$columnaPrec]; 
-         //   echo  $query;
+            echo  $query;
         };
 
             mysql_close();
 
-            
-            
-//  header("location:ver-alta-factura.php?ord_id=$idOrden&fav_id=$nro_factura");
+            header("location:ver-alta-factura.php?ord_id=$idOrden&fav_id=$nro_factura");
 
 ?>

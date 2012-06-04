@@ -17,18 +17,20 @@
     
      
      */
-        $ord_id = $_GET["ord_id"];
+        //$ord_id = $_GET["ord_id"];
         $fav_id = $_GET["fav_id"];
         include("funciones.php");
         include("conexion.php");
         
         $sql = "SELECT c.cli_nombre,c.cli_direccion,z.zon_nombre,i.iva_nombre,c.cli_cuit 
-                FROM ordenes o,clientes c,zonas z,iva_tipo i
-                    WHERE 
-                    o.cli_id = c.cli_id
-                    and o.ord_id = $ord_id
-                    and c.zon_id = z.zon_id
-                    and c.iva_id = i.iva_id";
+                FROM ordenes o,clientes c,zonas z,iva_tipo i,factura_venta f,grupo_ordenes g_o
+                WHERE 
+                f.fav_id 	= $fav_id
+                and f.gru_id    = g_o.gru_id
+                and g_o.gru_id = o.gru_id
+                and o.cli_id = c.cli_id
+                and c.zon_id = z.zon_id
+                and c.iva_id = i.iva_id";
         
        $cliente = mysql_query($sql); 
        $fila_datos_cliente = mysql_fetch_array($cliente); 
@@ -53,7 +55,8 @@
        $descripcion_factura2 = mysql_query($sql);
        $fila_descripcion = mysql_fetch_array($descripcion_factura2);
        
-       $idiva=$fila_descripcion["iva_idiva"];
+       //$idiva=$fila_descripcion["iva_idiva"];
+       $idiva=$fila_descripcion["idiva"];
        $sql = "select * from iva where idiva = $idiva";
        $descrio_iva = mysql_query($sql);
        $fila_iva = mysql_fetch_array($descrio_iva);

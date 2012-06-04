@@ -22,11 +22,11 @@
         
         
 /* CALCULO PAGINADO */  ###############################################################################
-    $sql0="SELECT o.ord_id,o.ord_descripcion,o.ord_venta,o.est_id from ordenes o,cuentacorriente_cliente cc where cc.cli_id = o.cli_id and cc.cli_id = $cli_id and o.estado = 1 and cc.estado = 1";
+    $sql0="SELECT o.ord_id,o.ord_codigo,o.ord_descripcion,o.ord_venta,o.est_id from ordenes o,cuentacorriente_cliente cc where cc.cli_id = o.cli_id and cc.cli_id = $cli_id and o.estado = 1 and cc.estado = 1 and o.est_id >= 12";
     $tamPag=100;
     
     include("paginado.php");        
-        $sql = "SELECT o.ord_id,o.ord_descripcion,o.ord_venta,o.est_id from ordenes o,cuentacorriente_cliente cc where cc.cli_id = o.cli_id and cc.cli_id = $cli_id and o.estado = 1 and cc.estado = 1";
+        $sql = "SELECT o.ord_id,o.ord_codigo,o.ord_descripcion,o.ord_venta,o.est_id from ordenes o,cuentacorriente_cliente cc where cc.cli_id = o.cli_id and cc.cli_id = $cli_id and o.estado = 1 and cc.estado = 1 and o.est_id >= 12";
                 $sql .= " LIMIT ".$limitInf.",".$tamPag; 
         $resultado = mysql_query($sql);
         $cantidad = mysql_num_rows($resultado);
@@ -118,8 +118,8 @@
 
   <table class="listados" cellpadding="5">
           <tr class="titulo">
-            <td width="80">Nro de Orden</td>
-            <td width="487">Descripción</td>
+            <td width="100">Código de orden</td>
+            <td width="467">Descripción</td>
             <td width="66">Valor venta</td>
             <td width="67">Cancelada</td>
             <td width="73">Saldo</td>
@@ -131,7 +131,7 @@
           while($fila = mysql_fetch_array($resultado)){
   ?>
           <tr class="lista" bgcolor="<?php echo($colores[$i]);?>">
-              <td><a href="ver-alta-ordenes.php?ord_id=<?php echo($fila["ord_id"]);?>&action=0" target="_blank"><?php echo($fila["ord_id"]);?></a></td>
+              <td><a href="ver-alta-ordenes.php?ord_id=<?php echo($fila["ord_id"]);?>&action=0" target="_blank"><?php echo($fila["ord_codigo"]);?></a></td>
             <td><?php echo($fila["ord_descripcion"]);?></td>
             <td><?php echo $fila["ord_venta"];?></td>
             <td><?php if ($fila["est_id"]==$estadoPagado){
