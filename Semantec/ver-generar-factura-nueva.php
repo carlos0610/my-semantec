@@ -41,7 +41,7 @@
         $cantOrdenesChecadas=$_GET["cant"]; 
         $remito=$_GET["remito"]; 
         $condicionventa=$_GET["condicionventa"];
-      
+        $ocultar=$_GET["ocultar"];
        mysql_close();
        
 ?>
@@ -204,7 +204,7 @@
             </table>  
       <input type="button" name="btnConfirmarCheckboxs" id="btnConfirmarCheckboxs" style="visibility:visible" value="Confirmar" onClick="verificarCheckboxs(<?php echo $i; ?>,<?php echo $cli_id; ?>);">  
    <!-- DESCRIPCION DE FACTURA  -->
-   
+ <?php if($ocultar=="no"){ ?>  
 <div class="contenido_descripcion" style="visibility:none" enable="true" >
   
   <table width="100%" border="0">
@@ -297,7 +297,7 @@
       <td>&nbsp;</td>
     </tr>
     <tr>
-      <td> <a href="index-admin.php"><input type="button" value="Volver" class="botones" /></a></td>
+      <td> </td>
       <td>&nbsp;</td>
       <td>
          
@@ -309,12 +309,13 @@
   </table>
 </form>
 </div>
+   <?php } ?>
 
    </div>
    <!--end contenedor-->
 
 
-
+  <a href="index-admin.php"><input type="button" value="Volver" class="botones" /></a>
   </div>
    <!-- fin main --><!-- fin main --><!-- fin main --><!-- fin main --><!-- fin main -->
    

@@ -222,28 +222,43 @@ function refrescarDatosDeCliente(id){
 // verificarCheckBoxs
 function verificarCheckboxs(cantTotalCheckboxs,id){
     i=0;
+    continua=false;
     url="ver-generar-factura-nueva.php?cli_id="+id;
     elementoOrden=0;
     condicionveanta=document.getElementById("condicion_venta").value;
     remito=document.getElementById("txtRemito").value;
-    while (i<cantTotalCheckboxs)
+        while (i<cantTotalCheckboxs)
         {
             i++;
             if(eval("document.frmGenerarFactura.checkbox_ord_id"+i+".checked"))
                 {
+                   continua=true;
+                } 
+        }
+    if(continua){
+    i=0;
+    document.getElementById("btnConfirmarCheckboxs").style.visibility = "hidden"; 
+    while (i<cantTotalCheckboxs)
+        {
+            i++;       
+            if(eval("document.frmGenerarFactura.checkbox_ord_id"+i+".checked"))
+                {
                    elementoOrden++; 
-                   url+="&ord_check"+elementoOrden+"="+eval("document.frmGenerarFactura.checkbox_ord_id"+i+".value");   
+                   url+="&ord_check"+elementoOrden+"="+eval("document.frmGenerarFactura.checkbox_ord_id"+i+".value"); 
                 } 
                 else
                     {
                         eval("document.frmGenerarFactura.checkbox_ord_id"+i+".style.visibility = 'hidden'")
                     }
         }
-        url+="&cant="+elementoOrden+"&condicionventa="+condicionveanta+"&remito="+remito+"&ocultar=si";
-        
+        url+="&cant="+elementoOrden+"&condicionventa="+condicionveanta+"&remito="+remito+"&ocultar=no";      
    window.location=url;  
+    }
+    else
+        {
+            alert("debe seleccionar una orden");
+        }
 }
-
 
 /* ALERTA DE PLAZOS*/
 
