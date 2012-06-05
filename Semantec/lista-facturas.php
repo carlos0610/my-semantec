@@ -4,19 +4,23 @@
         include("funciones.php");
         include("conexion.php");
 /* CALCULO PAGINADO */  ###############################################################################
-    $sql0 =    "SELECT distinct f.fav_id,f.fav_fecha,c.cli_nombre,f.files_id,f.fav_fecha_pago from factura_venta f,ordenes o,clientes c,grupo_ordenes g_o
+    $sql0 =    "SELECT distinct f.fav_id,f.fav_fecha,c.cli_nombre,cc.ccc_id,f.files_id,f.fav_fecha_pago 
+                FROM factura_venta f,ordenes o,clientes c,grupo_ordenes g_o,cuentacorriente_cliente cc
                 WHERE f.gru_id = g_o.gru_id
                 AND g_o.gru_id = o.gru_id
                 AND o.cli_id = c.cli_id
+                AND c.cli_id = cc.ccc_id
                 ORDER BY f.fav_fecha desc";
     $tamPag=10;
     
     include("paginado.php"); 
     
-        $sql = "SELECT distinct f.fav_id,f.fav_fecha,c.cli_nombre,f.files_id,f.fav_fecha_pago from factura_venta f,ordenes o,clientes c,grupo_ordenes g_o
+        $sql = "SELECT distinct f.fav_id,f.fav_fecha,c.cli_nombre,cc.ccc_id,f.files_id,f.fav_fecha_pago 
+                FROM factura_venta f,ordenes o,clientes c,grupo_ordenes g_o,cuentacorriente_cliente cc
                 WHERE f.gru_id = g_o.gru_id
                 AND g_o.gru_id = o.gru_id
                 AND o.cli_id = c.cli_id
+                AND c.cli_id = cc.ccc_id
                 ORDER BY f.fav_fecha desc";
         
                 $sql .= " LIMIT ".$limitInf.",".$tamPag; 
@@ -91,7 +95,7 @@
                 <?php //echo(utf8_encode($fila_req["files_id"]));
                       $id = $fila["files_id"] ?>
             <td width="60"><?php if ($id!=null) echo "<a href=descargar.php?id=$id><img src=images/download.png /></a>";?></td>
-            <td width="32" align="center"><a href="#" onclick="pagarFactura(<?php echo($fila["fav_id"]);?> )"><img src="images/pagar_factura.png"></a></td>
+            <td width="32" align="center"><a href="#" onclick="pagarFactura(<?php echo($fila["fav_id"]);?> ,<?php echo($fila["ccc_id"]);?>)"><img src="images/pagar_factura.png"></a></td>
             <td width="32" align="center"><a href="ver-alta-factura.php?fav_id=<?php echo($fila["fav_id"]); ?>"><img src="images/detalles.png" alt="editar" title="Ver detalle" width="32" height="32" border="none" /></a></td>            
             <td><a href="#" onclick="eliminarFactura(<?php echo($fila["fav_id"]);?> )">
                 <img src="images/eliminar.png" alt="eliminar" title="Eliminar orden" width="32" height="32" border="none" /></a></td>

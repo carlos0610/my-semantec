@@ -9,6 +9,46 @@
         $resultado1 = mysql_query($sql);
         
         
+        /* LISTADO DE MOVIMIENTOS DE CUENTAS CORRIENTES DE CLIENTE*/
+        
+        $sql0 = "SELECT distinct (ccc_id),c.cli_id,c.cli_nombre,cc.fav_id,sum(o.ord_venta) as 'Monto',f.fav_fecha_pago,f.usu_nombre  from detalle_corriente_cliente cc, clientes c, factura_venta f, ordenes o,grupo_ordenes g_o
+                WHERE
+                cc.fav_id  	= f.fav_id
+                AND f.gru_id  		= g_o.gru_id
+                AND g_o.gru_id 	= o.gru_id
+                AND o.cli_id	   = c.cli_id
+                group by f.fav_id
+                order by fav_fecha_pago desc;";
+        
+        $listado_movimientos = mysql_query($sql0);
+        /*FIN_LISTADO*/
+        
+        
+        
+        /* PAGINACIÓN */
+        $tamPag=10;
+        include("paginado.php");
+        
+        $sql = "SELECT distinct (ccc_id),c.cli_nombre,cc.fav_id,sum(o.ord_venta) as 'Monto',f.fav_fecha_pago  from detalle_corriente_cliente cc, clientes c, factura_venta f, ordenes o,grupo_ordenes g_o
+                WHERE
+                cc.fav_id  	= f.fav_id
+                AND f.gru_id  		= g_o.gru_id
+                AND g_o.gru_id 	= o.gru_id
+                AND o.cli_id	   = c.cli_id
+                group by f.fav_id
+                order by fav_fecha_pago desc;";
+        $sql .= " LIMIT ".$limitInf.",".$tamPag;
+        $resultado = mysql_query($sql);
+        //$cantidad = mysql_num_rows($resultado);
+        
+        $i = 0;
+        $colores = array("#fff","#e8f7fa");
+        $cant = count($colores);
+        
+        /*FIN_PAGINACIÓN*/
+        
+        
+        
 ?>
 <!doctype html>
 <html>  
@@ -39,8 +79,9 @@
 
    <!--start contenedor-->
    <div id="contenedor" style="height:auto;">
+   
       <h2>Panel de control - Cuenta corrientes de clientes</h2>
-
+	<div id="seleccion" style="height:auto">	
       <form name="frmSeleccionarCliente" action="ver-corriente-clientes.php" method="post" ><table class="listados" cellpadding="5">
           <tr class="titulo">
             <td width="149">Seleccione cliente</td>
@@ -70,21 +111,61 @@
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td colspan="2">&nbsp;</td>
-          </tr>
-          <tr>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td colspan="2">&nbsp;</td>
-          </tr>
-          <tr>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td colspan="2">&nbsp;</td>
-          </tr>
+          </tr>          
       </table>   
-      </form>
+     </form>
 
      <div class="clear"></div>
+     </div>
+   <!--end seleccion-->
+   <div id="resumen">
+   <h2>Últimos movimientos de cuentas corrientes</h2>
+   <table class="listados" cellpadding="5">
+          <tr class="titulo">
+            <td width="80">Cuenta corriente</td>
+            <td width="240">Cliente</td>            
+            <td width="79">Factura nro</td> 
+            <td width="115">Monto de pago</td>
+            <td width="115">Fecha de pago</td>
+            <td width="95">Registrado por</td>
+            <td width="72">&nbsp;</td>
+        </tr>
+  <?php
+          while($fila = mysql_fetch_array($listado_movimientos)){
+              //echo($fila["ord_alta"]);
+  ?>
+          <tr class="lista" bgcolor="<?php echo($colores[$i]);?>">
+            <td><?php echo($fila["ccc_id"]);?></td>
+            <td>
+            <a href="ver-alta-clientes.php?cli_id=<?php echo($fila["cli_id"]);?>&action=0">
+            <?php echo($fila["cli_nombre"]);?>
+            </a>          
+            </td>            
+            <td align="center"><?php echo $fila["fav_id"];?></td>          
+            <td><?php echo $fila["Monto"];?></td>     
+            <td width="115"><?php echo $fila[fav_fecha_pago];?> </td>
+            <td width="95" align="center"><?php echo $fila[usu_nombre]; ?></td>
+            <td width="72" align="center"><a href="ver-alta-factura.php?fav_id=<?php echo($fila["fav_id"]); ?>"><img src="images/detalles.png" alt="editar" title="Ver detalle" width="32" height="32" border="none" /></a></td>            
+        </tr>
+  <?php
+            $i++;
+            if($i==$cant){$i=0;}
+
+          }
+  ?>
+          <tr>
+            <td colspan="8" class="pie_lista"><?php 
+/* PAGINADO */  ###############################################################################            
+            echo(verPaginado($cant_registros, $pagina, $inicio, $final, $numPags)); 
+            ?></td>
+          </tr>
+      </table>
+   
+   </div>
+   
+   
+   
+   
    </div>
    <!--end contenedor-->
 

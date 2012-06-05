@@ -36,11 +36,12 @@ function eliminarFactura(id){
 }
 
 
-function pagarFactura(id){
+function pagarFactura(id,cuenta){
     
-    if(confirm('Confirma el pago de la factura nro: '+id+' ?')==true)
+    if(confirm('Confirma el pago de la factura nro: '+id+' ? cuenta'+cuenta)==true)
     {
-        window.location="pagar-factura.php?fav_id="+id;
+        window.location="pagar-factura.php?fav_id="+id+"&ccc_id="+cuenta;
+        //alert("pagar-factura.php?fav_id="+id+"&ccc_id="+cuenta);
     }
 }
 
