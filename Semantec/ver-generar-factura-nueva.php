@@ -37,6 +37,8 @@
               AND    ISNULL(gru_id)
               ";
         $result_ordenes=mysql_query($sql); 
+        $result_cantordenes=mysql_query($sql);
+        $cantOrdenes= mysql_num_rows($result_cantordenes);
        //+++++++++++Gets de los checkbox
         $cantOrdenesChecadas=$_GET["cant"]; 
         $remito=$_GET["remito"]; 
@@ -167,7 +169,11 @@
             <td>&nbsp;</td>
             <td>&nbsp;</td>
           </tr>
-     </table>   
+     </table> 
+        <!-- Si el Cliente no tiene ordenes muestra  mensaje --> 
+        <?php if($cantOrdenes!=0){ ?> 
+           <!-- Muestro tabla de ordenes a seleccionar -->  
+           <?php if($ocultar=="si"){ ?> 
                 <table width="100%" border="0" id="dataTableOrdenes">  
                       <tr>
                              <td width="5%" class="titulo"><div align="center">Selección</div></td>
@@ -182,6 +188,7 @@
                    <tr>
                        <td>
                            <div align="center">
+                               
                               <input type="checkbox" name="checkbox_ord_id<?php echo $i ?>" value="<?php echo $item["ord_id"]; ?>" />
                           </div>
                        </td>
@@ -199,11 +206,26 @@
                    <?php
                }
                ?>
-  
-
             </table>  
+           <!-- FIN de Muestro tabla de ordenes a seleccionar --> 
+            <?php }else{ ?>
+           <!-- Muestro ORdenes seleccionas -->  
+        Codigos de Ordenes Seleccionados :  <br> 
+        <?php
+        $i=0;
+        while ($i <$cantOrdenesChecadas)
+        { $i++;  ?>
+          &nbsp;&nbsp; &nbsp;-  <?php echo ($_GET["ord_check$i"]); ?>   <br>            
+        <?php      
+        }       
+        ?>        
+        <?php } ?>
+      <!-- Boton confirmar  -->    
+      <?php if($ocultar=="si"){ ?> 
       <input type="button" name="btnConfirmarCheckboxs" id="btnConfirmarCheckboxs" style="visibility:visible" value="Confirmar" onClick="verificarCheckboxs(<?php echo $i; ?>,<?php echo $cli_id; ?>);">  
-   <!-- DESCRIPCION DE FACTURA  -->
+      <?php } ?>
+  <?php }else{ ?> <b>*No Posee Ordenes Pendientes a Facturar </b> <?php } ?>
+      <!-- DESCRIPCION DE FACTURA  -->
  <?php if($ocultar=="no"){ ?>  
 <div class="contenido_descripcion" style="visibility:none" enable="true" >
   
@@ -244,8 +266,8 @@
   
   <table width="100%" border="0">
     <tr>
-      <td width="12%">VENCIMIENTO: <input name="vencimiento" type="text" id="vencimiento" required> </td>
-      <td width="31%">&nbsp;</td>
+      <td width="12%">VENCIMIENTO:  </td>
+      <td width="31%"><input name="vencimiento" type="text" id="vencimiento" required></td>
       <td width="39%"><div align="right">SUBTOTAL:</div></td>
       <td width="18%"><label>
         <div align="center">
@@ -301,7 +323,7 @@
       <td>&nbsp;</td>
       <td>
          
-          <input type="submit" name="btnConfirma" id="btnConfirma"  value="Confirmar" >
+          <input type="submit" name="btnConfirma" id="btnConfirma" style="visibility:hidden"  value="Confirmar" >
           
       </td>
       <td>&nbsp;</td>

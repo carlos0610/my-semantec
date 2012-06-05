@@ -216,7 +216,7 @@ if((document.getElementById("ord_det_monto").value > costo))
 
 // PASAR Cli_Id
 function refrescarDatosDeCliente(id){
-   window.location="ver-generar-factura-nueva.php?cli_id="+id;  
+   window.location="ver-generar-factura-nueva.php?cli_id="+id+"&ocultar=si";  
 }
 
 // verificarCheckBoxs
@@ -237,7 +237,6 @@ function verificarCheckboxs(cantTotalCheckboxs,id){
         }
     if(continua){
     i=0;
-    document.getElementById("btnConfirmarCheckboxs").style.visibility = "hidden"; 
     while (i<cantTotalCheckboxs)
         {
             i++;       

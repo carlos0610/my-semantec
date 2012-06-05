@@ -88,6 +88,6 @@
 
             mysql_close();
 
-            header("location:ver-alta-factura.php?ord_id=$idOrden&fav_id=$nro_factura");
+            header("location:ver-alta-factura.php?fav_id=$nro_factura");
 
 ?>
