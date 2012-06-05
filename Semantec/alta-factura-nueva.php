@@ -14,7 +14,8 @@
     
     $estado = 1;
     $idFile = -1;
-    if($_FILES['userfile']['size']>0){      //SI ELIGIO UN ARCHIVO
+    if($_FILES['userfile']['size']>0)
+    {      //SI ELIGIO UN ARCHIVO
                                 
                                 $fileName = $_FILES['userfile']['name'];
                                 $tmpName  = $_FILES['userfile']['tmp_name'];
@@ -33,14 +34,11 @@
                         }
         $sql_file = "INSERT INTO files (file_name, file_size, file_type, file_content,tabla ) ".
         "VALUES ('$fileName', '$fileSize', '$fileType', '$content','factura_venta')";
-
         mysql_query($sql_file);
-        $idFile = mysql_insert_id(); // HAY QUE VALIDAR SI SE ROMPE LA TRANSACCIÓN DEL FILE
-        
-            }
-    
+        $idFile = mysql_insert_id(); // HAY QUE VALIDAR SI SE ROMPE LA TRANSACCIÓN DEL FILE 
+       }
+       
         $sql_grupo_ordenes= "INSERT INTO `grupo_ordenes`(`gru_fecha_alta`) VALUES (NOW()) ";
-        echo "GRUPO ORDENES: ".$sql_grupo_ordenes;
         mysql_query($sql_grupo_ordenes);
         $id_grupo_ordenes = mysql_insert_id(); 
         
@@ -59,15 +57,15 @@
             mysql_query($sql);
         }
                                                    
-    if ($idFile != -1){
-        $query = "INSERT INTO factura_venta (gru_id, files_id,ord_id,fav_fecha,fav_nota,    fav_remito, fav_condicion_vta ,fav_vencimiento,   estado) VALUES ($id_grupo_ordenes, $idFile,$idOrden,NOW(),'$nota',$Remito,'$condicion_venta','$vencimiento',$estado)";
-    }else{
-        $query = "INSERT INTO factura_venta (gru_id,fav_fecha,fav_nota,  fav_remito, fav_condicion_vta ,fav_vencimiento, estado) VALUES ($id_grupo_ordenes,NOW(),'$nota',$Remito,'$condicion_venta','$vencimiento',1)";
-        $inserto = mysql_query($query);      
+    if ($idFile != -1)
+        {
+        $query = "INSERT INTO factura_venta (gru_id, files_id,fav_fecha,fav_nota,fav_remito, fav_condicion_vta ,fav_vencimiento,   estado) VALUES ($id_grupo_ordenes, $idFile,NOW(),'$nota',$Remito,'$condicion_venta','$vencimiento',$estado)";       
+     }else
+        {
+        $query = "INSERT INTO factura_venta (gru_id,fav_fecha,fav_nota,  fav_remito, fav_condicion_vta ,fav_vencimiento, estado) VALUES ($id_grupo_ordenes,NOW(),'$nota',$Remito,'$condicion_venta','$vencimiento',1)";  
+        }
+       $inserto = mysql_query($query);      
         $nro_factura = mysql_insert_id();
-     
-    }
-       
        $i=1;
             $columnaDesc = "txtDescripcionItem".$i;
             $columnaPrec = "txtTotalItem".$i;

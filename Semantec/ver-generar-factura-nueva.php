@@ -111,7 +111,7 @@
 
    
    </div>
-   <form name="frmGenerarFactura" method="post" enctype="multipart/form-data" action="alta-factura-nueva.php?items=<?php echo $totalDescripcion ?>" >
+ <form name="frmGenerarFactura" method="post" enctype="multipart/form-data" action="alta-factura-nueva.php?items=<?php echo $totalDescripcion ?>" >
     <div id="contenedor2" style="height:auto;">  
         
         

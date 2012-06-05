@@ -19,6 +19,7 @@
      */
         //$ord_id = $_GET["ord_id"];
         $fav_id = $_GET["fav_id"];
+        echo $$fav_id;
         include("funciones.php");
         include("conexion.php");
         
