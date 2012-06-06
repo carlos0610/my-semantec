@@ -199,7 +199,7 @@
                            </label></td>
                        <td><label>
                                <div align="center">
-                                         <? echo $item["ord_descripcion"]; ?>
+                                         <? echo utf8_encode($item["ord_descripcion"]); ?>
                                </div>
                            </label></td>
                    </tr>
