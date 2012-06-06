@@ -69,7 +69,7 @@
           </tr>
           <tr>
             <td>C&oacute;digo de Orden</td>
-            <td><input type="number"  style="text-align:right" class="campos" id="ord_codigo" name="ord_codigo" required min="0" onChange="return autentica();" />
+            <td><input type="number"  style="text-align:right" class="campos" id="ord_codigo" name="ord_codigo" required min="0" onChange="return autentica();"/>
                 <span id="error" style="font-family: Verdana, Arial, Helvetica,sans-serif;font-size: 9pt;color: #CC3300;position:relative;visibility:hidden;">Orden existente</span>
             </td>
             <td></td>
@@ -120,12 +120,12 @@
           </tr>                    
           <tr>
             <td>Valor Costo de la Orden</td>
-            <td><input type="number" style="text-align:right" class="campos" id="ord_costo" name="ord_costo" value="0"  min="0" required /></td>
+            <td><input type="number" style="text-align:right" class="campos" id="ord_costo" name="ord_costo" value="0"  min="0" required OnKeyUp="return validarCostoDeLaOrden();" /></td>
             <td></td>
           </tr>          
           <tr>
             <td>Valor Venta de la Orden</td>
-            <td><input type="number" style="text-align:right" class="campos" id="ord_venta" name="ord_venta" value="0"  min="0" required /></td>
+            <td><input type="number" style="text-align:right" class="campos" id="ord_venta" name="ord_venta" value="0"  min="0" required  OnKeyUp="return validarVentaDeLaOrden();" /></td>
             <td></td>
           </tr>
           <tr>

@@ -90,7 +90,7 @@
           </tr>
           <tr>
             <td>CUIT</td>
-            <td><input type="number" style="text-align:right" maxlength="11" value="<?php echo($fila_clientes["cli_cuit"]); ?>" id="cli_cuit" name="cli_cuit" class="campos" /></td>
+            <td><input type="number" style="text-align:right" maxlength="11" value="<?php echo($fila_clientes["cli_cuit"]); ?>" id="cli_cuit" name="cli_cuit" class="campos" readOnly/></td>
             <td></td>
           </tr>
           <tr>
@@ -137,7 +137,7 @@
           
           <tr>
             <td>Tel&eacute;fono</td>
-            <td><input value="<?php echo($fila_clientes["cli_telefono"]); ?>" type="text" style="text-align:right" class="campos" id="cli_telefono" name="cli_telefono" /></td>
+            <td><input value="<?php echo($fila_clientes["cli_telefono"]); ?>" type="number" style="text-align:right" class="campos" id="cli_telefono" name="cli_telefono" /></td>
             <td></td>
           </tr>
           <tr>

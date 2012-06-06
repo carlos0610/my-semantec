@@ -46,21 +46,31 @@ function procesarRespuesta(){
 
 // Funciones llamdas del Form
 function autentica(){
+    
  usuario = document.getElementById("ord_codigo").value;
  url = "existeNumeroOrden.php?usuario=" + usuario;
+ if (validarSiNumero(usuario))
+ { 
  leer_doc(url);
+ }
+ else
+     {
+         document.getElementById("ord_codigo").value='';
+     }
 }
 
 function autenticaCUIT(){
  usuario = document.getElementById("prv_cuit").value;
  url = "existeNumeroCuit.php?usuario=" + usuario;
  leer_doc(url);
+ document.getElementById("prv_cuit").value=(usuario.substring(0,11));
 }
 
 function autenticaClienteCUIT(){
  usuario = document.getElementById("cli_cuit").value;
  url = "existeNumeroCuitCliente.php?usuario=" + usuario;
  leer_doc(url);
+ document.getElementById("cli_cuit").value=(usuario.substring(0,11));
 }
 
 function VerificarProveedor(){
@@ -168,4 +178,31 @@ lab.innerHTML = val;
  usuario = document.getElementById("cli_id").value;
  url = "getDatosDeCliente.php?usuario=" + usuario;
  leer_doc3(url);
+}
+// validadores GENERALES-----------------------------
+function validarSiNumero(numero){
+    ok=true;
+
+if (!/^([0-9])*$/.test(numero)){
+alert("El valor " + numero + " no es un número");
+ok=false;
+}
+return ok;
+}
+
+
+function validarSoloNumero(object)
+{
+numero = object.value;
+if (!/^([0-9])*$/.test(numero))
+object.value = numero.substring(0,numero.length-1);
+}
+
+// ENGANCHES a VALIDADOREs-----------------------------
+function validarCostoDeLaOrden(){
+validarSoloNumero(document.getElementById("ord_costo"));
+}
+
+function validarVentaDeLaOrden(){
+validarSoloNumero(document.getElementById("ord_venta"));
 }

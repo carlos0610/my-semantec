@@ -130,7 +130,7 @@
           </tr>
           <tr>
             <td>Tel&eacute;fono</td>
-            <td><input type="text" class="campos" id="cli_telefono" name="cli_telefono" style="text-align:right" required/></td>
+            <td><input type="number" class="campos" id="cli_telefono" name="cli_telefono" style="text-align:right" required/></td>
             <td></td>
           </tr>
           <tr>

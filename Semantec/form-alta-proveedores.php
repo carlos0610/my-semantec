@@ -77,7 +77,7 @@
             <td colspan="2"> <?php echo($titulo)?> </td>
             <td width="32">
                 <a href="index-admin.php">
-                    <img src="images/home.png"  alt="inicio" title="Volver al panel" width="32" height="32" border="none" />
+                    <img src="images/home.png"  alt="inicio" title="Volver al panel" width="32" height="32" border="none" /> 
                 </a>
             </td>
           </tr>
@@ -89,7 +89,7 @@
           <tr>
             <td>CUIT</td>
             <td>
-                <input type="number" min="10000000000" style="text-align:right" class="campos" id="prv_cuit" name="prv_cuit" maxlength="11" onChange="return autenticaCUIT();" required/>
+                <input type="number" min="10000000000" style="text-align:right" class="campos" id="prv_cuit" name="prv_cuit" maxlength="11" onChange="return autenticaCUIT();" required/> 
                 <span id="error" style="font-family: Verdana, Arial, Helvetica,sans-serif;font-size: 9pt;color: #CC3300;position:relative;visibility:hidden;">Cuit existente</span>
             </td>
             <td></td>
@@ -146,32 +146,32 @@
           </tr>
           <tr>
             <td>Tel&eacute;fono</td>
-            <td><input type="tel" style="text-align:right" class="campos" id="prv_telefono" name="prv_telefono" required/></td>
+            <td><input type="number" style="text-align:right" class="campos" id="prv_telefono" name="prv_telefono" required /></td>
             <td></td>
           </tr>
           <tr>
             <td>Fax</td>
-            <td><input type="text" style="text-align:right" class="campos" id="prv_fax" name="prv_fax" /></td>
+            <td><input type="number" style="text-align:right" class="campos" id="prv_fax" name="prv_fax" required /></td>
             <td></td>
           </tr>
           <tr>
             <td>Cel</td>
-            <td><input type="tel" style="text-align:right" class="campos" id="prv_cel" name="prv_cel" /></td>
+            <td><input type="number" style="text-align:right" class="campos" id="prv_cel" name="prv_cel" required /></td>
             <td></td>
           </tr>
           <tr>
             <td>Alternativo</td>
-            <td><input type="text" style="text-align:right" class="campos" id="prv_alternativo" name="prv_alternativo" /></td>
+            <td><input type="number" style="text-align:right" class="campos" id="prv_alternativo" name="prv_alternativo" required  /></td>
             <td></td>
           </tr>
           <tr>
             <td>Urgencia</td>
-            <td><input type="text" style="text-align:right" class="campos" id="prv_urgencia" name="prv_urgencia" /></td>
+            <td><input type="number" style="text-align:right" class="campos" id="prv_urgencia" name="prv_urgencia" required /></td>
             <td></td>
           </tr>
           <tr>
             <td>Web</td>
-            <td><input type="url" class="campos" id="prv_web" name="prv_web" value=""/></td>
+            <td><input type="text" class="campos" id="prv_web" name="prv_web" value=""/></td>
             <td></td>
           </tr>
           <tr>
@@ -186,7 +186,7 @@
           </tr>
           <tr>
             <td>Nro.Cuenta bancaria</td>
-            <td><input type="text" style="text-align:right" class="campos" id="cue_nrobancaria" name="cue_nrobancaria" disabled/></td>
+            <td><input type="number" style="text-align:right" class="campos" id="cue_nrobancaria" name="cue_nrobancaria" disabled/></td>
             <td></td>
           </tr>
           <tr>
@@ -204,7 +204,7 @@
           </tr>
           <tr>
             <td>CBU</td>
-            <td><input type="text" style="text-align:right" class="campos" id="cue_cbu" name="cue_cbu" disabled/></td>
+            <td><input type="number" style="text-align:right" class="campos" id="cue_cbu" name="cue_cbu" disabled/></td>
             <td></td>
           </tr> 
           
