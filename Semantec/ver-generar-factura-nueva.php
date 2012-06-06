@@ -44,7 +44,7 @@
         $remito=$_GET["remito"]; 
         $condicionventa=$_GET["condicionventa"];
         $ocultar=$_GET["ocultar"];
-       mysql_close();
+     //  mysql_close();
        
 ?>
 <!doctype html>
@@ -214,8 +214,21 @@
         <?php
         $i=0;
         while ($i <$cantOrdenesChecadas)
-        { $i++;  ?>
-          &nbsp;&nbsp; &nbsp;-  <?php echo ($_GET["ord_check$i"]); ?>   <br>            
+        { $i++;  
+                $unord_ID=$_GET["ord_check$i"];
+                $sql5="SELECT `gru_id`,`ord_codigo`,`ord_descripcion`,`prv_id`,`est_id` ,ord_id 
+              FROM `ordenes` 
+              WHERE `ord_id` =$unord_ID
+              AND    est_id  = 11 
+              AND    estado  = 1
+              AND    ISNULL(gru_id)
+              ";
+        $resultado_deOredenes=mysql_query($sql5); 
+        $filaDeLasOrdenesCheckeadas=mysql_fetch_array($resultado_deOredenes);
+        
+        
+        ?>
+          &nbsp;&nbsp; &nbsp;#  <?php echo $filaDeLasOrdenesCheckeadas["ord_codigo"]; ?>   <br>            
         <?php      
         }       
         ?>        
@@ -345,6 +358,7 @@
    <footer>
 <?php
     include("footer.php");
+    mysql_close();
 ?>
    </footer>
    <!--fin footer-->
