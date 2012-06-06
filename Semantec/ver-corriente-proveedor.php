@@ -48,7 +48,7 @@
         $resultado = mysql_query($sql);
         $cantidad = mysql_num_rows($resultado);
         
-        echo "<br>EL QUERY ES :".$sql;
+        
 
         $i = 0;
         $colores = array("#fff","#e8f7fa");

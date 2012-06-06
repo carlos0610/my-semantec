@@ -24,7 +24,7 @@
 /* CALCULO PAGINADO */  ###############################################################################
     $sql0="SELECT o.ord_id,o.ord_codigo,f.fav_id,o.ord_descripcion,o.ord_venta,o.est_id 
                 FROM ordenes o,cuentacorriente_cliente cc ,factura_venta f,grupo_ordenes g_o
-                WHERE cc.cli_id = o.cli_id and cc.cli_id = 2 
+                WHERE cc.cli_id = o.cli_id and cc.cli_id = $cli_id 
                 AND o.estado = 1 
                 AND cc.estado = 1 
                 AND o.est_id >= 12
@@ -35,7 +35,7 @@
     include("paginado.php");        
         $sql = "SELECT o.ord_id,o.ord_codigo,f.fav_id,o.ord_descripcion,o.ord_venta,o.est_id 
                     FROM ordenes o,cuentacorriente_cliente cc ,factura_venta f,grupo_ordenes g_o
-                    WHERE cc.cli_id = o.cli_id and cc.cli_id = 2 
+                    WHERE cc.cli_id = o.cli_id and cc.cli_id = $cli_id 
                     AND o.estado = 1 
                     AND cc.estado = 1 
                     AND o.est_id >= 12

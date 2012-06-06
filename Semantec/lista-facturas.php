@@ -9,7 +9,7 @@
                 WHERE f.gru_id = g_o.gru_id
                 AND g_o.gru_id = o.gru_id
                 AND o.cli_id = c.cli_id
-                AND c.cli_id = cc.ccc_id
+                AND c.cli_id = cc.cli_id
                 ORDER BY f.fav_fecha desc";
     $tamPag=10;
     
@@ -20,7 +20,7 @@
                 WHERE f.gru_id = g_o.gru_id
                 AND g_o.gru_id = o.gru_id
                 AND o.cli_id = c.cli_id
-                AND c.cli_id = cc.ccc_id
+                AND c.cli_id = cc.cli_id
                 ORDER BY f.fav_fecha desc";
         
                 $sql .= " LIMIT ".$limitInf.",".$tamPag; 
@@ -94,8 +94,17 @@
              </td>
                 <?php //echo(utf8_encode($fila_req["files_id"]));
                       $id = $fila["files_id"] ?>
-            <td width="60"><?php if ($id!=null) echo "<a href=descargar.php?id=$id><img src=images/download.png /></a>";?></td>
-            <td width="32" align="center"><a href="#" onclick="pagarFactura(<?php echo($fila["fav_id"]);?> ,<?php echo($fila["ccc_id"]);?>)"><img src="images/pagar_factura.png"></a></td>
+            <td width="60" align="center"><?php if ($id!=null) echo "<a href=descargar.php?id=$id><img src=images/download.png title=Descargar /></a>";?></td>
+            
+            <td width="32" align="center">
+            <?php if($fila["fav_fecha_pago"]==NULL){?>
+            <a href="#" onclick="pagarFactura(<?php echo($fila["fav_id"]);?> ,<?php echo($fila["ccc_id"]);?>)">
+            <img src="images/pagar_factura.png" title="Registrar pago de factura">
+            </a>
+            
+            <?php }?>
+   
+            </td>
             <td width="32" align="center"><a href="ver-alta-factura.php?fav_id=<?php echo($fila["fav_id"]); ?>"><img src="images/detalles.png" alt="editar" title="Ver detalle" width="32" height="32" border="none" /></a></td>            
             <td><a href="#" onclick="eliminarFactura(<?php echo($fila["fav_id"]);?> )">
                 <img src="images/eliminar.png" alt="eliminar" title="Eliminar orden" width="32" height="32" border="none" /></a></td>

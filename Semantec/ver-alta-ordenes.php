@@ -104,7 +104,8 @@
           <tr>
             <td width="157">C&oacute;digo de Orden</td>
             <td width="309"><?php echo($fila0["ord_codigo"]);?></td>
-            <td rowspan="8" align="center"><?php if ($est_id == $pendienteFacturacion) {?><a href="ver-generar-factura.php?ord_id=<?php echo($ord_id)?>"><img src="images/generarFactura2.png" /></a><br><b>Generar factura</b></br></td><?php }?>
+            <td rowspan="8" align="center"><br>
+            </br></td>
           </tr>
           <tr>
             <td>Descripci&oacute;n de Orden</td>
