@@ -2,7 +2,6 @@
     header('Content-Type: text/html; charset=utf-8');
     $titulo = "Formulario de cambio de estado de una Orden de Servicio.";
         include("validar.php");
-
         include("conexion.php");
 
 	$provedor_id=$_POST['provedor_id'];	
