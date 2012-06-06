@@ -78,7 +78,7 @@
 	  <!-- form login -->
 
     <div id ="login">
-         <span id="mensaje_top" style="text-align:right;"><?php echo($_SESSION["usu_nombre"]); ?>
+         <span id="mensaje_top" style="text-align:right;"><?php echo(utf8_encode($_SESSION["usu_nombre"])); ?>
          <a href="logout.php"><img src="images/salir.png"  alt="salir" title="Salir" width="32" height="32" border="none" valign="middle" hspace="8" /></a>
          </span>
     </div>
@@ -95,13 +95,13 @@
   </tr>
 <tr>
             <td width="15%" class="titulo">Cliente:</td>
-            <td colspan="3" style="background-color:#cbeef5"><?php echo $fila_datos_cliente["cli_nombre"]?></td>
+            <td colspan="3" style="background-color:#cbeef5"><?php echo utf8_encode($fila_datos_cliente["cli_nombre"]);?></td>
        </tr>
           <tr>
             <td class="titulo">Domiclio:</td>
-            <td width="24%" style="background-color:#cbeef5"><?php echo $fila_datos_cliente["cli_direccion"]?></td>
+            <td width="24%" style="background-color:#cbeef5"><?php echo utf8_encode($fila_datos_cliente["cli_direccion"]);?></td>
             <td width="9%" class="titulo">Localidad:</td>
-            <td width="52%" style="background-color:#cbeef5"><?php echo $fila_datos_cliente["zon_nombre"]?></td>
+            <td width="52%" style="background-color:#cbeef5"><?php echo utf8_encode($fila_datos_cliente["zon_nombre"]);?></td>
        </tr>
           <tr>
             <td class="titulo">IVA:</td>
@@ -128,7 +128,7 @@
    
    
    <div id="contenedor" style="height:auto;">
-      <h2>Ordenes realizadas por <?php echo $fila_datos_cliente["cli_nombre"]?></h2>
+      <h2>Ordenes realizadas por <?php echo utf8_encode($fila_datos_cliente["cli_nombre"]);?></h2>
 
   <table class="listados" cellpadding="5">
           <tr class="titulo">
@@ -148,7 +148,7 @@
           <tr class="lista" bgcolor="<?php echo($colores[$i]);?>">
               <td><a href="ver-alta-ordenes.php?ord_id=<?php echo($fila["ord_id"]);?>&action=0" target="_blank"><?php echo($fila["ord_codigo"]);?></a></td>
               <td><?php echo($fila["fav_id"]);?></td>
-              <td><?php echo($fila["ord_descripcion"]);?></td>
+              <td><?php echo(utf8_encode($fila["ord_descripcion"]));;?></td>
             <td><?php echo $fila["ord_venta"];?></td>
             <td><?php if ($fila["est_id"]==$estadoPagado){
                         echo "Sí";

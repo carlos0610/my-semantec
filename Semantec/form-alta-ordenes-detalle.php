@@ -61,7 +61,7 @@
 	  <!-- form login -->
 
     <div id ="login">
-         <span id="mensaje_top" style="text-align:right;"><?php echo($_SESSION["usu_nombre"]); ?>
+         <span id="mensaje_top" style="text-align:right;"><?php echo(utf8_encode($_SESSION["usu_nombre"])); ?>
          <a href="logout.php"><img src="images/salir.png"  alt="salir" title="Salir" width="32" height="32" border="none" valign="middle" hspace="8" /></a>
          </span>
     </div>
@@ -92,13 +92,13 @@
           <tr>
             <td>Cliente</td>
             <td>                
-				<?php echo($cliente["cli_nombre"]); ?>            </td>
+				<?php echo(utf8_encode($cliente["cli_nombre"])); ?>            </td>
             <td></td>
           </tr>
           <tr>
             <td>Proveedor</td>
             <td>
-					<?php echo($proveedor["prv_nombre"]); ?>            </td>
+					<?php ($proveedor["prv_nombre"]); ?>            </td>
             <td></td>
           </tr>
           <tr>

@@ -66,7 +66,7 @@
           while($fila = mysql_fetch_array($resultado)){
   ?>
           <tr class="lista" bgcolor="<?php echo($colores[$i]);?>">
-            <td><?php echo($fila["cli_nombre"]);?></td>
+            <td><?php echo(utf8_encode($fila["cli_nombre"]));?></td>
             <td><?php echo(verCUIT($fila["cli_cuit"]));?></td>
             <td><?php echo($fila["cli_telefono"]);?></td>
             <td>

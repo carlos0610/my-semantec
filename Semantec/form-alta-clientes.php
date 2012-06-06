@@ -55,7 +55,7 @@
 	  <!-- form login -->
 
     <div id ="login">
-         <span id="mensaje_top" style="text-align:right;"><?php echo($_SESSION["usu_nombre"]); ?>
+         <span id="mensaje_top" style="text-align:right;"><?php echo(utf8_encode($_SESSION["usu_nombre"])); ?>
          <a href="logout.php"><img src="images/salir.png"  alt="salir" title="Salir" width="32" height="32" border="none" valign="middle" hspace="8" /></a>
          </span>
     </div>
@@ -73,7 +73,7 @@
       <form action="alta-clientes.php" method="post">
       <table class="forms" cellpadding="5">
           <tr class="titulo">
-            <td colspan="2"> <?php echo($titulo)?> </td>
+            <td colspan="2"> <?php echo(utf8_encode($titulo));?> </td>
             <td width="32">
                 <a href="index-admin.php">
                     <img src="images/home.png"  alt="inicio" title="Volver al panel" width="32" height="32" border="none" />                </a>            </td>

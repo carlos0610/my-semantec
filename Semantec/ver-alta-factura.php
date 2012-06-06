@@ -91,7 +91,7 @@
     <header><!-- form login -->
 
     <div id ="login">
-         <span id="mensaje_top" style="text-align:right;"><?php echo($_SESSION["usu_nombre"]); ?>
+         <span id="mensaje_top" style="text-align:right;"><?php echo(utf8_encode($_SESSION["usu_nombre"])); ?>
          <a href="logout.php"><img src="images/salir.png"  alt="salir" title="Salir" width="32" height="32" border="none" valign="middle" hspace="8" /></a>
          </span>
     </div>
@@ -134,13 +134,13 @@
 	 <table width="100%" border="0" id="dataTable">
 <tr>
             <td width="15%" class="titulo"><span id="ocultarParaImpresion">Señores:</span></td>
-            <td colspan="3" style="background-color:#cbeef5" align="left"><?php echo $fila_datos_cliente["cli_nombre"]?></td>
+            <td colspan="3" style="background-color:#cbeef5" align="left"><?php echo utf8_encode($fila_datos_cliente["cli_nombre"]);?></td>
        </tr>
           <tr>
             <td class="titulo"><span id="ocultarParaImpresion">Domiclio:</span></td>
-            <td width="24%" style="background-color:#cbeef5"  align="left"><?php echo $fila_datos_cliente["cli_direccion"]?></td>
+            <td width="24%" style="background-color:#cbeef5"  align="left"><?php echo utf8_encode($fila_datos_cliente["cli_direccion"]);?></td>
             <td width="9%" class="titulo"><span id="ocultarParaImpresion">Localidad:</span></td>
-            <td width="52%" style="background-color:#cbeef5"  align="rigth"><?php echo $fila_datos_cliente["zon_nombre"]?></td>
+            <td width="52%" style="background-color:#cbeef5"  align="rigth"><?php echo utf8_encode($fila_datos_cliente["zon_nombre"]);?></td>
        </tr>
           <tr>
             <td class="titulo"><span id="ocultarParaImpresion">IVA:</span></td>

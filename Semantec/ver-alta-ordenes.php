@@ -114,12 +114,12 @@
           <tr>
             <td>Cliente</td>
             <td>
-                <?php echo($fila1["cli_nombre"]);?>            </td>
+                <?php echo(utf8_encode($fila1["cli_nombre"]));?>            </td>
           </tr>
           <tr>
             <td>Proveedor</td>
             <td>
-                <?php echo($fila2["prv_nombre"]); ?>            </td>
+                <?php echo(utf8_encode($fila2["prv_nombre"])); ?>            </td>
           </tr>
           <tr>
             <td>Estado</td>

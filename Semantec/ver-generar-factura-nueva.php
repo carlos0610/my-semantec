@@ -71,7 +71,7 @@
     <header><!-- form login -->
 
     <div id ="login">
-         <span id="mensaje_top" style="text-align:right;"><?php echo($_SESSION["usu_nombre"]); ?>
+         <span id="mensaje_top" style="text-align:right;"><?php echo(utf8_encode($_SESSION["usu_nombre"])); ?>
          <a href="logout.php"><img src="images/salir.png"  alt="salir" title="Salir" width="32" height="32" border="none" valign="middle" hspace="8" /></a>
          </span>
     </div>
@@ -133,7 +133,7 @@
              <?php
                  while($fila = mysql_fetch_array($resultado1)){
                 ?>
-                    <option value="<?php echo($fila["cli_id"]); ?>"<?php if($fila["cli_id"]==$cli_id){echo(" selected=\"selected\"");} ?>><?php echo($fila["cli_nombre"]); ?></option>
+                    <option value="<?php echo($fila["cli_id"]); ?>"<?php if($fila["cli_id"]==$cli_id){echo(" selected=\"selected\"");} ?>><?php echo(utf8_encode($fila["cli_nombre"])); ?></option>
              <?php
                      }
                 ?>
@@ -143,9 +143,9 @@
        </tr>
           <tr>
             <td class="titulo">Domiclio:</td>
-            <td width="24%" style="background-color:#cbeef5"><label id="domicilio"><?php echo $fila_datos_cliente["cli_direccion"]?></label></td>
+            <td width="24%" style="background-color:#cbeef5"><label id="domicilio"><?php echo utf8_encode($fila_datos_cliente["cli_direccion"]);?></label></td>
             <td width="9%" class="titulo">Localidad:</td>
-            <td width="52%" style="background-color:#cbeef5"><label id="localidad"><?php echo $fila_datos_cliente["zon_nombre"]?> </label></td>
+            <td width="52%" style="background-color:#cbeef5"><label id="localidad"><?php echo utf8_encode($fila_datos_cliente["zon_nombre"]);?> </label></td>
        </tr>
           <tr>
             <td class="titulo">IVA:</td>

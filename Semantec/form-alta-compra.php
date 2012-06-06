@@ -68,7 +68,7 @@
     <header><!-- form login -->
 
     <div id ="login">
-         <span id="mensaje_top" style="text-align:right;"><?php echo($_SESSION["usu_nombre"]); ?>
+         <span id="mensaje_top" style="text-align:right;"><?php echo(utf8_encode($_SESSION["usu_nombre"])); ?>
          <a href="logout.php"><img src="images/salir.png"  alt="salir" title="Salir" width="32" height="32" border="none" valign="middle" hspace="8" /></a>
          </span>
     </div>
@@ -115,13 +115,13 @@
 </tr>
 <tr>
             <td width="15%" class="titulo">Señores:</td>
-            <td colspan="3" style="background-color:#cbeef5"><?php echo $fila_proveedor["prv_nombre"]?></td>
+            <td colspan="3" style="background-color:#cbeef5"><?php echo utf8_encode($fila_proveedor["prv_nombre"]);?></td>
        </tr>
           <tr>
             <td class="titulo">Domiclio:</td>
-            <td width="24%" style="background-color:#cbeef5"><?php echo $fila_proveedor["prv_direccion"]?></td>
+            <td width="24%" style="background-color:#cbeef5"><?php echo utf8_encode($fila_proveedor["prv_direccion"]);?></td>
             <td width="9%" class="titulo">Localidad:</td>
-            <td width="52%" style="background-color:#cbeef5"><?php echo $fila_proveedor["zon_nombre"]?></td>
+            <td width="52%" style="background-color:#cbeef5"><?php echo utf8_encode($fila_proveedor["zon_nombre"]);?></td>
        </tr>
           <tr>
             <td class="titulo">IVA:</td>

@@ -78,7 +78,7 @@
 	  <!-- form login -->
 
     <div id ="login">
-         <span id="mensaje_top" style="text-align:right;"><?php echo($_SESSION["usu_nombre"]); ?>
+         <span id="mensaje_top" style="text-align:right;"><?php echo(utf8_encode($_SESSION["usu_nombre"])); ?>
          <a href="logout.php"><img src="images/salir.png"  alt="salir" title="Salir" width="32" height="32" border="none" valign="middle" hspace="8" /></a>
          </span>
     </div>
@@ -110,9 +110,9 @@
   ?>
           <tr class="lista" bgcolor="<?php echo($colores[$i]);?>">
               <td><a href=form-edit-ordenes.php?ord_id=<?php echo($fila["ord_id"]);?>><?php echo($fila["ord_codigo"]);?></a></td>
-            <td><?php echo($fila["cli_nombre"]);?></td>
+            <td><?php echo(utf8_encode($fila["cli_nombre"]));?></td>
             <td><?php echo(nl2br(utf8_encode($fila["ord_descripcion"])));?></td>
-            <td><?php echo($fila["prv_nombre"]);?></td>
+            <td><?php echo(utf8_encode($fila["prv_nombre"]));?></td>
             <td>
                   <img src="images/estado.png" alt="estado" style="background-color:<?php echo($fila["est_color"]);?>">
                   <?php echo(utf8_encode($fila["est_nombre"]));?>

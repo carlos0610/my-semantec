@@ -39,7 +39,7 @@
 	  <!-- form login -->
 
     <div id ="login">
-         <span id="mensaje_top" style="text-align:right;"><?php echo($_SESSION["usu_nombre"]); ?>
+         <span id="mensaje_top" style="text-align:right;"><?php echo(utf8_encode($_SESSION["usu_nombre"])); ?>
          <a href="logout.php"><img src="images/salir.png"  alt="salir" title="Salir" width="32" height="32" border="none" valign="middle" hspace="8" /></a>
          </span>
     </div>
@@ -50,7 +50,7 @@
 
    <!--start contenedor-->
    <div id="contenedor" style="height:auto;">
-      <h2>Panel de control - <?php echo $tituloPanel?></h2>
+      <h2>Panel de control - <?php echo utf8_encode($tituloPanel);?></h2>
 
       <form name="frmSeleccionarProveedor" action="<?php if ($action == 1) echo "ver-corriente-proveedor.php"; else echo "form-alta-compra.php";?>" method="post" ><table class="listados" cellpadding="5">
           <tr class="titulo">
@@ -66,7 +66,7 @@
                   <?php
           while($fila = mysql_fetch_array($resultado1)){
                     ?>
-                    <option value="<?php echo($fila["prv_id"]); ?>"><?php echo($fila["prv_nombre"]); ?></option>
+                    <option value="<?php echo($fila["prv_id"]); ?>"><?php echo(utf8_encode($fila["prv_nombre"])); ?></option>
             <?php
                         }
                 ?>

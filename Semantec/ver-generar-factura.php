@@ -119,13 +119,13 @@
 	 <table width="100%" border="0" id="dataTable">
 <tr>
             <td width="15%" class="titulo">Señores:</td>
-            <td colspan="3" style="background-color:#cbeef5"><?php echo $fila_datos_cliente["cli_nombre"]?></td>
+            <td colspan="3" style="background-color:#cbeef5"><?php echo utf8_encode($fila_datos_cliente["cli_nombre"]);?></td>
        </tr>
           <tr>
             <td class="titulo">Domiclio:</td>
-            <td width="24%" style="background-color:#cbeef5"><?php echo $fila_datos_cliente["cli_direccion"]?></td>
+            <td width="24%" style="background-color:#cbeef5"><?php echo utf8_encode($fila_datos_cliente["cli_direccion"]);?></td>
             <td width="9%" class="titulo">Localidad:</td>
-            <td width="52%" style="background-color:#cbeef5"><?php echo $fila_datos_cliente["zon_nombre"]?></td>
+            <td width="52%" style="background-color:#cbeef5"><?php echo utf8_encode($fila_datos_cliente["zon_nombre"]);?></td>
        </tr>
           <tr>
             <td class="titulo">IVA:</td>

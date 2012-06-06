@@ -68,7 +68,7 @@
 	  <!-- form login -->
 
     <div id ="login">
-         <span id="mensaje_top" style="text-align:right;"><?php echo($_SESSION["usu_nombre"]); ?>
+         <span id="mensaje_top" style="text-align:right;"><?php echo(utf8_encode($_SESSION["usu_nombre"])); ?>
          <a href="logout.php"><img src="images/salir.png"  alt="salir" title="Salir" width="32" height="32" border="none" valign="middle" hspace="8" /></a>
          </span>
     </div>
@@ -96,7 +96,7 @@
                   <?php
           while($fila = mysql_fetch_array($resultado1)){
                     ?>
-                    <option value="<?php echo($fila["cli_id"]); ?>"><?php echo($fila["cli_nombre"]); ?></option>
+                    <option value="<?php echo($fila["cli_id"]); ?>"><?php echo(utf8_encode($fila["cli_nombre"])); ?></option>
             <?php
                         }
                 ?>
@@ -138,7 +138,7 @@
             <td><?php echo($fila["ccc_id"]);?></td>
             <td>
             <a href="ver-alta-clientes.php?cli_id=<?php echo($fila["cli_id"]);?>&action=0">
-            <?php echo($fila["cli_nombre"]);?>
+            <?php echo(utf8_encode($fila["cli_nombre"]));?>
             </a>          
             </td>            
             <td align="center"><?php echo $fila["fav_id"];?></td>          

@@ -56,7 +56,7 @@
 	  <!-- form login -->
 
     <div id ="login">
-         <span id="mensaje_top" style="text-align:right;"><?php echo($_SESSION["usu_nombre"]); ?>
+         <span id="mensaje_top" style="text-align:right;"><?php echo(utf8_encode($_SESSION["usu_nombre"])); ?>
          <a href="logout.php"><img src="images/salir.png"  alt="salir" title="Salir" width="32" height="32" border="none" valign="middle" hspace="8" /></a>
          </span>
     </div>
@@ -74,7 +74,7 @@
       <form action="alta-proveedores.php" method="post" name="frmAltaPrv">
       <table class="forms" cellpadding="5">
           <tr class="titulo">
-            <td colspan="2"> <?php echo($titulo)?> </td>
+            <td colspan="2"> <?php echo(utf8_encode($titulo))?> </td>
             <td width="32">
                 <a href="index-admin.php">
                     <img src="images/home.png"  alt="inicio" title="Volver al panel" width="32" height="32" border="none" /> 
@@ -101,7 +101,7 @@
     <?php
           while($fila = mysql_fetch_array($resultado1)){
     ?>
-                    <option value="<?php echo($fila["iva_id"]); ?>"><?php echo($fila["iva_nombre"]); ?></option>
+                    <option value="<?php echo($fila["iva_id"]); ?>"><?php echo(utf8_encode($fila["iva_nombre"])); ?></option>
     <?php
           }
     ?>
@@ -116,7 +116,7 @@
                 <?php
           while($fila = mysql_fetch_array($rubros)){
                 ?>
-                    <option value="<?php echo($fila["rub_id"]); ?>"><?php echo($fila["rub_nombre"]); ?></option>
+                    <option value="<?php echo($fila["rub_id"]); ?>"><?php echo(utf8_encode($fila["rub_nombre"])); ?></option>
                 <?php
                     }
                     ?>          
@@ -151,22 +151,22 @@
           </tr>
           <tr>
             <td>Fax</td>
-            <td><input type="number" style="text-align:right" class="campos" id="prv_fax" name="prv_fax" required /></td>
+            <td><input type="number" style="text-align:right" class="campos" id="prv_fax" name="prv_fax"  /></td>
             <td></td>
           </tr>
           <tr>
             <td>Cel</td>
-            <td><input type="number" style="text-align:right" class="campos" id="prv_cel" name="prv_cel" required /></td>
+            <td><input type="number" style="text-align:right" class="campos" id="prv_cel" name="prv_cel"  /></td>
             <td></td>
           </tr>
           <tr>
             <td>Alternativo</td>
-            <td><input type="number" style="text-align:right" class="campos" id="prv_alternativo" name="prv_alternativo" required  /></td>
+            <td><input type="number" style="text-align:right" class="campos" id="prv_alternativo" name="prv_alternativo"   /></td>
             <td></td>
           </tr>
           <tr>
             <td>Urgencia</td>
-            <td><input type="number" style="text-align:right" class="campos" id="prv_urgencia" name="prv_urgencia" required /></td>
+            <td><input type="number" style="text-align:right" class="campos" id="prv_urgencia" name="prv_urgencia"  /></td>
             <td></td>
           </tr>
           <tr>

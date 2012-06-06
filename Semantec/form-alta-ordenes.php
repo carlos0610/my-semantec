@@ -86,7 +86,7 @@
     <?php
           while($fila = mysql_fetch_array($resultado1)){
     ?>
-                    <option value="<?php echo($fila["cli_id"]); ?>"><?php echo($fila["cli_nombre"]); ?></option>
+                    <option value="<?php echo($fila["cli_id"]); ?>"><?php echo(utf8_encode($fila["cli_nombre"])); ?></option>
     <?php
           }
     ?>
@@ -101,7 +101,7 @@
     <?php
           while($fila2 = mysql_fetch_array($resultado2)){
     ?>
-                    <option value="<?php echo($fila2["prv_id"]); ?>"><?php echo($fila2["prv_nombre"]); ?></option>
+                    <option value="<?php echo($fila2["prv_id"]); ?>"><?php echo(utf8_encode($fila2["prv_nombre"])); ?></option>
     <?php
           }
     ?>

@@ -81,11 +81,23 @@ function disableTxt(formulario,id){
 
 }
 
+function validarSiNumeroYComa(numero){
+    ok=true;
+
+if (!/^[0-9]+(\.[0-9]+)?$/.test(numero)){
+alert("El valor " + numero + " no es un número");
+ok=false;
+}
+return ok;
+}
+
+
+
 function ActualizarTotal(cantidadDescripciones,factura){
     
     
     iva = document.getElementById("comboIva").value;
-    document.getElementById("btnConfirma").style.visibility = "visible"; // giladita fea dps arreglar
+    document.getElementById("btnConfirma").style.visibility = "visible"; 
 
 
     if (iva == 1){
@@ -102,22 +114,26 @@ function ActualizarTotal(cantidadDescripciones,factura){
     {
         
         numeroDescripcion++;
-        subtotal += parseFloat(document.getElementById("txtTotalItem"+numeroDescripcion).value); 
+        if (validarSiNumeroYComa(document.getElementById("txtTotalItem"+numeroDescripcion).value))
+        {
+             subtotal += parseFloat(document.getElementById("txtTotalItem"+numeroDescripcion).value); 
+        }else
+        {document.getElementById("txtTotalItem"+numeroDescripcion).value="0.00";}
     }
-    document.getElementById("txtSubtotal").value = subtotal;
+    document.getElementById("txtSubtotal").value = subtotal.toFixed(2);
     
     total_iva = subtotal * iva;
     
     
     
-    document.getElementById("txtIva_Ins").value = total_iva;
+    document.getElementById("txtIva_Ins").value = total_iva.toFixed(2);
     
     
     //1 = FACTURA VENTA
     //2 = FACTURA COMPRA
     
     if(factura == 1){
-    document.getElementById("txtTotalFactura").value = total_iva + subtotal;
+    document.getElementById("txtTotalFactura").value = (total_iva + subtotal).toFixed(2);
     } else {
     percepciones = parseFloat(document.getElementById("txtPercepciones").value);
     document.getElementById("txtTotalFactura").value = total_iva + subtotal + percepciones;      

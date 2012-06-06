@@ -206,3 +206,11 @@ validarSoloNumero(document.getElementById("ord_costo"));
 function validarVentaDeLaOrden(){
 validarSoloNumero(document.getElementById("ord_venta"));
 }
+
+function validarTotales(){
+validarSoloNumeroyPunto(document.getElementById("ord_venta"));
+}
+
+
+
+

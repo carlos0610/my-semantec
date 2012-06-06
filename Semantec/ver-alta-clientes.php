@@ -51,7 +51,7 @@
 	  <!-- form login -->
 
     <div id ="login">
-         <span id="mensaje_top" style="text-align:right;"><?php echo($_SESSION["usu_nombre"]); ?>
+         <span id="mensaje_top" style="text-align:right;"><?php echo(utf8_encode($_SESSION["usu_nombre"])); ?>
          <a href="logout.php"><img src="images/salir.png"  alt="salir" title="Salir" width="32" height="32" border="none" valign="middle" hspace="8" /></a>
          </span>
     </div>
@@ -90,7 +90,7 @@
           </tr>          
           <tr>
             <td>Provincia/Zona</td>
-            <td><?php echo($cliente["zon_nombre"]); ?></td>
+            <td><?php echo(utf8_encode($cliente["zon_nombre"])); ?></td>
             <td></td>
           </tr>
           <tr>
