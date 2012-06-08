@@ -23,7 +23,9 @@
   <head>
 <?php
     include("encabezado-main.php");
+    
 ?>    
+      <script src="js/sorttable.js"></script>
   </head>
   <body>
 	
@@ -89,6 +91,7 @@
 
           }
   ?>
+         
           <tr>
             <td colspan="5" class="pie_lista"><?php 
 /* PAGINADO */  ###############################################################################            

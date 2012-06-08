@@ -286,7 +286,8 @@ if (typeof(mylink) == 'string')
    href=mylink;
 else
    href=mylink.href;
-window.open(href, windowname, 'width=700,height=500,scrollbars=yes');
+window.open(href, windowname, 'width=1050,height=500,scrollbars=yes,toolbar=1');
+
 return false;
 }
 

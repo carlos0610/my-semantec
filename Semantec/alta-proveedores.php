@@ -1,10 +1,27 @@
 <?php
         include("validar.php");
+        include("conexion.php");
         $prv_nombre = $_POST["prv_nombre"];
         $prv_cuit = $_POST["prv_cuit"];
         $iva_id = $_POST["iva_id"];
         $prv_rubro = utf8_decode($_POST["rub_id"]);
-        $zon_id = $_POST["zon_id"];
+        
+        
+        
+        /* OBTENEMOS LOS DATOS DE UBICACIÓN DE LOS SELECTS*/
+        $provincia_id   = $_POST["select1"];
+        $partido_id     = $_POST["select2"];
+        $localidad_id   = $_POST["select3"];
+        
+        /* GENERAMOS UN CÓDIGO DE UBICACIÓN EN LA TABLA UBICACIÓN */
+        
+        $sql = "INSERT INTO ubicacion (provincias_id,partidos_id,localidades_id) VALUES ($provincia_id,$partido_id,$localidad_id)";
+        mysql_query($sql);
+        
+       $ubicacion_id = mysql_insert_id();
+        
+        
+        
         $prv_direccion = utf8_decode($_POST["prv_direccion"]);
         $prv_telefono = $_POST["prv_telefono"];
         $prv_fax = $_POST["prv_fax"];
@@ -16,13 +33,13 @@
         $prv_notas = utf8_decode($_POST["prv_notas"]);
         $rbt_cuenta = $_POST["rbt_cuenta"];
 
-        include("conexion.php");
-        $sql = "INSERT INTO proveedores (prv_nombre,prv_cuit,rub_id,iva_id,zon_id,prv_direccion,prv_telefono,prv_fax,prv_cel,prv_alternativo,prv_urgencia,prv_web,prv_email,prv_notas,estado) VALUES (     										
+        
+        $sql = "INSERT INTO proveedores (prv_nombre,prv_cuit,rub_id,iva_id,ubicacion_id,prv_direccion,prv_telefono,prv_fax,prv_cel,prv_alternativo,prv_urgencia,prv_web,prv_email,prv_notas,estado) VALUES (     										
         										'$prv_nombre',
         										'$prv_cuit',
         										$prv_rubro,
                                                                                         $iva_id,    
-        										$zon_id,
+        										$ubicacion_id,
         										'$prv_direccion',
         										'$prv_telefono',
                                                                                         '$prv_fax',
@@ -59,6 +76,9 @@
                 mysql_query($sql);
 
 		mysql_close();
-		header("location:ver-alta-proveedores.php?action=1");
+                
+                
+                //echo "QUERY: ".$mensaje2;
+                header("location:ver-alta-proveedores.php?action=1");
 
 ?>

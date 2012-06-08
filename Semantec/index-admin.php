@@ -6,7 +6,7 @@
     $fila_plazo_proveedor = -1;
     include("conexion.php");
     
-    /* COMPROBAR SI HAY ALERTA DE PROVEEDOR*/
+    /* COMPROBAR SI HAY ALERTA DE PROVEEDOR* #REFACTORIZAR# */
     
         $sql0 =    "SELECT ord_id, ord_codigo, ord_descripcion, cli_nombre, prv_nombre, est_nombre, est_color, ord_alta, ord_plazo,ord_plazo_proveedor, ord_costo, ord_venta
                     FROM ordenes o, clientes c, estados e, proveedores p
@@ -20,6 +20,21 @@
         $alerta_plazo_proveedor = mysql_query($sql0);
         $fila_plazo_proveedor = mysql_num_rows($alerta_plazo_proveedor);
         
+     /* COMPROBAR SI HAY ALERTA DE PLAZO DE FINALIZACION DEL TRABAJO #REFACTORIZAR# */   
+        
+        $sql ="SELECT ord_id, ord_codigo, ord_descripcion, cli_nombre, prv_nombre, est_nombre, est_color, ord_alta, ord_plazo,ord_plazo_proveedor, ord_costo, ord_venta
+                    FROM ordenes o, clientes c, estados e, proveedores p
+                    WHERE o.cli_id = c.cli_id
+                    AND o.est_id = e.est_id
+                    AND o.prv_id = p.prv_id  
+                    AND o.estado = 1
+                    AND o.est_id > 8
+		    AND DATEDIFF(ord_plazo,now()) = 1 
+                    ORDER BY o.ord_alta DESC";
+        $alerta_plazo_finalizado = mysql_query($sql);
+        $fila_plazo_finalizado = mysql_num_rows($alerta_plazo_finalizado);
+        
+
         //echo "FILA : ".$fila_plazo_proveedor;
         
         
@@ -106,20 +121,38 @@
      <table width="100%" border="0">
          
          <tr>
+           <td colspan="5" class="botones"><div align="center">ALERTAS</div></td>
+         </tr>
+         <tr>
+           <td width="18%">Respuesta de proveedor:</td>
   
       <?php if ($fila_plazo_proveedor > 0) { ?>
          
-    <td width="27%"><div align="right"><img src="images/warning.png" width="32" height="32"></div></td>
-    <td width="73%"><h5><a href="#" onclick="popup('lista-alertas.php', 'Alerta')">Hay ordenes que no recibieron respuesta de proveedor </h5></td>
+    <td width="4%"><div align="right"><img src="images/warning.png" width="32" height="32"></div></td>
+    <td width="36%"><h5><a href="#" onclick="popup('lista-alertas.php', 'Alerta')">Hay órdenes que no recibieron respuesta de proveedor </h5></td>
           
          <?php } else { ?>
            
-            <td width="27%"><div align="right"><img src="images/ok.png" width="32" height="32"></div></td>
-            <td width="73%"><h5>Sin novedades</h5></td>
+            <td width="7%"><div align="right"><img src="images/ok.png" width="32" height="32"></div></td>
+            <td width="35%"><h5>Sin novedades</h5></td>
             
                <?php } ?>
+            </tr>
+            <tr>
+              <td width="18%">Órdenes finalizadas:</td>
+               
+                <?php if ($fila_plazo_finalizado > 0) { ?>
+         
+    <td width="4%"><div align="right"><img src="images/warning.png" width="32" height="32"></div></td>
+    <td width="36%"><h5><a href="#" onclick="popup('lista-alertas-finalizado.php', 'Alerta')">Hay órdenes que no fueron terminadas y vence el plazo mañana.  </h5></td>
+          
+         <?php } else { ?>
+           
+            <td width="7%"><div align="right"><img src="images/ok.png" width="32" height="32"></div></td>
+            <td width="35%"><h5>Sin novedades</h5></td>
             
-            </tr> 
+               <?php } ?>
+            </tr>
             </table>
                         
 

@@ -11,8 +11,8 @@ $titulo = "Alerta de ordenes con vencimiento.";
                     AND o.est_id = e.est_id
                     AND o.prv_id = p.prv_id  
                     AND o.estado = 1
-                    AND o.est_id = 2
-		    AND DATEDIFF(ord_plazo_proveedor,now()) = 1 
+                    AND o.est_id > 8
+		    AND DATEDIFF(ord_plazo,now()) = 1 
                     ORDER BY o.ord_alta DESC";
         $alerta_plazo_proveedor = mysql_query($sql0);
         
@@ -25,8 +25,8 @@ $titulo = "Alerta de ordenes con vencimiento.";
                     AND o.est_id = e.est_id
                     AND o.prv_id = p.prv_id  
                     AND o.estado = 1
-                    AND o.est_id = 2
-		    AND DATEDIFF(ord_plazo_proveedor,now()) = 1 
+                    AND o.est_id > 8
+		    AND DATEDIFF(ord_plazo,now()) = 1 
                     ORDER BY o.ord_alta DESC";
         $sql .= " LIMIT ".$limitInf.",".$tamPag;
         $resultado = mysql_query($sql);
@@ -53,7 +53,7 @@ $titulo = "Alerta de ordenes con vencimiento.";
       <table width="100%" border="0">
       <tr>
         <td width="18%"><div align="right"><img src="images/warning.png" width="48" height="48"></div></td>
-        <td width="82%"><h2>Las siguientes ordenes  aún no recibieron respuesta del proveedor</h2></td>
+        <td width="82%"><h2>Las siguientes ordenes  aún no fueron terminadas por el proveedor</h2></td>
       </tr>
     </table>
     </div>
@@ -67,7 +67,7 @@ $titulo = "Alerta de ordenes con vencimiento.";
             <td>Descripci&oacute;n</td>
             <td width="100">Proveedor</td>
             <td width="100">Estado</td>
-            <td width="32">Respuesta proveedor</td>
+            <td width="32">Plazo de finalización</td>
             <td width="32">&nbsp;</td>
             <td width="32">&nbsp;</td>            
             <td width="32">&nbsp;</td>
@@ -84,14 +84,14 @@ $titulo = "Alerta de ordenes con vencimiento.";
           <tr class="lista" bgcolor="<?php echo($colores[$i]);?>">
             <td><?php echo($fila["ord_codigo"]);?></td>
             <td><?php echo(tfecha($fila["ord_alta"]));?></td>
-            <td><a href="ver-alta-clientes.php?cli_id=<?php echo$fila["cli_id"]?>&action=0"><?php echo($fila["cli_nombre"]);?></td>
+            <td><a href="ver-alta-clientes.php?cli_id=<?php echo$fila["cli_id"]?>&action=0"><?php echo($fila["cli_nombre"]);?></td>            
             <td><?php echo(nl2br(utf8_encode($fila["ord_descripcion"])));?></td>
             <td><a href="ver-alta-proveedores.php?prv_id=<?php echo$fila["prv_id"]?>&action=0"><?php echo($fila["prv_nombre"]);?></td>
             <td>
                   <img src="images/estado.png" alt="estado" style="background-color:<?php echo($fila["est_color"]);?>">
                   <?php echo(utf8_encode($fila["est_nombre"]));?>
             </td>
-            <td style="background-color: red;"><?php echo(tfecha($fila["ord_plazo_proveedor"]));?></td>
+            <td style="background-color: red;"><?php echo(tfecha($fila["ord_plazo"]));?></td>
             <td width="32"><a href="ver-alta-ordenes.php?ord_id=<?php echo($fila["ord_id"]); ?>&action=0"><img src="images/detalles.png" alt="editar" title="Ver detalle" width="32" height="32" border="none" /></a></td>            
             <td><a href="form-edit-ordenes.php?ord_id=<?php echo($fila["ord_id"]); ?>"><img src="images/editar.png" alt="editar" title="Modificar orden" width="32" height="32" border="none" /></a></td>
             <td><a href="#" onClick="eliminarOrden(<?php echo($fila["ord_id"]);?>,'<?php echo($fila["ord_codigo"]);?>')">

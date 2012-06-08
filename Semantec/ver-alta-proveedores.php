@@ -2,7 +2,7 @@
     include("validar.php");  
     $action = $_GET["action"];
     if($action == 0){
-          $titulo = "Datos de Orden de Servicio";
+          $titulo = "Datos de proveedor";
           $prv_id = $_GET["prv_id"];
     }
     else if($action == 1){
@@ -21,11 +21,40 @@
         //unset($_SESSION["prv_id"]);
         
         
-        $sql = "SELECT prv_nombre, prv_cuit, iva_tipo.iva_nombre, rubros.rub_nombre, zonas.zon_nombre, prv_direccion, prv_telefono,prv_fax,prv_cel,prv_alternativo,prv_urgencia,prv_web,prv_email,prv_notas FROM proveedores,rubros,iva_tipo,zonas WHERE prv_id = $prv_id and proveedores.iva_id = iva_tipo.iva_id
-        and proveedores.rub_id = rubros.rub_id
-        and proveedores.zon_id = zonas.zon_id";
-        $zonas = mysql_query($sql);
-        $fila_zonas = mysql_fetch_array($zonas);
+        $sql = "SELECT prv_nombre, prv_cuit, iva_tipo.iva_nombre, rubros.rub_nombre, p.nombre as provincia,pa.nombre as partido,l.nombre as localidad, prv_direccion, prv_telefono,prv_fax,prv_cel,prv_alternativo,prv_urgencia,prv_web,prv_email,prv_notas 
+		FROM proveedores,rubros,iva_tipo,ubicacion u,provincias p, partidos pa,localidades l 
+		WHERE prv_id = $prv_id
+		AND proveedores.iva_id = iva_tipo.iva_id
+                AND proveedores.rub_id = rubros.rub_id
+                AND proveedores.ubicacion_id = u.id
+                AND u.provincias_id = p.id
+		AND u.partidos_id = pa.id
+		AND u.localidades_id = l.id";
+        $proveedor = mysql_query($sql);
+        $fila_proveedor = mysql_fetch_array($proveedor);
+        
+        //$ubicacion_id = $fila_proveedor["ubicacion_id"];
+        /*
+        $sql = "SELECT p.id,pa.id,l.id FROM ubicacion u,provincias p, partidos pa,localidades l
+                WHERE
+                u.id = $ubicacion_id;
+                and u.provincias_id = p.id
+                and u.partidos_id = pa.id
+                and u.localidades_id = l.id";
+        
+        $ubicacion = mysql_query($sql);
+        $fila_ubicacion = mysql_fetch_array($ubicacion);
+         * */
+         
+        
+        
+        
+        
+        
+        
+        
+        
+        
         
         /* Si tiene cuenta obtenemos los datos de su cuenta de la tabla cuentabanco*/
         if ($tienecuenta){
@@ -86,67 +115,77 @@
           </tr>
           <tr>
             <td>Razón Social</td>
-            <td><?php echo(utf8_encode($fila_zonas["prv_nombre"])); ?></td>
+            <td><?php echo(utf8_encode($fila_proveedor["prv_nombre"])); ?></td>
             <td></td>
           </tr>
           <tr>
             <td>CUIT</td>
-            <td><?php echo($fila_zonas["prv_cuit"]); ?></td>
+            <td><?php echo($fila_proveedor["prv_cuit"]); ?></td>
             <td></td>
           </tr>
           <tr>
             <td>Condici&oacute;n de IVA</td>
-            <td><?php echo($fila_zonas["iva_nombre"]); ?></td>
+            <td><?php echo($fila_proveedor["iva_nombre"]); ?></td>
             <td></td>
           </tr>
           <tr>
             <td>Rubro</td>
-            <td><?php echo(utf8_encode($fila_zonas["rub_nombre"]));; ?></td>
+            <td><?php echo(utf8_encode($fila_proveedor["rub_nombre"]));; ?></td>
             <td></td>
           </tr>
           <tr>
-            <td>Provincia/Zona</td>
-            <td><?php echo(utf8_encode($fila_zonas["zon_nombre"])); ?></td>
+            <td>Provincia</td>
+            <td><?php echo(utf8_encode($fila_proveedor["provincia"])); ?></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Partido</td>
+            <td><?php echo(utf8_encode($fila_proveedor["partido"])); ?></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Localidad</td>
+            <td><?php echo(utf8_encode($fila_proveedor["localidad"])); ?></td>
             <td></td>
           </tr>
           <tr>
             <td>Direcci&oacute;n</td>
-            <td><?php echo(utf8_encode($fila_zonas["prv_direccion"])); ?></td>
+            <td><?php echo(utf8_encode($fila_proveedor["prv_direccion"])); ?></td>
             <td></td>
           </tr>
           <tr>
             <td>Tel&eacute;fono</td>
-            <td><?php echo($fila_zonas["prv_telefono"]); ?></td>
+            <td><?php echo($fila_proveedor["prv_telefono"]); ?></td>
             <td></td>
           </tr>
           <tr>
             <td>Fax</td>
-            <td><?php echo($fila_zonas["prv_fax"]); ?></td>
+            <td><?php echo($fila_proveedor["prv_fax"]); ?></td>
             <td></td>
           </tr>
           <tr>
             <td>Cel</td>
-            <td><?php echo($fila_zonas["prv_cel"]); ?></td>
+            <td><?php echo($fila_proveedor["prv_cel"]); ?></td>
             <td></td>
           </tr>
           <tr>
             <td>Alternativo</td>
-            <td><?php echo($fila_zonas["prv_alternativo"]); ?></td>
+            <td><?php echo($fila_proveedor["prv_alternativo"]); ?></td>
             <td></td>
           </tr>
           <tr>
             <td>Urgencia</td>
-            <td><?php echo($fila_zonas["prv_urgencia"]); ?></td>
+            <td><?php echo($fila_proveedor["prv_urgencia"]); ?></td>
             <td></td>
           </tr>
           <tr>
             <td>Web</td>
-            <td><?php echo($fila_zonas["prv_web"]); ?></td>
+            <td><?php echo($fila_proveedor["prv_web"]); ?></td>
             <td></td>
           </tr>
           <tr>
             <td>Email</td>
-            <td><?php echo($fila_zonas["prv_email"]); ?></td>
+            <td><?php echo($fila_proveedor["prv_email"]); ?></td>
             <td></td>
           </tr>
           <td>Tiene cuenta bancaria?</td>
@@ -179,7 +218,7 @@
           }?>
           <tr>
            <td>Notas</td>
-           <td><?php echo(utf8_encode($fila_zonas["prv_notas"])); ?></td>
+           <td><?php echo(utf8_encode($fila_proveedor["prv_notas"])); ?></td>
            <td></td>
           </tr>
           

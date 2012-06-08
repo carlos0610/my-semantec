@@ -2,7 +2,7 @@
     include("validar.php");
     $action = $_GET["action"];
     if($action == 0){
-          $titulo = "Datos de Orden de Servicio";
+          $titulo = "Datos de Cliente";
           $cli_id = $_GET["cli_id"];
     }
     else 
