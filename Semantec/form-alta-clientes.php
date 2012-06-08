@@ -5,12 +5,13 @@
         include("conexion.php");
         $sql    = "SELECT  iva_id, iva_nombre FROM iva_tipo";
         $iva    = mysql_query($sql);
-        $sql    = "SELECT  zon_id, zon_nombre FROM zonas";
-        $zonas  = mysql_query($sql);
+        //$sql    = "SELECT  zon_id, zon_nombre FROM zonas";
+        //$zonas  = mysql_query($sql);
         //$sql    = "SELECT rub_id,rub_nombre FROM rubros";
         //$rubros = mysql_query($sql);
         
-        
+        $sql = "SELECT id, nombre FROM provincias";
+        $provincias=mysql_query($sql);
         
         
         
@@ -105,19 +106,39 @@
             <td></td>
           </tr>          
           <tr>
-            <td>Provincia/Zona</td>
+            <td>Provincia</td>
             <td>
-                <select name="zon_id" id="zon_id" class="campos">
+                <select name="select1" id="select1" class="campos" onChange="cargaContenido(this.id)">
+                <option value='0'>Seleccione</option>;   
     <?php
-          while($fila = mysql_fetch_array($zonas)){
+          while($fila = mysql_fetch_array($provincias)){
     ?>
-                    <option value="<?php echo($fila["zon_id"]); ?>"><?php echo(utf8_encode($fila["zon_nombre"])); ?></option>
+                    <option value="<?php echo($fila["id"]); ?>"><?php echo(utf8_encode($fila["nombre"])); ?></option>
     <?php
           }
     ?>
-                </select>            </td>
+                </select>
+            </td>
             <td></td>
           </tr>
+          
+          <tr>
+                        <td>Partido</td>
+                        <td><label>
+                                <select name="select2" id="select2" class="campos">
+                                <option value="0">Selecciona opci&oacute;n...</option>
+                                </select>
+                        </label></td>
+                      </tr>
+          
+          <tr>
+                        <td>Localidad</td>
+                        <td><label>
+                                <select name="select3" id="select3" class="campos">
+                                <option value="0">Selecciona opci&oacute;n...</option>
+                                </select>
+                        </label></td>
+                      </tr>
           <tr>
             <td>Direcci&oacute;n</td>
             <td><input type="text" class="campos" id="cli_direccion" name="cli_direccion" required/></td>

@@ -20,12 +20,14 @@
         
         //$query = $_SESSION["query"];
       //  unset($_SESSION["cli_id"]);        
-        $sql = "SELECT cli_nombre, cli_cuit, iva_tipo.iva_nombre, rubros.rub_nombre, zonas.zon_nombre, cli_direccion,cli_direccion_fiscal, cli_telefono, cli_notas 
-        FROM clientes,rubros,iva_tipo,zonas 
-        WHERE cli_id = $cli_id 
-        and clientes.cli_rubro = rubros.rub_id
-        and clientes.zon_id = zonas.zon_id
-        and clientes.iva_id = iva_tipo.iva_id";
+        $sql = "SELECT cli_nombre, cli_cuit, iva_tipo.iva_nombre,p.nombre as provincia,pa.nombre as partido,l.nombre as localidad, cli_direccion,cli_direccion_fiscal, cli_telefono, cli_notas 
+                FROM clientes,iva_tipo,ubicacion u,provincias p, partidos pa,localidades l
+                WHERE cli_id =  $cli_id
+        	AND clientes.iva_id = iva_tipo.iva_id
+        	AND clientes.ubicacion_id = u.id
+        	AND u.provincias_id = p.id
+		AND u.partidos_id = pa.id
+		AND u.localidades_id = l.id";
         
         
         $resultado0 = mysql_query($sql);
@@ -89,8 +91,18 @@
             <td></td>
           </tr>          
           <tr>
-            <td>Provincia/Zona</td>
-            <td><?php echo(utf8_encode($cliente["zon_nombre"])); ?></td>
+            <td>Provincia</td>
+            <td><?php echo(utf8_encode($cliente["provincia"])); ?></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Partido</td>
+            <td><?php echo(utf8_encode($cliente["partido"])); ?></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Localidad</td>
+            <td><?php echo(utf8_encode($cliente["localidad"])); ?></td>
             <td></td>
           </tr>
           <tr>

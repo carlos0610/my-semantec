@@ -12,8 +12,9 @@
 
         $sql = "SELECT  iva_id, iva_nombre FROM iva_tipo";
         $iva = mysql_query($sql);
-        $sql = "SELECT  zon_id, zon_nombre FROM zonas";
-        $resultado2 = mysql_query($sql);
+        
+        //$sql = "SELECT  zon_id, zon_nombre FROM zonas";
+        //$resultado2 = mysql_query($sql);
         
         $sql    = "SELECT rub_id,rub_nombre FROM rubros";
         $rubros = mysql_query($sql);
@@ -109,13 +110,14 @@
             <td></td>
           </tr>          
           <tr>
-            <td>Provincia/Zona</td>
+            <td>Provincia</td>
             <td>
-                <select name="zon_id" id="zon_id" class="campos">
+                <select name="select1" id="select1" class="campos" onChange="cargaContenido(this.id)">
+                <option value='0'>Seleccione</option>;   
     <?php
-          while($fila = mysql_fetch_array($resultado2)){
+          while($fila = mysql_fetch_array($provincias)){
     ?>
-                    <option value="<?php echo($fila["zon_id"]); ?>"<?php if($fila_clientes["zon_id"]==$fila["zon_id"]){echo(" selected=\"selected\"");} ?>><?php echo(utf8_encode($fila["zon_nombre"])); ?></option>
+                    <option value="<?php echo($fila["id"]); ?>"><?php echo(utf8_encode($fila["nombre"])); ?></option>
     <?php
           }
     ?>
@@ -123,6 +125,24 @@
             </td>
             <td></td>
           </tr>
+          
+          <tr>
+                        <td>Partido</td>
+                        <td><label>
+                                <select name="select2" id="select2" class="campos">
+                                <option value="0">Selecciona opci&oacute;n...</option>
+                                </select>
+                        </label></td>
+                      </tr>
+          
+          <tr>
+                        <td>Localidad</td>
+                        <td><label>
+                                <select name="select3" id="select3" class="campos">
+                                <option value="0">Selecciona opci&oacute;n...</option>
+                                </select>
+                        </label></td>
+                      </tr>
           <tr>
             <td>Direcci&oacute;n</td>
             <td><input value="<?php echo(utf8_encode($fila_clientes["cli_direccion"])); ?>" type="text" class="campos" id="cli_direccion" name="cli_direccion" required/></td>

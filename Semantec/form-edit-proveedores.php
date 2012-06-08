@@ -4,20 +4,28 @@
 
         include("conexion.php");
         $prv_id = $_GET["prv_id"];
-        $sql0 = "SELECT prv_nombre, prv_cuit, iva_tipo.iva_nombre, rubros.rub_nombre, zonas.zon_nombre, prv_direccion, prv_telefono,prv_fax,prv_cel,prv_alternativo,prv_urgencia,prv_web,prv_email,prv_notas FROM proveedores,rubros,iva_tipo,zonas WHERE prv_id = $prv_id and proveedores.iva_id = iva_tipo.iva_id
-        and proveedores.rub_id = rubros.rub_id
-        and proveedores.zon_id = zonas.zon_id";
+        $sql0 = "SELECT prv_nombre, prv_cuit, iva_tipo.iva_nombre, rubros.rub_nombre, u.id as ubicacion_id, prv_direccion, prv_telefono,prv_fax,prv_cel,prv_alternativo,prv_urgencia,prv_web,prv_email,prv_notas 
+		FROM proveedores,rubros,iva_tipo,ubicacion u,provincias p, partidos pa,localidades l 
+		WHERE prv_id = $prv_id
+		AND proveedores.iva_id = iva_tipo.iva_id
+                AND proveedores.rub_id = rubros.rub_id
+                AND proveedores.ubicacion_id = u.id
+                AND u.provincias_id = p.id
+		AND u.partidos_id = pa.id
+		AND u.localidades_id = l.id";
     
         $resultado0 = mysql_query($sql0);
         $fila0 = mysql_fetch_array($resultado0);
 
+        
+        $ubicacion_id = $fila0["ubicacion_id"];
+        
+        
+        
         $sql = "SELECT  iva_id, iva_nombre FROM iva_tipo";
         $iva = mysql_query($sql);
         
-                    
-        $sql = "SELECT  zon_id, zon_nombre FROM zonas";
-        $zonas = mysql_query($sql);       
-             
+                                     
         $sql    = "SELECT rub_id,rub_nombre FROM rubros";
         $rubros = mysql_query($sql);
                
@@ -27,12 +35,36 @@
         $sql = "SELECT ban_id , ban_nombre FROM `banco` ";
         $bancos = mysql_query($sql);
         
+        $sql = "SELECT id, nombre FROM provincias";
+        $listado_provincias=mysql_query($sql);
+        
+        
+        $sql = "SELECT p.id ,p.nombre from ubicacion u, provincias p 
+                WHERE u.id = $ubicacion_id
+                and u.provincias_id = p.id";
+        
+        $provincia = mysql_query($sql);
+        
+        
+        $sql = "SELECT p.id ,p.nombre FROM ubicacion u, partidos p 
+                WHERE u.id = $ubicacion_id
+                and u.partidos_id = p.id";
+        
+        $partidos = mysql_query($sql);
+        
+        $sql =  "SELECT l.id ,l.nombre FROM ubicacion u, localidades l 
+                 WHERE u.id = $ubicacion_id
+                 AND u.localidades_id= l.id";
+        
+        $localidades = mysql_query($sql);
+        
+        
+        
         
         $sql ="SELECT cue.cue_nrobancaria,cut.cut_nombre,cue.cue_cbu , b.ban_nombre AS nombreBanco FROM cuentabanco_prv cue,cuentatipo cut , banco b
                WHERE prv_id = $prv_id
                AND cue.cut_id = cut.cut_id
-               AND cue.ban_id = b.ban_id
-              ";
+               AND cue.ban_id = b.ban_id";
         $banco = mysql_query($sql);
         $filas =  mysql_num_rows($banco);
         
@@ -151,13 +183,14 @@
             <td></td>
           </tr>
           <tr>
-            <td>Provincia/Zona</td>
+            <td>Provincia</td>
             <td>
-                <select name="zon_id" id="zon_id" class="campos">
+                <select name="select1" id="select1" class="campos" onChange="cargaContenido(this.id)">
+                <option value='0'>Seleccione</option>;   
     <?php
-          while($fila = mysql_fetch_array($zonas)){
+          while($fila_provincia = mysql_fetch_array($listado_provincias)){
     ?>
-                    <option value="<?php echo($fila["zon_id"]); ?>"<?php if($fila0["zon_nombre"]==$fila["zon_nombre"]){echo(" selected=\"selected\"");} ?>><?php echo(utf8_encode($fila["zon_nombre"])); ?></option>
+                    <option value="<?php echo($fila_provincia["id"]); ?>" <?php if($provincia["id"]==$fila_provincia["id"]){echo(" selected=\"selected\"");} ?>><?php echo(utf8_encode($fila_provincia["nombre"])); ?></option>
     <?php
           }
     ?>
@@ -165,6 +198,24 @@
             </td>
             <td></td>
           </tr>
+          
+          <tr>
+                        <td>Partido</td>
+                        <td><label>
+                                <select name="select2" id="select2" class="campos">
+                                <option value="0">Selecciona opci&oacute;n...</option>
+                                </select>
+                        </label></td>
+                      </tr>
+          
+          <tr>
+                        <td>Localidad</td>
+                        <td><label>
+                                <select name="select3" id="select3" class="campos">
+                                <option value="0">Selecciona opci&oacute;n...</option>
+                                </select>
+                        </label></td>
+                      </tr>
           <tr>
             <td>Direcci&oacute;n</td>
             <td><input type="text" value="<?php echo(utf8_encode($fila0["prv_direccion"])); ?>" class="campos" id="prv_direccion" name="prv_direccion" /></td>
