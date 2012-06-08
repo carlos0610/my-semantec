@@ -105,7 +105,7 @@ $titulo = "Alerta de ordenes con vencimiento.";
           }
   ?>
 </table>
-    <table>
+    <table class="listados" cellpadding="5">
           <tr>
             <td colspan="8" class="pie_lista"><?php 
 /* PAGINADO */  ###############################################################################            

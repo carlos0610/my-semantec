@@ -181,7 +181,7 @@
           }
   ?>
       </table>
-      <table>
+      <table  class="listados" cellpadding="5">
           <tr>
             <td colspan="6" class="pie_lista"><?php 
 /* PAGINADO */  ###############################################################################            
