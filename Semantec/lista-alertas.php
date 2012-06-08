@@ -59,7 +59,7 @@ $titulo = "Alerta de ordenes con vencimiento.";
     </div>
     
     
-<table class="listados" cellpadding="5">
+<table class="sortable" cellpadding="5">
           <tr class="titulo">
             <td width="70">C&oacute;digo</td>
             <td width="100">Fecha alta orden</td>
@@ -103,7 +103,9 @@ $titulo = "Alerta de ordenes con vencimiento.";
             if($i==$cant){$i=0;}
 
           }
-  ?>
+  ?>    
+</table>
+    <table>
           <tr>
             <td colspan="8" class="pie_lista"><?php 
 /* PAGINADO */  ###############################################################################            

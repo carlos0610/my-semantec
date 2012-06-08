@@ -63,7 +63,7 @@
    <div id="contenedor" style="height:auto;">
       <h2>Panel de control - Listado de Facturas</h2>
 
-      <table class="listados" cellpadding="5">
+      <table class="sortable" cellpadding="5">
           <tr class="titulo">
             <td width="70">Factura Nro</td>
             <td width="100">Fecha de emisión</td>
@@ -115,6 +115,8 @@
 
           }
   ?>
+      </table>
+      <table>
           <tr>
             <td colspan="8" class="pie_lista"><?php 
 /* PAGINADO */  ###############################################################################            

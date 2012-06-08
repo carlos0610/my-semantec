@@ -277,6 +277,10 @@ a.current:hover{
 /***************************************************
 			        LISTADOS
 ***************************************************/
+.sortable{
+	width:95%;
+	margin:auto;
+}
 .listados{
 	width:95%;
 	margin:auto;

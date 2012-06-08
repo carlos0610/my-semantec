@@ -50,7 +50,7 @@
    <div id="contenedor" style="height:auto;">
       <h2>Panel de control - Listado de proveedores</h2>
 
-      <table class="listados" cellpadding="5">
+      <table class="sortable" cellpadding="5">
           <tr class="titulo">
             <td>Nombre</td>
             <td width="90">CUIT</td>
@@ -92,6 +92,8 @@
 
           }
   ?>
+          </table>   
+      <table>   
           <tr>
             <td colspan="5" class="pie_lista"><?php 
 /* PAGINADO */  ###############################################################################            
