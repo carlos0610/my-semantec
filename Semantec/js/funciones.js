@@ -176,6 +176,11 @@ function mostrarCuenta(id,nombre){
 
 function validarFacturacion(costo,venta){
 
+//Constantes de estado
+var estadoEnviadoProveedor = 2;     
+var estadoConfirmarProveedor = 10;
+
+
 if((document.getElementById("est_id").value == 11)&(costo==0)&(venta==0))
     {
         document.getElementById("error").style.visibility = "visible"; 
@@ -190,7 +195,7 @@ if((document.getElementById("est_id").value == 11)&(costo==0)&(venta==0))
    
    
    /* SI EL ESTADO SELECCIONADO ES 'ENVIADO A PROVEEDOR' */
-   if((document.getElementById("est_id").value == 2)){
+   if((document.getElementById("est_id").value == estadoEnviadoProveedor)){
        
        
             document.getElementById("fecha").style.visibility = "visible";
@@ -203,7 +208,7 @@ if((document.getElementById("est_id").value == 11)&(costo==0)&(venta==0))
         
         
         /* SI EL ESTADO SELECCIONADO ES 'APROBADO' */
-   if((document.getElementById("est_id").value == 9)){
+   if((document.getElementById("est_id").value == estadoConfirmarProveedor)){
             document.getElementById("fecha").style.visibility = "visible";
             document.getElementById("texto_respuesta").style.visibility = "visible";
             document.getElementById("texto_respuesta").textContent = "Plazo de finalizacion";

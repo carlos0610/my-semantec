@@ -28,7 +28,7 @@
         $resultado1 = mysql_query($sql);
         $cliente = mysql_fetch_array($resultado1);
         
-        $mostrar = false;
+        
         
 ?>
 <!doctype html>
@@ -110,9 +110,7 @@
     ?>                 
                       <option style="background-color:<?php echo($fila3["est_color"]); ?>" value="<?php echo($fila3["est_id"]); ?>"<?php if($fila0["est_id"]==$fila3["est_id"]){echo(" selected=\"selected\"");} ?>><?php echo(utf8_encode($fila3["est_nombre"])); ?></option>
     <?php
-                if ($fila3["est_id"] == 2){
-                    $mostrar = true;
-                }   
+                   
           }
     ?>
                 </select>
