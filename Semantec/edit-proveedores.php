@@ -5,7 +5,12 @@
         $prv_cuit = $_POST["prv_cuit"];
         $iva_id = $_POST["iva_id"];
         $rub_id = utf8_decode($_POST["rub_id"]);
-        $zon_id = $_POST["zon_id"];
+        
+        $ubicacion_id = $_POST["ubicacion_id"];
+        $provincia_id =  $_POST["select1"];
+        $partidos_id = $_POST["select2"];
+        $localidad_id  = $_POST["select3"];
+        
         $prv_direccion = utf8_decode($_POST["prv_direccion"]);
         $prv_telefono = $_POST["prv_telefono"];
         $prv_fax = $_POST["prv_fax"];
@@ -20,12 +25,23 @@
         $prv_notas = utf8_decode($_POST["prv_notas"]);
         
         include("conexion.php");
+        
+        
+        /* Actualizamos su ubicación*/
+        $sql = "UPDATE ubicacion SET localidades_id = $localidad_id, partidos_id = $partidos_id, provincias_id = $provincia_id WHERE id = $ubicacion_id";
+        mysql_query($sql);
+        //$mensaje = $sql;
+        
+        
+        
+        /* Actualizamos los datos del proveedor */
+        
         $sql = "UPDATE proveedores SET
         				prv_nombre = '$prv_nombre',
         				prv_cuit = '$prv_cuit',
         				iva_id = $iva_id,
         				rub_id = '$rub_id',
-        				zon_id = $zon_id,
+        				ubicacion_id = $ubicacion_id,
         				prv_direccion = '$prv_direccion',
         				prv_telefono = '$prv_telefono',
                                         prv_fax = '$prv_fax',
@@ -60,6 +76,9 @@
                 }
 
 		mysql_close();
-		header("location:ver-alta-proveedores.php?action=2");
+		
+                echo "QUERY: ".$mensaje;
+                        
+                header("location:ver-alta-proveedores.php?action=2");
 
 ?>

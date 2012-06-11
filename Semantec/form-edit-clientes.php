@@ -4,20 +4,53 @@
 
         include("conexion.php");
         $cli_id = $_GET["cli_id"];
-        $sql0 = "SELECT cli_nombre, cli_cuit, iva_id, cli_rubro, zon_id, cli_direccion,cli_direccion_fiscal, cli_telefono, cli_notas
+        $sql0 = "SELECT cli_nombre, cli_cuit, iva_id, cli_rubro, ubicacion_id, cli_direccion,cli_direccion_fiscal, cli_telefono, cli_notas
                   FROM clientes c
                   WHERE c.cli_id=$cli_id";
         $clientes = mysql_query($sql0);
         $fila_clientes = mysql_fetch_array($clientes);
+        
+        $ubicacion_id = $fila_clientes["ubicacion_id"];
 
         $sql = "SELECT  iva_id, iva_nombre FROM iva_tipo";
         $iva = mysql_query($sql);
+          
+        /* COMBOS DE PROVINCIAS , PARTIDOS, LOCALIDADES */
         
-        //$sql = "SELECT  zon_id, zon_nombre FROM zonas";
-        //$resultado2 = mysql_query($sql);
+        $sql = "SELECT id, nombre FROM provincias";
+        $listado_provincias =   mysql_query($sql);
         
-        $sql    = "SELECT rub_id,rub_nombre FROM rubros";
-        $rubros = mysql_query($sql);
+        
+        $sql = "SELECT id, nombre FROM partidos";
+        $listado_partidos   =   mysql_query($sql);
+        
+        $sql = "SELECT id, nombre FROM localidades";
+        $listado_localidades  =    mysql_query($sql);
+        
+        /* OBTENIENDO ID DE PROV, PARTIDOS Y LOCALDAD DE ACUERDO A SU UBICACIÓN_ID */
+        
+        $sql = "SELECT p.id ,p.nombre from ubicacion u, provincias p 
+                WHERE u.id = $ubicacion_id
+                and u.provincias_id = p.id";
+        
+        $resultado = mysql_query($sql);
+        $provincia = mysql_fetch_array($resultado);
+        
+        
+        $sql = "SELECT p.id ,p.nombre FROM ubicacion u, partidos p 
+                WHERE u.id = $ubicacion_id
+                and u.partidos_id = p.id";
+        
+        $resultado = mysql_query($sql);
+        $partidos = mysql_fetch_array($resultado);
+        
+        
+        $sql =  "SELECT l.id ,l.nombre FROM ubicacion u, localidades l 
+                 WHERE u.id = $ubicacion_id
+                 AND u.localidades_id= l.id";
+        $resultado = mysql_query($sql);
+        $localidades = mysql_fetch_array($resultado);
+        
 
 ?>
 <!doctype html>
@@ -110,14 +143,15 @@
             <td></td>
           </tr>          
           <tr>
+            <tr>
             <td>Provincia</td>
             <td>
                 <select name="select1" id="select1" class="campos" onChange="cargaContenido(this.id)">
                 <option value='0'>Seleccione</option>;   
     <?php
-          while($fila = mysql_fetch_array($provincias)){
+          while($fila_provincia = mysql_fetch_array($listado_provincias)){
     ?>
-                    <option value="<?php echo($fila["id"]); ?>"><?php echo(utf8_encode($fila["nombre"])); ?></option>
+                    <option value="<?php echo($fila_provincia["id"]); ?>" <?php if($provincia["id"]==$fila_provincia["id"]){echo(" selected=\"selected\"");} ?>><?php echo(utf8_encode($fila_provincia["nombre"])); ?></option>
     <?php
           }
     ?>
@@ -129,8 +163,15 @@
           <tr>
                         <td>Partido</td>
                         <td><label>
-                                <select name="select2" id="select2" class="campos">
+                                <select name="select2" id="select2" class="campos" onChange="cargaContenido(this.id)">
                                 <option value="0">Selecciona opci&oacute;n...</option>
+                                <?php
+          while($fila_partidos = mysql_fetch_array($listado_partidos)){
+    ?>
+                    <option value="<?php echo($fila_partidos["id"]); ?>" <?php if($partidos["id"]==$fila_partidos["id"]){echo(" selected=\"selected\"");} ?>><?php echo(utf8_encode($fila_partidos["nombre"])); ?></option>
+    <?php
+          }
+    ?>
                                 </select>
                         </label></td>
                       </tr>
@@ -140,7 +181,19 @@
                         <td><label>
                                 <select name="select3" id="select3" class="campos">
                                 <option value="0">Selecciona opci&oacute;n...</option>
+                               
+                                <?php
+                     while($fila_localidades = mysql_fetch_array($listado_localidades)){
+    ?>
+                    <option value="<?php echo($fila_localidades["id"]); ?>" <?php if($localidades["id"]==$fila_localidades["id"]){echo(" selected=\"selected\"");} ?>><?php echo(utf8_encode($fila_localidades["nombre"])); ?></option>
+    <?php
+          }
+    ?>
                                 </select>
+                                
+                                
+                                
+                                
                         </label></td>
                       </tr>
           <tr>
@@ -171,6 +224,7 @@
                 <input type="reset" value="Restablecer" class="botones" /> &nbsp; &nbsp; 
                 <input type="submit" value="Modificar cliente" class="botones" />
                 <input type="hidden" value="<?php echo($cli_id); ?>" name="cli_id" id="cli_id" />
+                <input type="hidden" value="<?php echo($ubicacion_id); ?>" name="ubicacion_id" id="ubicacion_id" />
             </td>
             <td></td>
           </tr>

@@ -6,6 +6,24 @@
     $fila_plazo_proveedor = -1;
     include("conexion.php");
     
+    
+    
+    /* COMPROBAR SI HAY ALERTA DE ÓRDENES SIN ENVIAR A PROVEEDOR * #REFACTORIZAR# */
+    
+   $sql = "SELECT ord_id, ord_codigo, ord_descripcion, cli_nombre, prv_nombre, est_nombre, est_color, ord_alta, ord_plazo,ord_plazo_proveedor, ord_costo, ord_venta
+                    FROM ordenes o, clientes c, estados e, proveedores p
+                    WHERE o.cli_id = c.cli_id
+                    AND o.est_id = e.est_id
+                    AND o.prv_id = p.prv_id  
+                    AND o.estado = 1
+                    AND o.est_id = 1
+		    AND DATEDIFF(ord_alta,now()) = 0
+                    ORDER BY o.ord_alta DESC";
+   
+   $resultado = mysql_query($sql);
+   $fila_orden_sinenviar = mysql_num_rows($resultado);   //Nro de órdenes sin enviar a proveedor.
+    
+   
     /* COMPROBAR SI HAY ALERTA DE PROVEEDOR* #REFACTORIZAR# */
     
         $sql0 =    "SELECT ord_id, ord_codigo, ord_descripcion, cli_nombre, prv_nombre, est_nombre, est_color, ord_alta, ord_plazo,ord_plazo_proveedor, ord_costo, ord_venta
@@ -124,6 +142,23 @@
            <td colspan="5" class="botones"><div align="center">ALERTAS</div></td>
          </tr>
          <tr>
+              <td width="18%">Órdenes sin enviar a proveedor:</td>
+               
+                <?php if ($fila_orden_sinenviar > 0) { ?>
+         
+    <td width="4%"><div align="right"><img src="images/warning.png" width="32" height="32"></div></td>
+    <td width="36%"><h5><a href="#" onclick="popup('lista-alertas-sinenviar.php', 'Alerta')">Hay órdenes que no fueron enviadas a ningún proveedor.</h5></td>
+          
+         <?php } else { ?>
+           
+            <td width="7%"><div align="right"><img src="images/ok.png" width="32" height="32"></div></td>
+            <td width="35%"><h5>Sin novedades</h5></td>
+            
+               <?php } ?>
+            </tr>
+         
+         
+         <tr>
            <td width="18%">Respuesta de proveedor:</td>
   
       <?php if ($fila_plazo_proveedor > 0) { ?>
@@ -153,6 +188,12 @@
             
                <?php } ?>
             </tr>
+            
+            
+            
+            
+            
+            
             </table>
                         
 

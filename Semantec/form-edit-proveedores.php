@@ -35,33 +35,46 @@
         $sql = "SELECT ban_id , ban_nombre FROM `banco` ";
         $bancos = mysql_query($sql);
         
-        $sql = "SELECT id, nombre FROM provincias";
-        $listado_provincias=mysql_query($sql);
         
+        /* COMBOS DE PROVINCIAS , PARTIDOS, LOCALIDADES */
+        
+        $sql = "SELECT id, nombre FROM provincias";
+        $listado_provincias =   mysql_query($sql);
+        
+        
+        $sql = "SELECT id, nombre FROM partidos";
+        $listado_partidos   =   mysql_query($sql);
+        
+        $sql = "SELECT id, nombre FROM localidades";
+        $listado_localidades  =    mysql_query($sql);
+        
+        
+        /* OBTENIENDO ID DE PROV, PARTIDOS Y LOCALDAD DE ACUERDO A SU UBICACIÓN_ID */
         
         $sql = "SELECT p.id ,p.nombre from ubicacion u, provincias p 
                 WHERE u.id = $ubicacion_id
                 and u.provincias_id = p.id";
         
-        $provincia = mysql_query($sql);
+        $resultado = mysql_query($sql);
+        $provincia = mysql_fetch_array($resultado);
         
         
         $sql = "SELECT p.id ,p.nombre FROM ubicacion u, partidos p 
                 WHERE u.id = $ubicacion_id
                 and u.partidos_id = p.id";
         
-        $partidos = mysql_query($sql);
+        $resultado = mysql_query($sql);
+        $partidos = mysql_fetch_array($resultado);
+        
         
         $sql =  "SELECT l.id ,l.nombre FROM ubicacion u, localidades l 
                  WHERE u.id = $ubicacion_id
                  AND u.localidades_id= l.id";
-        
-        $localidades = mysql_query($sql);
-        
-        
+        $resultado = mysql_query($sql);
+        $localidades = mysql_fetch_array($resultado);
         
         
-        $sql ="SELECT cue.cue_nrobancaria,cut.cut_nombre,cue.cue_cbu , b.ban_nombre AS nombreBanco FROM cuentabanco_prv cue,cuentatipo cut , banco b
+       $sql ="SELECT cue.cue_nrobancaria,cut.cut_nombre,cue.cue_cbu , b.ban_nombre AS nombreBanco FROM cuentabanco_prv cue,cuentatipo cut , banco b
                WHERE prv_id = $prv_id
                AND cue.cut_id = cut.cut_id
                AND cue.ban_id = b.ban_id";
@@ -130,7 +143,7 @@
    <div id="contenedor" style="height:auto;">
 
 
-      <h2>Panel de control</h2>
+      <h2>PROVINCIA: <?php echo $provincia["id"]; ?>  PARTIDOS: <?php echo $partidos["id"]; ?> LOCALIDADES: <?php echo $localidades["id"]; ?></h2>
 
       <form action="edit-proveedores.php" method="post" name="frmEditPrv">
       <table class="forms" cellpadding="5">
@@ -202,8 +215,15 @@
           <tr>
                         <td>Partido</td>
                         <td><label>
-                                <select name="select2" id="select2" class="campos">
+                                <select name="select2" id="select2" class="campos" onChange="cargaContenido(this.id)">
                                 <option value="0">Selecciona opci&oacute;n...</option>
+                                <?php
+          while($fila_partidos = mysql_fetch_array($listado_partidos)){
+    ?>
+                    <option value="<?php echo($fila_partidos["id"]); ?>" <?php if($partidos["id"]==$fila_partidos["id"]){echo(" selected=\"selected\"");} ?>><?php echo(utf8_encode($fila_partidos["nombre"])); ?></option>
+    <?php
+          }
+    ?>
                                 </select>
                         </label></td>
                       </tr>
@@ -213,7 +233,19 @@
                         <td><label>
                                 <select name="select3" id="select3" class="campos">
                                 <option value="0">Selecciona opci&oacute;n...</option>
+                               
+                                <?php
+                     while($fila_localidades = mysql_fetch_array($listado_localidades)){
+    ?>
+                    <option value="<?php echo($fila_localidades["id"]); ?>" <?php if($localidades["id"]==$fila_localidades["id"]){echo(" selected=\"selected\"");} ?>><?php echo(utf8_encode($fila_localidades["nombre"])); ?></option>
+    <?php
+          }
+    ?>
                                 </select>
+                                
+                                
+                                
+                                
                         </label></td>
                       </tr>
           <tr>
@@ -330,6 +362,7 @@
                 <input type="reset" value="Restablecer" class="botones" /> &nbsp; &nbsp; 
                 <input type="submit" value="Modificar proveedor" class="botones" />
                 <input type="hidden" value="<?php echo($prv_id); ?>" name="prv_id" id="prv_id" />
+                <input type="hidden" value="<?php echo($ubicacion_id); ?>" name="ubicacion_id" id="ubicacion_id" />
             </td>
             <td></td>
           </tr>
