@@ -93,10 +93,10 @@
       <h2></h2>
    
      <section class="cajas">
-     <h3>Ordenes</h3>
+     <h3>Órdenes</h3>
       <p><a href="lista-ordenes.php" class="current">ir al listado</a></p>
       <p><a href="form-alta-ordenes.php" class="current">nueva orden</a></p>
-      <p><a href=lista-req-ordenes.php class="current">seguimiento de ordenes</a></p>
+      <p><a href=lista-req-ordenes.php class="current">seguimiento de órdenes</a></p>
      </section>
 
 

@@ -81,6 +81,33 @@ function disableTxt(formulario,id){
 
 }
 
+function habilitarComboCliente(formulario){
+    
+    var nombre = formulario;
+    var valor = true;
+    
+    
+    if(document.forms[nombre].chkSucursal.checked){
+        valor = false;
+        }
+    
+    document.forms[nombre].comboClientes.disabled = valor;
+    
+    
+    
+    
+    
+    
+}
+
+
+
+
+
+
+
+
+
 function validarSiNumeroYComa(numero){
     ok=true;
 

@@ -13,6 +13,10 @@
         $sql = "SELECT id, nombre FROM provincias";
         $provincias=mysql_query($sql);
         
+        $sql = "SELECT cli_id, cli_nombre FROM clientes where estado = 1";
+        $clientes = mysql_query($sql);
+        
+        
         
         
 
@@ -71,13 +75,38 @@
 
       <h2>Panel de control</h2>
 
-      <form action="alta-clientes.php" method="post">
+      <form action="alta-clientes.php" method="post" name="frmAltaCli">
       <table class="forms" cellpadding="5">
           <tr class="titulo">
             <td colspan="2"> <?php echo(utf8_encode($titulo));?> </td>
             <td width="32">
                 <a href="index-admin.php">
                     <img src="images/home.png"  alt="inicio" title="Volver al panel" width="32" height="32" border="none" />                </a>            </td>
+          </tr>
+          <tr>
+            <td>Es sucursal?</td>
+            <td><label>
+                    <input name="chkSucursal" type="checkbox" id="chkSucursal" onclick="habilitarComboCliente('frmAltaCli')">
+              Sí
+            </label></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Sucursal de</td>
+            <td><label>
+              <select name="comboClientes" id="comboClientes" disabled>
+                  
+                  <?php
+          while($fila = mysql_fetch_array($clientes)){
+    ?>
+                  <option value="<?php echo($fila["cli_id"]); ?>" ><?php echo($fila["cli_nombre"]); ?> </option>
+                  
+                  <?php
+          }
+    ?>
+              </select>
+            </label></td>
+            <td></td>
           </tr>
           <tr>
             <td>Raz&oacute;n Social</td>
@@ -117,8 +146,7 @@
     <?php
           }
     ?>
-                </select>
-            </td>
+                </select>            </td>
             <td></td>
           </tr>
           

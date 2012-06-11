@@ -89,7 +89,7 @@
 
    <!--start contenedor-->
    <div id="contenedor" style="height:auto;">
-      <h2>Panel de control - Listado de Ordenes de Servicio</h2>
+      <h2>Panel de control - Listado de Órdenes de Servicio</h2>
 
       <table class="sortable" cellpadding="5">
           <tr class="titulo">

@@ -12,7 +12,7 @@
         //$ord_plazo = gfecha($_POST["ord_plazo"]); 
         $ord_costo = $_POST["ord_costo"];
         $ord_venta = $_POST["ord_venta"];
-        $usu_nombre = $_SESSION["usu_nombre"]; 
+        $usu_nombre = $_SESSION["usu_nombre"];        
         $est_nombre = $_POST["est_nombre"];
   //      echo $ord_plazo;
         
