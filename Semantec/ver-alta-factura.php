@@ -23,14 +23,17 @@
         include("funciones.php");
         include("conexion.php");
         
-        $sql = "SELECT c.cli_nombre,c.cli_direccion,z.zon_nombre,i.iva_nombre,c.cli_cuit 
-                FROM ordenes o,clientes c,zonas z,iva_tipo i,factura_venta f,grupo_ordenes g_o
+        $sql = "SELECT c.cli_nombre,c.cli_direccion,i.iva_nombre,c.cli_cuit ,p.nombre as provincia,pa.nombre as partido,l.nombre as localidad
+                FROM ordenes o,clientes c,iva_tipo i,factura_venta f,grupo_ordenes g_o , ubicacion u,provincias p, partidos pa,localidades l
                 WHERE 
                 f.fav_id 	= $fav_id
                 and f.gru_id    = g_o.gru_id
                 and g_o.gru_id = o.gru_id
                 and o.cli_id = c.cli_id
-                and c.zon_id = z.zon_id
+                AND c.ubicacion_id = u.id
+                AND u.provincias_id = p.id
+                AND u.partidos_id = pa.id
+                AND u.localidades_id = l.id
                 and c.iva_id = i.iva_id";
         
        $cliente = mysql_query($sql); 
@@ -140,7 +143,7 @@
             <td class="titulo"><span id="ocultarParaImpresion">Domiclio:</span></td>
             <td width="24%" style="background-color:#cbeef5"  align="left"><?php echo utf8_encode($fila_datos_cliente["cli_direccion"]);?></td>
             <td width="9%" class="titulo"><span id="ocultarParaImpresion">Localidad:</span></td>
-            <td width="52%" style="background-color:#cbeef5"  align="rigth"><?php echo utf8_encode($fila_datos_cliente["zon_nombre"]);?></td>
+            <td width="52%" style="background-color:#cbeef5"  align="rigth"><?php echo utf8_encode($fila_datos_cliente["provincia"]);?>/<?php echo utf8_encode($fila_datos_cliente["localidad"]);?></td>
        </tr>
           <tr>
             <td class="titulo"><span id="ocultarParaImpresion">IVA:</span></td>

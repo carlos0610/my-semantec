@@ -19,13 +19,16 @@
        $iva = mysql_query($sql);
        
        $cli_id = $_GET["cli_id"];
-       $sql = "SELECT c.cli_nombre, c.cli_cuit , i.iva_id , c.cli_rubro , c.zon_id , c.cli_direccion , c.cli_direccion_fiscal , i.iva_nombre ,z.zon_nombre
-        FROM clientes c , iva_tipo i , zonas z
+       $sql = "SELECT c.cli_nombre, c.cli_cuit , i.iva_id , c.cli_rubro , c.cli_direccion , c.cli_direccion_fiscal ,
+                      i.iva_nombre ,p.nombre as provincia,pa.nombre as partido,l.nombre as localidad
+        FROM clientes c , iva_tipo i ,ubicacion u,provincias p, partidos pa,localidades l
         WHERE  c.cli_id =$cli_id
         AND  c.iva_id = i.iva_id 
-        AND  c.zon_id = z.zon_id
+        AND c.ubicacion_id = u.id
+        AND u.provincias_id = p.id
+	AND u.partidos_id = pa.id
+	AND u.localidades_id = l.id
         ";
-
         $result=mysql_query($sql); 
         $fila_datos_cliente = mysql_fetch_array($result); 
        
@@ -145,7 +148,7 @@
             <td class="titulo">Domiclio:</td>
             <td width="24%" style="background-color:#cbeef5"><label id="domicilio"><?php echo utf8_encode($fila_datos_cliente["cli_direccion"]);?></label></td>
             <td width="9%" class="titulo">Localidad:</td>
-            <td width="52%" style="background-color:#cbeef5"><label id="localidad"><?php echo utf8_encode($fila_datos_cliente["zon_nombre"]);?> </label></td>
+            <td width="52%" style="background-color:#cbeef5"><label id="localidad"><?php echo utf8_encode($fila_datos_cliente["provincia"]);?>/<?php echo utf8_encode($fila_datos_cliente["localidad"]);?> </label></td>
        </tr>
           <tr>
             <td class="titulo">IVA:</td>
@@ -336,7 +339,7 @@
       <td>&nbsp;</td>
       <td>
          
-          <input type="submit" name="btnConfirma" id="btnConfirma" style="visibility:hidden"  value="Confirmar" >
+          <input type="submit" name="btnConfirma" id="btnConfirma" style="visibility:hidden" class="botones"  value="Confirmar" >
           
       </td>
       <td>&nbsp;</td>

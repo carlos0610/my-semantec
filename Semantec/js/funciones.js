@@ -94,6 +94,7 @@ function habilitarComboCliente(formulario){
                document.getElementById("cli_cuit_parteA").value="";
                document.getElementById("cli_cuit_parteB").value="";
                document.getElementById("cli_cuit_parteC").value="";
+               document.getElementById("cli_nombre").value="";
                document.getElementById("cli_cuit_parteA").removeAttribute('readOnly');
                document.getElementById("cli_cuit_parteB").removeAttribute('readOnly');
                document.getElementById("cli_cuit_parteC").removeAttribute('readOnly');
