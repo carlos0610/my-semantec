@@ -65,10 +65,7 @@ function disableTxt(formulario,id){
         document.forms[nombre].cut_id.disabled=false;             //Habilitamos combobox Tipo cuenta
         document.forms[nombre].cue_cbu.disabled=false; 
         document.forms[nombre].ban_id.disabled=false; 
-        
-        
-        
-        
+     
     }else{
         document.forms[nombre].cue_nrobancaria.disabled=true;
         document.forms[nombre].cut_id.disabled=true;              //Deshabilitamos combobox Tipo cuenta
@@ -84,29 +81,25 @@ function disableTxt(formulario,id){
 function habilitarComboCliente(formulario){
     
     var nombre = formulario;
-    var valor = true;
-    
-    
+    var valor = true;    
     if(document.forms[nombre].chkSucursal.checked){
         valor = false;
+         document.getElementById("cli_cuit_parteA").setAttribute('readOnly','readonly');
+         document.getElementById("cli_cuit_parteB").setAttribute('readOnly','readonly');
+         document.getElementById("cli_cuit_parteC").setAttribute('readOnly','readonly');
+         document.getElementById("error").style.visibility = "hidden";
         }
-    
-    document.forms[nombre].comboClientes.disabled = valor;
-    
-    
-    
-    
-    
-    
+        else
+            {
+               document.getElementById("cli_cuit_parteA").value="";
+               document.getElementById("cli_cuit_parteB").value="";
+               document.getElementById("cli_cuit_parteC").value="";
+               document.getElementById("cli_cuit_parteA").removeAttribute('readOnly');
+               document.getElementById("cli_cuit_parteB").removeAttribute('readOnly');
+               document.getElementById("cli_cuit_parteC").removeAttribute('readOnly');
+            }
+    document.forms[nombre].comboClientes.disabled = valor;   
 }
-
-
-
-
-
-
-
-
 
 function validarSiNumeroYComa(numero){
     ok=true;
@@ -117,8 +110,6 @@ ok=false;
 }
 return ok;
 }
-
-
 
 function ActualizarTotal(cantidadDescripciones,factura){
     
@@ -133,7 +124,6 @@ function ActualizarTotal(cantidadDescripciones,factura){
          iva = 0.105;   
          } 
      
-    
     subtotal = 0;
     numeroDescripcion=0;
     
@@ -149,13 +139,9 @@ function ActualizarTotal(cantidadDescripciones,factura){
     }
     document.getElementById("txtSubtotal").value = subtotal.toFixed(2);
     
-    total_iva = subtotal * iva;
-    
-    
-    
+    total_iva = subtotal * iva;    
     document.getElementById("txtIva_Ins").value = total_iva.toFixed(2);
-    
-    
+ 
     //1 = FACTURA VENTA
     //2 = FACTURA COMPRA
     
@@ -187,10 +173,8 @@ function actualizarIva(factura){
             if (factura == 1)
                 document.getElementById("txtTotalFactura").value = parseFloat(total_iva) + parseFloat(subtotal);
             else
-                document.getElementById("txtTotalFactura").value = parseFloat(total_iva) + parseFloat(subtotal) +  parseFloat(document.getElementById("txtPercepciones").value);  
-  
+                document.getElementById("txtTotalFactura").value = parseFloat(total_iva) + parseFloat(subtotal) +  parseFloat(document.getElementById("txtPercepciones").value);    
 }
-
 
 function mostrarCuenta(id,nombre){
     
@@ -207,7 +191,6 @@ function validarFacturacion(costo,venta){
 var estadoEnviadoProveedor = 2;     
 var estadoConfirmarProveedor = 10;
 
-
 if((document.getElementById("est_id").value == 11)&(costo==0)&(venta==0))
     {
         document.getElementById("error").style.visibility = "visible"; 
@@ -218,9 +201,7 @@ if((document.getElementById("est_id").value == 11)&(costo==0)&(venta==0))
            document.getElementById("error").style.visibility = "hidden"; 
            document.getElementById("guardarDetalle").style.visibility = "visible";
         }
-        
-   
-   
+         
    /* SI EL ESTADO SELECCIONADO ES 'ENVIADO A PROVEEDOR' */
    if((document.getElementById("est_id").value == estadoEnviadoProveedor)){
        
@@ -232,8 +213,7 @@ if((document.getElementById("est_id").value == 11)&(costo==0)&(venta==0))
             document.getElementById("fecha").style.visibility = "hidden";
             document.getElementById("texto_respuesta").style.visibility = "hidden";           
         }  
-        
-        
+               
         /* SI EL ESTADO SELECCIONADO ES 'APROBADO' */
    if((document.getElementById("est_id").value == estadoConfirmarProveedor)){
             document.getElementById("fecha").style.visibility = "visible";
@@ -242,10 +222,7 @@ if((document.getElementById("est_id").value == 11)&(costo==0)&(venta==0))
         }else if((document.getElementById("est_id").value != 2)){
             document.getElementById("fecha").style.visibility = "hidden";
             document.getElementById("texto_respuesta").style.visibility = "hidden"; 
-            
-        }       
-        
-       
+        }              
 }
 
 
@@ -324,4 +301,19 @@ return false;
 }
 
 
+/* PASAR focus de CUIT*/
 
+function pasaSiguiente(actual, siguiente, longitud)
+  {
+      numero = actual.value;
+     if (!/^([0-9])*$/.test(numero))
+     {
+        actual.value = numero.substring(0,numero.length-1);
+     }
+     else
+         {
+
+         if((actual.value.length + 1) == longitud)
+                siguiente.focus();
+         }
+  }

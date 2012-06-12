@@ -18,6 +18,7 @@
         $i = 0;
         $colores = array("#fff","#e8f7fa");
         $cant = count($colores);
+        
 ?>
 <!doctype html>
 <html>  
@@ -25,7 +26,18 @@
 <?php
     include("encabezado-main.php");
 ?>    
+      		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js" type="text/javascript"></script>
+		<script src="js/jquery.uitablefilter.js" type="text/javascript"></script>
+      		<script language="javascript">
+		$(function() {
+		  theTable = $("#latabla");
+		  $("#q").keyup(function() {
+			$.uiTableFilter(theTable, this.value);
+		  });
+		});
+		</script>
   </head>
+  
   <body>
 	
   <!-- start main --><!-- start main --><!-- start main --><!-- start main --><!-- start main -->
@@ -49,8 +61,12 @@
    <!--start contenedor-->
    <div id="contenedor" style="height:auto;">
       <h2>Panel de control - Listado de proveedores</h2>
+      
+      		<div id="busqueda">
+			<input type="text" id="q" name="q" value="" />
+		</div>
 
-      <table class="sortable" cellpadding="5">
+      <table class="sortable" cellpadding="5" id="latabla">
           <tr class="titulo">
             <td>Nombre</td>
             <td width="90">CUIT</td>

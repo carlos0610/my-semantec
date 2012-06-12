@@ -66,11 +66,21 @@ function autenticaCUIT(){
  document.getElementById("prv_cuit").value=(usuario.substring(0,11));
 }
 
-function autenticaClienteCUIT(){
- usuario = document.getElementById("cli_cuit").value;
- url = "existeNumeroCuitCliente.php?usuario=" + usuario;
- leer_doc(url);
- document.getElementById("cli_cuit").value=(usuario.substring(0,11));
+function autenticaClienteCUIT()
+{
+    if(document.getElementById("chkSucursal").checked==false)
+    {
+    
+          usuario = document.getElementById("cli_cuit_parteA").value+
+           document.getElementById("cli_cuit_parteB").value+
+           document.getElementById("cli_cuit_parteC").value
+            ;
+ 
+            url = "existeNumeroCuitCliente.php?usuario=" + usuario;
+            leer_doc(url);
+        document.getElementById("cli_cuit").value=(usuario.substring(0,11));
+        
+    }
 }
 
 function VerificarProveedor(){
@@ -211,6 +221,53 @@ function validarTotales(){
 validarSoloNumeroyPunto(document.getElementById("ord_venta"));
 }
 
+//---------------------------llenar datos de Form Alta Cliente-------------------------------------
+function leer_doc4(url) {
+ req = false;
+ // Llama objeto XMLHttpRequest
+ if (window.XMLHttpRequest) {
+   req = new XMLHttpRequest();
+   if (req.overrideMimeType) {
+     req.overrideMimeType('text/xml'); 
+   }
+ 
+ // Si no funciona intenta utiliar el objeto IE/Windows ActiveX 
+ } else if (window.ActiveXObject) {
+   req = new ActiveXObject("Microsoft.XMLHTTP"); 
+ }
 
+ if(req!=null){
+   req.onreadystatechange = procesarRespuesta4;
+   req.open('GET', url, true);
+   req.send(null);
+ } 
+ 
+}
+
+function procesarRespuesta4(){
+    //NOTA: para q funcione correctamente no olvidarse q deben existir los id
+    // para cargar en un label usar :.innerHTML en lugar de value.
+ respuesta = req.responseXML;
+ var existe = respuesta.getElementsByTagName('senores').item(0).firstChild.data;
+var cuit=respuesta.getElementsByTagName('cuit').item(0).firstChild.data;
+
+document.getElementById('cli_nombre').value = existe;
+
+        document.getElementById("cli_cuit_parteA").value=(cuit.substring(0,2));
+        document.getElementById("cli_cuit_parteB").value=(cuit.substring(3,11));
+        document.getElementById("cli_cuit_parteC").value=(cuit.substring(12,13));
+
+
+document.getElementById('cli_cuit').value = respuesta.getElementsByTagName('cuit').item(0).firstChild.data;
+document.getElementById('iva_id').selected = respuesta.getElementsByTagName('iva_id').item(0).firstChild.data;
+
+}
+
+// Funciones llamdas del Form
+function rellenarDatosClienteSucursal(){   
+ usuario = document.getElementById("comboClientes").value;
+ url = "getDatosDeClienteSucursal.php?usuario=" + usuario;
+ leer_doc4(url);
+}
 
 

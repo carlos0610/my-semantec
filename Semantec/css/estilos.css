@@ -314,6 +314,17 @@ a.current:hover{
 	width:69%;
 	margin:auto;
 }
+.campos2{
+	background-color:#edfbff;
+	border: 1px solid #a0ecff;}
+
+.campos2:focus{
+	border: 1px solid #00aacc;
+	-moz-box-shadow:    0px 0px 2px 2px #a0ecff;	
+  	-webkit-box-shadow: 0px 0px 2px 2px #a0ecff;
+  	box-shadow:         0px 0px 2px 2px #a0ecff;
+}
+
 .campos{
 	background-color:#edfbff;
 	border: 1px solid #a0ecff;

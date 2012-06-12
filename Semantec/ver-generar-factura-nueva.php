@@ -235,7 +235,7 @@
         <?php } ?>
       <!-- Boton confirmar  -->    
       <?php if($ocultar=="si"){ ?> 
-      <input type="button" name="btnConfirmarCheckboxs" id="btnConfirmarCheckboxs" style="visibility:visible" value="Confirmar" onClick="verificarCheckboxs(<?php echo $i; ?>,<?php echo $cli_id; ?>);">  
+      <input type="button" name="btnConfirmarCheckboxs" id="btnConfirmarCheckboxs" style="visibility:visible" class="botones" value="Confirmar" onClick="verificarCheckboxs(<?php echo $i; ?>,<?php echo $cli_id; ?>);">  
       <?php } ?>
   <?php }else{ ?> <b>*No Posee Ordenes Pendientes a Facturar </b> <?php } ?>
       <!-- DESCRIPCION DE FACTURA  -->

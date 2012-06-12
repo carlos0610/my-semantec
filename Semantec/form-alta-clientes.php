@@ -92,9 +92,9 @@
             <td></td>
           </tr>
           <tr>
-            <td>Sucursal de</td>
+            <td>Sucursal de</td>  
             <td><label>
-              <select name="comboClientes" id="comboClientes" disabled>
+              <select name="comboClientes" id="comboClientes" disabled class="campos" onclick="rellenarDatosClienteSucursal()">
                   
                   <?php
           while($fila = mysql_fetch_array($clientes)){
@@ -113,21 +113,27 @@
             <td><input type="text" class="campos" id="cli_nombre" name="cli_nombre" required/></td>
             <td></td>
           </tr>
-          <tr>
+        
+           <tr>
             <td>CUIT</td>
             <td>
-                <input type="number" style="text-align:right" min="10000000000" class="campos" id="cli_cuit" name="cli_cuit" maxlength="11" onChange="return autenticaClienteCUIT();"  required />
+                <input type="text" style="text-align:right" min="10" class="campos2" id="cli_cuit_parteA" name="cli_cuit_parteA" maxlength="2" size="2" onKeyPress="pasaSiguiente(this, document.getElementById('cli_cuit_parteB'), 2)"  required />-
+                <input type="text" style="text-align:right" min="10000000" class="campos2" id="cli_cuit_parteB" name="cli_cuit_parteB" maxlength="8" size="8" onKeyPress="pasaSiguiente(this, document.getElementById('cli_cuit_parteC'), 8)" required />-
+                <input type="text" style="text-align:right" min="0" class="campos2" id="cli_cuit_parteC" name="cli_cuit_parteC" maxlength="1" size="1" onChange="return autenticaClienteCUIT();"  required />
                 <span id="error" style="font-family: Verdana, Arial, Helvetica,sans-serif;font-size: 9pt;color: #CC3300;position:relative;visibility:hidden;">Cuit Existente</span>            </td>
             <td></td>
           </tr>
+          
+          
+          
           <tr>
             <td>Condici&oacute;n de IVA</td>
             <td>
                 <select name="iva_id" id="iva_id" class="campos">
     <?php
           while($fila = mysql_fetch_array($iva)){
-    ?>
-                    <option value="<?php echo($fila["iva_id"]); ?>"><?php echo($fila["iva_nombre"]); ?></option>
+    ?>                                                              
+                    <option value="<?php echo($fila["iva_id"]); ?>" ><?php echo($fila["iva_nombre"]); ?></option>
     <?php
           }
     ?>
@@ -137,7 +143,7 @@
           <tr>
             <td>Provincia</td>
             <td>
-                <select name="select1" id="select1" class="campos" onChange="cargaContenido(this.id)">
+                <select name="select1" id="select1" class="campos" onChange="cargaContenido(this.id)" required>
                 <option value='0'>Seleccione</option>;   
     <?php
           while($fila = mysql_fetch_array($provincias)){
@@ -153,7 +159,7 @@
           <tr>
                         <td>Partido</td>
                         <td><label>
-                                <select name="select2" id="select2" class="campos">
+                                <select name="select2" id="select2" class="campos" required>
                                 <option value="0">Selecciona opci&oacute;n...</option>
                                 </select>
                         </label></td>
@@ -162,7 +168,7 @@
           <tr>
                         <td>Localidad</td>
                         <td><label>
-                                <select name="select3" id="select3" class="campos">
+                                <select name="select3" id="select3" class="campos" required>
                                 <option value="0">Selecciona opci&oacute;n...</option>
                                 </select>
                         </label></td>

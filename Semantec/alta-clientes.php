@@ -1,7 +1,13 @@
 <?php
         include("validar.php");
         $cli_nombre = utf8_decode($_POST["cli_nombre"]);
-        $cli_cuit = $_POST["cli_cuit"];
+        $cli_cuitA = $_POST["cli_cuit_parteA"];
+        $cli_cuitB = $_POST["cli_cuit_parteB"];
+        $cli_cuitC = $_POST["cli_cuit_parteC"];
+        $cli_cuit = "$cli_cuitA$cli_cuitB$cli_cuitC";
+        
+        echo $cli_cuit;
+        
         $iva_id = $_POST["iva_id"];        
         $cli_direccion = utf8_decode($_POST["cli_direccion"]);
         $cli_direccion_fiscal = utf8_decode($_POST["cli_direccion_fiscal"]);
@@ -43,6 +49,7 @@
 		mysql_query($sql);
                 //$_SESSION["query"] = $sql;
                 //echo "QUERY DE INSERT CLIENTE : ".$sql;
+                echo $sql;
                 
                 $idCliente = mysql_insert_id();
 		$_SESSION["cli_id"] = $idCliente;
@@ -50,6 +57,7 @@
                 /* CREAMOS UNA CUENTA CORRIENTE PARA EL CLIENTE INGRESADO */
                 
                 $sql = "INSERT INTO cuentacorriente_cliente  (cli_id,estado) VALUES ($idCliente,1)";
+                
                 mysql_query($sql);
      
 

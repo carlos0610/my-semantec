@@ -23,7 +23,7 @@
         $resultado0 = mysql_query($sql0);       
         $fila0 = mysql_fetch_array($resultado0);
         $cliente_id=$fila0["cli_id"]; 
-        
+        // Datos deCliente
         $sql = "SELECT  cli_id, cli_nombre FROM clientes WHERE cli_id= $cliente_id"; 
         $resultado1 = mysql_query($sql);
         $cliente = mysql_fetch_array($resultado1);
@@ -132,7 +132,7 @@
           </tr>
           <tr>
               <td>Adjuntar archivo</td><td>
-                  <input type="file" class="" id="userfile" name="userfile" />
+                  <input type="file" class="" id="userfile" name="userfile"/>
               </td>
           </tr>
           <tr>
