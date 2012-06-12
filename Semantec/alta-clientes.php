@@ -1,12 +1,20 @@
 <?php
         include("validar.php");
+       
         $cli_nombre = utf8_decode($_POST["cli_nombre"]);
         $cli_cuitA = $_POST["cli_cuit_parteA"];
         $cli_cuitB = $_POST["cli_cuit_parteB"];
         $cli_cuitC = $_POST["cli_cuit_parteC"];
         $cli_cuit = "$cli_cuitA$cli_cuitB$cli_cuitC";
         
-        echo $cli_cuit;
+        
+        
+        
+        
+
+//echo "CUIT: ".$cli_cuit;
+        //echo "SUCURSAL: ".$sucursal;
+        
         
         $iva_id = $_POST["iva_id"];        
         $cli_direccion = utf8_decode($_POST["cli_direccion"]);
@@ -26,15 +34,17 @@
         
         $sql = "INSERT INTO ubicacion (provincias_id,partidos_id,localidades_id) VALUES ($provincia_id,$partido_id,$localidad_id)";
         mysql_query($sql);
-        
-       $ubicacion_id = mysql_insert_id();
-        
+        $ubicacion_id = mysql_insert_id();
         
         
+            if (isset($_REQUEST['chkSucursal']))
+                $sucursal = $_POST["comboClientes"];
+            else
+                $sucursal = "NULL";
         
         
-        $sql = "INSERT INTO clientes (cli_nombre,cli_cuit,iva_id,cli_rubro,ubicacion_id,cli_direccion,cli_direccion_fiscal,cli_telefono,cli_notas,estado)VALUES (
-        										
+                $sql = "INSERT INTO clientes (sucursal_id,cli_nombre,cli_cuit,iva_id,cli_rubro,ubicacion_id,cli_direccion,cli_direccion_fiscal,cli_telefono,cli_notas,estado) VALUES (
+        										$sucursal,
         										'$cli_nombre',
         										'$cli_cuit',
         										$iva_id,
@@ -42,14 +52,18 @@
         										$ubicacion_id,
         										'$cli_direccion',
                                                                                         '$cli_direccion_fiscal',       
-        										$cli_telefono,
+        										'$cli_telefono',
         										'$cli_notas',
                                                                                         1        
         										)";
-		mysql_query($sql);
-                //$_SESSION["query"] = $sql;
-                //echo "QUERY DE INSERT CLIENTE : ".$sql;
-                echo $sql;
+                                                                                 
+                mysql_query($sql);
+                
+
+
+                
+                echo "QUERY DE INSERT CLIENTE : ".$sql;
+                
                 
                 $idCliente = mysql_insert_id();
 		$_SESSION["cli_id"] = $idCliente;
@@ -59,9 +73,12 @@
                 $sql = "INSERT INTO cuentacorriente_cliente  (cli_id,estado) VALUES ($idCliente,1)";
                 
                 mysql_query($sql);
-     
-
-		mysql_close();
-		header("location:ver-alta-clientes.php?action=1");
+                mysql_close();
+		
+                if ($sucursal != "NULL"){
+                header("location:ver-alta-clientes.php?action=3");
+                }else{
+                header("location:ver-alta-clientes.php?action=1");                       
+                }
 
 ?>

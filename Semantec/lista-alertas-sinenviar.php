@@ -37,6 +37,13 @@ $titulo = "Alerta de ordenes sin enviar a proveedor.";
         $cant = count($colores);
         
         
+        $sql = "select usu_id,usu_login from usuarios";
+        $resultado = mysql_query($sql);
+        
+        
+        
+        
+        
 ?>
 <html>  
   <head>
@@ -55,8 +62,21 @@ $titulo = "Alerta de ordenes sin enviar a proveedor.";
         <td width="18%"><div align="right"><img src="images/warning.png" width="48" height="48"></div></td>
         <td width="82%"><h2>Las siguientes ordenes  se dieron de alta y aún no se enviaron al proveedor</h2></td>
       </tr>
+      <tr>
+        <td><div align="right">Ver órdenes de</div></td>
+        <td><label>
+          <select name="comboUsuarios" id="comboUsuarios">
+              
+          <?php ?>    
+              
+              
+              
+              
+          </select>
+        </label></td>
+      </tr>
     </table>
-    </div>
+  </div>
     
     
 <table class="listados" cellpadding="5">

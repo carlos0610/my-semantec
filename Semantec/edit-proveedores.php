@@ -76,9 +76,6 @@
                 }
 
 		mysql_close();
-		
-                echo "QUERY: ".$mensaje;
-                        
-                header("location:ver-alta-proveedores.php?action=2");
+		header("location:ver-alta-proveedores.php?action=2");
 
 ?>

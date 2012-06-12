@@ -13,7 +13,7 @@
         $sql = "SELECT id, nombre FROM provincias";
         $provincias=mysql_query($sql);
         
-        $sql = "SELECT cli_id, cli_nombre FROM clientes where estado = 1";
+        $sql = "SELECT cli_id, cli_nombre FROM clientes where estado = 1 and sucursal_id is null";
         $clientes = mysql_query($sql);
         
         
@@ -86,7 +86,7 @@
           <tr>
             <td>Es sucursal?</td>
             <td><label>
-                    <input name="chkSucursal" type="checkbox" id="chkSucursal" onclick="habilitarComboCliente('frmAltaCli')">
+                    <input name="chkSucursal" type="checkbox" id="chkSucursal" onClick="habilitarComboCliente('frmAltaCli')">
               Sí
             </label></td>
             <td></td>
@@ -94,8 +94,8 @@
           <tr>
             <td>Sucursal de</td>  
             <td><label>
-              <select name="comboClientes" id="comboClientes" disabled class="campos" onclick="rellenarDatosClienteSucursal()">
-                  
+              <select name="comboClientes" id="comboClientes" disabled class="campos" onchange="rellenarDatosClienteSucursal()">
+                  <option value="0" >Seleccione</option>
                   <?php
           while($fila = mysql_fetch_array($clientes)){
     ?>
@@ -130,6 +130,7 @@
             <td>Condici&oacute;n de IVA</td>
             <td>
                 <select name="iva_id" id="iva_id" class="campos">
+                    
     <?php
           while($fila = mysql_fetch_array($iva)){
     ?>                                                              

@@ -27,6 +27,7 @@ $fila_datos_cliente = mysql_fetch_array($result);
 $senores=$fila_datos_cliente["cli_nombre"];
 $cuit=verCUIT($fila_datos_cliente["cli_cuit"]);
 $iva_id=$fila_datos_cliente["iva_id"];
+$dire_fiscal = $fila_datos_cliente["cli_direccion_fiscal"];
 
 
 mysql_close();
@@ -40,6 +41,7 @@ echo "<note>";
 echo "<senores>$senores</senores>";
 echo "<iva_id>$iva_id</iva_id>";
 echo "<cuit>$cuit</cuit>";
+echo "<direccion>$dire_fiscal</direccion>";
 echo "</note>";
     
     

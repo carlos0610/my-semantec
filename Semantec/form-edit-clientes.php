@@ -1,10 +1,10 @@
 <?php
-    $titulo = "Formulario de modificaci&oacute;n de datos de un cliente.";
+    
         include("validar.php");
 
         include("conexion.php");
         $cli_id = $_GET["cli_id"];
-        $sql0 = "SELECT cli_nombre, cli_cuit, iva_id, cli_rubro, ubicacion_id, cli_direccion,cli_direccion_fiscal, cli_telefono, cli_notas
+        $sql0 = "SELECT sucursal_id,cli_nombre, cli_cuit, iva_id, cli_rubro, ubicacion_id, cli_direccion,cli_direccion_fiscal, cli_telefono, cli_notas
                   FROM clientes c
                   WHERE c.cli_id=$cli_id";
         $clientes = mysql_query($sql0);
@@ -50,6 +50,13 @@
                  AND u.localidades_id= l.id";
         $resultado = mysql_query($sql);
         $localidades = mysql_fetch_array($resultado);
+        
+        if (isset($fila_clientes["sucursal_id"]))
+            $titulo = "Formulario de modificaci&oacute;n de datos de una sucursal.";
+        else
+            $titulo = "Formulario de modificaci&oacute;n de datos de un cliente.";   
+            
+        
         
 
 ?>
@@ -119,12 +126,12 @@
           </tr>
           <tr>
             <td>Raz&oacute;n Social</td>
-            <td><input type="text" value="<?php echo(utf8_encode($fila_clientes["cli_nombre"])); ?>" id="cli_nombre" name="cli_nombre" class="campos" /></td>
+            <td><input type="text" value="<?php echo(utf8_encode($fila_clientes["cli_nombre"])); ?>" id="cli_nombre" name="cli_nombre" class="campos" <?php if (isset($fila_clientes["sucursal_id"])) echo "readOnly" ?>/></td>
             <td></td>
           </tr>
           <tr>
             <td>CUIT</td>
-            <td><input type="number" style="text-align:right" maxlength="11" value="<?php echo($fila_clientes["cli_cuit"]); ?>" id="cli_cuit" name="cli_cuit" class="campos" readOnly/></td>
+            <td><input type="number" style="text-align:right" maxlength="11" value="<?php echo($fila_clientes["cli_cuit"]); ?>" id="cli_cuit" name="cli_cuit" class="campos" <?php if (isset($fila_clientes["sucursal_id"])) echo "readOnly"?>/></td>
             <td></td>
           </tr>
           <tr>
@@ -203,7 +210,7 @@
           </tr>
           <tr>
             <td>Direcci&oacute;n fiscal</td>
-            <td><input value="<?php echo(utf8_encode($fila_clientes["cli_direccion_fiscal"])); ?>" type="text" class="campos" id="cli_direccion_fiscal" name="cli_direccion_fiscal" required/></td>
+            <td><input value="<?php echo(utf8_encode($fila_clientes["cli_direccion_fiscal"])); ?>" type="text" class="campos" id="cli_direccion_fiscal" name="cli_direccion_fiscal" required <?php if (isset($fila_clientes["sucursal_id"])) echo "readOnly" ?>/></td>
             <td></td>
           </tr>
           

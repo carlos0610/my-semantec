@@ -84,23 +84,41 @@ function habilitarComboCliente(formulario){
     var valor = true;    
     if(document.forms[nombre].chkSucursal.checked){
         valor = false;
+        limpiarFrmAltaCliente();
          document.getElementById("cli_cuit_parteA").setAttribute('readOnly','readonly');
          document.getElementById("cli_cuit_parteB").setAttribute('readOnly','readonly');
          document.getElementById("cli_cuit_parteC").setAttribute('readOnly','readonly');
+         document.getElementById("cli_nombre").setAttribute('readOnly','readonly');
+         document.getElementById("cli_direccion_fiscal").setAttribute('readOnly','readonly');
          document.getElementById("error").style.visibility = "hidden";
         }
         else
             {
-               document.getElementById("cli_cuit_parteA").value="";
-               document.getElementById("cli_cuit_parteB").value="";
-               document.getElementById("cli_cuit_parteC").value="";
+               limpiarFrmAltaCliente();
                document.getElementById("cli_nombre").value="";
                document.getElementById("cli_cuit_parteA").removeAttribute('readOnly');
                document.getElementById("cli_cuit_parteB").removeAttribute('readOnly');
                document.getElementById("cli_cuit_parteC").removeAttribute('readOnly');
+               document.getElementById("cli_nombre").removeAttribute('readOnly');
+               document.getElementById("cli_nombre").focus();
+               document.getElementById("cli_direccion_fiscal").removeAttribute('readOnly');
             }
     document.forms[nombre].comboClientes.disabled = valor;   
 }
+
+function limpiarFrmAltaCliente(){
+         document.getElementById("cli_cuit_parteA").value="";
+         document.getElementById("cli_cuit_parteB").value="";
+         document.getElementById("cli_cuit_parteC").value="";
+         document.getElementById("cli_nombre").value="";
+         document.getElementById("cli_direccion_fiscal").value="";
+         
+}
+
+
+
+
+
 
 function validarSiNumeroYComa(numero){
     ok=true;

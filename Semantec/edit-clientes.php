@@ -33,7 +33,7 @@
         				ubicacion_id = $ubicacion_id,
         				cli_direccion = '$cli_direccion',
                                         cli_direccion_fiscal = '$cli_direccion_fiscal',    
-        				cli_telefono = $cli_telefono,
+        				cli_telefono = '$cli_telefono',
         				cli_notas = '$cli_notas'
         		WHERE cli_id = $cli_id";
 

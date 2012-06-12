@@ -5,11 +5,27 @@
 
         include("conexion.php");
 /* CALCULO PAGINADO */  ###############################################################################
-    $sql0="SELECT cli_id, cli_nombre, cli_cuit, cli_telefono FROM clientes where estado = 1";
+    $sql0="SELECT sucursal_id,cli_id,cli_nombre, cli_cuit, iva_tipo.iva_nombre,p.nombre as provincia,pa.nombre as partido,l.nombre as localidad, cli_direccion,cli_direccion_fiscal, cli_telefono, cli_notas 
+           FROM clientes,iva_tipo,ubicacion u,provincias p, partidos pa,localidades l
+           WHERE 
+           clientes.iva_id = iva_tipo.iva_id
+           AND clientes.ubicacion_id = u.id
+           AND u.provincias_id = p.id
+           AND u.partidos_id = pa.id
+           AND u.localidades_id = l.id
+           AND clientes.estado = 1";
+    
     $tamPag=20;
     
     include("paginado.php");        
-        $sql = "SELECT cli_id, cli_nombre, cli_cuit, cli_telefono FROM clientes where estado = 1";
+        $sql = "SELECT sucursal_id,cli_id,cli_nombre, cli_cuit, iva_tipo.iva_nombre,p.nombre as provincia,pa.nombre as partido,l.nombre as localidad, cli_direccion,cli_direccion_fiscal, cli_telefono, cli_notas 
+                FROM clientes,iva_tipo,ubicacion u,provincias p, partidos pa,localidades l
+                WHERE clientes.iva_id = iva_tipo.iva_id
+                AND clientes.ubicacion_id = u.id
+                AND u.provincias_id = p.id
+                AND u.partidos_id = pa.id
+                AND u.localidades_id = l.id
+                AND clientes.estado = 1  ";
                 $sql .= " LIMIT ".$limitInf.",".$tamPag; 
         $resultado = mysql_query($sql);
         $cantidad = mysql_num_rows($resultado);
@@ -68,7 +84,7 @@
           while($fila = mysql_fetch_array($resultado)){
   ?>
           <tr class="lista" bgcolor="<?php echo($colores[$i]);?>">
-            <td><?php echo(utf8_encode($fila["cli_nombre"]));?></td>
+              <td><?php echo(utf8_encode($fila["cli_nombre"]));  if (isset($fila["sucursal_id"]))  echo " -- (SUCURSAL ".$fila['provincia'].")";?> </td>
             <td><?php echo(verCUIT($fila["cli_cuit"]));?></td>
             <td><?php echo($fila["cli_telefono"]);?></td>
             <td>

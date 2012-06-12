@@ -14,6 +14,7 @@
         $ord_venta = $_POST["ord_venta"];
         $usu_nombre = $_SESSION["usu_nombre"];        
         $est_nombre = $_POST["est_nombre"];
+        $usu_id     = $_SESSION["usu_id"];
   //      echo $ord_plazo;
         
         include("conexion.php");
@@ -51,8 +52,9 @@
                                                         
         /*INSERTAMOS ORDEN*/
         echo $ord_codigo;
-        $sql = "INSERT INTO ordenes (ord_codigo,ord_descripcion,cli_id,prv_id,est_id,ord_alta,ord_costo,ord_venta,estado) VALUES (
+        $sql = "INSERT INTO ordenes (usu_id,ord_codigo,ord_descripcion,cli_id,prv_id,est_id,ord_alta,ord_costo,ord_venta,estado) VALUES (
         							
+                                                                 $usu_id,
 								 $ord_codigo,
         							'$ord_descripcion',
         						         $cli_id,
@@ -65,7 +67,7 @@
         				    )";
 	mysql_query($sql);//alta de la orden
         
-        //echo $sql;
+        //echo "QUERY".$sql;
         
         $ord_id = mysql_insert_id();
         

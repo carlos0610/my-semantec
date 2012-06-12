@@ -247,11 +247,13 @@ function leer_doc4(url) {
 function procesarRespuesta4(){
     //NOTA: para q funcione correctamente no olvidarse q deben existir los id
     // para cargar en un label usar :.innerHTML en lugar de value.
- respuesta = req.responseXML;
- var existe = respuesta.getElementsByTagName('senores').item(0).firstChild.data;
-var cuit=respuesta.getElementsByTagName('cuit').item(0).firstChild.data;
+    respuesta = req.responseXML;
+    var existe = respuesta.getElementsByTagName('senores').item(0).firstChild.data;
+    var cuit=respuesta.getElementsByTagName('cuit').item(0).firstChild.data;
+    var direccion = respuesta.getElementsByTagName('direccion').item(0).firstChild.data;
 
 document.getElementById('cli_nombre').value = existe;
+document.getElementById('cli_direccion_fiscal').value = direccion;
 
         document.getElementById("cli_cuit_parteA").value=(cuit.substring(0,2));
         document.getElementById("cli_cuit_parteB").value=(cuit.substring(3,11));
@@ -261,13 +263,20 @@ document.getElementById('cli_nombre').value = existe;
 document.getElementById('cli_cuit').value = respuesta.getElementsByTagName('cuit').item(0).firstChild.data;
 document.getElementById('iva_id').selected = respuesta.getElementsByTagName('iva_id').item(0).firstChild.data;
 
+
+
 }
 
 // Funciones llamdas del Form
-function rellenarDatosClienteSucursal(){   
- usuario = document.getElementById("comboClientes").value;
- url = "getDatosDeClienteSucursal.php?usuario=" + usuario;
- leer_doc4(url);
+function rellenarDatosClienteSucursal(){
+    if (document.getElementById("comboClientes").value != 0){
+        usuario = document.getElementById("comboClientes").value;
+        url = "getDatosDeClienteSucursal.php?usuario=" + usuario;
+        leer_doc4(url);
+ } else {
+     limpiarFrmAltaCliente();
+     
+ }
 }
 
 

@@ -10,9 +10,14 @@
           $titulo = "Se ha dado de alta el siguiente cliente.";
           $cli_id = $_SESSION["cli_id"];
     }
-    else{ // 2
+    else
+    if($action ==2)    { 
           $titulo = "Se han modificado los datos del siguiente cliente."; 
           $cli_id = $_SESSION["cli_id"];
+    }else{
+            $titulo = "Se ha dado de alta la siguiente sucursal."; 
+          $cli_id = $_SESSION["cli_id"];
+        
     }
        
 
@@ -77,7 +82,7 @@
           </tr>
           <tr>
             <td>Razón Social</td>
-            <td><?php echo(utf8_encode($cliente["cli_nombre"])); ?></td>
+            <td><?php echo(utf8_encode($cliente["cli_nombre"])); if ($action==3) echo " -- SUCURSAL (".$cliente['provincia'].")"; ?> </td>
             <td></td>
           </tr>
           <tr>
