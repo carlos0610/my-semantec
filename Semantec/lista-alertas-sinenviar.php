@@ -39,11 +39,8 @@ $titulo = "Alerta de ordenes sin enviar a proveedor.";
         
         $sql = "select usu_id,usu_login from usuarios";
         $resultado = mysql_query($sql);
-        
-        
-        
-        
-        
+        //$fila = mysql_fetch_array($resultado);
+      
 ?>
 <html>  
   <head>
@@ -63,17 +60,28 @@ $titulo = "Alerta de ordenes sin enviar a proveedor.";
         <td width="82%"><h2>Las siguientes ordenes  se dieron de alta y aún no se enviaron al proveedor</h2></td>
       </tr>
       <tr>
-        <td><div align="right">Ver órdenes de</div></td>
-        <td><label>
+        <td>&nbsp;</td>
+        <td><label></label></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td>Ver órdenes de
           <select name="comboUsuarios" id="comboUsuarios">
-              
-          <?php ?>    
-              
-              
-              
-              
-          </select>
-        </label></td>
+          <?php
+          while($fila = mysql_fetch_array($resultado)){
+                    ?>
+          <option value="<?php echo($fila["usu_id"]); ?>"><?php echo(utf8_encode($fila["usu_login"])); ?></option>
+          <?php
+                                    }
+                ?>
+        </select>
+          
+          <input type="submit" name="btnMostrar" id="btnMostrar" value="Mostrar">
+        </td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
       </tr>
     </table>
   </div>
