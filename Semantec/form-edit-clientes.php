@@ -229,7 +229,7 @@
             <td>&nbsp;</td>
             <td>
                 <input type="reset" value="Restablecer" class="botones" /> &nbsp; &nbsp; 
-                <input type="submit" value="Modificar cliente" class="botones" />
+                <input type="submit" value="Modificar cliente" class="botones" onclick="return validarCombosDeUbicacion()"/>
                 <input type="hidden" value="<?php echo($cli_id); ?>" name="cli_id" id="cli_id" />
                 <input type="hidden" value="<?php echo($ubicacion_id); ?>" name="ubicacion_id" id="ubicacion_id" />
             </td>

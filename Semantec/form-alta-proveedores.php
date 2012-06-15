@@ -261,7 +261,7 @@
             <td>&nbsp;</td>
             <td>
                 <input type="reset" value="Restablecer" class="botones" /> &nbsp; &nbsp; 
-                <input type="submit" value="Agregar proveedor" class="botones" style="visibility:visible" id="botonAgregar" />
+                <input type="submit" value="Agregar proveedor" class="botones" style="visibility:visible" id="botonAgregar" onclick="return validarCombosDeUbicacion()"/>
             </td>
             <td></td>
           </tr>

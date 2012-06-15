@@ -336,3 +336,25 @@ function pasaSiguiente(actual, siguiente, longitud)
                 siguiente.focus();
          }
   }
+  
+  
+  function validarCombosDeUbicacion(){
+      
+     if(document.getElementById('select1').selectedIndex == 0){
+         window.alert("Debe seleccionar una provincia");
+         return false;
+     }
+     
+     if(document.getElementById('select2').selectedIndex == 0){
+         window.alert("Debe seleccionar un partido");
+         return false;
+     }
+     
+     if(document.getElementById('select3').selectedIndex == 0){
+         window.alert("Debe seleccionar una localidad");
+         return false;
+     }
+ 
+     return true;     
+      
+  }

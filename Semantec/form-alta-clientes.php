@@ -75,7 +75,7 @@
 
       <h2>Panel de control</h2>
 
-      <form action="alta-clientes.php" method="post" name="frmAltaCli">
+      <form action="alta-clientes.php" method="post" name="frmAltaCli" >
       <table class="forms" cellpadding="5">
           <tr class="titulo">
             <td colspan="2"> <?php echo(utf8_encode($titulo));?> </td>
@@ -198,7 +198,8 @@
             <td>&nbsp;</td>
             <td>
                 <input type="reset" value="Restablecer" class="botones" /> &nbsp; &nbsp; 
-                <input type="submit" value="Agregar cliente" class="botones" style="visibility:visible" id="botonAgregar" />            </td>
+                <input type="submit" value="Agregar cliente" class="botones" style="visibility:visible" id="botonAgregar"  onclick="return validarCombosDeUbicacion()"/>           
+            </td>
             <td></td>
           </tr>
           <tr>

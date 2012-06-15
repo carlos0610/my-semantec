@@ -360,7 +360,7 @@
             <td>&nbsp;</td>
             <td>
                 <input type="reset" value="Restablecer" class="botones" /> &nbsp; &nbsp; 
-                <input type="submit" value="Modificar proveedor" class="botones" />
+                <input type="submit" value="Modificar proveedor" class="botones" onclick="return validarCombosDeUbicacion()"/>
                 <input type="hidden" value="<?php echo($prv_id); ?>" name="prv_id" id="prv_id" />
                 <input type="hidden" value="<?php echo($ubicacion_id); ?>" name="ubicacion_id" id="ubicacion_id" />
             </td>

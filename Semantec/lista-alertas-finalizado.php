@@ -5,29 +5,41 @@ $titulo = "Alerta de ordenes con vencimiento.";
         
         include("conexion.php");
         
-        $sql0 =    "SELECT ord_id, o.prv_id,ord_codigo, ord_descripcion, o.cli_id,cli_nombre, prv_nombre, est_nombre, est_color, ord_alta, ord_plazo,ord_plazo_proveedor, ord_costo, ord_venta
-                    FROM ordenes o, clientes c, estados e, proveedores p
+        $sql0 =    "SELECT ord_id, u.usu_login,o.prv_id,ord_codigo, ord_descripcion, o.cli_id,cli_nombre, prv_nombre, est_nombre, est_color, ord_alta, ord_plazo,ord_plazo_proveedor, ord_costo, ord_venta
+                    FROM ordenes o, clientes c, estados e, proveedores p,usuarios u
                     WHERE o.cli_id = c.cli_id
                     AND o.est_id = e.est_id
                     AND o.prv_id = p.prv_id  
                     AND o.estado = 1
                     AND o.est_id > 8
-		    AND DATEDIFF(ord_plazo,now()) = 1 
-                    ORDER BY o.ord_alta DESC";
+                    AND o.usu_id = u.usu_id
+		    AND DATEDIFF(ord_plazo,now()) = 1";
+                    if(isset($_REQUEST['btnMostrar'])){
+                        $id_usuario = $_GET["comboUsuarios"];
+                            if ($id_usuario != 0)
+                                $sql0 .= " AND o.usu_id = $id_usuario";
+                        }
+        $sql0 .=" ORDER BY o.ord_alta DESC";
         $alerta_plazo_proveedor = mysql_query($sql0);
         
         
         $tamPag=10;
         include("paginado.php");
-        $sql = "SELECT ord_id,o.prv_id, ord_codigo, ord_descripcion, o.cli_id,cli_nombre, prv_nombre, est_nombre, est_color, ord_alta, ord_plazo,ord_plazo_proveedor, ord_costo, ord_venta
-                  FROM ordenes o, clientes c, estados e, proveedores p
+        $sql = "SELECT ord_id,u.usu_login,o.prv_id, ord_codigo, ord_descripcion, o.cli_id,cli_nombre, prv_nombre, est_nombre, est_color, ord_alta, ord_plazo,ord_plazo_proveedor, ord_costo, ord_venta
+                  FROM ordenes o, clientes c, estados e, proveedores p,usuarios u
                   WHERE o.cli_id = c.cli_id
                     AND o.est_id = e.est_id
                     AND o.prv_id = p.prv_id  
                     AND o.estado = 1
                     AND o.est_id > 8
-		    AND DATEDIFF(ord_plazo,now()) = 1 
-                    ORDER BY o.ord_alta DESC";
+                    AND o.usu_id = u.usu_id
+		    AND DATEDIFF(ord_plazo,now()) = 1";
+                    if(isset($_REQUEST['btnMostrar'])){
+                        $id_usuario = $_GET["comboUsuarios"];
+                            if ($id_usuario != 0)
+                                $sql0 .= " AND o.usu_id = $id_usuario";
+                        }
+        $sql .=" ORDER BY o.ord_alta DESC";
         $sql .= " LIMIT ".$limitInf.",".$tamPag;
         $resultado = mysql_query($sql);
         $cantidad = mysql_num_rows($resultado);
@@ -36,7 +48,8 @@ $titulo = "Alerta de ordenes con vencimiento.";
         $colores = array("#fff","#e8f7fa");
         $cant = count($colores);
         
-        
+        $sql = "select usu_id,usu_login from usuarios";
+        $resultado = mysql_query($sql);
 ?>
 <html>  
   <head>
@@ -49,13 +62,39 @@ $titulo = "Alerta de ordenes con vencimiento.";
 <div id="contenedor" style="height:auto;">
   <?php  if ($cantidad>0) {?>
     <div id="mensaje" style="height:auto;">
-  
+        <form>
       <table width="100%" border="0">
       <tr>
         <td width="18%"><div align="right"><img src="images/warning.png" width="48" height="48"></div></td>
         <td width="82%"><h2>Las siguientes ordenes  aún no fueron terminadas por el proveedor</h2></td>
       </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td><label></label></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td>Ver órdenes de
+          <select name="comboUsuarios" id="comboUsuarios">
+              <option value="0">Todos</option>
+          <?php
+          while($fila = mysql_fetch_array($resultado)){
+                    ?>
+          <option value="<?php echo($fila["usu_id"]); ?>"><?php echo(utf8_encode($fila["usu_login"])); ?></option>
+          <?php
+                                    }
+                ?>
+        </select>
+          
+          <input type="submit" name="btnMostrar" id="btnMostrar" value="Mostrar">
+        </td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
     </table>
+    </form>
     </div>
     
     
@@ -63,6 +102,7 @@ $titulo = "Alerta de ordenes con vencimiento.";
           <tr class="titulo">
             <td width="70">C&oacute;digo</td>
             <td width="100">Fecha alta orden</td>
+            <td width="100">Creada por</td>
             <td width="100">Cliente</td>
             <td>Descripci&oacute;n</td>
             <td width="100">Proveedor</td>
@@ -84,6 +124,7 @@ $titulo = "Alerta de ordenes con vencimiento.";
           <tr class="lista" bgcolor="<?php echo($colores[$i]);?>">
             <td><?php echo($fila["ord_codigo"]);?></td>
             <td><?php echo(tfecha($fila["ord_alta"]));?></td>
+            <td><?php echo $fila["usu_login"];?></td>
             <td><a href="ver-alta-clientes.php?cli_id=<?php echo$fila["cli_id"]?>&action=0"><?php echo($fila["cli_nombre"]);?></td>            
             <td><?php echo(nl2br(utf8_encode($fila["ord_descripcion"])));?></td>
             <td><a href="ver-alta-proveedores.php?prv_id=<?php echo$fila["prv_id"]?>&action=0"><?php echo($fila["prv_nombre"]);?></td>
