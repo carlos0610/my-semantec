@@ -2,20 +2,64 @@
     $titulo = "Listado de Ordenes de Servicio.";
         include("validar.php");
         include("funciones.php");
-
         include("conexion.php");
-/* CALCULO PAGINADO */  ###############################################################################
-    $sql0 = "SELECT ord_id, ord_codigo, ord_descripcion, cli_nombre, prv_nombre, est_nombre, est_color, ord_alta, ord_plazo, ord_costo, ord_venta
+         $tamPag=10;    
+         // estados
+        $sql = "SELECT  est_id, est_nombre, est_color FROM estados";
+        $resultado3 = mysql_query($sql);
+        //proovedores
+        $sql = "SELECT  prv_id, prv_nombre FROM proveedores WHERE estado=1";
+        $resultado2 = mysql_query($sql);
+        //recibo los criterios y construyo la consulta
+        $elementoBusqueda=$_POST['filtrartxt'];
+        $proveedorFiltro=$_POST['prv_id'];
+        $estado_id=$_POST['est_id'];
+        $sqlaux="";
+        if($elementoBusqueda!="")
+        {$sqlaux.="AND ord_codigo like '$elementoBusqueda%' ";}
+        if($proveedorFiltro!="")
+        {$sqlaux.="AND o.prv_id = $proveedorFiltro ";}
+        if($estado_id!="")
+        {$sqlaux.="AND o.est_id = $estado_id ";}
+/*if($_POST['est_id'])
+    {  */
+
+$sql="SELECT ord_id, ord_codigo, ord_descripcion, cli_nombre, prv_nombre, est_nombre, est_color, ord_alta, ord_plazo, ord_costo, ord_venta
+                  FROM ordenes o, clientes c, estados e, proveedores p
+                  WHERE o.cli_id = c.cli_id
+                    AND o.est_id = e.est_id
+                    AND o.prv_id = p.prv_id  
+                    AND o.estado = 1 ";
+                    $sql.=$sqlaux;
+               //     AND ord_codigo like '$elementoBusqueda%' 
+               //     AND o.est_id = $estado_id
+               //     AND o.prv_id = $proveedorFiltro
+               //     ORDER BY o.ord_alta DESC ";
+                    $sql0=$sql;
+                    include("paginado.php");
+                    $sql .= " ORDER BY o.ord_alta DESC  LIMIT ".$limitInf.",".$tamPag;                  
+  /* }           
+else{
+$sql="SELECT ord_id, ord_codigo, ord_descripcion, cli_nombre, prv_nombre, est_nombre, est_color, ord_alta, ord_plazo, ord_costo, ord_venta
                   FROM ordenes o, clientes c, estados e, proveedores p
                   WHERE o.cli_id = c.cli_id
                     AND o.est_id = e.est_id
                     AND o.prv_id = p.prv_id  
                     AND o.estado = 1 
-                    ORDER BY o.ord_alta DESC ";
-    $tamPag=10;
+                    ORDER BY o.ord_alta DESC";
+                    $sql0=$sql;
+                    include("paginado.php");
+                   $sql .= " LIMIT ".$limitInf.",".$tamPag;                 
+                   } */
+                    
+$resultado=mysql_query($sql);
+ $cantidad = mysql_num_rows($resultado);   
     
-    include("paginado.php");        
-        $sql = "SELECT ord_id, ord_codigo, ord_descripcion, cli_nombre, prv_nombre, est_nombre, est_color, ord_alta, ord_plazo, ord_costo, ord_venta
+    
+    
+    
+     
+   /*     $sql = "SELECT ord_id, ord_codigo, ord_descripcion, cli_nombre, prv_nombre, est_nombre, est_color, ord_alta, ord_plazo, ord_costo, ord_venta
                   FROM ordenes o, clientes c, estados e, proveedores p
                   WHERE o.cli_id = c.cli_id
                     AND o.est_id = e.est_id
@@ -25,7 +69,7 @@
                     ";
                 $sql .= " LIMIT ".$limitInf.",".$tamPag; 
         $resultado = mysql_query($sql);
-        $cantidad = mysql_num_rows($resultado);
+        $cantidad = mysql_num_rows($resultado); */
 
         $i = 0;
         $colores = array("#fff","#e8f7fa");
@@ -63,6 +107,32 @@
    <div id="contenedor" style="height:auto;">
       <h2>Panel de control - Listado de Ordenes de Servicio</h2>
 
+      
+      
+<form name="filtro" action="<?php echo $PHP_SELF;?>" method="POST">
+     Proovedor 
+     <select name="prv_id" id="prv_id" class="campos" <?php if($proveedorFiltro==""){echo ("disabled");}?>>
+    <?php while($fila2 = mysql_fetch_array($resultado2)){ ?>
+                    <option value="<?php echo($fila2["prv_id"]); ?>"<?php if($proveedorFiltro==$fila2["prv_id"]){echo(" selected=\"selected\"");} ?>><?php echo(utf8_encode($fila2["prv_nombre"])); ?></option>
+    <?php }?>
+     </select> 
+     <input name="chkProovedor" type="checkbox" id="chkProovedor" value="si" onClick="habilitarFiltros('chkProovedor','prv_id')"  <?php if($proveedorFiltro!=""){echo ("checked");}?>>
+     <br>
+     Estado &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <select name="est_id" id="est_id" class="campos" value="si" <?php if($estado_id==""){echo ("disabled");}?>>
+    <?php  while($fila3 = mysql_fetch_array($resultado3)){  ?>                 
+                <option style="background-color:<?php echo($fila3["est_color"]); ?>" value="<?php echo($fila3["est_id"]); ?>"<?php if($estado_id==$fila3["est_id"]){echo(" selected=\"selected\"");} ?>><?php echo(utf8_encode($fila3["est_nombre"])); ?></option>
+    <?php    } ?>
+                </select>
+      <input name="chkEstado" type="checkbox" id="chkEstado" onClick="habilitarFiltros('chkEstado','est_id')" <?php if($estado_id!=""){echo ("checked");}?>><br>
+     N° Orden &nbsp;
+<input type="text" name="filtrartxt" class="campos" value="<?php echo $elementoBusqueda; ?>"  style="text-align:right" >
+<input type="submit" name="filtrar" value="Filtrar" class="botones" >
+</form>
+      
+      
+      
+      
       <table class="sortable" cellpadding="5">
           <tr class="titulo">
             <td width="70">C&oacute;digo</td>

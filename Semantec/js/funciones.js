@@ -106,6 +106,13 @@ function habilitarComboCliente(formulario){
     document.forms[nombre].comboClientes.disabled = valor;   
 }
 
+function habilitarFiltros(nombre,gadet){
+  if(document.getElementById(nombre).checked){ 
+     document.getElementById(gadet).disabled=false;   
+  }else{document.getElementById(gadet).disabled=true  ;}
+   
+}
+
 function limpiarFrmAltaCliente(){
          document.getElementById("cli_cuit_parteA").value="";
          document.getElementById("cli_cuit_parteB").value="";
