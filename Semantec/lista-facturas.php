@@ -3,18 +3,33 @@
         include("validar.php");
         include("funciones.php");
         include("conexion.php");
+        $sql = "SELECT  cli_id, cli_nombre FROM clientes WHERE estado=1";
+        $resultado1 = mysql_query($sql);
+        //recibo los criterios y construyo la consulta
+        $elementoBusqueda=$_POST['filtrartxt'];
+        $pagado=$_POST['pagado'];
+        $cli_id=$_POST['cli_id'];
+        $sqlaux="";
+        if($elementoBusqueda!="")
+        {$sqlaux.=" AND fav_id like '$elementoBusqueda%' ";}
+        if($pagado!="")
+        {$sqlaux.=" AND $pagado (f.fav_fecha_pago) ";}
+        if($cli_id!="")
+        {$sqlaux.=" AND c.cli_id  = $cli_id ";}
+        
+        
+        
 /* CALCULO PAGINADO */  ###############################################################################
-    $sql0 =    "SELECT distinct f.fav_id,f.fav_fecha,c.cli_nombre,cc.ccc_id,f.files_id,f.fav_fecha_pago 
+ /*   $sql0 =    "SELECT distinct f.fav_id,f.fav_fecha,c.cli_nombre,cc.ccc_id,f.files_id,f.fav_fecha_pago 
                 FROM factura_venta f,ordenes o,clientes c,grupo_ordenes g_o,cuentacorriente_cliente cc
                 WHERE f.gru_id = g_o.gru_id
                 AND g_o.gru_id = o.gru_id
                 AND o.cli_id = c.cli_id
                 AND c.cli_id = cc.cli_id
                 AND f.estado = 1
-                ORDER BY f.fav_fecha desc";
+                ORDER BY f.fav_fecha desc"; */
     $tamPag=10;
     
-    include("paginado.php"); 
     
         $sql = "SELECT distinct f.fav_id,f.fav_fecha,c.cli_nombre,cc.ccc_id,f.files_id,f.fav_fecha_pago 
                 FROM factura_venta f,ordenes o,clientes c,grupo_ordenes g_o,cuentacorriente_cliente cc
@@ -22,10 +37,12 @@
                 AND g_o.gru_id = o.gru_id
                 AND o.cli_id = c.cli_id
                 AND c.cli_id = cc.cli_id
-                AND f.estado = 1
-                ORDER BY f.fav_fecha desc";
-        
-                $sql .= " LIMIT ".$limitInf.",".$tamPag; 
+                AND f.estado = 1";
+                $sql.=$sqlaux;
+                $sql0=$sql;
+                include("paginado.php");
+                
+                $sql .= " ORDER BY f.fav_fecha desc LIMIT ".$limitInf.",".$tamPag;                      
         $resultado = mysql_query($sql);
         $cantidad = mysql_num_rows($resultado);
 
@@ -65,6 +82,33 @@
    <div id="contenedor" style="height:auto;">
       <h2>Panel de control - Listado de Facturas</h2>
 
+     <div id="buscador" >     
+<form name="filtro" action="<?php echo $PHP_SELF;?>" method="POST">
+     Cliente  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <select name="cli_id" id="cli_id" class="campos" <?php if($cli_id==""){echo ("disabled");}?>>
+    <?php
+          while($fila = mysql_fetch_array($resultado1)){
+    ?>
+                    <option value="<?php echo($fila["cli_id"]); ?>"<?php if($cli_id==$fila["cli_id"]){echo(" selected=\"selected\"");} ?>><?php echo(utf8_encode($fila["cli_nombre"])); ?></option>
+    <?php
+          }
+    ?>
+                </select>
+     <input name="chckCliente" type="checkbox" id="chckCliente" onClick="habilitarFiltros('chckCliente','cli_id')" <?php if($cli_id!=""){echo ("checked");}?>><br>
+     Pagado &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <select name="pagado" id="pagado" class="campos" value="si" <?php if($pagado==""){echo ("disabled");}?>>
+            <option value=" NOT ISNULL " <?php if($pagado==" NOT ISNULL "){echo(" selected=\"selected\"");} ?>>Sí</option> 
+            <option value=" ISNULL " <?php if($pagado==" ISNULL "){echo(" selected=\"selected\"");} ?>>No</option>
+                </select>
+      <input name="chkEstado" type="checkbox" id="chkEstado" onClick="habilitarFiltros('chkEstado','pagado')" <?php if($pagado!=""){echo ("checked");}?>><br>
+     N° Factura &nbsp;
+<input type="text" name="filtrartxt" class="campos" value="<?php echo $elementoBusqueda; ?>"  style="text-align:right" >
+<input type="submit" name="filtrar" value="Filtrar" class="botones" >
+</form>
+      </div>  
+      
+      
+      
       <table class="sortable" cellpadding="5">
           <tr class="titulo">
             <td width="70">Factura Nro</td>
