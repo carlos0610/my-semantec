@@ -2,7 +2,11 @@
         include("validar.php");
         include("conexion.php");
         $prv_nombre = $_POST["prv_nombre"];
-        $prv_cuit = $_POST["prv_cuit"];
+        
+        $cuitA = $_POST["cuit_parteA"];
+        $cuitB = $_POST["cuit_parteB"];
+        $cuitC = $_POST["cuit_parteC"];
+        $prv_cuit = "$cuitA$cuitB$cuitC";
         $iva_id = $_POST["iva_id"];
         $prv_rubro = utf8_decode($_POST["rub_id"]);
         

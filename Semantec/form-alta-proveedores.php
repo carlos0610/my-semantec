@@ -95,8 +95,10 @@
           </tr>
           <tr>
             <td>CUIT</td>
-            <td>
-                <input type="number" min="10000000000" style="text-align:right" class="campos" id="prv_cuit" name="prv_cuit" maxlength="11" onChange="return autenticaCUIT();" required/> 
+            <td>               
+                <input type="text" style="text-align:right" min="10" class="campos2" id="cuit_parteA" name="cuit_parteA" maxlength="2" size="2" onKeyPress="pasaSiguiente(this, document.getElementById('cuit_parteB'), 2)"  required />-
+                <input type="text" style="text-align:right" min="10000000" class="campos2" id="cuit_parteB" name="cuit_parteB" maxlength="8" size="8" onKeyPress="pasaSiguiente(this, document.getElementById('cuit_parteC'), 8)" required />-
+                <input type="text" style="text-align:right" min="0" class="campos2" id="cuit_parteC" name="cuit_parteC" maxlength="1" size="1" onChange="return autenticaCUIT();"  required />
                 <span id="error" style="font-family: Verdana, Arial, Helvetica,sans-serif;font-size: 9pt;color: #CC3300;position:relative;visibility:hidden;">Cuit existente</span>
             </td>
             <td></td>

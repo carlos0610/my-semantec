@@ -1,5 +1,6 @@
 <?php
     include("validar.php");  
+    include("funciones.php");
     $action = $_GET["action"];
     if($action == 0){
           $titulo = "Datos de proveedor";
@@ -120,7 +121,7 @@
           </tr>
           <tr>
             <td>CUIT</td>
-            <td><?php echo($fila_proveedor["prv_cuit"]); ?></td>
+            <td><?php echo(verCUIT($fila_proveedor["prv_cuit"])); ?></td>
             <td></td>
           </tr>
           <tr>
@@ -201,7 +202,9 @@
           echo"<td>".$fila_banco["cue_nrobancaria"]."</td>";
           echo"<td></td>";  
           echo"</tr>";
-          echo"<tr><td>Tipo de cuenta</td><td>".$fila_banco["cut_nombre"]."</td>
+          echo"<tr><td>Tipo de cuenta</td><td>"; 
+          echo (utf8_encode($fila_banco["cut_nombre"])),
+          "</td>
           </tr>
           <tr>
             <td>CBU</td>
@@ -210,7 +213,9 @@
           </tr>
           <tr>
              <td>Banco</td>
-             <td>".$fila_banco["nombreBanco"]."</td>
+             <td>"; 
+          echo (utf8_encode($fila_banco["nombreBanco"])),
+             "</td>
              <td></td>
           </tr>
           ";

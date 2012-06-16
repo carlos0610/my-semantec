@@ -217,8 +217,8 @@
           </div>
       </label></td>
     </tr>
-    <tr>
-      <td><div align="right">PERCEPCIONES</div></td>
+    <tr style="visibility:hidden">
+      <td><div align="right" >PERCEPCIONES</div></td>
       <td><label>
         <div align="center">
             <input type="text" style="text-align:right" value="0.00"  name="txtPercepciones" id="txtPercepciones" onChange="return ActualizarTotal(<?php echo($totalDescripcion);?>,2);">

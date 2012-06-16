@@ -339,7 +339,7 @@
       <td>&nbsp;</td>
       <td>
          
-          <input type="submit" name="btnConfirma" id="btnConfirma" style="visibility:hidden" class="botones"  value="Confirmar" >
+          <input type="submit" name="btnConfirma" id="btnConfirma" style="visibility:hidden" class="botones"  value="Confirmar" onClick="PedirConfirmacion('generar Factura','frmGenerarFactura')" >
           
       </td>
       <td>&nbsp;</td>

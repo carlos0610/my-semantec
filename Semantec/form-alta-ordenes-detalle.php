@@ -7,8 +7,7 @@
 	$provedor_id=$_POST['provedor_id'];	
         $sql = "SELECT  prv_id, prv_nombre FROM proveedores WHERE prv_id=$provedor_id ";
         $resultado2 = mysql_query($sql);
-		$proveedor = mysql_fetch_array($resultado2);
-		
+	$proveedor = mysql_fetch_array($resultado2);	
         $sql = "SELECT  est_id, est_nombre, est_color FROM estados";
         $resultado3 = mysql_query($sql);
         // LOS PARAMETROS
@@ -98,7 +97,7 @@
           <tr>
             <td>Proveedor</td>
             <td>
-					<?php ($proveedor["prv_nombre"]); ?>            </td>
+					<?php echo ($proveedor["prv_nombre"]); ?>            </td>
             <td></td>
           </tr>
           <tr>

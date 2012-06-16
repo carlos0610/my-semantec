@@ -79,9 +79,10 @@
                AND cue.cut_id = cut.cut_id
                AND cue.ban_id = b.ban_id";
         $banco = mysql_query($sql);
+        $banco2 = mysql_query($sql);
         $filas =  mysql_num_rows($banco);
         
-        $fila_banco = mysql_fetch_array($banco);
+        $fila_banco = mysql_fetch_array($banco2);
         
         if($filas > 0){            
             $_SESSION["tienecuenta"] = true;
@@ -187,7 +188,7 @@
                 <?php
           while($fila = mysql_fetch_array($rubros)){
                 ?>
-                    <option value="<?php echo($fila["rub_id"]); ?>" <?php if($fila0["rub_nombre"]==$fila["rub_nombre"]){echo(" selected=\"selected\"");} ?>><?php echo($fila["rub_nombre"]); ?></option>
+                    <option value="<?php echo($fila["rub_id"]); ?>" <?php if($fila0["rub_nombre"]==$fila["rub_nombre"]){echo(" selected=\"selected\"");} ?>><?php echo(utf8_encode($fila["rub_nombre"])); ?></option>
                 <?php
                     }
                     ?>          

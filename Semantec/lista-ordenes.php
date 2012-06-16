@@ -108,7 +108,7 @@ $resultado=mysql_query($sql);
       <h2>Panel de control - Listado de Ordenes de Servicio</h2>
 
       
-      
+      <div id="buscador" >     
 <form name="filtro" action="<?php echo $PHP_SELF;?>" method="POST">
      Proovedor 
      <select name="prv_id" id="prv_id" class="campos" <?php if($proveedorFiltro==""){echo ("disabled");}?>>
@@ -129,10 +129,8 @@ $resultado=mysql_query($sql);
 <input type="text" name="filtrartxt" class="campos" value="<?php echo $elementoBusqueda; ?>"  style="text-align:right" >
 <input type="submit" name="filtrar" value="Filtrar" class="botones" >
 </form>
-      
-      
-      
-      
+      </div>    
+   
       <table class="sortable" cellpadding="5">
           <tr class="titulo">
             <td width="70">C&oacute;digo</td>

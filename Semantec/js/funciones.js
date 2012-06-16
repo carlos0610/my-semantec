@@ -365,3 +365,10 @@ function pasaSiguiente(actual, siguiente, longitud)
      return true;     
       
   }
+// Confirmacion de factura nueva
+function PedirConfirmacion(nombre,frm){
+    if(confirm('Confirma '+nombre+' ?')==true)
+    {
+        document.getElementById(frm).submit();
+    }
+}

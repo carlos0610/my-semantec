@@ -1,5 +1,6 @@
 <?php
     include("validar.php");
+    include("funciones.php");
     $action = $_GET["action"];
     if($action == 0){
           $titulo = "Datos de Cliente";
@@ -87,7 +88,7 @@
           </tr>
           <tr>
             <td>CUIT</td>
-            <td><?php echo($cliente["cli_cuit"]); ?></td>
+            <td><?php echo(verCUIT($cliente["cli_cuit"])); ?></td>
             <td></td>
           </tr>
           <tr>

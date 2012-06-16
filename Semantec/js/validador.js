@@ -60,8 +60,10 @@ function autentica(){
 }
 
 function autenticaCUIT(){
- usuario = document.getElementById("prv_cuit").value;
- url = "existeNumeroCuit.php?usuario=" + usuario;
+    usuario = document.getElementById("cuit_parteA").value+
+    document.getElementById("cuit_parteB").value+
+    document.getElementById("cuit_parteC").value ;
+    url = "existeNumeroCuit.php?usuario=" + usuario;
  leer_doc(url);
  document.getElementById("prv_cuit").value=(usuario.substring(0,11));
 }

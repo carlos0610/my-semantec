@@ -98,7 +98,7 @@
             <td><!--Guardo proveedor oculto y cambio de estado-->
                 <form action="form-alta-ordenes-detalle.php?ord_id=<?php echo($ord_id); ?>&ord_costo=<?php echo($fila0["ord_costo"]); ?>&ord_venta=<?php echo($fila0["ord_venta"]); ?>&cli_id=" method="post" id="frm" >
                  <?php echo(utf8_encode($fila4["est_nombre"])); ?> 
-                <input type="hidden" value="<?php echo($est_id); ?>" name="provedor_id" id="provedor_id" />
+                <input type="hidden" value="<?php echo($fila0["prv_id"]); ?>" name="provedor_id" id="provedor_id" />
                 <input type="submit" value="Cambiar" class="botones" id="botonAgregar" style="visibility:<?php if($fila0["prv_id"]==1){echo "hidden";}else{ echo "visible";} ?>"  />
                 </form>
             </td>
