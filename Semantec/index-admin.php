@@ -37,6 +37,20 @@
         $alerta_plazo_proveedor = mysql_query($sql0);
         $fila_plazo_proveedor = mysql_num_rows($alerta_plazo_proveedor);
         
+        /* COMPROBAR SI HAY ALERTA DE ORDENES SIN CONFIRMAR A PROVEEDOR */
+        
+        
+        $sql = "SELECT ord_id, ord_codigo, u.usu_login,ord_descripcion, cli_nombre, prv_nombre, est_nombre, est_color, ord_alta, ord_plazo,ord_plazo_proveedor, ord_costo, ord_venta
+                    FROM ordenes o, clientes c, estados e, proveedores p,usuarios u
+                    WHERE o.cli_id = c.cli_id
+                    AND o.est_id = e.est_id
+                    AND o.prv_id = p.prv_id  
+                    AND o.estado = 1
+                    AND o.est_id = 9
+                    AND o.usu_id = u.usu_id";
+        $alerta_orden_sinaprobar = mysql_query($sql);
+        $fila_orden_sinaprobar = mysql_num_rows($alerta_orden_sinaprobar);
+        
      /* COMPROBAR SI HAY ALERTA DE PLAZO DE FINALIZACION DEL TRABAJO #REFACTORIZAR# */   
         
         $sql ="SELECT ord_id, ord_codigo, ord_descripcion, cli_nombre, prv_nombre, est_nombre, est_color, ord_alta, ord_plazo,ord_plazo_proveedor, ord_costo, ord_venta
@@ -172,6 +186,23 @@
             
                <?php } ?>
             </tr>
+            <tr>
+           <td width="18%">Órdenes aprobadas sin confirmar a proveedor:</td>
+  
+      <?php if ($fila_orden_sinaprobar > 0) { ?>
+         
+    <td width="4%"><div align="right"><img src="images/warning.png" width="32" height="32"></div></td>
+    <td width="36%"><h5><a href="#" onclick="popup('lista-alertas-sinconfirmar.php', 'Alerta')">Hay órdenes que fueron aprobadas y no se confirmaron al proveedor </h5></td>
+          
+         <?php } else { ?>
+           
+            <td width="7%"><div align="right"><img src="images/ok.png" width="32" height="32"></div></td>
+            <td width="35%"><h5>Sin novedades</h5></td>
+            
+               <?php } ?>
+            </tr>
+            
+            
             <tr>
               <td width="18%">Órdenes finalizadas:</td>
                

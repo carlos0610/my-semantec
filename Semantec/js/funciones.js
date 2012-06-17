@@ -367,8 +367,14 @@ function pasaSiguiente(actual, siguiente, longitud)
   }
 // Confirmacion de factura nueva
 function PedirConfirmacion(nombre,frm){
-    if(confirm('Confirma '+nombre+' ?')==true)
+    
+    
+    if((confirm('Confirma '+nombre+' ?'))==true)
     {
-        document.getElementById(frm).submit();
+        //document.getElementById(frm).submit();
+        return true;
+    }else{
+        return false;
+        
     }
 }
