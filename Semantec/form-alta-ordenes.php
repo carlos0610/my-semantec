@@ -26,7 +26,7 @@
   <script type="text/javascript" src="js/jquery.datepick-es.js"></script>
   <script type="text/javascript">
   $(function() {
-      $('#ord_plazo').datepick();
+      $('#ord_alta').datepick();
   });
   </script>    
   <script type="text/javascript" src="js/validador.js"></script>
@@ -117,7 +117,11 @@
                 <input type="hidden" value=" <?php echo($fila3["est_nombre"]); ?>" name="est_nombre"  id="est_id">
             </td>
             <td></td>
-          </tr>                    
+          </tr>
+          <tr><td>Fecha de alta</td>
+              <td><input type="text" name="ord_alta" id="ord_alta" class="campos"></td>
+          </tr>
+          <td></td>
           <tr>
             <td>Valor Costo de la Orden</td>
             <td><input type="number" style="text-align:right" class="campos" id="ord_costo" name="ord_costo" value="0"  min="0" required OnKeyUp="return validarCostoDeLaOrden();" /></td>

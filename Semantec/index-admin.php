@@ -17,8 +17,7 @@
                     AND o.prv_id = p.prv_id  
                     AND o.estado = 1
                     AND o.est_id = 1
-		    AND DATEDIFF(ord_alta,now()) = 0
-                    ORDER BY o.ord_alta DESC";
+		    ORDER BY o.ord_alta DESC";
    
    $resultado = mysql_query($sql);
    $fila_orden_sinenviar = mysql_num_rows($resultado);   //Nro de órdenes sin enviar a proveedor.

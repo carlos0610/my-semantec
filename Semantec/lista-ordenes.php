@@ -110,25 +110,38 @@ $resultado=mysql_query($sql);
       
       <div id="buscador" >     
 <form name="filtro" action="<?php echo $PHP_SELF;?>" method="POST">
-     Proovedor 
-     <select name="prv_id" id="prv_id" class="campos" <?php if($proveedorFiltro==""){echo ("disabled");}?>>
-    <?php while($fila2 = mysql_fetch_array($resultado2)){ ?>
-                    <option value="<?php echo($fila2["prv_id"]); ?>"<?php if($proveedorFiltro==$fila2["prv_id"]){echo(" selected=\"selected\"");} ?>><?php echo(utf8_encode($fila2["prv_nombre"])); ?></option>
-    <?php }?>
-     </select> 
-     <input name="chkProovedor" type="checkbox" id="chkProovedor" value="si" onClick="habilitarFiltros('chkProovedor','prv_id')"  <?php if($proveedorFiltro!=""){echo ("checked");}?>>
-     <br>
-     Estado &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <select name="est_id" id="est_id" class="campos" value="si" <?php if($estado_id==""){echo ("disabled");}?>>
-    <?php  while($fila3 = mysql_fetch_array($resultado3)){  ?>                 
-                <option style="background-color:<?php echo($fila3["est_color"]); ?>" value="<?php echo($fila3["est_id"]); ?>"<?php if($estado_id==$fila3["est_id"]){echo(" selected=\"selected\"");} ?>><?php echo(utf8_encode($fila3["est_nombre"])); ?></option>
-    <?php    } ?>
-                </select>
-      <input name="chkEstado" type="checkbox" id="chkEstado" onClick="habilitarFiltros('chkEstado','est_id')" <?php if($estado_id!=""){echo ("checked");}?>><br>
-     N° Orden &nbsp;
-<input type="text" name="filtrartxt" class="campos" value="<?php echo $elementoBusqueda; ?>"  style="text-align:right" >
-<input type="submit" name="filtrar" value="Filtrar" class="botones" >
-</form>
+     <table width="100%" border="0">
+       <tr>
+         <td width="15%">&nbsp;</td>
+         <td width="34%">&nbsp;</td>
+         <td width="51%">&nbsp;</td>
+       </tr>
+       <tr>
+         <td><div align="right">Proovedor</div></td>
+         <td><select name="prv_id" id="prv_id" class="campos" <?php if($proveedorFiltro==""){echo ("disabled");}?>>
+           <?php while($fila2 = mysql_fetch_array($resultado2)){ ?>
+           <option value="<?php echo($fila2["prv_id"]); ?>"<?php if($proveedorFiltro==$fila2["prv_id"]){echo(" selected=\"selected\"");} ?>><?php echo(utf8_encode($fila2["prv_nombre"])); ?></option>
+           <?php }?>
+         </select></td>
+         <td><input name="chkProovedor" type="checkbox" id="chkProovedor" value="si" onClick="habilitarFiltros('chkProovedor','prv_id')"  <?php if($proveedorFiltro!=""){echo ("checked");}?>></td>
+       </tr>
+       <tr>
+         <td><div align="right">Estado</div></td>
+         <td><select name="est_id" id="est_id" class="campos" value="si" <?php if($estado_id==""){echo ("disabled");}?>>
+           <?php  while($fila3 = mysql_fetch_array($resultado3)){  ?>
+           <option style="background-color:<?php echo($fila3["est_color"]); ?>" value="<?php echo($fila3["est_id"]); ?>"<?php if($estado_id==$fila3["est_id"]){echo(" selected=\"selected\"");} ?>><?php echo(utf8_encode($fila3["est_nombre"])); ?></option>
+           <?php    } ?>
+         </select></td>
+         <td><input name="chkEstado" type="checkbox" id="chkEstado" onClick="habilitarFiltros('chkEstado','est_id')" <?php if($estado_id!=""){echo ("checked");}?>></td>
+       </tr>
+       <tr>
+         <td><div align="right">N° Orden</div></td>
+         <td><input type="text" name="filtrartxt" class="campos" value="<?php echo $elementoBusqueda; ?>"  style="text-align:right" ></td>
+         <td><input type="submit" name="filtrar" value="Filtrar" class="botones" ></td>
+       </tr>
+     </table>
+     <p>&nbsp;</p>
+     </form>
       </div>    
    
       <table class="sortable" cellpadding="5">
@@ -163,7 +176,7 @@ $resultado=mysql_query($sql);
             </td>
             <td width="32"><a href="ver-alta-ordenes.php?ord_id=<?php echo($fila["ord_id"]); ?>&action=0"><img src="images/detalles.png" alt="editar" title="Ver detalle" width="32" height="32" border="none" /></a></td>            
             <td><a href="form-edit-ordenes.php?ord_id=<?php echo($fila["ord_id"]); ?>"><img src="images/editar.png" alt="editar" title="Modificar orden" width="32" height="32" border="none" /></a></td>
-            <td><a href="#" onclick="eliminarOrden(<?php echo($fila["ord_id"]);?>,'<?php echo($fila["ord_codigo"]);?>')">
+            <td><a href="#" onClick="eliminarOrden(<?php echo($fila["ord_id"]);?>,'<?php echo($fila["ord_codigo"]);?>')">
                 <img src="images/eliminar.png" alt="eliminar" title="Eliminar orden" width="32" height="32" border="none" /></a></td>
           </tr>
   <?php

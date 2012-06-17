@@ -14,8 +14,7 @@ $titulo = "Alerta de ordenes sin enviar a proveedor.";
                     AND o.prv_id = p.prv_id  
                     AND o.estado = 1
                     AND o.est_id = 1
-                    AND o.usu_id = u.usu_id
-		    AND DATEDIFF(ord_alta,now()) = 0";
+                    AND o.usu_id = u.usu_id";
         
                 if(isset($_REQUEST['btnMostrar'])){
                         $id_usuario = $_GET["comboUsuarios"];
@@ -35,8 +34,7 @@ $titulo = "Alerta de ordenes sin enviar a proveedor.";
                     AND o.prv_id = p.prv_id  
                     AND o.estado = 1
                     AND o.est_id = 1
-                    AND o.usu_id = u.usu_id
-		    AND DATEDIFF(ord_alta,now()) = 0";
+                    AND o.usu_id = u.usu_id";
                     if(isset($_REQUEST['btnMostrar'])){
                         $id_usuario = $_GET["comboUsuarios"];
                             if ($id_usuario != 0)

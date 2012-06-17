@@ -84,26 +84,40 @@
 
      <div id="buscador" >     
 <form name="filtro" action="<?php echo $PHP_SELF;?>" method="POST">
-     Cliente  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <select name="cli_id" id="cli_id" class="campos" <?php if($cli_id==""){echo ("disabled");}?>>
-    <?php
+     <table width="100%" border="0">
+       <tr>
+         <td width="14%"><div align="right">Cliente</div></td>
+         <td width="34%"><select name="cli_id" id="cli_id" class="campos" <?php if($cli_id==""){echo ("disabled");}?>>
+           <?php
           while($fila = mysql_fetch_array($resultado1)){
     ?>
-                    <option value="<?php echo($fila["cli_id"]); ?>"<?php if($cli_id==$fila["cli_id"]){echo(" selected=\"selected\"");} ?>><?php echo(utf8_encode($fila["cli_nombre"])); ?></option>
-    <?php
+           <option value="<?php echo($fila["cli_id"]); ?>"<?php if($cli_id==$fila["cli_id"]){echo(" selected=\"selected\"");} ?>><?php echo(utf8_encode($fila["cli_nombre"])); ?></option>
+           <?php
           }
     ?>
-                </select>
-     <input name="chckCliente" type="checkbox" id="chckCliente" onClick="habilitarFiltros('chckCliente','cli_id')" <?php if($cli_id!=""){echo ("checked");}?>><br>
-     Pagado &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <select name="pagado" id="pagado" class="campos" value="si" <?php if($pagado==""){echo ("disabled");}?>>
-            <option value=" NOT ISNULL " <?php if($pagado==" NOT ISNULL "){echo(" selected=\"selected\"");} ?>>Sí</option> 
-            <option value=" ISNULL " <?php if($pagado==" ISNULL "){echo(" selected=\"selected\"");} ?>>No</option>
-                </select>
-      <input name="chkEstado" type="checkbox" id="chkEstado" onClick="habilitarFiltros('chkEstado','pagado')" <?php if($pagado!=""){echo ("checked");}?>><br>
-     N° Factura &nbsp;
-<input type="text" name="filtrartxt" class="campos" value="<?php echo $elementoBusqueda; ?>"  style="text-align:right" >
-<input type="submit" name="filtrar" value="Filtrar" class="botones" >
+         </select></td>
+         <td width="52%"><input name="chckCliente" type="checkbox" id="chckCliente" onClick="habilitarFiltros('chckCliente','cli_id')" <?php if($cli_id!=""){echo ("checked");}?>></td>
+       </tr>
+       <tr>
+         <td><div align="right">Pagado</div></td>
+         <td><select name="pagado" id="pagado" class="campos" value="si" <?php if($pagado==""){echo ("disabled");}?>>
+           <option value=" NOT ISNULL " <?php if($pagado==" NOT ISNULL "){echo(" selected=\"selected\"");} ?>>Sí</option>
+           <option value=" ISNULL " <?php if($pagado==" ISNULL "){echo(" selected=\"selected\"");} ?>>No</option>
+         </select></td>
+         <td><input name="chkEstado" type="checkbox" id="chkEstado" onClick="habilitarFiltros('chkEstado','pagado')" <?php if($pagado!=""){echo ("checked");}?>></td>
+       </tr>
+       <tr>
+         <td><div align="right">N° Factura </div></td>
+         <td><input type="text" name="filtrartxt" class="campos" value="<?php echo $elementoBusqueda; ?>"  style="text-align:right" ></td>
+         <td><input type="submit" name="filtrar" value="Filtrar" class="botones" ></td>
+       </tr>
+       <tr>
+         <td>&nbsp;</td>
+         <td>&nbsp;</td>
+         <td>&nbsp;</td>
+       </tr>
+     </table>
+     <p>&nbsp;</p>
 </form>
       </div>  
       
@@ -144,7 +158,7 @@
             
             <td width="32" align="center">
             <?php if($fila["fav_fecha_pago"]==NULL){?>
-            <a href="#" onclick="pagarFactura(<?php echo($fila["fav_id"]);?> ,<?php echo($fila["ccc_id"]);?>)">
+            <a href="#" onClick="pagarFactura(<?php echo($fila["fav_id"]);?> ,<?php echo($fila["ccc_id"]);?>)">
             <img src="images/pagar_factura.png" title="Registrar pago de factura">
             </a>
             
@@ -152,7 +166,7 @@
    
             </td>
             <td width="32" align="center"><a href="ver-alta-factura.php?fav_id=<?php echo($fila["fav_id"]); ?>"><img src="images/detalles.png" alt="editar" title="Ver detalle" width="32" height="32" border="none" /></a></td>            
-            <td><a href="#" onclick="eliminarFactura(<?php echo($fila["fav_id"]);?> )">
+            <td><a href="#" onClick="eliminarFactura(<?php echo($fila["fav_id"]);?> )">
                 <img src="images/eliminar.png" alt="eliminar" title="Eliminar Factura" width="32" height="32" border="none" /></a></td>
           </tr>
   <?php

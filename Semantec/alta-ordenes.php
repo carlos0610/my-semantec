@@ -9,6 +9,8 @@
         $prv_id = $_POST["prv_id"];
         $est_id = $_POST["est_id"];
         //$ord_alta = date("Y-m-d");
+        $ord_alta = $_POST["ord_alta"];
+        $ord_alta = gfecha($ord_alta);
         //$ord_plazo = gfecha($_POST["ord_plazo"]); 
         $ord_costo = $_POST["ord_costo"];
         $ord_venta = $_POST["ord_venta"];
@@ -60,12 +62,14 @@
         						         $cli_id,
         							 $prv_id,
         							 $est_id,
-        							 NOW(),
+        							 '$ord_alta',
         							 $ord_costo,
                                                                  $ord_venta,
                                                                  1
         				    )";
 	mysql_query($sql);//alta de la orden
+        
+        $mensaje = $sql;
         
         //echo "QUERY".$sql;
         
@@ -121,7 +125,7 @@
         $_SESSION["query"] = $sql2;
         mysql_close();
         
- //       echo "MI AMIGO EL QUERY: ".$sql;
+        echo "MI AMIGO EL QUERY: ".$mensaje;
 	header("location:ver-alta-ordenes.php?action=1");
 
 ?>

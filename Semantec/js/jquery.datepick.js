@@ -73,7 +73,7 @@ function Datepick() {
 		autoSize: false, // True to size the input for the date format, false to leave as is
 		defaultDate: null, // Used when field is blank: actual date,
 			// +/-number for offset from today, null for today
-		showDefault: false, // True to populate field with the default date
+		showDefault: true, // True to populate field with the default date
 		appendText: '', // Display text following the input box, e.g. showing the format
 		closeAtTop: true, // True to have the clear/close at the top,
 			// false to have them at the bottom
