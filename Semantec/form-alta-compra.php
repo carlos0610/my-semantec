@@ -21,13 +21,17 @@
         include("funciones.php");
         include("conexion.php");
             
-        $sql ="SELECT prv_id,prv_nombre,prv_direccion,prv_cuit,iva_nombre,z.zon_nombre FROM proveedores p ,iva_tipo i,zonas z 
-                WHERE p.estado = 1 
+        $sql ="SELECT prv_id,prv_nombre,prv_direccion,prv_cuit,iva_nombre,p.nombre as provincia,pa.nombre as partido,l.nombre as localidad
+                FROM proveedores prv ,iva_tipo i,ubicacion u,provincias p, partidos pa,localidades l
+                WHERE prv.estado = 1 
                 AND prv_id = $prv_id
-                AND p.iva_id = i.iva_id
-                and p.zon_id = z.zon_id
+                AND prv.iva_id = i.iva_id
+                AND prv.ubicacion_id = u.id
+                AND u.provincias_id = p.id
+                AND u.partidos_id = pa.id
+                AND u.localidades_id = l.id
                 ORDER BY prv_nombre";
-        
+        echo $sql;
         $proveedores = mysql_query($sql);       
         $fila_proveedor = mysql_fetch_array($proveedores);
         
@@ -82,26 +86,12 @@
    <table width="100%" border="0">
   <tr>
     <td rowspan="3"><a href="#" id="logo2"><img src="images/semantec-logo.jpg" width="401" height="71" alt="logo" /></a></td>
-    <td width="51%" class="titulo"><span id="ocultarParaImpresion">FACTURA N° 0001- </span> xxxx-xxxx</td>
+    <td width="51%" ></td>
     <td width="1%">&nbsp;</td>
   </tr>
   <tr>
-    <td class="titulo"><span id="ocultarParaImpresion">Buenos Aires,</span> <?php echo date("d/m/Y") ?></td>
+    <td ><span id="ocultarParaImpresion">Buenos Aires,</span> <?php echo date("d/m/Y") ?></td>
     <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td class="titulo"><span id="ocultarParaImpresion">CUIT: 30-70877618-8</span></td>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td class="titulo"> <div id="ocultarParaImpresion" align="center">Dr. Aleu 3139 (1651) - 1er piso of 11 - San Andrés <br>
-      Provincia de Buenos Aires</div></td>
-    <td class="titulo"><span id="ocultarParaImpresion">Ing.Brutos : 902-820067 -3</span></td>
-    <td rowspan="2">&nbsp;</td>
-  </tr>
-  <tr>
-    <td class="titulo"><div align="center" id="ocultarParaImpresion"><strong>I.V.A Responsable inscripto</strong></div></td>
-    <td bgcolor="#F0F0F0" class="titulo"><span id="ocultarParaImpresion">Inicio de actividades: 01/06/2004</span></td>
   </tr>
 </table>
 
@@ -109,10 +99,7 @@
    </div>
    <div id="contenedor2" style="height:auto;">
 	 <table width="100%" border="0" id="dataTable">
-<tr>
-  <td>&nbsp;</td>
-  <td colspan="3" style="background-color:#cbeef5"><label></label></td>
-</tr>
+
 <tr>
             <td width="15%" class="titulo">Señores:</td>
             <td colspan="3" style="background-color:#cbeef5"><?php echo utf8_encode($fila_proveedor["prv_nombre"]);?></td>
@@ -121,7 +108,7 @@
             <td class="titulo">Domiclio:</td>
             <td width="24%" style="background-color:#cbeef5"><?php echo utf8_encode($fila_proveedor["prv_direccion"]);?></td>
             <td width="9%" class="titulo">Localidad:</td>
-            <td width="52%" style="background-color:#cbeef5"><?php echo utf8_encode($fila_proveedor["zon_nombre"]);?></td>
+            <td width="52%" style="background-color:#cbeef5"><?php echo utf8_encode($fila_proveedor["provincia"]);?>/<?php echo utf8_encode($fila_proveedor["localidad"]);?></td>
        </tr>
           <tr>
             <td class="titulo">IVA:</td>
@@ -136,8 +123,8 @@
             <span id="incorrecto" style="font-family: Verdana, Arial, Helvetica,sans-serif;font-size: 9pt;color: #CC3300;position:relative;visibility:hidden;">Incorrecto</span>
             <span id="correcto" style="font-family: Verdana, Arial, Helvetica,sans-serif;font-size: 9pt;color: green;position:relative;visibility:hidden;">Correcto</span>
             </td>
-            <td class="titulo">&nbsp;</td>
-            <td style="background-color:#cbeef5">&nbsp;</td>
+            <td class="titulo"><span id="ocultarParaImpresion">N°Factura</span></td>
+            <td style="background-color:#cbeef5">0001-xxxx-xxxx</td>
        </tr>
           <tr>
             <td>&nbsp;</td>

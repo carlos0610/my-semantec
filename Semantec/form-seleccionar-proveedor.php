@@ -73,7 +73,7 @@
               </select>
             </label></td>
             <td width="473"><label>
-              <input type="submit" name="btnVerCuenta" id="btnVerCuenta" value="<?php echo $botonValue ?>">
+              <input type="submit" class="botones" name="btnVerCuenta" id="btnVerCuenta" value="<?php echo $botonValue ?>">
             </label></td>
             <td colspan="2">&nbsp;</td>
         </tr>
