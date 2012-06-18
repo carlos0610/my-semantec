@@ -316,6 +316,43 @@ function verificarCheckboxs(cantTotalCheckboxs,id){
         }
 }
 
+function verificarCheckboxsFacturaCompra(cantTotalCheckboxs,id){
+    i=0;
+    continua=false;
+    url="form-alta-compra.php?comboProveedor="+id;
+    elementoOrden=0;
+        while (i<cantTotalCheckboxs)
+        {
+            i++;
+            if(eval("document.frmGenerarFactura.checkbox_ord_id"+i+".checked"))
+                {
+                   continua=true;
+                } 
+        }
+    if(continua){ 
+    i=0;
+    while (i<cantTotalCheckboxs)
+        {
+            i++;       
+            if(eval("document.frmGenerarFactura.checkbox_ord_id"+i+".checked"))
+                {
+                   elementoOrden++; 
+                   url+="&ord_check"+elementoOrden+"="+eval("document.frmGenerarFactura.checkbox_ord_id"+i+".value"); 
+                } 
+                else
+                    {
+                        eval("document.frmGenerarFactura.checkbox_ord_id"+i+".style.visibility = 'hidden'")
+                    }
+        }
+        url+="&cant="+elementoOrden+"&ocultar=no";      
+   window.location=url;  
+    }
+    else
+        {
+            alert("debe seleccionar una orden");
+        }
+}
+
 /* ALERTA DE PLAZOS*/
 
 function popup(mylink, windowname)

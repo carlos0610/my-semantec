@@ -16,8 +16,10 @@
     }
     
      
-     */
-        $prv_id= $_POST["comboProveedor"];
+     */ if($_GET["comboProveedor"]){
+          $prv_id= $_GET["comboProveedor"];
+     }else {
+        $prv_id= $_POST["comboProveedor"];}
         include("funciones.php");
         include("conexion.php");
             
@@ -31,21 +33,35 @@
                 AND u.partidos_id = pa.id
                 AND u.localidades_id = l.id
                 ORDER BY prv_nombre";
-        echo $sql;
-        $proveedores = mysql_query($sql);       
+        $proveedores = mysql_query($sql);  
         $fila_proveedor = mysql_fetch_array($proveedores);
         
          
+
+       //Ordenes  CAMBIAR EL 0
+              $sql="SELECT `gru_id`,`ord_codigo`,`ord_descripcion`,`prv_id`,`est_id` ,ord_id 
+              FROM `ordenes` 
+              WHERE `prv_id` =$prv_id
+              AND    est_id  >= 10 
+              AND    estado  = 1
+              AND    ISNULL(gru_id_compra)
+              ";
+       
+        $result_ordenes=mysql_query($sql); 
+        $result_cantordenes=mysql_query($sql);
+        $cantOrdenes= mysql_num_rows($result_cantordenes);
+
+       //+++++++++++Gets de los checkbox
+        $cantOrdenesChecadas=$_GET["cant"]; 
+        $ocultar=$_GET["ocultar"];
        //+++++configuracion  de descripciones a imprimir en pantalla+++++ 
        $numeroDescripcion=0;
-       $totalDescripcion=1;
-       
-       
+       $totalDescripcion=$cantOrdenesChecadas;
        //$_SESSION["ord_id"] = $ord_id;
         
        $sql = "SELECT idiva,valor from IVA";
        $iva = mysql_query($sql); 
-       mysql_close();
+      
        
 ?>
 <!doctype html>
@@ -116,10 +132,10 @@
             <td class="titulo">Cuit:</td>
             <td style="background-color:#cbeef5"><?php echo (verCUIT($fila_proveedor["prv_cuit"]))?></td>
           </tr>
-          <form name="frmGenerarFactura" method="post" enctype="multipart/form-data" action="alta-compra.php?prv_id=<?php echo $prv_id ?>" >
+          <form name="frmGenerarFactura" method="post" enctype="multipart/form-data" action="alta-compra.php?prv_id=<?php echo $prv_id ?>&cant=<?php echo $cantOrdenesChecadas ?>" >
           <tr>
-            <td class="titulo">N° Orden:</td>
-            <td style="background-color:#cbeef5"><input name="id_orden"  type="number" id="id_orden" required onChange="return autenticaOrden()">
+            <td class="titulo"></td>
+            <td style="background-color:#cbeef5"><input name="id_orden"  type="hidden" id="id_orden" required onChange="return autenticaOrden()">
             <span id="incorrecto" style="font-family: Verdana, Arial, Helvetica,sans-serif;font-size: 9pt;color: #CC3300;position:relative;visibility:hidden;">Incorrecto</span>
             <span id="correcto" style="font-family: Verdana, Arial, Helvetica,sans-serif;font-size: 9pt;color: green;position:relative;visibility:hidden;">Correcto</span>
             </td>
@@ -135,9 +151,95 @@
      </table>   
        
        
+       
+       
+       
+       
+       
+       
+       <!-- Si el Cliente no tiene ordenes muestra  mensaje --> 
+        <?php if($cantOrdenes!=0){ ?> 
+           <!-- Muestro tabla de ordenes a seleccionar -->  
+           <?php if($ocultar=="si"){ ?> 
+                <table width="100%" border="0" id="dataTableOrdenes">  
+                      <tr>
+                             <td width="5%" class="titulo"><div align="center">Selección</div></td>
+                             <td width="10%" class="titulo"><div align="center">Codigo</div></td>
+                             <td width="18%" class="titulo"><div align="center">descripción</div></td>
+                      </tr>
+               <?php
+               $i=0;
+               while ($item = mysql_fetch_array($result_ordenes)) {
+                   $i++;
+               ?>
+                   <tr>
+                       <td>
+                           <div align="center">
+                               
+                              <input type="checkbox" name="checkbox_ord_id<?php echo $i ?>" value="<?php echo $item["ord_id"]; ?>" />
+                          </div>
+                       </td>
+                       <td><label>   
+                               <div align="right">
+                                        <? echo $item["ord_codigo"]; ?>
+                               </div>
+                           </label></td>
+                       <td><label>
+                               <div align="center">
+                                         <? echo utf8_encode($item["ord_descripcion"]); ?>
+                               </div>
+                           </label></td>
+                   </tr>
+                   <?php
+               }
+               ?>
+            </table>  
+           <!-- FIN de Muestro tabla de ordenes a seleccionar --> 
+            <?php }else{ ?>
+           <!-- Muestro ORdenes seleccionas -->  
+        Codigos de Ordenes Seleccionados :  <br> 
+        <?php
+        $i=0;
+        while ($i <$cantOrdenesChecadas)
+        { $i++;  
+                $unord_ID=$_GET["ord_check$i"];
+                $sql59="SELECT `gru_id`,`ord_codigo`,`ord_descripcion`,`prv_id`,`est_id` ,ord_id 
+              FROM `ordenes` 
+              WHERE `ord_id` =$unord_ID
+              AND    est_id  >= 10 
+              AND    estado  = 1
+              AND    ISNULL(gru_id_compra)
+              ";
+               
+        $resultdeOrdenes=mysql_query($sql59); 
+        $filaDeLasOrdenesCheck=(mysql_fetch_array($resultdeOrdenes));
+
+        
+        ?>
+          &nbsp;&nbsp; &nbsp;#  <?php echo $filaDeLasOrdenesCheck["ord_codigo"]; ?>   <br>            
+        <?php      
+        }       
+        ?>        
+        <?php } ?>
+      <!-- Boton confirmar  -->    
+      <?php if($ocultar=="si"){ ?> 
+      <input type="button" name="btnConfirmarCheckboxs" id="btnConfirmarCheckboxs" style="visibility:visible" class="botones" value="Confirmar" onClick="verificarCheckboxsFacturaCompra(<?php echo $i; ?>,<?php echo $prv_id; ?>);">  
+      <?php } ?>
+  <?php }else{ ?> <b>*No Posee Ordenes Pendientes a Facturar </b> <?php } ?>
+ <?php if($ocultar=="no"){ ?>  
+      
+       
+       
+       
+       
+       
+       
+       
+       
+       
    <!-- DESCRIPCION DE FACTURA  -->
    
-<div class="contenido_descripcion">
+<div class="contenido_descripcion"  style="visibility:none" enable="true">
   
   <table width="100%" border="0">
   <tr>
@@ -230,7 +332,7 @@
     <tr>
       <td><a href="form-seleccionar-proveedor.php?action=2"><input type="button" value="Volver" class="botones" /></a> &nbsp; &nbsp; </td>
       <td>&nbsp;</td>
-      <td><input type="submit" name="btnConfirma" id="btnConfirma" value="Confirmar">
+      <td><input type="submit" name="btnConfirma" id="btnConfirma" value="Confirmar" class="botones">
           
       </td>
       <td>&nbsp;</td>
@@ -241,7 +343,7 @@
 
    </div>
    <!--end contenedor-->
-
+ <?php } ?>
 
 
   </div>
@@ -250,7 +352,7 @@
    <!--start footer-->
    <footer>
 <?php
-    include("footer.php");
+    include("footer.php"); mysql_close();
 ?>
    </footer>
    <!--fin footer-->
