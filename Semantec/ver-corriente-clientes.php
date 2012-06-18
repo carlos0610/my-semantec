@@ -137,12 +137,11 @@
 
   <table class="listados" cellpadding="5">
           <tr class="titulo">
-            <td width="100">Código de orden</td>
             <td width="100">Nro de factura</td>
+            <td width="100">Código de orden</td>
             <td width="467">Descripción</td>
             <td width="66">Valor venta</td>
-            <td width="67">Cancelada</td>
-            <td width="73">Saldo</td>
+            <td width="67">Cancelada</td>            
 <td width="35">
                 <a href="index-admin.php">
                     <img src="images/home.png"  alt="inicio" title="Volver al panel" width="32" height="32" border="none" />                </a>            </td>
@@ -151,8 +150,8 @@
           while($fila = mysql_fetch_array($resultado)){
   ?>
           <tr class="lista" bgcolor="<?php echo($colores[$i]);?>">
-              <td><a href="ver-alta-ordenes.php?ord_id=<?php echo($fila["ord_id"]);?>&action=0" target="_blank"><?php echo($fila["ord_codigo"]);?></a></td>
               <td><?php echo($fila["fav_id"]);?></td>
+              <td><a href="ver-alta-ordenes.php?ord_id=<?php echo($fila["ord_id"]);?>&action=0" target="_blank"><?php echo($fila["ord_codigo"]);?></a></td>             
               <td><?php echo(utf8_encode($fila["ord_descripcion"]));;?></td>
             <td><?php echo $fila["ord_venta"];?></td>
             <td><?php if ($fila["est_id"]==$estadoPagado){
@@ -162,15 +161,7 @@
                         {
                         echo "No";
                         }
-                ?></td>       
-          <td><?php if ($fila["est_id"]==$estadoPagado){
-                         echo 0;
-                        }
-                    else
-                        {
-                        echo $fila["ord_venta"];
-                        }
-                ?></td>
+                ?></td>                 
     <td>&nbsp;</td>
         </tr>
   <?php

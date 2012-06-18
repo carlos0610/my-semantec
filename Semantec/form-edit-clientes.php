@@ -110,10 +110,6 @@
 
    <!--start contenedor-->
    <div id="contenedor" style="height:auto;">
-
-
-      <h2>Panel de control</h2>
-
       <form action="edit-clientes.php" method="post">
       <table class="forms" cellpadding="5">
           <tr class="titulo">
@@ -131,7 +127,11 @@
           </tr>
           <tr>
             <td>CUIT</td>
-            <td><input type="number" style="text-align:right" maxlength="11" value="<?php echo($fila_clientes["cli_cuit"]); ?>" id="cli_cuit" name="cli_cuit" class="campos" <?php if (isset($fila_clientes["sucursal_id"])) echo "readOnly"?>/></td>
+            <td><input type="text" value="<?php echo substr(($fila_clientes["cli_cuit"]),0,2); ?>" style="text-align:right" min="10" class="campos2" id="cuit_parteA" name="cuit_parteA" maxlength="2" size="2" onKeyPress="pasaSiguiente(this, document.getElementById('cuit_parteB'), 2)"  required />
+              -
+                <input type="text" value="<?php echo substr(($fila_clientes["cli_cuit"]),2,8); ?>" style="text-align:right" min="10000000" class="campos2" id="cuit_parteB" name="cuit_parteB" maxlength="8" size="8" onKeyPress="pasaSiguiente(this, document.getElementById('cuit_parteC'), 8)" required />
+                -
+            <input type="text" value="<?php echo substr(($fila_clientes["cli_cuit"]),-1); ?>" style="text-align:right" min="0" class="campos2" id="cuit_parteC" name="cuit_parteC" maxlength="1" size="1" onChange="return autenticaCUIT();"  required /></td>
             <td></td>
           </tr>
           <tr>
@@ -229,7 +229,7 @@
             <td>&nbsp;</td>
             <td>
                 <input type="reset" value="Restablecer" class="botones" /> &nbsp; &nbsp; 
-                <input type="submit" value="Modificar cliente" class="botones" onclick="return validarCombosDeUbicacion()"/>
+                <input type="submit" value="Modificar cliente" class="botones" onClick="return validarCombosDeUbicacion()"/>
                 <input type="hidden" value="<?php echo($cli_id); ?>" name="cli_id" id="cli_id" />
                 <input type="hidden" value="<?php echo($ubicacion_id); ?>" name="ubicacion_id" id="ubicacion_id" />
             </td>

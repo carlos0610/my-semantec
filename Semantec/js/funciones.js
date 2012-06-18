@@ -45,6 +45,28 @@ function pagarFactura(id,cuenta){
     }
 }
 
+function emitirAdelanto(){
+    var orden       = document.getElementById("comboOrdenes").value;
+    var index = document.getElementById("comboOrdenes").selectedIndex;
+    var cod_orden = document.getElementById("comboOrdenes").options[index].text;
+
+    var monto       = document.getElementById("txtAdelanto").value;
+    
+    if (monto > 0){
+    
+                    if(confirm('¿Confirma el adelanto para la orden : '+cod_orden+'?')==true)
+                        {
+                        var desc =document.getElementById("txtDescripcion").value;
+                        window.location="pagar-adelanto.php?orden="+orden+"&adelanto="+monto+"&desc="+desc;
+                        }    
+        
+                  
+               } else {
+        alert("El monto de adelanto tiene que ser mayor a 0.00");
+                    }
+}
+
+
 function disableTxt(formulario,id){
     var check = (id=="S") ? true : false;
 

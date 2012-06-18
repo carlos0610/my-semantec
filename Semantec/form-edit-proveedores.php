@@ -142,11 +142,7 @@
 
    <!--start contenedor-->
    <div id="contenedor" style="height:auto;">
-
-
-      <h2>PROVINCIA: <?php echo $provincia["id"]; ?>  PARTIDOS: <?php echo $partidos["id"]; ?> LOCALIDADES: <?php echo $localidades["id"]; ?></h2>
-
-      <form action="edit-proveedores.php" method="post" name="frmEditPrv">
+    <form action="edit-proveedores.php" method="post" name="frmEditPrv">
       <table class="forms" cellpadding="5">
           <tr class="titulo">
             <td colspan="2"> <?php echo(utf8_encode($titulo))?> </td>
@@ -163,7 +159,11 @@
           </tr>
           <tr>
             <td>CUIT</td>
-            <td><input value="<?php echo($fila0["prv_cuit"]); ?>" style="text-align:right" type="number" maxlength="11" class="campos" id="prv_cuit" name="prv_cuit" required readOnly/></td>
+            <td><input type="text" value="<?php echo substr(($fila0["prv_cuit"]),0,2); ?>" style="text-align:right" min="10" class="campos2" id="cuit_parteA" name="cuit_parteA" maxlength="2" size="2" onKeyPress="pasaSiguiente(this, document.getElementById('cuit_parteB'), 2)"  required />
+              -
+                <input type="text" value="<?php echo substr(($fila0["prv_cuit"]),2,8); ?>" style="text-align:right" min="10000000" class="campos2" id="cuit_parteB" name="cuit_parteB" maxlength="8" size="8" onKeyPress="pasaSiguiente(this, document.getElementById('cuit_parteC'), 8)" required />
+                -
+            <input type="text" value="<?php echo substr(($fila0["prv_cuit"]),-1); ?>" style="text-align:right" min="0" class="campos2" id="cuit_parteC" name="cuit_parteC" maxlength="1" size="1" onChange="return autenticaCUIT();"  required /></td></td>
             <td></td>
           </tr>
           <tr>

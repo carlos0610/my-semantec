@@ -62,11 +62,23 @@
    <div id="contenedor" style="height:auto;">
       <h2>Panel de control - Listado de proveedores</h2>
       
-      		<div id="busqueda">
-			<input type="text" id="q" name="q" value="" />
-		</div>
+      		<table width="100%" border="0">
+              <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+              </tr>
+              <tr>
+                <td width="16%"><div align="right">Buscar proveedor:</div></td>
+                <td width="84%"><input type="text" id="q" name="q" value="" /></td>
+              </tr>
+              <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+              </tr>
+            </table>
+   		<div id="busqueda"></div>
 
-      <table class="sortable" cellpadding="5" id="latabla">
+<table class="sortable" cellpadding="5" id="latabla">
           <tr class="titulo">
             <td>Nombre</td>
             <td width="90">CUIT</td>
@@ -97,7 +109,7 @@
                 </a>
             </td>
             <td>
-                <a href="#" onclick="eliminarProveedor(<?php echo($fila["prv_id"]);?>,'<?php echo($fila["prv_nombre"]);?>')">
+                <a href="#" onClick="eliminarProveedor(<?php echo($fila["prv_id"]);?>,'<?php echo($fila["prv_nombre"]);?>')">
                     <img src="images/eliminar.png" alt="eliminar" title="Eliminar proveedor" width="32" height="32" border="none" />
                 </a>
             </td>

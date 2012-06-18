@@ -84,7 +84,7 @@
                     <img src="images/home.png"  alt="inicio" title="Volver al panel" width="32" height="32" border="none" />                </a>            </td>
           </tr>
           <tr>
-            <td>Es sucursal?</td>
+            <td>¿Es sucursal?</td>
             <td><label>
                     <input name="chkSucursal" type="checkbox" id="chkSucursal" onClick="habilitarComboCliente('frmAltaCli')">
               Sí

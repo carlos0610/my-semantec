@@ -5,8 +5,13 @@
 
         include("conexion.php");
         
-        $prv_id = $_POST["comboProveedor"];
+        $action = $_GET["action"];
         
+        if ($action == 1){
+            $prv_id = $_POST["comboProveedor"];
+        }else {
+            $prv_id = $_GET["prv_id"];           
+        }
         
                         
         /* OBTENGO DATOS DE PROVEEDOR */
@@ -28,29 +33,38 @@
         
         
 /* CALCULO PAGINADO */  ###############################################################################
-    $sql0="SELECT o.ord_id,ord_codigo,o.ord_descripcion,o.est_id,sum(od.ord_det_monto) as Adelantos,o.ord_costo Presupuesto,o.ord_costo - sum(od.ord_det_monto) as Saldo 
-            FROM ordenes o, ordenes_detalle od
+    $sql0="SELECT o.ord_id,ord_codigo,c.cli_nombre,p.nombre as provincia,l.nombre as localidad,o.ord_descripcion,o.est_id,sum(od.ord_det_monto) as Adelantos,o.ord_costo Presupuesto,o.ord_costo - sum(od.ord_det_monto) as Saldo 
+            FROM ordenes o, ordenes_detalle od,clientes c,ubicacion u,provincias p,localidades l
             WHERE 
             o.ord_id IN (select ord_id from ordenes where prv_id = $prv_id)
             AND o.ord_id = od.ord_id
+            AND o.cli_id = c.cli_id
+            AND u.id = c.ubicacion_id
+            AND u.provincias_id = p.id
+            AND u.localidades_id = l.id
             GROUP BY o.ord_id";
     
     
     $tamPag=100;
     
     include("paginado.php");        
-        $sql = "SELECT o.ord_id,ord_codigo,o.ord_descripcion,o.est_id,sum(od.ord_det_monto) as Adelantos,o.ord_costo Presupuesto,o.ord_costo - sum(od.ord_det_monto) as Saldo 
-            FROM ordenes o, ordenes_detalle od ";
+        $sql = "SELECT o.ord_id,ord_codigo,c.cli_nombre,p.nombre as provincia,l.nombre as localidad,o.ord_descripcion,o.est_id,sum(od.ord_det_monto) as Adelantos,o.ord_costo Presupuesto,o.ord_costo - sum(od.ord_det_monto) as Saldo 
+            FROM ordenes o, ordenes_detalle od,clientes c,ubicacion u,provincias p,localidades l ";
          
         $sql .= " WHERE 
             o.ord_id IN (select ord_id from ordenes where prv_id = $prv_id)
             AND o.ord_id = od.ord_id
+            AND o.cli_id = c.cli_id
+            AND u.id = c.ubicacion_id
+            AND u.provincias_id = p.id
+            AND u.localidades_id = l.id
             GROUP BY o.ord_id";
         $sql .= " LIMIT ".$limitInf.",".$tamPag;
                 
         $resultado = mysql_query($sql);
-        $cantidad = mysql_num_rows($resultado);
         
+        $cantidad = mysql_num_rows($resultado);
+        //$resultado2 = $resultado;
         
 
         $i = 0;
@@ -131,6 +145,34 @@
           </tr>
      </table>
    </div>
+   <div id="adelanto">
+     <table width="100%" border="0">
+       <tr>
+         <td colspan="4"><h2>Emitir un adelanto</h2></td>
+       </tr>
+       <tr>
+         <td width="8%">&nbsp;</td>
+         <td width="14%"><label>
+           Orden:
+               <select name="comboOrdenes" id="comboOrdenes">
+                   <?php while($filita = mysql_fetch_array($resultado)){ ?>
+                   <option value="<?php echo $filita['ord_id']?>"><?php echo $filita['ord_codigo']?></option>
+                   <?php } mysql_data_seek($resultado, 0) ?>
+                   
+           </select>
+         </label></td>
+         <td width="16%">Adelanto: 
+           <label>
+           <input name="txtAdelanto" type="text" class="campos2" id="txtAdelanto" value="0.00" size="8">
+         </label></td>
+         <td width="62%">Descripción: 
+           <label>
+           <input name="txtDescripcion" type="text" class="campos" id="txtDescripcion" value="Ingrese una descripción">
+           <input type="button" name="btnEmitir" id="btnEmitir" value="Emitir" onclick="emitirAdelanto()">
+         </label></td>
+       </tr>
+     </table>
+    </div>
    
    <!--end datos_cliente-->
    
@@ -140,7 +182,8 @@
 
 <table class="listados" cellpadding="5">
           <tr class="titulo">
-            <td width="80">Nro de Orden</td>
+            <td width="80">Código de orden</td>
+            <td width="120">Cliente</td>
             <td width="449">Descripción</td>
             <td width="88">Presupuesto</td>
             <td width="83">Cancelado</td>
@@ -154,7 +197,8 @@
           while($fila = mysql_fetch_array($resultado)){
   ?>
           <tr class="lista" bgcolor="<?php echo($colores[$i]);?>">
-              <td><a href="ver-alta-ordenes.php?ord_id=<?php echo($fila["ord_id"]);?>&action=0" target="_blank"><?php echo($fila["ord_id"]);?></a></td>
+              <td><a href="ver-alta-ordenes.php?ord_id=<?php echo($fila["ord_id"]);?>&action=0" target="_blank"><?php echo($fila["ord_codigo"]);?></a></td>
+            <td><?php echo(utf8_encode($fila["cli_nombre"]));?> (<?php echo(utf8_encode($fila["provincia"]));?>)</td>
             <td><?php echo(utf8_encode($fila["ord_descripcion"]));?></td>
             <td><?php echo $fila["Presupuesto"];?></td>
             <td>&nbsp;</td>

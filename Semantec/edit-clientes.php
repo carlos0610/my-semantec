@@ -2,7 +2,13 @@
         include("validar.php");
         $cli_id = $_POST["cli_id"];
         $cli_nombre = utf8_decode($_POST["cli_nombre"]);
-        $cli_cuit = $_POST["cli_cuit"];
+        //$cli_cuit = $_POST["cli_cuit"];
+        $cuitA = $_POST["cuit_parteA"];
+        $cuitB = $_POST["cuit_parteB"];
+        $cuitC = $_POST["cuit_parteC"];
+        $cli_cuit = "$cuitA$cuitB$cuitC";
+        
+        
         $iva_id = $_POST["iva_id"];
         
         
