@@ -132,7 +132,7 @@
             <td class="titulo">Cuit:</td>
             <td style="background-color:#cbeef5"><?php echo (verCUIT($fila_proveedor["prv_cuit"]))?></td>
           </tr>
-          <form name="frmGenerarFactura" method="post" enctype="multipart/form-data" action="alta-compra.php?prv_id=<?php echo $prv_id ?>&cant=<?php echo $cantOrdenesChecadas ?>" >
+   <form name="frmGenerarFactura" method="post" enctype="multipart/form-data" action="alta-compra.php?prv_id=<?php echo $prv_id ?>&cant=<?php echo $cantOrdenesChecadas ?>" >
           <tr>
             <td class="titulo"></td>
             <td style="background-color:#cbeef5"><input name="id_orden"  type="hidden" id="id_orden" required onChange="return autenticaOrden()">
@@ -149,11 +149,16 @@
             <td>&nbsp;</td>
           </tr>
      </table>   
+             
        
-       
-       
-       
-       
+               <?php // CARGO LAS ORDENES CHECADAS DE FORMA OCULTA
+        $i=0;
+        while ($i <$cantOrdenesChecadas)
+        { $i++;  ?>
+           <input type="hidden" name="ordenCheck<?php echo $i; ?>"  id="ordenCheck<?php echo $i; ?>" value="<?php echo ($_GET["ord_check$i"]); ?>" >               
+        <?php      
+        }       
+        ?>
        
        
        

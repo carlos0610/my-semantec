@@ -55,7 +55,7 @@
             $i++;
             $ord_id=$_POST["ordenCheck$i"];
             $sql="UPDATE `ordenes` 
-                  SET `gru_id_venta`=$id_grupo_ordenes
+                  SET `gru_id_compra`=$id_grupo_ordenes
                   WHERE `ord_id`= $ord_id
                 ";
             echo $sql;
@@ -78,7 +78,9 @@
             $precio = $_POST[$columnaPrec]; 
             
         while(($i <= $cantidadCheckboxs)&($descripcion != '')){   
-            $query = "INSERT INTO detalle_factura_compra (fco_id,det_fco_cant,det_fco_descripcion,fco_preciounitario) VALUES ($nro_factura,$iva,'$descripcion',$precio)";
+            $ord_id=$_POST["ordenCheck$i"];
+            
+            $query = "INSERT INTO detalle_factura_compra (fco_id,det_fco_orden_id,det_fco_descripcion, det_fco_preciounitario) VALUES ($nro_factura,$ord_id,'$descripcion',$precio)";
             mysql_query($query);
             
             $i++;
@@ -98,6 +100,6 @@
     
     mysql_close();
 
-  //header("location:ver-alta-factura.php?ord_id=$idOrden&fav_id=$nro_factura");
+  header("location:ver-alta-factura-compra.php?fav_id=$nro_factura");
 
 ?>
