@@ -134,6 +134,7 @@
                       <td width="600">Descripci&oacute;n</td>
                       <td width="100">Fecha</td>
                       <td width="100">Estado</td>
+                      <td width="100">Adelanto</td>
                       <td width="100">Usuario </td>
                       <td witdh="100">Archivo</td>
                     </tr>
@@ -153,6 +154,7 @@
                       <td width="600"><?php echo(utf8_encode($fila_req["ord_det_descripcion"])); ?></td>
                       <td width="100"><?php echo(tfecha($fila_req["ord_det_fecha"])); ?></td>
                       <td width="100"><?php echo(utf8_encode($fila_req["nombre_estado"])); ?></td>
+                      <td width="100"><?php echo(utf8_encode($fila_req["ord_det_monto"])); ?></td>
                       <td width="100"><?php echo(utf8_encode($fila_req["usu_nombre"])); ?></td>
                       <?php //echo(utf8_encode($fila_req["files_id"]));
                          $id = $fila_req["files_id"] ?>

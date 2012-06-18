@@ -8,13 +8,16 @@
         $cli_id = $_POST["comboCliente"];  
                         
         /* OBTENGO DATOS DE CLIENTE */
-        $sql = "SELECT c.cli_nombre,c.cli_direccion,z.zon_nombre,i.iva_nombre,c.cli_cuit,cc.ccc_id 
-                FROM clientes c,zonas z,iva_tipo i,cuentacorriente_cliente cc
+        $sql = "SELECT c.cli_nombre,c.cli_direccion,p.nombre as provincia,pa.nombre as partido,l.nombre as localidad,i.iva_nombre,c.cli_cuit,cc.ccc_id 
+                FROM clientes c,ubicacion u,iva_tipo i,cuentacorriente_cliente cc,provincias p,partidos pa,localidades l
                     WHERE 
-                     c.cli_id = $cli_id
+                    c.cli_id = $cli_id
                     and cc.cli_id = c.cli_id
-                    and c.zon_id = z.zon_id
-                    and c.iva_id = i.iva_id";
+                    and c.iva_id = i.iva_id
+                    and c.ubicacion_id = u.id
+                    and u.provincias_id = p.id
+                    and u.partidos_id = pa.id
+                    and u.localidades_id = l.id";
         
        $cliente = mysql_query($sql); 
        $fila_datos_cliente = mysql_fetch_array($cliente); 
@@ -24,7 +27,8 @@
 /* CALCULO PAGINADO */  ###############################################################################
     $sql0="SELECT o.ord_id,o.ord_codigo,f.fav_id,o.ord_descripcion,o.ord_venta,o.est_id 
                 FROM ordenes o,cuentacorriente_cliente cc ,factura_venta f,grupo_ordenes g_o
-                WHERE cc.cli_id = o.cli_id and cc.cli_id = $cli_id 
+                WHERE cc.cli_id = o.cli_id 
+                AND cc.cli_id = $cli_id 
                 AND o.estado = 1 
                 AND cc.estado = 1 
                 AND o.est_id >= 12
@@ -35,7 +39,8 @@
     include("paginado.php");        
         $sql = "SELECT o.ord_id,o.ord_codigo,f.fav_id,o.ord_descripcion,o.ord_venta,o.est_id 
                     FROM ordenes o,cuentacorriente_cliente cc ,factura_venta f,grupo_ordenes g_o
-                    WHERE cc.cli_id = o.cli_id and cc.cli_id = $cli_id 
+                    WHERE cc.cli_id = o.cli_id 
+                    AND cc.cli_id = $cli_id 
                     AND o.estado = 1 
                     AND cc.estado = 1 
                     AND o.est_id >= 12
@@ -101,7 +106,7 @@
             <td class="titulo">Domiclio:</td>
             <td width="24%" style="background-color:#cbeef5"><?php echo utf8_encode($fila_datos_cliente["cli_direccion"]);?></td>
             <td width="9%" class="titulo">Localidad:</td>
-            <td width="52%" style="background-color:#cbeef5"><?php echo utf8_encode($fila_datos_cliente["zon_nombre"]);?></td>
+            <td width="52%" style="background-color:#cbeef5"><?php echo utf8_encode($fila_datos_cliente["provincia"]);?>/<?php echo utf8_encode($fila_datos_cliente["localidad"]);?></td>
        </tr>
           <tr>
             <td class="titulo">IVA:</td>

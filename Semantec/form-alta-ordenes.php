@@ -3,7 +3,14 @@
     $titulo = "Formulario de alta de una Orden de Servicio.";
         include("validar.php");
         include("conexion.php");
-        $sql = "SELECT  cli_id, cli_nombre FROM clientes WHERE estado=1";
+        $sql = "SELECT sucursal_id,cli_id,cli_nombre,p.nombre as provincia,pa.nombre as partido,l.nombre as localidad 
+           FROM clientes,ubicacion u,provincias p, partidos pa,localidades l
+           WHERE 
+ 	   clientes.ubicacion_id = u.id
+           AND u.provincias_id = p.id
+           AND u.partidos_id = pa.id
+           AND u.localidades_id = l.id
+           AND clientes.estado = 1";
         $resultado1 = mysql_query($sql);
         $sql = "SELECT  prv_id, prv_nombre FROM proveedores WHERE estado=1";
         $resultado2 = mysql_query($sql);
@@ -86,7 +93,7 @@
     <?php
           while($fila = mysql_fetch_array($resultado1)){
     ?>
-                    <option value="<?php echo($fila["cli_id"]); ?>"><?php echo(utf8_encode($fila["cli_nombre"])); ?></option>
+                    <option value="<?php echo($fila["cli_id"]); ?>"><?php echo(utf8_encode($fila["cli_nombre"])); ?> (<?php echo(utf8_encode($fila["provincia"])); ?>)</option>
     <?php
           }
     ?>

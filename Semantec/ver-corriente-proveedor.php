@@ -10,14 +10,17 @@
         
                         
         /* OBTENGO DATOS DE PROVEEDOR */
-        $sql = "SELECT prv_nombre,prv_cuit,prv_direccion,z.zon_nombre,i.iva_nombre,prv_telefono,cc.ccp_id 
-                FROM proveedores p,zonas z,iva_tipo i,cuentacorriente_prv cc
-                WHERE 
-                p.prv_id = $prv_id
-                AND z.zon_id = p.zon_id
-                AND p.iva_id = i.iva_id
-                AND p.prv_id = cc.prv_id
-                AND p.estado = 1";
+        $sql = "SELECT prv.prv_id,prv_nombre,prv_direccion,prv_cuit,iva_nombre,prv_telefono,cc.ccp_id, p.nombre as provincia,pa.nombre as partido,l.nombre as localidad
+                FROM proveedores prv ,iva_tipo i,ubicacion u,provincias p, partidos pa,localidades l,cuentacorriente_prv cc
+                WHERE prv.estado = 1 
+                AND prv.prv_id = $prv_id
+                AND prv.iva_id = i.iva_id
+                AND prv.ubicacion_id = u.id
+                AND u.provincias_id = p.id
+                AND u.partidos_id = pa.id
+                AND u.localidades_id = l.id
+                AND prv.prv_id = cc.prv_id
+                ORDER BY prv_nombre";
         
        $proveedor = mysql_query($sql); 
        $fila_datos_proveedor = mysql_fetch_array($proveedor); 
@@ -106,7 +109,7 @@
             <td class="titulo">Domiclio:</td>
             <td width="24%" style="background-color:#cbeef5"><?php echo utf8_encode($fila_datos_proveedor["prv_direccion"]);?></td>
             <td width="9%" class="titulo">Localidad:</td>
-            <td width="52%" style="background-color:#cbeef5"><?php echo utf8_encode($fila_datos_proveedor["zon_nombre"]);?></td>
+            <td width="52%" style="background-color:#cbeef5"><?php echo utf8_encode($fila_datos_proveedor["provincia"]);?>/<?php echo utf8_encode($fila_datos_proveedor["localidad"]);?></td>
        </tr>
           <tr>
             <td class="titulo">IVA:</td>

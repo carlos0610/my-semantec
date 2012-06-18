@@ -9,13 +9,6 @@
         
         
         
-        
-        
-
-//echo "CUIT: ".$cli_cuit;
-        //echo "SUCURSAL: ".$sucursal;
-        
-        
         $iva_id = $_POST["iva_id"];        
         $cli_direccion = utf8_decode($_POST["cli_direccion"]);
         $cli_direccion_fiscal = utf8_decode($_POST["cli_direccion_fiscal"]);
@@ -68,17 +61,32 @@
                 $idCliente = mysql_insert_id();
 		$_SESSION["cli_id"] = $idCliente;
                 
-                /* CREAMOS UNA CUENTA CORRIENTE PARA EL CLIENTE INGRESADO */
-                
-                $sql = "INSERT INTO cuentacorriente_cliente  (cli_id,estado) VALUES ($idCliente,1)";
-                
-                mysql_query($sql);
-                mysql_close();
+                /* CREAMOS UNA CUENTA CORRIENTE PARA EL CLIENTE INGRESADO SIEMPRE Y CUANDO NO SEA UNA SUCURSAL */
+                if (!isset($_REQUEST['chkSucursal'])){
+                    $sql = "INSERT INTO cuentacorriente_cliente  (cli_id,estado) VALUES ($idCliente,1)";
+                    mysql_query($sql);
+                    
+                } else {
+                    /* SINO BUSCAMOS EL ID DE LA CUENTA CORRIENTE DE LA SUCURSAL Y LA INSERTAMOS COMO SU CUENTA CORRIENTE */
+                        $sql = "select ccc_id  from cuentacorriente_cliente where cli_id = $sucursal";
+                        $resultado = mysql_query($sql);
+                        $cuenta_corriente = mysql_fetch_array($resultado);
+                        
+                        $id_cuenta_corriente =  $cuenta_corriente['ccc_id'];
+                        
+                        $sql = "INSERT INTO cuentacorriente_cliente (ccc_id, cli_id, estado) VALUES ($id_cuenta_corriente, $idCliente, 1)";
+                        mysql_query($sql);
+                        echo "QUERY: ".$sql;
+                        
+                        }
+                        
+                        mysql_close();
 		
+                        
                 if ($sucursal != "NULL"){
                 header("location:ver-alta-clientes.php?action=3");
                 }else{
                 header("location:ver-alta-clientes.php?action=1");                       
                 }
-
+                        
 ?>

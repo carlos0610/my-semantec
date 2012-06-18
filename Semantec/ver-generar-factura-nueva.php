@@ -3,7 +3,7 @@
         $ord_id = $_GET["ord_id"];
         include("funciones.php");
         include("conexion.php");
-        $sql = "SELECT  cli_id, cli_nombre FROM clientes WHERE estado=1";
+        $sql = "SELECT  cli_id, cli_nombre FROM clientes WHERE estado=1 and sucursal_id is null";
         $resultado1 = mysql_query($sql);
        
         //$nro = mysql_num_rows($datos_cliente);
@@ -32,11 +32,15 @@
         $result=mysql_query($sql); 
         $fila_datos_cliente = mysql_fetch_array($result); 
        
-        $sql="SELECT `gru_id`,`ord_codigo`,`ord_descripcion`,`prv_id`,`est_id` ,ord_id 
-              FROM `ordenes` 
-              WHERE `cli_id` =$cli_id
-              AND    est_id  = 11 
-              AND    estado  = 1
+        $sql="SELECT `gru_id`,ord_codigo,`ord_descripcion`,`prv_id`,`est_id` ,ord_id ,pr.nombre as provincia,l.nombre as localidad
+              FROM ordenes o ,clientes c,ubicacion u,provincias pr,localidades l 
+              WHERE  o.cli_id in (select cli_id from clientes where cli_id = $cli_id or sucursal_id = $cli_id )
+              AND    o.cli_id = c.cli_id 
+              AND    o.est_id  = 11 
+              AND    o.estado  = 1
+              AND    c.ubicacion_id = u.id
+              AND    u.provincias_id = pr.id
+              and    u.localidades_id = l.id
               AND    ISNULL(gru_id)
               ";
         $result_ordenes=mysql_query($sql); 
@@ -133,6 +137,7 @@
             <td width="15%" class="titulo">Señores:</td>
             <td colspan="3" style="background-color:#cbeef5">
              <select name="cli_id" id="cli_id" class="campos" required onChange="return refrescarDatosDeCliente(value);" >
+                 <option value="0">Seleccione</option>
              <?php
                  while($fila = mysql_fetch_array($resultado1)){
                 ?>
@@ -181,7 +186,8 @@
                       <tr>
                              <td width="5%" class="titulo"><div align="center">Selección</div></td>
                              <td width="10%" class="titulo"><div align="center">Codigo</div></td>
-                             <td width="18%" class="titulo"><div align="center">descripción</div></td>
+                             <td width="18%" class="titulo"><div align="center">Descripción</div></td>
+                             <td width="18%" class="titulo"><div align="center">Sucursal</div></td>
                       </tr>
                <?php
                $i=0;
@@ -203,6 +209,11 @@
                        <td><label>
                                <div align="center">
                                          <? echo utf8_encode($item["ord_descripcion"]); ?>
+                               </div>
+                           </label></td>
+                           <td><label>
+                               <div align="center">
+                                         <? echo utf8_encode($item["provincia"]); ?>/<? echo utf8_encode($item["localidad"]); ?>
                                </div>
                            </label></td>
                    </tr>

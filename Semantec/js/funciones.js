@@ -268,7 +268,12 @@ if((document.getElementById("ord_det_monto").value > costo))
 
 // PASAR Cli_Id
 function refrescarDatosDeCliente(id){
-   window.location="ver-generar-factura-nueva.php?cli_id="+id+"&ocultar=si";  
+    if(document.getElementById('cli_id').selectedIndex != 0){
+                        window.location="ver-generar-factura-nueva.php?cli_id="+id+"&ocultar=si";  
+                            } else {
+                        window.location="ver-generar-factura-nueva.php?cli_id=0&ocultar=si";  
+                                
+                            }
 }
 
 // verificarCheckBoxs

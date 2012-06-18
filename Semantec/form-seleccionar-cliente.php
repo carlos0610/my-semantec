@@ -5,7 +5,7 @@
 
         include("conexion.php");
 
-        $sql = "SELECT  cli_id, cli_nombre FROM clientes WHERE estado=1";
+        $sql = "SELECT  cli_id, cli_nombre FROM clientes WHERE estado=1 and sucursal_id is null";
         $resultado1 = mysql_query($sql);
         
         
