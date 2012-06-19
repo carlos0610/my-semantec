@@ -164,7 +164,7 @@ function ActualizarTotal(cantidadDescripciones,factura){
     
     iva = document.getElementById("comboIva").value;
     document.getElementById("btnConfirma").style.visibility = "visible"; 
-
+    
 
     if (iva == 1){
          iva = 0.21;
@@ -193,8 +193,17 @@ function ActualizarTotal(cantidadDescripciones,factura){
     //1 = FACTURA VENTA
     //2 = FACTURA COMPRA
     
-    if(factura == 1){
+    if(factura == 1){ 
     document.getElementById("txtTotalFactura").value = (total_iva + subtotal).toFixed(2);
+    totalOrdenesVenta=document.getElementById("totalOrdenVenta").value;  
+    totalIva=totalOrdenesVenta*iva;
+    totalOrdenesVenta2 = parseFloat(totalOrdenesVenta) + parseFloat(totalIva);
+    document.getElementById("totalOrdenVentatxt").value = (totalOrdenesVenta2).toFixed(2);
+    document.getElementById("totalOrdenVentatxt").style.visibility = "visible";
+    if(document.getElementById("txtTotalFactura").value>totalOrdenesVenta2)
+        {alert("La factura supera el monto total aceptado");
+          document.getElementById("btnConfirma").style.visibility = "hidden"; 
+        }else{ document.getElementById("btnConfirma").style.visibility = "visible"; }
     } else {
     percepciones = parseFloat(document.getElementById("txtPercepciones").value);
     document.getElementById("txtTotalFactura").value =  subtotal + percepciones;      
@@ -219,7 +228,20 @@ function actualizarIva(factura){
          //1 = FACTURA VENTA
          //2 = FACTURA COMPRA
             if (factura == 1)
+            {
                 document.getElementById("txtTotalFactura").value = parseFloat(total_iva) + parseFloat(subtotal);
+            
+                    totalOrdenesVenta=document.getElementById("totalOrdenVenta").value;  
+                     totalIva=totalOrdenesVenta*iva;
+                     totalOrdenesVenta2 = parseFloat(totalOrdenesVenta) + parseFloat(totalIva);
+                     document.getElementById("totalOrdenVentatxt").value = (totalOrdenesVenta2).toFixed(2);
+                     document.getElementById("totalOrdenVentatxt").style.visibility = "visible";
+                     if(document.getElementById("txtTotalFactura").value>totalOrdenesVenta2)
+                     {
+                         alert("La factura supera el monto total aceptado");
+                         document.getElementById("btnConfirma").style.visibility = "hidden"; 
+                     }else{ document.getElementById("btnConfirma").style.visibility = "visible"; }
+            }   
             else
                 document.getElementById("txtTotalFactura").value = parseFloat(total_iva) + parseFloat(subtotal) +  parseFloat(document.getElementById("txtPercepciones").value);    
 }

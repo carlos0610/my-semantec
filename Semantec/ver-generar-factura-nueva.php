@@ -227,10 +227,11 @@
         Codigos de Órdenes Seleccionados :  <br> 
         <?php
         $i=0;
+        $totalOrdenVenta=0;
         while ($i <$cantOrdenesChecadas)
         { $i++;  
                 $unord_ID=$_GET["ord_check$i"];
-                $sql5="SELECT `gru_id`,`ord_codigo`,`ord_descripcion`,`prv_id`,`est_id` ,ord_id 
+                $sql5="SELECT `gru_id`,`ord_codigo`,`ord_descripcion`,`prv_id`,`est_id` ,ord_id ,ord_venta
               FROM `ordenes` 
               WHERE `ord_id` =$unord_ID
               AND    est_id  = 11 
@@ -239,21 +240,26 @@
               ";
         $resultado_deOredenes=mysql_query($sql5); 
         $filaDeLasOrdenesCheckeadas=mysql_fetch_array($resultado_deOredenes);
-        
+        $totalOrdenVenta+=$filaDeLasOrdenesCheckeadas["ord_venta"];
         
         ?>
           &nbsp;&nbsp; &nbsp;#  <?php echo $filaDeLasOrdenesCheckeadas["ord_codigo"]; ?>   <br>            
         <?php      
         }       
         ?>        
-        <?php } ?>
+        <?php }    
+        ?>
       <!-- Boton confirmar  -->    
+      
       <?php if($ocultar=="si"){ ?> 
+      
       <input type="button" name="btnConfirmarCheckboxs" id="btnConfirmarCheckboxs" style="visibility:visible" class="botones" value="Confirmar" onClick="verificarCheckboxs(<?php echo $i; ?>,<?php echo $cli_id; ?>);">  
       <?php } ?>
   <?php }else{ ?> <b>*No Posee Órdenes Pendientes a Facturar </b> <?php } ?>
       <!-- DESCRIPCION DE FACTURA  -->
- <?php if($ocultar=="no"){ ?>  
+ <?php if($ocultar=="no"){  // TOTAL de ORDENES?>  
+      <input type="hidden" name="totalOrdenVentatxt" id="totalOrdenVentatxt" style="visibility:visible" value="<?php echo $totalOrdenVenta ?>">
+      <input type="hidden" name="totalOrdenVenta" id="totalOrdenVenta" style="visibility:visible" value="<?php echo $totalOrdenVenta ?>">
 <div class="contenido_descripcion" style="visibility:none" enable="true" >
   
   <table width="100%" border="0">
