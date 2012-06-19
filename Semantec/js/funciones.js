@@ -1,7 +1,7 @@
 
 // BAJA de ORDEN
 function eliminarOrden(id,nombre){
-    if(confirm('Confirma Eliminar Orden: '+nombre+' ?')==true)
+    if(confirm('¿Confirma Eliminar Orden: '+nombre+' ?')==true)
     {
         window.location="delete-ordenes.php?orden_id="+id;
     }
@@ -11,7 +11,7 @@ function eliminarOrden(id,nombre){
 
 function eliminarCliente(id,nombre){
     
-    if(confirm('Confirma eliminar Cliente: '+nombre+' ?')==true)
+    if(confirm('¿Confirma eliminar Cliente: '+nombre+' ?')==true)
     {
         window.location="delete-clientes.php?cli_id="+id;       
        
@@ -21,7 +21,7 @@ function eliminarCliente(id,nombre){
 
 function eliminarProveedor(id,nombre){
     
-    if(confirm('Confirma eliminar proveedor: '+nombre+' ?')==true)
+    if(confirm('¿Confirma eliminar proveedor: '+nombre+' ?')==true)
     {
         window.location="delete-proveedores.php?prv_id="+id;
     }
@@ -29,7 +29,7 @@ function eliminarProveedor(id,nombre){
 // BAJA Factura
 function eliminarFactura(id){
     
-    if(confirm('Confirma eliminar Factura: '+id+' ?')==true)
+    if(confirm('¿Confirma eliminar Factura: '+id+' ?')==true)
     {
         window.location="delete-factura.php?fav_id="+id;
     }
@@ -197,7 +197,7 @@ function ActualizarTotal(cantidadDescripciones,factura){
     document.getElementById("txtTotalFactura").value = (total_iva + subtotal).toFixed(2);
     } else {
     percepciones = parseFloat(document.getElementById("txtPercepciones").value);
-    document.getElementById("txtTotalFactura").value = total_iva + subtotal + percepciones;      
+    document.getElementById("txtTotalFactura").value =  subtotal + percepciones;      
     }
 }
 
@@ -226,7 +226,7 @@ function actualizarIva(factura){
 
 function mostrarCuenta(id,nombre){
     
-    if(confirm('Confirma eliminar Cliente: '+nombre+' ?')==true)
+    if(confirm('¿Confirma eliminar Cliente: '+nombre+' ?')==true)
     {
         window.location="delete-clientes.php?cli_id="+id;       
        
@@ -433,7 +433,7 @@ function pasaSiguiente(actual, siguiente, longitud)
 function PedirConfirmacion(nombre,frm){
     
     
-    if((confirm('Confirma '+nombre+' ?'))==true)
+    if((confirm('¿Confirma '+nombre+' ?'))==true)
     {
         //document.getElementById(frm).submit();
         return true;

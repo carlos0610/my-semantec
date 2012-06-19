@@ -224,7 +224,7 @@
            <!-- FIN de Muestro tabla de ordenes a seleccionar --> 
             <?php }else{ ?>
            <!-- Muestro ORdenes seleccionas -->  
-        Codigos de Ordenes Seleccionados :  <br> 
+        Codigos de Órdenes Seleccionados :  <br> 
         <?php
         $i=0;
         while ($i <$cantOrdenesChecadas)
@@ -251,7 +251,7 @@
       <?php if($ocultar=="si"){ ?> 
       <input type="button" name="btnConfirmarCheckboxs" id="btnConfirmarCheckboxs" style="visibility:visible" class="botones" value="Confirmar" onClick="verificarCheckboxs(<?php echo $i; ?>,<?php echo $cli_id; ?>);">  
       <?php } ?>
-  <?php }else{ ?> <b>*No Posee Ordenes Pendientes a Facturar </b> <?php } ?>
+  <?php }else{ ?> <b>*No Posee Órdenes Pendientes a Facturar </b> <?php } ?>
       <!-- DESCRIPCION DE FACTURA  -->
  <?php if($ocultar=="no"){ ?>  
 <div class="contenido_descripcion" style="visibility:none" enable="true" >

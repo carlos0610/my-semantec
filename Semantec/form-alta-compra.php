@@ -106,7 +106,7 @@
     <td width="1%">&nbsp;</td>
   </tr>
   <tr>
-    <td ><span id="ocultarParaImpresion">Buenos Aires,</span> <?php echo date("d/m/Y") ?></td>
+    <td ></td>
     <td>&nbsp;</td>
   </tr>
 </table>
@@ -116,26 +116,10 @@
    <div id="contenedor2" style="height:auto;">
 	 <table width="100%" border="0" id="dataTable">
 
-<tr>
-            <td width="15%" class="titulo">Señores:</td>
-            <td colspan="3" style="background-color:#cbeef5"><?php echo utf8_encode($fila_proveedor["prv_nombre"]);?></td>
-       </tr>
-          <tr>
-            <td class="titulo">Domiclio:</td>
-            <td width="24%" style="background-color:#cbeef5"><?php echo utf8_encode($fila_proveedor["prv_direccion"]);?></td>
-            <td width="9%" class="titulo">Localidad:</td>
-            <td width="52%" style="background-color:#cbeef5"><?php echo utf8_encode($fila_proveedor["provincia"]);?>/<?php echo utf8_encode($fila_proveedor["localidad"]);?></td>
-       </tr>
-          <tr>
-            <td class="titulo">IVA:</td>
-            <td style="background-color:#cbeef5"><?php echo $fila_proveedor["iva_nombre"]?></td>
-            <td class="titulo">Cuit:</td>
-            <td style="background-color:#cbeef5"><?php echo (verCUIT($fila_proveedor["prv_cuit"]))?></td>
-          </tr>
    <form name="frmGenerarFactura" method="post" enctype="multipart/form-data" action="alta-compra.php?prv_id=<?php echo $prv_id ?>&cant=<?php echo $cantOrdenesChecadas ?>" >
           <tr>
-            <td class="titulo"></td>
-            <td style="background-color:#cbeef5"><input name="id_orden"  type="hidden" id="id_orden" required onChange="return autenticaOrden()">
+            <td ></td>
+            <td >
             <span id="incorrecto" style="font-family: Verdana, Arial, Helvetica,sans-serif;font-size: 9pt;color: #CC3300;position:relative;visibility:hidden;">Incorrecto</span>
             <span id="correcto" style="font-family: Verdana, Arial, Helvetica,sans-serif;font-size: 9pt;color: green;position:relative;visibility:hidden;">Correcto</span>
             </td>
@@ -202,9 +186,10 @@
            <!-- FIN de Muestro tabla de ordenes a seleccionar --> 
             <?php }else{ ?>
            <!-- Muestro ORdenes seleccionas -->  
-        Codigos de Ordenes Seleccionados :  <br> 
+        Codigos de Órdenes Seleccionados :  <br> 
         <?php
         $i=0;
+        $arrayOrdenes= array();
         while ($i <$cantOrdenesChecadas)
         { $i++;  
                 $unord_ID=$_GET["ord_check$i"];
@@ -222,7 +207,7 @@
         
         ?>
           &nbsp;&nbsp; &nbsp;#  <?php echo $filaDeLasOrdenesCheck["ord_codigo"]; ?>   <br>            
-        <?php      
+        <?php     $arrayOrdenes[]= $filaDeLasOrdenesCheck["ord_codigo"]; 
         }       
         ?>        
         <?php } ?>
@@ -230,7 +215,7 @@
       <?php if($ocultar=="si"){ ?> 
       <input type="button" name="btnConfirmarCheckboxs" id="btnConfirmarCheckboxs" style="visibility:visible" class="botones" value="Confirmar" onClick="verificarCheckboxsFacturaCompra(<?php echo $i; ?>,<?php echo $prv_id; ?>);">  
       <?php } ?>
-  <?php }else{ ?> <b>*No Posee Ordenes Pendientes a Facturar </b> <?php } ?>
+  <?php }else{ ?> <b>*No Posee Órdenes Pendientes a Facturar </b> <?php } ?>
  <?php if($ocultar=="no"){ ?>  
       
        
@@ -246,14 +231,12 @@
    
 <div class="contenido_descripcion"  style="visibility:none" enable="true">
   
-  <table width="100%" border="0">
-  <tr>
-    <td>&nbsp;</td>
-    <td><div align="center"><input type="hidden" src="images/add.png" onClick="addRow('dataTable')"></div></td>
-  </tr>
-  <tr>
-    <td width="82%" class="titulo"><div align="center">Descripción</div></td>
-    <td width="18%" class="titulo"><div align="center">Total compra</div></td>
+  <table width="100%"  border="0">
+
+  <tr class="titulo">
+    <td width="9"><div align="center">N°Orden</div></td>
+    <td width="90"><div align="center">Descripción</div></td>
+    <td width="90" ><div align="center">Total compra</div></td>
   </tr>
   
   <?php while($numeroDescripcion < $totalDescripcion){
@@ -262,9 +245,19 @@
   
   
   <tr>
+      
+      
+     <td><label>   
+        <div align="center">
+          <input name="txtOrdenItem<?php echo($numeroDescripcion);?>" style="text-align:right"  type="text" id="txtOrdenItem<?php echo($numeroDescripcion);?>" value="<?php echo $arrayOrdenes[$numeroDescripcion-1];?>" readOnly  required>
+        </div>
+    </label></td>
+      
+      
+      
     <td><label>   
         <div align="left">
-          <input name="txtDescripcionItem<?php echo($numeroDescripcion);?>"  type="text" id="txtDescripcionItem<?php echo($numeroDescripcion);?>" size="110" required>
+          <input name="txtDescripcionItem<?php echo($numeroDescripcion);?>"  type="text" id="txtDescripcionItem<?php echo($numeroDescripcion);?>" size="90" required>
         </div>
     </label></td>
     <td><label>
@@ -296,7 +289,7 @@
       <td rowspan="3"><label>
         <textarea name="txtNota" id="txtNota" cols="45" rows="5"></textarea>
       </label></td>
-      <td><div align="right">I.V.A INSCRIP
+      <td><div align="right" style="visibility:hidden">I.V.A INSCRIP
         <label>
             <select name="comboIva" id="comboIva" onChange="return actualizarIva(2)">
             <?php while ($fila_iva = mysql_fetch_array($iva)){  ?>
@@ -307,7 +300,7 @@
         %</div></td>
       <td><label>
         <div align="center">
-          <input type="text" style="text-align:right" value="0.00"  name="txtIva_Ins" id="txtIva_Ins" readonly>
+          <input type="hidden" style="text-align:right" value="0.00"  name="txtIva_Ins" id="txtIva_Ins" readonly>
           </div>
       </label></td>
     </tr>
@@ -348,9 +341,11 @@
 
    </div>
    <!--end contenedor-->
+ <?php } else {?>
+   
+<a href="form-seleccionar-proveedor.php?action=2"><input type="button" value="Volver" class="botones" /></a>
+
  <?php } ?>
-
-
   </div>
    <!-- fin main --><!-- fin main --><!-- fin main --><!-- fin main --><!-- fin main -->
    

@@ -114,41 +114,12 @@
     <td width="1%">&nbsp;</td>
   </tr>
   <tr>
-    <td class="titulo"><span id="ocultarParaImpresion">Buenos Aires,</span> <?php echo (tfecha($fila_fecha_factura["fco_fecha"])); ?></td>
+    <td ></td>
     <td>&nbsp;</td>
   </tr>
 </table>
    </div>
-   
-   
-   <div id="contenedor2" style="height:auto;">
-	 <table width="100%" border="0" id="dataTable">
-<tr>
-            <td width="15%" class="titulo"><span id="ocultarParaImpresion">Señores:</span></td>
-            <td colspan="3" style="background-color:#cbeef5" align="left"><?php echo utf8_encode($fila_datos_cliente["cli_nombre"]);?></td>
-       </tr>
-          <tr>
-            <td class="titulo"><span id="ocultarParaImpresion">Domiclio:</span></td>
-            <td width="24%" style="background-color:#cbeef5"  align="left"><?php echo utf8_encode($fila_datos_cliente["cli_direccion"]);?></td>
-            <td width="9%" class="titulo"><span id="ocultarParaImpresion">Localidad:</span></td>
-            <td width="52%" style="background-color:#cbeef5"  align="rigth"><?php echo utf8_encode($fila_datos_cliente["provincia"]);?>/<?php echo utf8_encode($fila_datos_cliente["localidad"]);?></td>
-       </tr>
-          <tr>
-            <td class="titulo"><span id="ocultarParaImpresion">IVA:</span></td>
-            <td style="background-color:#cbeef5"  align="left"><?php echo $fila_datos_cliente["iva_nombre"]?></td>
-            <td class="titulo"><span id="ocultarParaImpresion">Cuit:</span></td>
-            <td style="background-color:#cbeef5"  align="rigth"><?php echo (verCUIT($fila_datos_cliente["cli_cuit"]));?></td>
-          </tr>
-
-          <tr>
-            <td></td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-          </tr>
-     </table>   
-       
-   </div>
+  
    <!-- DESCRIPCION DE FACTURA  -->
    
 <div class="contenido_descripcion">
@@ -201,10 +172,10 @@
           <?php /*echo mfecha($fila_fecha_factura["fav_vencimiento"])*/ ;?>
           </div>
       </label></td>
-      <td width="39%"><div id="ocultarParaImpresion" align="right">SUBTOTAL:</div></td>
+      <td width="39%"></td>
       <td width="18%"><label>
         <div align="center">
-          <?php echo $subtotal ;?>
+         
           </div>
       </label></td>
     </tr>
@@ -213,21 +184,15 @@
       <td rowspan="3"><label>
         <?php echo $fila_fecha_factura["fco_nota"]; ?>
       </label></td>
-      <td><div align="right"><span id="ocultarParaImpresion">I.V.A INSCRIP&nbsp;&nbsp;&nbsp;&nbsp;</span><?php echo $fila_iva["valor"]; ?><span id="ocultarParaImpresion"> %</span></div></td>
+      <td></td>
       <td><label>
-        <div align="center">
-          <?php 
-          $iva_total = $subtotal*0.21;
-          echo $iva_total;
-          ?>
-          </div>
       </label></td>
     </tr>
     <tr>
-      <td><div id="ocultarParaImpresion" align="right">I.V.A NO INSCRIP.........%</div></td>
+      <td></td>
       <td><label>
         <div align="center">
-          0.00
+          
           </div>
       </label></td>
     </tr>
@@ -235,7 +200,7 @@
       <td><div  id="ocultarParaImpresion" align="right">TOTAL</div></td>
       <td><label>
         <div align="center">
-          <?php echo $iva_total + $subtotal?>
+          <?php echo  $subtotal?>
           </div>
       </label></td>
     </tr>
