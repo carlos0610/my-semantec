@@ -39,14 +39,60 @@
          
 
        //Ordenes  CAMBIAR EL 0
-              $sql="SELECT `gru_id`,`ord_codigo`,`ord_descripcion`,`prv_id`,`est_id` ,ord_id 
+       /*       $sql="SELECT `gru_id`,`ord_codigo`,`ord_descripcion`,`prv_id`,`est_id` ,ord_id 
               FROM `ordenes` 
               WHERE `prv_id` =$prv_id
               AND    est_id  >= 10 
               AND    estado  = 1
               AND    ISNULL(gru_id_compra)
-              ";
-       
+              ";*/
+        
+        /*ACA VA EL TRUQUITO DEL MAGO */
+        $sql = "DROP TABLE taula_temp;";
+        mysql_query($sql);
+        
+        
+        $sql = "CREATE TEMPORARY TABLE taula_temp
+					(
+					      id int(11) NOT NULL,
+					      ord_costo decimal(10,2),
+					    ord_saldo decimal(10,2),
+					    PRIMARY KEY  (`id`)
+					    
+					      );";
+	mysql_query($sql);				      
+					     
+              
+         $sql= "INSERT INTO taula_temp 
+              SELECT det_fco_orden_id,o.ord_costo,o.ord_costo - SUM(dfco.det_fco_preciounitario) 
+				  FROM detalle_factura_compra dfco , ordenes o 
+				  WHERE o.ord_id = dfco.det_fco_orden_id
+				  GROUP BY det_fco_orden_id
+				  HAVING o.ord_costo - SUM(dfco.det_fco_preciounitario) > 0;";
+	mysql_query($sql);
+        
+        
+        $sql = "INSERT INTO taula_temp
+		SELECT ord_id ,0,0
+		FROM `ordenes` 
+		WHERE `prv_id` = $prv_id
+		AND    est_id  >= 10 
+		AND    ISNULL(gru_id_compra);";
+        
+        mysql_query($sql);
+        
+        
+        
+        
+	$sql = "SELECT `gru_id`,`ord_codigo`,`ord_descripcion`,`prv_id`,`est_id` ,ord_id 
+              FROM `ordenes` 
+              WHERE `prv_id` = $prv_id
+              AND    est_id  >= 10 
+              AND ord_id in (select id from taula_temp)";
+        mysql_query($sql);
+        
+        //echo "QUERY: ".$sql;
+  
         $result_ordenes=mysql_query($sql); 
         $result_cantordenes=mysql_query($sql);
         $cantOrdenes= mysql_num_rows($result_cantordenes);
@@ -61,6 +107,9 @@
         
        $sql = "SELECT idiva,valor from IVA";
        $iva = mysql_query($sql); 
+       
+       
+       //mysql_close();
       
        
 ?>
@@ -193,13 +242,16 @@
         while ($i <$cantOrdenesChecadas)
         { $i++;  
                 $unord_ID=$_GET["ord_check$i"];
-                $sql59="SELECT `gru_id`,`ord_codigo`,`ord_descripcion`,`prv_id`,`est_id` ,ord_id 
-              FROM `ordenes` 
-              WHERE `ord_id` =$unord_ID
-              AND    est_id  >= 10 
-              AND    estado  = 1
-              AND    ISNULL(gru_id_compra)
-              ";
+                
+                /* METIÉNDOLE MAGIA */
+                
+               $sql59="SELECT `gru_id`,`ord_codigo`,`ord_descripcion`,`prv_id`,`est_id` ,ord_id 
+                        FROM `ordenes` 
+                        WHERE `ord_id` =$unord_ID
+                        AND    est_id  >= 10 
+                        AND    estado  = 1";
+
+               //echo "QUERY: ".$sql59;
                
         $resultdeOrdenes=mysql_query($sql59); 
         $filaDeLasOrdenesCheck=(mysql_fetch_array($resultdeOrdenes));

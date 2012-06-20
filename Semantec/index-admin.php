@@ -137,6 +137,7 @@
      <h3>Facturación</h3>
       <p><a href="lista-facturas.php" class="current">ir al listado</a></p>
       <p><a href="ver-generar-factura-nueva.php?cli_id=1&ocultar=si" class="current">nueva factura</a></p>
+      <p><a href="reporte-iva.php" class="current">reporte IVA</a></p>
      </section>
       
       <section class="cajas">

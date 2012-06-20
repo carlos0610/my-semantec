@@ -32,8 +32,10 @@
         
         
         
-/* CALCULO PAGINADO */  ###############################################################################
-    $sql0="SELECT o.ord_id,ord_codigo,c.cli_nombre,p.nombre as provincia,l.nombre as localidad,o.ord_descripcion,o.est_id,sum(od.ord_det_monto) as Adelantos,o.ord_costo Presupuesto,o.ord_costo - sum(od.ord_det_monto) as Saldo 
+/* CALCULO PAGINADO - DATOS DE LISTADO DE CUENTA CORRIENTE */  ###############################################################################
+       
+    /* ANTES DE LA MAGIA*/   
+    /*$sql0="SELECT o.ord_id,ord_codigo,c.cli_nombre,p.nombre as provincia,l.nombre as localidad,o.ord_descripcion,o.est_id,sum(od.ord_det_monto) as Adelantos,o.ord_costo Presupuesto,o.ord_costo - sum(od.ord_det_monto) as Saldo 
             FROM ordenes o, ordenes_detalle od,clientes c,ubicacion u,provincias p,localidades l
             WHERE 
             o.ord_id IN (select ord_id from ordenes where prv_id = $prv_id)
@@ -42,20 +44,39 @@
             AND u.id = c.ubicacion_id
             AND u.provincias_id = p.id
             AND u.localidades_id = l.id
+            GROUP BY o.ord_id";*/
+    
+    /*CON LA MAGIA*/
+    
+    $sql0 = "SELECT o.ord_id,ord_codigo,c.cli_nombre,p.nombre as provincia,l.nombre as localidad,o.ord_descripcion,o.est_id,sum(od.ord_det_monto) as Adelantos,round (o.ord_costo,2) as costo,ROUND(SUM(dfc.det_fco_preciounitario)/2,2) as compras ,ROUND(o.ord_costo - SUM(dfc.det_fco_preciounitario)/2,2) as saldoc,o.ord_costo - sum(od.ord_det_monto) as Saldo 
+            FROM ordenes o, ordenes_detalle od,clientes c,ubicacion u,provincias p,localidades l,detalle_factura_compra dfc
+            WHERE 
+            o.ord_id IN (select ord_id from ordenes where prv_id = $prv_id)
+            AND o.ord_id = od.ord_id
+            AND o.cli_id = c.cli_id
+            AND o.gru_id_compra is not null
+            AND o.ord_id = dfc.det_fco_orden_id
+            AND dfc.det_fco_orden_id = o.ord_id
+				AND u.id = c.ubicacion_id
+            AND u.provincias_id = p.id
+            AND u.localidades_id = l.id
             GROUP BY o.ord_id";
     
     
     $tamPag=100;
     
     include("paginado.php");        
-        $sql = "SELECT o.ord_id,ord_codigo,c.cli_nombre,p.nombre as provincia,l.nombre as localidad,o.ord_descripcion,o.est_id,sum(od.ord_det_monto) as Adelantos,o.ord_costo Presupuesto,o.ord_costo - sum(od.ord_det_monto) as Saldo 
-            FROM ordenes o, ordenes_detalle od,clientes c,ubicacion u,provincias p,localidades l ";
+        $sql = "SELECT o.ord_id,ord_codigo,c.cli_nombre,p.nombre as provincia,l.nombre as localidad,o.ord_descripcion,o.est_id,sum(od.ord_det_monto) as Adelantos,round (o.ord_costo,2) as costo,ROUND(SUM(dfc.det_fco_preciounitario)/2,2) as compras ,ROUND(o.ord_costo - SUM(dfc.det_fco_preciounitario)/2,2) as saldoc,o.ord_costo - sum(od.ord_det_monto) as Saldo 
+            FROM ordenes o, ordenes_detalle od,clientes c,ubicacion u,provincias p,localidades l,detalle_factura_compra dfc";
          
         $sql .= " WHERE 
             o.ord_id IN (select ord_id from ordenes where prv_id = $prv_id)
             AND o.ord_id = od.ord_id
             AND o.cli_id = c.cli_id
-            AND u.id = c.ubicacion_id
+            AND o.gru_id_compra is not null
+            AND o.ord_id = dfc.det_fco_orden_id
+            AND dfc.det_fco_orden_id = o.ord_id
+				AND u.id = c.ubicacion_id
             AND u.provincias_id = p.id
             AND u.localidades_id = l.id
             GROUP BY o.ord_id";
@@ -186,9 +207,10 @@
             <td width="120">Cliente</td>
             <td width="449">Descripción</td>
             <td width="88">Presupuesto</td>
-            <td width="83">Cancelado</td>
+            <td width="83">Facturado</td>
             <td width="83">Adelantos</td>
-            <td width="73">Saldo</td>
+            <td width="73">Saldo facturado</td>
+            <td width="73">Saldo adelantos</td>
 <td width="35">
                 <a href="index-admin.php">
                     <img src="images/home.png"  alt="inicio" title="Volver al panel" width="32" height="32" border="none" />                </a>            </td>
@@ -200,9 +222,10 @@
               <td><a href="ver-alta-ordenes.php?ord_id=<?php echo($fila["ord_id"]);?>&action=0" target="_blank"><?php echo($fila["ord_codigo"]);?></a></td>
             <td><?php echo(utf8_encode($fila["cli_nombre"]));?> (<?php echo(utf8_encode($fila["provincia"]));?>)</td>
             <td><?php echo(utf8_encode($fila["ord_descripcion"]));?></td>
-            <td><?php echo $fila["Presupuesto"];?></td>
-            <td>&nbsp;</td>
+            <td><?php echo $fila["costo"];?></td>
+            <td><?php echo $fila["compras"];?></td>
             <td><?php echo $fila["Adelantos"];?></td>
+    <td><?php echo $fila["saldoc"];?></td>
     <td><?php echo $fila["Saldo"];?></td>
         </tr>
   <?php

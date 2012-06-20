@@ -56,7 +56,7 @@
           <tr class="titulo">
             <td width="149">Seleccione proveedor</td>
             <td colspan="3"><div align="right"><a href="index-admin.php"><img src="images/home.png"  alt="inicio" title="Volver al panel" width="32" height="32" border="none" /></a>
-                <a href="index-admin.php"></a> </div></td>
+            <a href="index-admin.php"></a> </div></td>
           </tr>
   
           <tr>

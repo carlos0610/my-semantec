@@ -7,9 +7,13 @@
 	$provedor_id=$_POST['provedor_id'];	
         $sql = "SELECT  prv_id, prv_nombre FROM proveedores WHERE prv_id=$provedor_id ";
         $resultado2 = mysql_query($sql);
-	$proveedor = mysql_fetch_array($resultado2);	
-        $sql = "SELECT  est_id, est_nombre, est_color FROM estados";
+	$proveedor = mysql_fetch_array($resultado2);
+        
+        /* CONSULTA - SELECT DE ESTADOS*/
+        $sql = "SELECT  est_id, est_nombre, est_color FROM estados where est_id <= 11";
         $resultado3 = mysql_query($sql);
+        
+        
         // LOS PARAMETROS
         $orden_id=$_GET['ord_id'];
         $ord_costo=$_GET['ord_costo'];
