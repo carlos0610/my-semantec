@@ -223,8 +223,10 @@
             </table>  
            <!-- FIN de Muestro tabla de ordenes a seleccionar --> 
             <?php }else{ ?>
-           <!-- Muestro ORdenes seleccionas -->  
-        Codigos de Órdenes Seleccionados :  <br> 
+           
+           <!-- Muestro ORdenes seleccionas --> 
+           
+               Codigos de Órdenes Seleccionados :   
         <table border="0">
         <?php
         $i=0;
@@ -245,12 +247,12 @@
        /* <a href=form-edit-ordenes.php?ord_id=<?php echo($filaDeLasOrdenesCheckeadas["ord_id"]);?>><?php echo($filaDeLasOrdenesCheckeadas["ord_codigo"]);?></a> */
         ?>
         
-        <tr><label>
+        <tr><td><label>
             <div id="campodeOrden">
                 &nbsp;&nbsp; &nbsp;# <a href="#" onclick="popup('form-edit-ordenes.php?ord_id=<?php echo($filaDeLasOrdenesCheckeadas["ord_id"]);?>', 'Alerta')"> <?php echo $filaDeLasOrdenesCheckeadas["ord_codigo"]; ?></a>
             </div>
             </label>
-        </tr>            
+            </td></tr>            
         <?php      
         }       
         ?>   
