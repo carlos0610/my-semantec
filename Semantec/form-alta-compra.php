@@ -38,7 +38,7 @@
         
          
 
-       //Ordenes  CAMBIAR EL 0
+       //Ordenes  
        /*       $sql="SELECT `gru_id`,`ord_codigo`,`ord_descripcion`,`prv_id`,`est_id` ,ord_id 
               FROM `ordenes` 
               WHERE `prv_id` =$prv_id
@@ -303,9 +303,7 @@
         <div align="center">
           <input name="txtOrdenItem<?php echo($numeroDescripcion);?>" style="text-align:right"  type="text" id="txtOrdenItem<?php echo($numeroDescripcion);?>" value="<?php echo $arrayOrdenes[$numeroDescripcion-1];?>" readOnly  required>
         </div>
-    </label></td>
-      
-      
+    </label></td>     
       
     <td><label>   
         <div align="left">

@@ -95,6 +95,7 @@
           <tr class="titulo">
             <td width="70">C&oacute;digo</td>
             <td width="100">Cliente</td>
+            <td width="100">Fecha Alta</td>
             <td>Descripci&oacute;n</td>
             <td width="100">Proveedor</td>
             <td width="100">Estado</td>
@@ -111,6 +112,7 @@
           <tr class="lista" bgcolor="<?php echo($colores[$i]);?>">
               <td><a href=form-edit-ordenes.php?ord_id=<?php echo($fila["ord_id"]);?>><?php echo($fila["ord_codigo"]);?></a></td>
             <td><?php echo(utf8_encode($fila["cli_nombre"]));?></td>
+            <td><?php echo(tfecha($fila["ord_alta"]));?></td>
             <td><?php echo(nl2br(utf8_encode($fila["ord_descripcion"])));?></td>
             <td><?php echo(utf8_encode($fila["prv_nombre"]));?></td>
             <td>

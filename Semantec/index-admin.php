@@ -142,7 +142,7 @@
       
       <section class="cajas">
      <h3>Compras</h3>
-      <p><a href="" class="current">ir al listado</a></p>
+      <p><a href="lista-facturas-compra.php" class="current">ir al listado</a></p>
       <p><a href="form-seleccionar-proveedor.php?action=2" class="current">nueva compra</a></p>
      </section>
       
