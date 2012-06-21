@@ -1,22 +1,8 @@
 <?php
     include("validar.php");
-
-    /* $action = $_GET["action"]; // 0
-    if($action == 0){
-          $titulo = "Datos de Orden de Servicio";
-          $ord_id = $_GET["ord_id"];
-    }
-    else if($action == 1){
-          $titulo = "Se ha dado de alta la siguiente Orden de Servicio";
-          $ord_id = $_SESSION["ord_id"];
-    }
-    else{  2
-          $titulo = "Se han modificado los datos del la siguiente Orden de Servicio"; 
-          $ord_id = $_SESSION["ord_id"];
-    }
+ 
     
-     
-     */ if($_GET["comboProveedor"]){
+    if($_GET["comboProveedor"]){
           $prv_id= $_GET["comboProveedor"];
      }else {
         $prv_id= $_POST["comboProveedor"];}
@@ -81,9 +67,7 @@
         
         mysql_query($sql);
         
-        
-        
-        
+       
 	$sql = "SELECT `gru_id`,`ord_codigo`,`ord_descripcion`,`prv_id`,`est_id` ,ord_id 
               FROM `ordenes` 
               WHERE `prv_id` = $prv_id
