@@ -247,6 +247,17 @@
        /* <a href=form-edit-ordenes.php?ord_id=<?php echo($filaDeLasOrdenesCheckeadas["ord_id"]);?>><?php echo($filaDeLasOrdenesCheckeadas["ord_codigo"]);?></a> */
         ?>
         
+<<<<<<< .mine
+        <tr>
+            <td>
+            
+                &nbsp;&nbsp; &nbsp;
+            </td>
+            <td>
+                    <a href="#" onclick="popup('form-edit-ordenes.php?ord_id=<?php echo($filaDeLasOrdenesCheckeadas["ord_id"]);?>', 'Alerta')"># <?php echo $filaDeLasOrdenesCheckeadas["ord_codigo"]; ?></a>
+            </td>
+            
+=======
         <tr><td><label>
             <div id="campodeOrden">
                 &nbsp;&nbsp; &nbsp;# <a href="#" onclick="popup('form-edit-ordenes.php?ord_id=<?php echo($filaDeLasOrdenesCheckeadas["ord_id"]);?>', 'Alerta')"> <?php echo $filaDeLasOrdenesCheckeadas["ord_codigo"]; ?></a>

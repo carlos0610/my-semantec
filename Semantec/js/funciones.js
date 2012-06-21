@@ -199,10 +199,10 @@ function ActualizarTotal(cantidadDescripciones,factura){
     totalIva=totalOrdenesVenta*iva;
     totalOrdenesVenta2 = parseFloat(totalOrdenesVenta) + parseFloat(totalIva);
     document.getElementById('totalLabel').innerHTML ="Total Órdenes venta: $ "+(totalOrdenesVenta2).toFixed(2);
-    if(document.getElementById("txtTotalFactura").value>totalOrdenesVenta2)
-        {alert("La factura supera el monto total aceptado");
-          document.getElementById("btnConfirma").style.visibility = "hidden"; 
-        }else{ document.getElementById("btnConfirma").style.visibility = "visible"; }
+    if(document.getElementById("txtTotalFactura").value==totalOrdenesVenta2)
+        {document.getElementById("btnConfirma").style.visibility = "visible"; }
+        else{alert("La factura no iguala el total aceptado");
+          document.getElementById("btnConfirma").style.visibility = "hidden"; }
     } else {
     percepciones = parseFloat(document.getElementById("txtPercepciones").value);
     document.getElementById("txtTotalFactura").value =  subtotal + percepciones;      
