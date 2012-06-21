@@ -1,23 +1,7 @@
 <?php
     include("validar.php");
 
-    /* $action = $_GET["action"]; // 0
-    if($action == 0){
-          $titulo = "Datos de Orden de Servicio";
-          $ord_id = $_GET["ord_id"];
-    }
-    else if($action == 1){
-          $titulo = "Se ha dado de alta la siguiente Orden de Servicio";
-          $ord_id = $_SESSION["ord_id"];
-    }
-    else{  2
-          $titulo = "Se han modificado los datos del la siguiente Orden de Servicio"; 
-          $ord_id = $_SESSION["ord_id"];
-    }
-    
-     
-     */
-        //$ord_id = $_GET["ord_id"];
+        $action = $_GET["action"];
         $fav_id = $_GET["fav_id"];
         echo $$fav_id;
         include("funciones.php");
@@ -207,7 +191,10 @@
     
     <tr>
       <td>&nbsp;</td>
-      <td><a href="form-seleccionar-proveedor.php?action=2">
+      <td><a href=<?php  if($action!=1)
+                    { echo ("form-seleccionar-proveedor.php?action=2");}
+                        else{echo ("lista-facturas-compra.php");}
+                    ?>>
     <input type="button" value="volver"s class="botones" />
                 </a>  </td>
       <td><a href="javascript:window.print()">
