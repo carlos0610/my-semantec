@@ -72,7 +72,7 @@
         /* INSERTAMOS EN LA TABLA TEMPORAL EL RESULTADO DE LA CONSULTA QUE AVERIGUA LOS ADELANTOS VS ORD_COSTO */
         
         $sql = "INSERT INTO tabla_temp	      
-		SELECT o.ord_id,ord_codigo,c.cli_nombre,p.nombre as provincia,l.nombre as localidad,o.ord_descripcion,o.est_id,sum(od.ord_det_monto) as adelantos,round (o.ord_costo,2) as presupuesto ,o.ord_costo - sum(od.ord_det_monto) as Saldo,0,0 
+		SELECT o.ord_id,ord_codigo,c.cli_nombre,p.nombre as provincia,l.nombre as localidad,o.ord_descripcion,o.est_id,sum(od.ord_det_monto) as adelantos,round (o.ord_costo,2) as presupuesto ,o.ord_costo - sum(od.ord_det_monto) as Saldo,0,round (o.ord_costo,2) as presupuesto 
                 FROM ordenes o, ordenes_detalle od,clientes c,ubicacion u,provincias p,localidades l
                 WHERE 
                 o.ord_id IN (select ord_id from ordenes where prv_id = $prv_id)
@@ -293,7 +293,7 @@
             <td width="88">Ord costo</td>
             <td width="83">Facturado</td>
             <td width="83">Adelantos</td>
-            <td width="73">Saldo facturado</td>
+            <td width="73">Resta facturar</td>
             
 <td width="35">
                 <a href="index-admin.php">
