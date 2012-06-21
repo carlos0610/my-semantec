@@ -16,6 +16,6 @@
 	$_SESSION["fav_id"] = $fav_id;
 
 	mysql_close();
-//	header("location:lista-facturas.php");
+	header("location:lista-facturas.php");
 
 ?>
