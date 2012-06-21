@@ -225,6 +225,7 @@
             <?php }else{ ?>
            <!-- Muestro ORdenes seleccionas -->  
         Codigos de Órdenes Seleccionados :  <br> 
+        <table border="0">
         <?php
         $i=0;
         $totalOrdenVenta=0;
@@ -241,12 +242,19 @@
         $resultado_deOredenes=mysql_query($sql5); 
         $filaDeLasOrdenesCheckeadas=mysql_fetch_array($resultado_deOredenes);
         $totalOrdenVenta+=$filaDeLasOrdenesCheckeadas["ord_venta"];
-        
+       /* <a href=form-edit-ordenes.php?ord_id=<?php echo($filaDeLasOrdenesCheckeadas["ord_id"]);?>><?php echo($filaDeLasOrdenesCheckeadas["ord_codigo"]);?></a> */
         ?>
-          &nbsp;&nbsp; &nbsp;#  <?php echo $filaDeLasOrdenesCheckeadas["ord_codigo"]; ?>   <br>            
+        
+        <tr><label>
+            <div id="campodeOrden">
+                &nbsp;&nbsp; &nbsp;# <a href="#" onclick="popup('form-edit-ordenes.php?ord_id=<?php echo($filaDeLasOrdenesCheckeadas["ord_id"]);?>', 'Alerta')"> <?php echo $filaDeLasOrdenesCheckeadas["ord_codigo"]; ?></a>
+            </div>
+            </label>
+        </tr>            
         <?php      
         }       
-        ?>        
+        ?>   
+         </table>
         <?php }    
         ?>
       <!-- Boton confirmar  -->    
@@ -258,6 +266,7 @@
   <?php }else{ ?> <b>*No Posee Órdenes Pendientes a Facturar </b> <?php } ?>
       <!-- DESCRIPCION DE FACTURA  -->
  <?php if($ocultar=="no"){  // TOTAL de ORDENES?>  
+      <div id="totalLabel">Total Órdenes venta: $<?php echo $totalOrdenVenta; ?></div> 
       <input type="hidden" name="totalOrdenVentatxt" id="totalOrdenVentatxt" style="visibility:visible" value="<?php echo $totalOrdenVenta ?>">
       <input type="hidden" name="totalOrdenVenta" id="totalOrdenVenta" style="visibility:visible" value="<?php echo $totalOrdenVenta ?>">
 <div class="contenido_descripcion" style="visibility:none" enable="true" >

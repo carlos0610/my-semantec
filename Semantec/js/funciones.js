@@ -198,8 +198,7 @@ function ActualizarTotal(cantidadDescripciones,factura){
     totalOrdenesVenta=document.getElementById("totalOrdenVenta").value;  
     totalIva=totalOrdenesVenta*iva;
     totalOrdenesVenta2 = parseFloat(totalOrdenesVenta) + parseFloat(totalIva);
-    document.getElementById("totalOrdenVentatxt").value = (totalOrdenesVenta2).toFixed(2);
-    document.getElementById("totalOrdenVentatxt").style.visibility = "visible";
+    document.getElementById('totalLabel').innerHTML ="Total Órdenes venta: $ "+(totalOrdenesVenta2).toFixed(2);
     if(document.getElementById("txtTotalFactura").value>totalOrdenesVenta2)
         {alert("La factura supera el monto total aceptado");
           document.getElementById("btnConfirma").style.visibility = "hidden"; 
@@ -234,8 +233,7 @@ function actualizarIva(factura){
                     totalOrdenesVenta=document.getElementById("totalOrdenVenta").value;  
                      totalIva=totalOrdenesVenta*iva;
                      totalOrdenesVenta2 = parseFloat(totalOrdenesVenta) + parseFloat(totalIva);
-                     document.getElementById("totalOrdenVentatxt").value = (totalOrdenesVenta2).toFixed(2);
-                     document.getElementById("totalOrdenVentatxt").style.visibility = "visible";
+                     document.getElementById('totalLabel').innerHTML ="Total Órdenes venta: $ "+(totalOrdenesVenta2).toFixed(2);
                      if(document.getElementById("txtTotalFactura").value>totalOrdenesVenta2)
                      {
                          alert("La factura supera el monto total aceptado");
