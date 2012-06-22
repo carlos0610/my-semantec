@@ -217,7 +217,7 @@
           
           <tr>
             <td>Tel&eacute;fono</td>
-            <td><input value="<?php echo($fila_clientes["cli_telefono"]); ?>" type="number" style="text-align:right" class="campos" id="cli_telefono" name="cli_telefono" /></td>
+            <td><input value="<?php echo($fila_clientes["cli_telefono"]); ?>" type="text" style="text-align:right" class="campos" id="cli_telefono" name="cli_telefono" /></td>
             <td></td>
           </tr>
           <tr>

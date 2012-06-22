@@ -178,27 +178,27 @@
           </tr>
           <tr>
             <td>Tel&eacute;fono</td>
-            <td><input type="number" style="text-align:right" class="campos" id="prv_telefono" name="prv_telefono" required /></td>
+            <td><input type="text" style="text-align:right" class="campos" id="prv_telefono" name="prv_telefono" required /></td>
             <td></td>
           </tr>
           <tr>
             <td>Fax</td>
-            <td><input type="number" style="text-align:right" class="campos" id="prv_fax" name="prv_fax"  /></td>
+            <td><input type="text" style="text-align:right" class="campos" id="prv_fax" name="prv_fax"  /></td>
             <td></td>
           </tr>
           <tr>
             <td>Cel</td>
-            <td><input type="number" style="text-align:right" class="campos" id="prv_cel" name="prv_cel"  /></td>
+            <td><input type="text" style="text-align:right" class="campos" id="prv_cel" name="prv_cel"  /></td>
             <td></td>
           </tr>
           <tr>
             <td>Alternativo</td>
-            <td><input type="number" style="text-align:right" class="campos" id="prv_alternativo" name="prv_alternativo"   /></td>
+            <td><input type="text" style="text-align:right" class="campos" id="prv_alternativo" name="prv_alternativo"   /></td>
             <td></td>
           </tr>
           <tr>
             <td>Urgencia</td>
-            <td><input type="number" style="text-align:right" class="campos" id="prv_urgencia" name="prv_urgencia"  /></td>
+            <td><input type="text" style="text-align:right" class="campos" id="prv_urgencia" name="prv_urgencia"  /></td>
             <td></td>
           </tr>
           <tr>
