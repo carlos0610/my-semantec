@@ -205,7 +205,7 @@
             
             
             <tr>
-              <td width="18%">Órdenes finalizadas:</td>
+              <td width="18%">Órdenes por vencer:</td>
                
                 <?php if ($fila_plazo_finalizado > 0) { ?>
          

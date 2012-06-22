@@ -291,8 +291,9 @@
             <td width="120">Cliente</td>
             <td width="449">Descripción</td>
             <td width="88">Ord costo</td>
-            <td width="83">Facturado</td>
             <td width="83">Adelantos</td>
+            <td width="83">Saldo</td>
+            <td width="83">Facturado</td>          
             <td width="73">Resta facturar</td>
             
 <td width="35">
@@ -307,8 +308,10 @@
             <td><?php echo(utf8_encode($fila["cli_nombre"]));?> (<?php echo(utf8_encode($fila["provincia"]));?>)</td>
             <td><?php echo(utf8_encode($fila["ord_descripcion"]));?></td>
             <td><?php echo $fila["costo"];?></td>
-            <td><?php echo $fila["compras"];?></td>
             <td><?php echo $fila["adelantos"];?></td>
+            <td><?php echo $fila["saldo_a"];?></td>
+            <td><?php echo $fila["compras"];?></td>
+            
     <td><?php echo $fila["saldo_c"];?></td>
     
         </tr>
@@ -317,15 +320,15 @@
             if($i==$cant){$i=0;}
             
              
-            $totalDeuda += $fila["saldo_c"];
+            $totalDeuda += $fila["saldo_a"];
             
           } // FIN_WHILE
           
-          echo "<tr><td colspan=5 align=right>Total deuda con proveedor: <b>$totalDeuda</b> pesos</td></tr>";
+          echo "<tr><td colspan=8 align=right>Total deuda con proveedor: <b>$totalDeuda</b> pesos</td></tr>";
           
   ?>
           <tr>
-            <td colspan="6" class="pie_lista"><?php 
+            <td colspan="8" class="pie_lista"><?php 
 /* PAGINADO */  ###############################################################################            
             echo(verPaginado($cant_registros, $pagina, $inicio, $final, $numPags)); 
             ?></td>

@@ -65,9 +65,11 @@
         
         
     if ($idFile != -1)
-        $query = "INSERT INTO factura_compra (files_id,idiva,prv_id,fco_fecha,estado,fco_descripcion,fco_subtotal,fco_percepcion,fco_nota,gru_id) VALUES ($idFile,$iva,$prv_id,NOW(),$estado,'$descripcion',$subtotal,$percepciones,'$nota',$id_grupo_ordenes)";
+        $query = "INSERT INTO factura_compra (files_id,idiva,prv_id,fco_fecha,estado,fco_descripcion,fco_subtotal,fco_percepcion,fco_nota,gru_id) VALUES ($idFile,1,$prv_id,NOW(),$estado,'$descripcion',$subtotal,$percepciones,'$nota',$id_grupo_ordenes)";
     else
-        $query = "INSERT INTO factura_compra (idiva,prv_id,fco_fecha,estado,fco_descripcion,fco_subtotal,fco_percepcion,fco_nota,gru_id) VALUES ($iva,$prv_id,NOW(),$estado,'$descripcion',$subtotal,$percepciones,'$nota',$id_grupo_ordenes)";   
+        $query = "INSERT INTO factura_compra (idiva,prv_id,fco_fecha,estado,fco_descripcion,fco_subtotal,fco_percepcion,fco_nota,gru_id) VALUES (1,$prv_id,NOW(),$estado,'$descripcion',$subtotal,$percepciones,'$nota',$id_grupo_ordenes)";   
+    
+    $prueba = $query;
     
     $inserto = mysql_query($query);      
     $nro_factura = mysql_insert_id();
@@ -88,14 +90,10 @@
             $columnaPrec = "txtTotalItem".$i;
             $descripcion = $_POST[$columnaDesc];
             $precio = $_POST[$columnaPrec]; 
-            echo  $query;
+           // echo  $query;
         };
     
-    
-    
-    
-    
-    echo "NUESTRO QUERY: ".$query;
+     //echo "NUESTRO QUERY: ".$prueba;
     
     
     mysql_close();
