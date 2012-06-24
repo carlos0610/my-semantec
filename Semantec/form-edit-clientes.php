@@ -4,7 +4,7 @@
 
         include("conexion.php");
         $cli_id = $_GET["cli_id"];
-        $sql0 = "SELECT sucursal_id,cli_nombre, cli_cuit, iva_id, cli_rubro, ubicacion_id, cli_direccion,cli_direccion_fiscal, cli_telefono, cli_notas
+        $sql0 = "SELECT sucursal_id,cli_nombre,sucursal, cli_cuit, iva_id, cli_rubro, ubicacion_id, cli_direccion,cli_direccion_fiscal, cli_telefono, cli_notas
                   FROM clientes c
                   WHERE c.cli_id=$cli_id";
         $clientes = mysql_query($sql0);
@@ -166,43 +166,12 @@
             </td>
             <td></td>
           </tr>
-          
           <tr>
-                        <td>Partido</td>
-                        <td><label>
-                                <select name="select2" id="select2" class="campos" onChange="cargaContenido(this.id)">
-                                <option value="0">Selecciona opci&oacute;n...</option>
-                                <?php
-          while($fila_partidos = mysql_fetch_array($listado_partidos)){
-    ?>
-                    <option value="<?php echo($fila_partidos["id"]); ?>" <?php if($partidos["id"]==$fila_partidos["id"]){echo(" selected=\"selected\"");} ?>><?php echo(utf8_encode($fila_partidos["nombre"])); ?></option>
-    <?php
-          }
-    ?>
-                                </select>
-                        </label></td>
-                      </tr>
+            <td>Sucursal</td>
+            <td><input value="<?php echo($fila_clientes["sucursal"]); ?>" type="text" style="text-align:left" class="campos" id="sucursal" name="sucursal" /></td>
+            <td></td>
+          </tr>
           
-          <tr>
-                        <td>Localidad</td>
-                        <td><label>
-                                <select name="select3" id="select3" class="campos">
-                                <option value="0">Selecciona opci&oacute;n...</option>
-                               
-                                <?php
-                     while($fila_localidades = mysql_fetch_array($listado_localidades)){
-    ?>
-                    <option value="<?php echo($fila_localidades["id"]); ?>" <?php if($localidades["id"]==$fila_localidades["id"]){echo(" selected=\"selected\"");} ?>><?php echo(utf8_encode($fila_localidades["nombre"])); ?></option>
-    <?php
-          }
-    ?>
-                                </select>
-                                
-                                
-                                
-                                
-                        </label></td>
-                      </tr>
           <tr>
             <td>Direcci&oacute;n</td>
             <td><input value="<?php echo(utf8_encode($fila_clientes["cli_direccion"])); ?>" type="text" class="campos" id="cli_direccion" name="cli_direccion" required/></td>

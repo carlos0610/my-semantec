@@ -449,6 +449,18 @@ function pasaSiguiente(actual, siguiente, longitud)
      return true;     
       
   }
+  
+    function validarCombosDeUbicacionSoloProvincia(){
+      
+     if(document.getElementById('select1').selectedIndex == 0){
+         window.alert("Debe seleccionar una provincia");
+         return false;
+     }
+     
+ 
+     return true;     
+      
+  }
 // Confirmacion de factura nueva
 function PedirConfirmacion(nombre,frm){
     

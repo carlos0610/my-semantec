@@ -10,7 +10,7 @@
         //$sql    = "SELECT rub_id,rub_nombre FROM rubros";
         //$rubros = mysql_query($sql);
         
-        $sql = "SELECT id, nombre FROM provincias";
+        $sql = "SELECT id, nombre FROM provincias ORDER BY nombre";
         $provincias=mysql_query($sql);
         
         $sql = "SELECT cli_id, cli_nombre FROM clientes where estado = 1 and sucursal_id is null";
@@ -140,7 +140,13 @@
     ?>
                 </select>            </td>
             <td></td>
-          </tr>          
+          </tr>
+          <tr>
+            <td>Sucursal</td>
+            <td><input type="text" class="campos" id="Sucursal" name="Sucursal" required/></td>
+            <td></td>
+          </tr>
+ 
           <tr>
             <td>Provincia</td>
             <td>
@@ -156,24 +162,6 @@
                 </select>            </td>
             <td></td>
           </tr>
-          
-          <tr>
-                        <td>Partido</td>
-                        <td><label>
-                                <select name="select2" id="select2" class="campos" required>
-                                <option value="0">Selecciona opci&oacute;n...</option>
-                                </select>
-                        </label></td>
-                      </tr>
-          
-          <tr>
-                        <td>Localidad</td>
-                        <td><label>
-                                <select name="select3" id="select3" class="campos" required>
-                                <option value="0">Selecciona opci&oacute;n...</option>
-                                </select>
-                        </label></td>
-                      </tr>
           <tr>
             <td>Direcci&oacute;n</td>
             <td><input type="text" class="campos" id="cli_direccion" name="cli_direccion" required/></td>
@@ -198,7 +186,7 @@
             <td>&nbsp;</td>
             <td>
                 <input type="reset" value="Restablecer" class="botones" /> &nbsp; &nbsp; 
-                <input type="submit" value="Agregar cliente" class="botones" style="visibility:visible" id="botonAgregar"  onclick="return validarCombosDeUbicacion()"/>           
+                <input type="submit" value="Agregar cliente" class="botones" style="visibility:visible" id="botonAgregar"  onclick="return validarCombosDeUbicacionSoloProvincia()"/>           
             </td>
             <td></td>
           </tr>

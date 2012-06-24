@@ -14,7 +14,7 @@
         $cli_direccion_fiscal = utf8_decode($_POST["cli_direccion_fiscal"]);
         $cli_telefono = $_POST["cli_telefono"];
         $cli_notas = utf8_decode($_POST["cli_notas"]);
-        
+        $cli_SucursalDetalle = utf8_decode($_POST["Sucursal"]);
         
        
         include("conexion.php");
@@ -25,10 +25,11 @@
         
         /* GENERAMOS UN CÓDIGO DE UBICACIÓN EN LA TABLA UBICACIÓN */
         
-        $sql = "INSERT INTO ubicacion (provincias_id,partidos_id,localidades_id) VALUES ($provincia_id,$partido_id,$localidad_id)";
+        $sql = "INSERT INTO ubicacion (provincias_id,partidos_id,localidades_id) VALUES ($provincia_id,1,1)";
         mysql_query($sql);
+        echo $sql;
         $ubicacion_id = mysql_insert_id();
-        
+        echo $ubicacion_id;
         
             if (isset($_REQUEST['chkSucursal']))
                 $sucursal = $_POST["comboClientes"];
@@ -36,7 +37,7 @@
                 $sucursal = "NULL";
         
         
-                $sql = "INSERT INTO clientes (sucursal_id,cli_nombre,cli_cuit,iva_id,cli_rubro,ubicacion_id,cli_direccion,cli_direccion_fiscal,cli_telefono,cli_notas,estado) VALUES (
+                $sql = "INSERT INTO clientes (sucursal_id,cli_nombre,cli_cuit,iva_id,cli_rubro,ubicacion_id,cli_direccion,cli_direccion_fiscal,cli_telefono,cli_notas,estado,sucursal) VALUES (
         										$sucursal,
         										'$cli_nombre',
         										'$cli_cuit',
@@ -47,7 +48,8 @@
                                                                                         '$cli_direccion_fiscal',       
         										'$cli_telefono',
         										'$cli_notas',
-                                                                                        1        
+                                                                                        1,
+                                                                                        '$cli_SucursalDetalle'
         										)";
                                                                                  
                 mysql_query($sql);
@@ -76,7 +78,6 @@
                         
                         $sql = "INSERT INTO cuentacorriente_cliente (ccc_id, cli_id, estado) VALUES ($id_cuenta_corriente, $idCliente, 1)";
                         mysql_query($sql);
-                        echo "QUERY: ".$sql;
                         
                         }
                         

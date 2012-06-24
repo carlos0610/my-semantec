@@ -21,15 +21,15 @@
         $provincia_id =  $_POST["select1"];
         $partidos_id = $_POST["select2"];
         $localidad_id  = $_POST["select3"];
+        $cli_SucursalDetalle = utf8_decode($_POST["sucursal"]);
         
         
         
         
         
-        
-        include("conexion.php");
-        
-        $sql = "UPDATE ubicacion SET localidades_id = $localidad_id, partidos_id = $partidos_id, provincias_id = $provincia_id WHERE id = $ubicacion_id";
+        include("conexion.php");      
+     //   $sql = "UPDATE ubicacion SET localidades_id = $localidad_id, partidos_id = $partidos_id, provincias_id = $provincia_id WHERE id = $ubicacion_id";
+        $sql = "UPDATE ubicacion SET localidades_id = $localidad_id WHERE id = $ubicacion_id";
         mysql_query($sql);
              
         $sql = "UPDATE clientes SET
@@ -40,7 +40,8 @@
         				cli_direccion = '$cli_direccion',
                                         cli_direccion_fiscal = '$cli_direccion_fiscal',    
         				cli_telefono = '$cli_telefono',
-        				cli_notas = '$cli_notas'
+        				cli_notas = '$cli_notas',
+                                        sucursal= '$cli_SucursalDetalle'
         		WHERE cli_id = $cli_id";
 
 		mysql_query($sql);

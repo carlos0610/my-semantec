@@ -26,7 +26,7 @@
         
         //$query = $_SESSION["query"];
       //  unset($_SESSION["cli_id"]);        
-        $sql = "SELECT cli_nombre, cli_cuit, iva_tipo.iva_nombre,p.nombre as provincia,pa.nombre as partido,l.nombre as localidad, cli_direccion,cli_direccion_fiscal, cli_telefono, cli_notas 
+        $sql = "SELECT cli_nombre,sucursal , cli_cuit, iva_tipo.iva_nombre,p.nombre as provincia,pa.nombre as partido,l.nombre as localidad, cli_direccion,cli_direccion_fiscal, cli_telefono, cli_notas 
                 FROM clientes,iva_tipo,ubicacion u,provincias p, partidos pa,localidades l
                 WHERE cli_id =  $cli_id
         	AND clientes.iva_id = iva_tipo.iva_id
@@ -95,20 +95,15 @@
             <td>Condici&oacute;n de IVA</td>
             <td><?php echo($cliente["iva_nombre"]); ?></td>
             <td></td>
-          </tr>          
+          </tr> 
+          <tr>
+            <td>Sucursal</td>
+            <td><?php echo(utf8_encode($cliente["sucursal"])); ?></td>
+            <td></td>
+          </tr>
           <tr>
             <td>Provincia</td>
             <td><?php echo(utf8_encode($cliente["provincia"])); ?></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Partido</td>
-            <td><?php echo(utf8_encode($cliente["partido"])); ?></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Localidad</td>
-            <td><?php echo(utf8_encode($cliente["localidad"])); ?></td>
             <td></td>
           </tr>
           <tr>

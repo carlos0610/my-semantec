@@ -5,7 +5,7 @@
 
         include("conexion.php");
 /* CALCULO PAGINADO */  ###############################################################################
-    $sql0="SELECT sucursal_id,cli_id,cli_nombre, cli_cuit, iva_tipo.iva_nombre,p.nombre as provincia,pa.nombre as partido,l.nombre as localidad, cli_direccion,cli_direccion_fiscal, cli_telefono, cli_notas 
+    $sql0="SELECT sucursal_id, cli_id,cli_nombre, cli_cuit, iva_tipo.iva_nombre,p.nombre as provincia,pa.nombre as partido,l.nombre as localidad, cli_direccion,cli_direccion_fiscal, cli_telefono, cli_notas
            FROM clientes,iva_tipo,ubicacion u,provincias p, partidos pa,localidades l
            WHERE 
            clientes.iva_id = iva_tipo.iva_id
@@ -18,7 +18,7 @@
     $tamPag=20;
     
     include("paginado.php");        
-        $sql = "SELECT sucursal_id,cli_id,cli_nombre, cli_cuit, iva_tipo.iva_nombre,p.nombre as provincia,pa.nombre as partido,l.nombre as localidad, cli_direccion,cli_direccion_fiscal, cli_telefono, cli_notas 
+        $sql = "SELECT sucursal_id,cli_id,cli_nombre, cli_cuit, iva_tipo.iva_nombre,p.nombre as provincia,pa.nombre as partido,l.nombre as localidad, cli_direccion,cli_direccion_fiscal, cli_telefono, cli_notas, sucursal  
                 FROM clientes,iva_tipo,ubicacion u,provincias p, partidos pa,localidades l
                 WHERE clientes.iva_id = iva_tipo.iva_id
                 AND clientes.ubicacion_id = u.id
@@ -26,7 +26,7 @@
                 AND u.partidos_id = pa.id
                 AND u.localidades_id = l.id
                 AND clientes.estado = 1  ";
-                $sql .= " LIMIT ".$limitInf.",".$tamPag; 
+                $sql .= "ORDER BY cli_nombre  LIMIT ".$limitInf.",".$tamPag; 
         $resultado = mysql_query($sql);
         $cantidad = mysql_num_rows($resultado);
 
@@ -71,7 +71,7 @@
           <tr class="titulo">
             <td>Nombre</td>
             <td width="90">CUIT</td>
-            <td width="90">Tel&eacute;fono</td>
+            <td width="120">Tel&eacute;fono</td>
             <td width="32">&nbsp;</td>
             <td width="32">&nbsp;</td>
             <td width="32">
@@ -84,7 +84,7 @@
           while($fila = mysql_fetch_array($resultado)){
   ?>
           <tr class="lista" bgcolor="<?php echo($colores[$i]);?>">
-              <td><?php echo(utf8_encode($fila["cli_nombre"]));  if (isset($fila["sucursal_id"]))  echo " -- (SUCURSAL ".$fila['provincia'].")";?> </td>
+              <td><?php echo(utf8_encode($fila["cli_nombre"])); if (isset($fila["sucursal_id"])){ echo" - ",(utf8_encode($fila["sucursal"]));  echo " - (SUCURSAL ".$fila['provincia'].")";}?> </td>
             <td><?php echo(verCUIT($fila["cli_cuit"]));?></td>
             <td><?php echo($fila["cli_telefono"]);?></td>
             <td>
