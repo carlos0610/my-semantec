@@ -91,6 +91,8 @@
 
     <div id ="login">
          <span id="mensaje_top" style="text-align:right;">
+          Configuración
+          <a href="form-configuracion.php"><img src="images/icono-formulario.jpg"  alt="configuración" title="configuración" width="32" height="32" border="none" valign="middle" hspace="8"></a>
           <?php echo($_SESSION["usu_nombre"]); ?>
           <a href="logout.php"><img src="images/salir.png"  alt="salir" title="Salir" width="32" height="32" border="none" valign="middle" hspace="8"></a>
          </span>
