@@ -6,13 +6,17 @@
         include("conexion.php");
 /* CALCULO PAGINADO */  ###############################################################################
     $sql0="SELECT `ban_nombre`, `ban_direccion`, `ban_telefono`  
-           FROM `banco` ";
+           FROM `banco` 
+           where estado=1
+           ";
     
     $tamPag=20;
     
     include("paginado.php");        
         $sql = "SELECT `ban_id`, `ban_nombre`, `ban_direccion`, `ban_telefono`  
-                FROM `banco` ";
+                FROM `banco` 
+                where estado=1
+                ";
                 $sql .= "ORDER BY ban_nombre  LIMIT ".$limitInf.",".$tamPag; 
         $resultado = mysql_query($sql);
         $cantidad = mysql_num_rows($resultado);
