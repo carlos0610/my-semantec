@@ -17,7 +17,7 @@
                 FROM `banco` 
                 where estado=1
                 ";
-                $sql .= "ORDER BY ban_nombre  LIMIT ".$limitInf.",".$tamPag; 
+                $sql .= " ORDER BY ban_nombre  LIMIT ".$limitInf.",".$tamPag; 
         $resultado = mysql_query($sql);
         $cantidad = mysql_num_rows($resultado);
 
@@ -32,7 +32,7 @@
     include("encabezado-main.php");
     
 ?>    
-      <script src="js/sorttable.js"></script>
+     
   </head>
   <body>
 	
@@ -56,9 +56,54 @@
 
    <!--start contenedor-->
    <div id="contenedor" style="height:auto;">
-      <h2>Panel de control - Listado de clientes</h2>
+      <h2>Panel de Configuración Bancos</h2>
+      
+     <form action="alta-banco.php" method="post">
+      <table class="forms" cellpadding="1">
+          <tr>
+             <td><b>Nuevo Banco</b></td> 
+          </tr>
+          <tr>
+            <td>Banco</td>
+            <td><input type="text" value="" id="ban_nombre" name="ban_nombre" class="campos" required/></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Tel&eacute;fono</td>
+            <td><input value="" type="text" style="text-align:left" class="campos" id="ban_telefono" name="ban_telefono" required/></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>Direcci&oacute;n</td>
+            <td><input value="<?php echo(utf8_encode($fila_banco["ban_direccion"])); ?>" type="text" class="campos" id="ban_direccion" name="ban_direccion" required/></td>
+            <td></td>
+          </tr>
 
-      <table class="sortable" cellpadding="5">
+          <tr>
+            <td>&nbsp;</td>
+            <td>
+                <input type="reset" value="Restablecer" class="botones" /> &nbsp; &nbsp; 
+                <input type="submit" value="Agregar Banco" class="botones" />
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td >&nbsp;</td>
+          </tr>
+      </table> 
+
+      </form>  
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <table class="sortable" cellpadding="3">
           <tr class="titulo">
             <td>Banco</td>
             <td width="90">Tel&eacute;fono</td>

@@ -4,9 +4,9 @@
 
         include("conexion.php");
         $id = $_GET["id"];
-        $sql0 = "SELECT `ban_nombre`, `ban_direccion`, `ban_telefono`  
-                  FROM `banco` 
-                  WHERE ban_id=$id";
+        $sql0 = "SELECT `rub_nombre`
+                  FROM `rubros` 
+                  WHERE rub_id=$id";
         $banco = mysql_query($sql0);
         $fila_banco = mysql_fetch_array($banco);      
         
@@ -43,38 +43,26 @@
 
    <!--start contenedor-->
    <div id="contenedor" style="height:auto;">
-      <form action="edit-banco.php" method="post">
+      <form action="edit-rubro.php" method="post">
       <table class="forms" cellpadding="5">
           <tr class="titulo">
             <td colspan="2"> <?php echo($titulo)?> </td>
             <td width="32">
-                <a href="lista-bancos.php">
+                <a href="lista-rubros.php">
                     <img src="images/home.png"  alt="inicio" title="Volver al panel" width="32" height="32" border="none" />
                 </a>
             </td>
           </tr>
           <tr>
-            <td>Banco</td>
-            <td><input type="text" value="<?php echo(utf8_encode($fila_banco["ban_nombre"])); ?>" id="ban_nombre" name="ban_nombre" class="campos" required/></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Tel&eacute;fono</td>
-            <td><input value="<?php echo($fila_banco["ban_telefono"]); ?>" type="text" style="text-align:left" class="campos" id="ban_telefono" name="ban_telefono" required/></td>
-            <td></td>
-          </tr>
-          
-          <tr>
-            <td>Direcci&oacute;n</td>
-            <td><input value="<?php echo(utf8_encode($fila_banco["ban_direccion"])); ?>" type="text" class="campos" id="ban_direccion" name="ban_direccion" required/></td>
+            <td>Rubro Nombre</td>
+            <td><input type="text" value="<?php echo(utf8_encode($fila_banco["rub_nombre"])); ?>" id="rub_nombre" name="rub_nombre" class="campos" required/></td>
             <td></td>
           </tr>
 
-          <tr>
             <td>&nbsp;</td>
             <td>
                 <input type="reset" value="Restablecer" class="botones" /> &nbsp; &nbsp; 
-                <input type="submit" value="Modificar Banco" class="botones" />
+                <input type="submit" value="Modificar Rubro" class="botones" />
                 <input type="hidden" value="<?php echo($id); ?>" name="id" id="id" />
                 <?php         if($_GET["actualizo"]==1)
         {

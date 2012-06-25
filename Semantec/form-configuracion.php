@@ -51,7 +51,7 @@
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           
       <a href="lista-bancos.php"><input type="button" value="Banco ABM" class="botones" /></a>
-      <a href="form-seleccionar-proveedor.php?action=2"><input type="button" value="Rubro ABM" class="botones" /></a>
+      <a href="lista-rubros.php"><input type="button" value="Rubro ABM" class="botones" /></a>
       
       </div>
       <div class="clear"></div>

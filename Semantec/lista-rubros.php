@@ -5,28 +5,19 @@
 
         include("conexion.php");
 /* CALCULO PAGINADO */  ###############################################################################
-    $sql0="SELECT sucursal_id, cli_id,cli_nombre, cli_cuit, iva_tipo.iva_nombre,p.nombre as provincia,pa.nombre as partido,l.nombre as localidad, cli_direccion,cli_direccion_fiscal, cli_telefono, cli_notas
-           FROM clientes,iva_tipo,ubicacion u,provincias p, partidos pa,localidades l
-           WHERE 
-           clientes.iva_id = iva_tipo.iva_id
-           AND clientes.ubicacion_id = u.id
-           AND u.provincias_id = p.id
-           AND u.partidos_id = pa.id
-           AND u.localidades_id = l.id
-           AND clientes.estado = 1";
+    $sql0="SELECT `rub_id`, `rub_nombre` 
+           FROM `rubros` 
+           WHERE `estado`=1
+           ";
     
     $tamPag=20;
     
     include("paginado.php");        
-        $sql = "SELECT sucursal_id,cli_id,cli_nombre, cli_cuit, iva_tipo.iva_nombre,p.nombre as provincia,pa.nombre as partido,l.nombre as localidad, cli_direccion,cli_direccion_fiscal, cli_telefono, cli_notas, sucursal  
-                FROM clientes,iva_tipo,ubicacion u,provincias p, partidos pa,localidades l
-                WHERE clientes.iva_id = iva_tipo.iva_id
-                AND clientes.ubicacion_id = u.id
-                AND u.provincias_id = p.id
-                AND u.partidos_id = pa.id
-                AND u.localidades_id = l.id
-                AND clientes.estado = 1  ";
-                $sql .= "ORDER BY cli_nombre  LIMIT ".$limitInf.",".$tamPag; 
+        $sql = "SELECT `rub_id`, `rub_nombre` 
+                FROM `rubros` 
+                WHERE `estado`=1
+                ";
+                $sql .= " ORDER BY rub_nombre  LIMIT ".$limitInf.",".$tamPag; 
         $resultado = mysql_query($sql);
         $cantidad = mysql_num_rows($resultado);
 
@@ -41,7 +32,7 @@
     include("encabezado-main.php");
     
 ?>    
-
+     
   </head>
   <body>
 	
@@ -65,17 +56,48 @@
 
    <!--start contenedor-->
    <div id="contenedor" style="height:auto;">
-      <h2>Panel de control - Listado de clientes</h2>
+      <h2>Panel de Configuración Rubros</h2>
+      
+     <form action="alta-rubro.php" method="post">
+      <table class="forms" cellpadding="1">
+          <tr>
+             <td><b>Nuevo Rubro</b></td> 
+          </tr>
+          <tr>
+            <td>Rubro Nombre</td>
+            <td><input type="text" value="" id="rub_nombre" name="rub_nombre" class="campos" required/></td>
+            <td></td>
+          </tr>
 
-      <table class="sortable" cellpadding="5">
+          <tr>
+            <td>&nbsp;</td>
+            <td>
+                <input type="reset" value="Restablecer" class="botones" /> &nbsp; &nbsp; 
+                <input type="submit" value="Agregar Rubro" class="botones" />
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td >&nbsp;</td>
+          </tr>
+      </table> 
+
+      </form>  
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <table class="sortable" cellpadding="3">
           <tr class="titulo">
-            <td>Nombre</td>
-            <td width="90">CUIT</td>
-            <td width="120">Tel&eacute;fono</td>
-            <td width="32">&nbsp;</td>
+            <td>Rubro Nombre</td>
             <td width="32">&nbsp;</td>
             <td width="32">
-                <a href="index-admin.php">
+                <a href="form-configuracion.php">
                     <img src="images/home.png"  alt="inicio" title="Volver al panel" width="32" height="32" border="none" />
                 </a>
             </td>
@@ -84,20 +106,13 @@
           while($fila = mysql_fetch_array($resultado)){
   ?>
           <tr class="lista" bgcolor="<?php echo($colores[$i]);?>">
-              <td><?php echo(utf8_encode($fila["cli_nombre"])); if (isset($fila["sucursal_id"])){ echo" - ",(utf8_encode($fila["sucursal"]));  echo " - (SUCURSAL ".$fila['provincia'].")";}?> </td>
-            <td><?php echo(verCUIT($fila["cli_cuit"]));?></td>
-            <td><?php echo($fila["cli_telefono"]);?></td>
+              <td><?php echo(utf8_encode($fila["rub_nombre"])); ?></td>   
             <td>
-                <a href="ver-alta-clientes.php?cli_id=<?php echo($fila["cli_id"]);?>&action=0">
-                  <img src="images/detalles.png" alt="editar" title="ver detalle" width="32" height="32" border="none" />
-                </a>  
-            </td>       
-            <td>
-                <a href="form-edit-clientes.php?cli_id=<?php echo($fila["cli_id"]);?>">
+                <a href="form-edit-rubro.php?id=<?php echo($fila["rub_id"]);?>">
                   <img src="images/editar.png" alt="editar" title="Modificar cliente" width="32" height="32" border="none" />
                 </a>  
               </td>
-            <td><a href="#" onclick="eliminarCliente(<?php echo($fila["cli_id"]);?>,'<?php echo($fila["cli_nombre"]);?>')">
+            <td><a href="#" onclick="eliminarItem(<?php echo($fila["rub_id"]);?>,'<?php echo($fila["rub_nombre"]);?>','delete-rubro.php?id=')">
                     <img src="images/eliminar.png" alt="eliminar" title="Eliminar cliente" width="32" height="32" border="none" />
                 </a></td>
           </tr>

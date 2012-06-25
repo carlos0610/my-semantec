@@ -481,8 +481,6 @@ function eliminarItem(id,nombre,url){
     
     if(confirm('¿Confirma eliminar: '+nombre+' ?')==true)
     {
-       // window.location="delete-clientes.php?cli_id="+id;  
-       alert(url+id);
         window.location=url+id;   
     }
 }
