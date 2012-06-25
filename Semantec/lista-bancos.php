@@ -78,7 +78,7 @@
             <td><?php echo(verCUIT($fila["ban_telefono"]));?></td>
             <td><?php echo($fila["ban_direccion"]);?></td>      
             <td>
-                <a href="form-edit-clientes.php?cli_id=<?php echo($fila["cli_id"]);?>">
+                <a href="form-edit-banco.php?id=<?php echo($fila["ban_id"]);?>">
                   <img src="images/editar.png" alt="editar" title="Modificar cliente" width="32" height="32" border="none" />
                 </a>  
               </td>
