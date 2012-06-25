@@ -7,8 +7,7 @@
 /* CALCULO PAGINADO */  ###############################################################################
     $sql0="SELECT `ban_nombre`, `ban_direccion`, `ban_telefono`  
            FROM `banco` 
-           where estado=1
-           ";
+           where estado=1";
     
     $tamPag=20;
     
@@ -120,7 +119,7 @@
   ?>
           <tr class="lista" bgcolor="<?php echo($colores[$i]);?>">
               <td><?php echo(utf8_encode($fila["ban_nombre"])); ?></td>
-            <td><?php echo(verCUIT($fila["ban_telefono"]));?></td>
+            <td><?php echo(utf8_encode($fila["ban_telefono"]));?></td>
             <td><?php echo($fila["ban_direccion"]);?></td>      
             <td>
                 <a href="form-edit-banco.php?id=<?php echo($fila["ban_id"]);?>">

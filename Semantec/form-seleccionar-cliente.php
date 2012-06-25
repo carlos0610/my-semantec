@@ -14,9 +14,10 @@
         $sql0 = "SELECT distinct (ccc_id),c.cli_id,c.cli_nombre,cc.fav_id,sum(o.ord_venta) as 'Monto',f.fav_fecha_pago,f.usu_nombre  from detalle_corriente_cliente cc, clientes c, factura_venta f, ordenes o,grupo_ordenes g_o
                 WHERE
                 cc.fav_id  	= f.fav_id
-                AND f.gru_id  		= g_o.gru_id
+                AND f.gru_id  	= g_o.gru_id
                 AND g_o.gru_id 	= o.gru_id
-                AND o.cli_id	   = c.cli_id
+                AND o.cli_id	= c.cli_id
+                AND c.cli_id = 1
                 group by f.fav_id
                 order by fav_fecha_pago desc;";
         

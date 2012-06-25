@@ -82,7 +82,7 @@
                     <img src="images/home.png"  alt="inicio" title="Volver al panel" width="32" height="32" border="none" />                </a>            </td>
           </tr>
           <tr>
-            <td>Razón Social</td>
+            <td>Usuario</td>
             <td><?php echo(utf8_encode($cliente["cli_nombre"])); if ($action==3) echo " -- SUCURSAL (".$cliente['provincia'].")"; ?> </td>
             <td></td>
           </tr>

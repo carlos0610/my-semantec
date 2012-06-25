@@ -32,7 +32,7 @@
                     AND o.prv_id = p.prv_id  
                     AND o.estado = 1
                     AND o.est_id = 2
-		    AND DATEDIFF(ord_plazo_proveedor,now()) = 1 
+		    AND DATEDIFF(ord_plazo_proveedor,now()) = (SELECT valor from parametros where par_id = 1) 
                     ORDER BY o.ord_alta DESC";
         $alerta_plazo_proveedor = mysql_query($sql0);
         $fila_plazo_proveedor = mysql_num_rows($alerta_plazo_proveedor);
@@ -60,7 +60,7 @@
                     AND o.prv_id = p.prv_id  
                     AND o.estado = 1
                     AND o.est_id > 8
-		    AND DATEDIFF(ord_plazo,now()) = 1 
+		    AND DATEDIFF(ord_plazo,now()) = (SELECT valor from parametros where par_id = 2) 
                     ORDER BY o.ord_alta DESC";
         $alerta_plazo_finalizado = mysql_query($sql);
         $fila_plazo_finalizado = mysql_num_rows($alerta_plazo_finalizado);
@@ -91,8 +91,11 @@
 
     <div id ="login">
          <span id="mensaje_top" style="text-align:right;">
-          Configuración
+          <?php if($_SESSION["rol_id"] == 1){?>
+             Configuración
           <a href="form-configuracion.php"><img src="images/icono-formulario.jpg"  alt="configuración" title="configuración" width="32" height="32" border="none" valign="middle" hspace="8"></a>
+          <?php } ?>
+              
           <?php echo($_SESSION["usu_nombre"]); ?>
           <a href="logout.php"><img src="images/salir.png"  alt="salir" title="Salir" width="32" height="32" border="none" valign="middle" hspace="8"></a>
          </span>

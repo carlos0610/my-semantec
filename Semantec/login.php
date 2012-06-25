@@ -4,7 +4,7 @@
 
 	include("conexion.php");
 
-	$sql = "SELECT usu_id,usu_nombre FROM usuarios WHERE usu_login = '$usu_login' AND usu_clave = '$usu_clave'";
+	$sql = "SELECT rol_id,usu_id,usu_nombre FROM usuarios WHERE usu_login = '$usu_login' AND usu_clave = '$usu_clave'";
 	$resultado = mysql_query($sql);
 	$cant = mysql_num_rows($resultado);
 
@@ -18,6 +18,7 @@
 		$fila = mysql_fetch_array($resultado);
 		$_SESSION["usu_nombre"] = $fila["usu_nombre"];
                 $_SESSION["usu_id"]     = $fila["usu_id"];
+                $_SESSION["rol_id"]     = $fila["rol_id"];
 		header("location:index-admin.php");
 	}
 	mysql_close();

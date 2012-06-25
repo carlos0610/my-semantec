@@ -84,7 +84,7 @@
           while($fila = mysql_fetch_array($resultado)){
   ?>
           <tr class="lista" bgcolor="<?php echo($colores[$i]);?>">
-              <td><?php echo(utf8_encode($fila["cli_nombre"])); if (isset($fila["sucursal_id"])){ echo" - ",(utf8_encode($fila["sucursal"]));  echo " - (SUCURSAL ".$fila['provincia'].")";}?> </td>
+              <td><?php echo(utf8_encode($fila["cli_nombre"])); if (isset($fila["sucursal_id"])){ echo" - ",(utf8_encode($fila["sucursal"]));  echo " - (".$fila['provincia'].")";}?> </td>
             <td><?php echo(verCUIT($fila["cli_cuit"]));?></td>
             <td><?php echo($fila["cli_telefono"]);?></td>
             <td>

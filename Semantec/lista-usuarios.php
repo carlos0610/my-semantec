@@ -5,18 +5,20 @@
 
         include("conexion.php");
 /* CALCULO PAGINADO */  ###############################################################################
-    $sql0="SELECT `rub_id`, `rub_nombre` 
-           FROM `rubros` 
-           WHERE `estado`=1";
+    $sql0="SELECT u.usu_id,r.rol_nombre,u.usu_nombre,u.usu_login,u.usu_email FROM usuarios u, roles r 
+                           WHERE u.rol_id = r.rol_id
+                           AND u.estado = 1";
     
     $tamPag=20;
     
     include("paginado.php");        
-        $sql = "SELECT `rub_id`, `rub_nombre` 
-                FROM `rubros` 
-                WHERE `estado`=1";
-                $sql .= " ORDER BY rub_nombre  LIMIT ".$limitInf.",".$tamPag; 
+        $sql = "SELECT u.usu_id,r.rol_nombre,u.usu_nombre,u.usu_login,u.usu_email FROM usuarios u, roles r 
+                WHERE u.rol_id = r.rol_id
+                AND u.estado = 1";
+                $sql .= " ORDER BY u.usu_login LIMIT ".$limitInf.",".$tamPag; 
         $resultado = mysql_query($sql);
+        
+        //echo $sql;
         $cantidad = mysql_num_rows($resultado);
 
         $i = 0;
@@ -30,7 +32,7 @@
     include("encabezado-main.php");
     
 ?>    
-     
+
   </head>
   <body>
 	
@@ -54,65 +56,35 @@
 
    <!--start contenedor-->
    <div id="contenedor" style="height:auto;">
-      <h2>Panel de Configuración Rubros</h2>
-      
-     <form action="alta-rubro.php" method="post">
-      <table class="forms" cellpadding="1">
-          <tr>
-             <td><b>Nuevo Rubro</b></td> 
-          </tr>
-          <tr>
-            <td>Rubro Nombre</td>
-            <td><input type="text" value="" id="rub_nombre" name="rub_nombre" class="campos" required/></td>
-            <td></td>
-          </tr>
+      <h2>Panel de control - Listado de usuarios</h2>
 
-          <tr>
-            <td>&nbsp;</td>
-            <td>
-                <input type="reset" value="Restablecer" class="botones" /> &nbsp; &nbsp; 
-                <input type="submit" value="Agregar Rubro" class="botones" />
-            </td>
-            <td></td>
-          </tr>
-          <tr>
-            <td >&nbsp;</td>
-          </tr>
-      </table> 
-
-      </form>  
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      <table class="sortable" cellpadding="3">
+      <table class="sortable" cellpadding="5">
           <tr class="titulo">
-            <td>Rubro Nombre</td>
-            <td width="32">&nbsp;</td>
-            <td width="32">
+            <td width="120">Usuario</td>
+            <td width="384">Nombre</td>
+            <td width="384">Rol</td>
+            <td width="199">Email</td>
+            <td width="35">&nbsp;</td>
+            <td width="35">&nbsp;</td>           
+          <td width="35">
                 <a href="form-configuracion.php">
-                    <img src="images/home.png"  alt="inicio" title="Volver al panel" width="32" height="32" border="none" />
-                </a>
-            </td>
-          </tr>
+                    <img src="images/home.png"  alt="inicio" title="Volver al panel" width="32" height="32" border="none" />                </a>            </td>
+        </tr>
   <?php
           while($fila = mysql_fetch_array($resultado)){
   ?>
           <tr class="lista" bgcolor="<?php echo($colores[$i]);?>">
-              <td><?php echo(utf8_encode($fila["rub_nombre"])); ?></td>   
-            <td>
-                <a href="form-edit-rubro.php?id=<?php echo($fila["rub_id"]);?>">
-                  <img src="images/editar.png" alt="editar" title="Modificar cliente" width="32" height="32" border="none" />
-                </a>  
-              </td>
-            <td><a href="#" onclick="eliminarItem(<?php echo($fila["rub_id"]);?>,'<?php echo($fila["rub_nombre"]);?>','delete-rubro.php?id=')">
-                    <img src="images/eliminar.png" alt="eliminar" title="Eliminar cliente" width="32" height="32" border="none" />
-                </a></td>
+              <td><?php echo(utf8_encode($fila["usu_login"]));?> </td>
+            <td><?php echo $fila["usu_nombre"];?></td>
+            <td><?php echo($fila["rol_nombre"]);?></td>
+            <td><?php echo($fila["usu_email"]);?></td>           
+            <td><a href="form-edit-usuarios.php?usu_id=<?php echo($fila["usu_id"]);?>">
+                  <img src="images/editar.png" alt="editar" title="Modificar usuario" width="32" height="32" border="none" />                </a>              </td>       
+            <td><a href="#" onClick="eliminarUsuario(<?php echo($fila["usu_id"]);?>,'<?php echo($fila["usu_login"]);?>')">
+                    <img src="images/eliminar.png" alt="eliminar" title="Eliminar usuario" width="32" height="32" border="none" />
+                </a>
+                            </td>
+            <td></td>
           </tr>
   <?php
             $i++;
@@ -121,7 +93,7 @@
           }
   ?>
       </table>
-      <table class="listados" cellpadding="5">
+<table class="listados" cellpadding="5">
           <tr>
             <td colspan="5" class="pie_lista"><?php 
 /* PAGINADO */  ###############################################################################            

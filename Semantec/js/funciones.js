@@ -19,6 +19,19 @@ function eliminarCliente(id,nombre){
 }
 
 
+function eliminarUsuario(id,nombre){
+    if(confirm('¿Confirma eliminar usuario: '+nombre+' ?')==true)
+    {
+        window.location="delete-usuarios.php?usu_id="+id;       
+       
+    }
+    
+    
+}
+
+
+
+
 function eliminarProveedor(id,nombre){
     
     if(confirm('¿Confirma eliminar proveedor: '+nombre+' ?')==true)
@@ -26,6 +39,9 @@ function eliminarProveedor(id,nombre){
         window.location="delete-proveedores.php?prv_id="+id;
     }
 }
+
+
+
 // BAJA Factura
 function eliminarFactura(id){
     
@@ -130,8 +146,11 @@ function habilitarComboCliente(formulario){
 
 function habilitarFiltros(nombre,gadet){
   if(document.getElementById(nombre).checked){ 
-     document.getElementById(gadet).disabled=false;   
-  }else{document.getElementById(gadet).disabled=true  ;}
+     document.getElementById(gadet).disabled=false;
+     document.getElementById(gadet).focus();
+  }else{
+      document.getElementById(gadet).disabled=true  ;
+  }
    
 }
 
@@ -200,9 +219,9 @@ function ActualizarTotal(cantidadDescripciones,factura){
     totalOrdenesVenta2 = parseFloat(totalOrdenesVenta) + parseFloat(totalIva);
     document.getElementById('totalLabel').innerHTML ="Total Órdenes venta: $ "+(totalOrdenesVenta2).toFixed(2);
     if(document.getElementById("txtTotalFactura").value==totalOrdenesVenta2)
-        {document.getElementById("btnConfirma").style.visibility = "visible"; }
+        {document.getElementById("btnConfirma").style.visibility = "visible";}
         else{alert("La factura no iguala el total aceptado");
-          document.getElementById("btnConfirma").style.visibility = "hidden"; }
+          document.getElementById("btnConfirma").style.visibility = "hidden";}
     } else {
     percepciones = parseFloat(document.getElementById("txtPercepciones").value);
     document.getElementById("txtTotalFactura").value =  subtotal + percepciones;      
@@ -238,7 +257,7 @@ function actualizarIva(factura){
                      {
                          alert("La factura supera el monto total aceptado");
                          document.getElementById("btnConfirma").style.visibility = "hidden"; 
-                     }else{ document.getElementById("btnConfirma").style.visibility = "visible"; }
+                     }else{document.getElementById("btnConfirma").style.visibility = "visible";}
             }   
             else
                 document.getElementById("txtTotalFactura").value = parseFloat(total_iva) + parseFloat(subtotal) +  parseFloat(document.getElementById("txtPercepciones").value);    
