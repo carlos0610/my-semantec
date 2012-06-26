@@ -14,7 +14,10 @@
       $titulo = "Se han modificado los dato del siguiente proveedor.";
       $prv_id = $_SESSION["prv_id"];
     }
-       
+    if($action ==4)    { 
+          $titulo = " ¡ DIFICULTAD TRANSACCIONAL EN ALTA DE PROVEEDOR !"; 
+          $cli_id = $_SESSION["prv_id"];
+    }   
         include("conexion.php");
         
         //$query = $_SESSION["query"];

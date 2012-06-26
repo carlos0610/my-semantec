@@ -20,7 +20,10 @@
           $cli_id = $_SESSION["cli_id"];
         
     }
-       
+        if($action ==4)    { 
+          $titulo = " ¡ DIFICULTAD TRANSACCIONAL EN ALTA DE CLIENTE !"; 
+          $cli_id = $_SESSION["cli_id"];
+    }  
 
         include("conexion.php");
         

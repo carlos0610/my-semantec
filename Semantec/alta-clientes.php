@@ -89,22 +89,29 @@
                             $error=1;
                         }
                         
-                        if($error) {
+                  if($error) 
+                      {
                             mysql_query("ROLLBACK");
                             echo "Error en la transaccion";
+                             mysql_close();
                             header("location:ver-alta-clientes.php?action=4");
-                        } else {
+                        } 
+                        else 
+                        {
                         mysql_query("COMMIT");
+                         mysql_close();
                         echo "Transacción exitosa";
+                            if ($sucursal != "NULL"){
+                            header("location:ver-alta-clientes.php?action=3");
+                            }else{
+                                
+                             header("location:ver-alta-clientes.php?action=1");                       
+                             }       
                         }
                         
-                        mysql_close();
+                       
 		
                         
-                if ($sucursal != "NULL"){
-                header("location:ver-alta-clientes.php?action=3");
-                }else{
-                header("location:ver-alta-clientes.php?action=1");                       
-                }
+
                         
 ?>

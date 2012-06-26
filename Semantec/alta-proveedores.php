@@ -18,11 +18,14 @@
         $localidad_id   = $_POST["select3"];
         
         /* GENERAMOS UN CÓDIGO DE UBICACIÓN EN LA TABLA UBICACIÓN */
+        $error = 0; //variable para detectar error
+        mysql_query("BEGIN"); // Inicio de Transacción
         
         $sql = "INSERT INTO ubicacion (provincias_id,partidos_id,localidades_id) VALUES ($provincia_id,$partido_id,$localidad_id)";
-        mysql_query($sql);
-        
-       $ubicacion_id = mysql_insert_id();
+        $result=mysql_query($sql);
+        if(!$result)
+        $error=1;
+        $ubicacion_id = mysql_insert_id();
         
         
         
@@ -56,7 +59,9 @@
                                                                                         1
         										)";
 		
-                mysql_query($sql);
+                $result= mysql_query($sql);
+                if(!$result)
+                        $error=1;
                 $prv_id = mysql_insert_id(); // <-- Proveedor recién ingresado
                 
 		$_SESSION["prv_id"] = $prv_id;
@@ -77,12 +82,21 @@
                 
                 /* REGISTRO CUENTA CORRIENTE DE PROVEEDOR */
                 $sql = "INSERT INTO cuentacorriente_prv (prv_id) VALUES ($prv_id)";
-                mysql_query($sql);
-
-		mysql_close();
+                $result=mysql_query($sql);
+                if(!$result)
+                        $error=1;
+                if($error) {
+                        mysql_query("ROLLBACK");
+                        echo "Error en la transaccion";
+                             mysql_close();
+                             header("location:ver-alta-proveedores.php?action=4");
+                        } else {
+                        mysql_query("COMMIT");
+                           echo "Transacción exitosa";
+                           mysql_close();
+                           header("location:ver-alta-proveedores.php?action=1");
+                        }
                 
-                
-                //echo "QUERY: ".$mensaje2;
-                header("location:ver-alta-proveedores.php?action=1");
+		
 
 ?>
