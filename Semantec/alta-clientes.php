@@ -20,8 +20,8 @@
         include("conexion.php");
         /* OBTENEMOS LOS DATOS DE UBICACIÓN DE LOS SELECTS*/
         $provincia_id   = $_POST["select1"];
-        $partido_id     = $_POST["select2"];
-        $localidad_id   = $_POST["select3"];
+        //$partido_id     = $_POST["select2"];
+        //$localidad_id   = $_POST["select3"];
         
         /* GENERAMOS UN CÓDIGO DE UBICACIÓN EN LA TABLA UBICACIÓN */
         
@@ -33,6 +33,8 @@
       //  mysql_query($sql);
       //  echo $sql;
         $result=mysql_query("INSERT INTO ubicacion (provincias_id,partidos_id,localidades_id) VALUES ($provincia_id,1,1)");
+        
+        
         $ubicacion_id = mysql_insert_id();
         if(!$result)
             $error=1;
@@ -63,7 +65,7 @@
                if(!$result)
                      $error=1;
                
-                echo "QUERY DE INSERT CLIENTE : ".$sql;
+                //echo "QUERY DE INSERT CLIENTE : ".$sql;
                 
                 
                 $idCliente = mysql_insert_id();
@@ -92,7 +94,7 @@
                   if($error) 
                       {
                             mysql_query("ROLLBACK");
-                            echo "Error en la transaccion";
+                                echo "Error en la transaccion";
                              mysql_close();
                             header("location:ver-alta-clientes.php?action=4");
                         } 

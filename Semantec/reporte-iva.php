@@ -1,5 +1,5 @@
 <?php
-    $titulo = "Listado de Facturas.";
+        $titulo = "Listado de Facturas.";
         include("validar.php");
         include("funciones.php");
         include("conexion.php");
@@ -9,9 +9,29 @@
         
         
         
-        //$pagado=$_POST['pagado'];
-        $cli_id=$_POST['cli_id'];
-       
+        
+            if (isset($_REQUEST["chckCliente"])){
+                            $cli_id        = $_POST['comboClientes'];
+                            $consulta      = " (select cli_id from clientes where sucursal_id = $cli_id or cli_id = $cli_id)";
+                            
+                            while ($fila = mysql_fetch_array($resultado1)){
+                                    if ($fila["cli_id"] == $_REQUEST["comboClientes"]){
+                                        $nombre_cliente = $fila["cli_nombre"];
+                                        }
+                                        
+                            }
+                            mysql_data_seek($resultado1, 0);        
+                            $tituloReporte = " DE ".$nombre_cliente;
+                            } 
+            else            {
+                            $cli_id         =   "";
+                            $consulta       =   " (select cli_id from clientes where estado = 1)";
+                            $tituloReporte  = " DE TODOS LOS CLIENTES";
+                            }
+        
+        
+        //echo " CLIENTE: ".$cli_id;
+              
         $filtrar = $_POST['filtrar'];
         //if($elementoBusqueda!="")
            if(isset($filtrar)) {
@@ -22,6 +42,10 @@
                $fecha_ini = gfecha($fecha_ini);
                $fecha_fin = gfecha($fecha_fin);
             
+               
+               
+               
+               
             $sql = "SELECT ROUND(SUM((det.det_fav_precio * (select valor/100 from iva where idiva = det.idiva))),2) as total_iva  FROM detalle_factura_venta det,factura_venta fa
                                     WHERE
                                     det.fav_id = fa.fav_id
@@ -33,7 +57,7 @@
                                                             AND 
                                                             g_o.gru_id = o.gru_id
                                                             AND
-                                                            o.cli_id  in (select cli_id from clientes where sucursal_id = $cli_id or cli_id = $cli_id)
+                                                            o.cli_id  in $consulta
                                                             AND
                                                             det.fav_id = fa.fav_id
                                                     )
@@ -41,10 +65,7 @@
             //echo "QUERY: ".$sql;
                         
         }
-        
-        
-        
-        
+              
 /* CALCULO PAGINADO */  ###############################################################################
  
     //$tamPag=10;
@@ -68,17 +89,12 @@
                 //$sql .= " ORDER BY f.fav_fecha desc LIMIT ".$limitInf.",".$tamPag;
         
         $resultado = mysql_query($sql);
-        $cantidad = mysql_num_rows($resultado);
+        //$cantidad = mysql_num_rows($resultado);
 
         $i = 0;
         $colores = array("#fff","#e8f7fa");
         $cant = count($colores);
-        
-        
-        
-        
-        
-        
+       
 ?>
 <!doctype html>
 <html>  
@@ -92,7 +108,17 @@
   <script type="text/javascript" src="js/jquery.datepick-es.js"></script>
   <script type="text/javascript">
   $(function() {
+      
       $('#fecha_inicio').datepick();
+        /* Obtenemos mes y a;o actual */
+                var fecha = new Date();
+                var mes  = fecha.getMonth()+1;
+                var anho = fecha.getFullYear();
+        /*Armamos la fecha para setear el primer dia del mes por defecto como -fecha de inicio- */
+                var primerDiaDelMesActual =("01/"+mes+"/"+anho);
+      
+      $("#fecha_inicio").datepick("setDate" , primerDiaDelMesActual);
+      
       $('#fecha_fin').datepick();
   });
   </script>     
@@ -126,7 +152,7 @@
      <table width="100%" border="0">
        <tr>
          <td width="14%"><div align="right">Cliente</div></td>
-         <td width="34%"><select name="cli_id" id="cli_id" class="campos" <?php if($cli_id==""){echo ("disabled");}?>>
+         <td width="34%"><select name="comboClientes" id="comboClientes" class="campos" <?php if($cli_id==""){echo ("disabled");}?>>
            <?php
           while($fila = mysql_fetch_array($resultado1)){
     ?>
@@ -135,18 +161,19 @@
           }
     ?>
          </select></td>
-         <td width="52%"><input name="chckCliente" type="checkbox" id="chckCliente" onClick="habilitarFiltros('chckCliente','cli_id')" <?php if($cli_id!=""){echo ("checked");}?>></td>
+         <td width="52%"><input name="chckCliente" type="checkbox" id="chckCliente" onClick="habilitarFiltros('chckCliente','comboClientes')" <?php if($cli_id!=""){echo ("checked");}?>></td>
        </tr>
        <tr>
          <td><div align="right">Desde</div></td>
-         <td><input type="text" name="fecha_inicio" id="fecha_inicio" class="campos"></td>
+         <td><input type="text" name="fecha_inicio" id="fecha_inicio" class="campos2"></td>
          <td>Hasta 
-           <input type="text" name="fecha_fin" id="fecha_fin" class="campos"></td>
+           <input type="text" name="fecha_fin" id="fecha_fin" class="campos2">
+           <input type="submit" name="filtrar" value="filtrar" class="botones" ></td>
        </tr>
        <tr>
          <td>&nbsp;</td>
          <td>&nbsp;</td>
-         <td><input type="submit" name="filtrar" value="filtrar" class="botones" ></td>
+         <td>&nbsp;</td>
        </tr>
        <tr>
          <td>&nbsp;</td>
@@ -159,8 +186,12 @@
       </div>  
       
       
-      
+   </div>
+      <div class="clear">
+        <div align="center">REPORTE DE IVA  <?php echo $tituloReporte?></div>
+      </div>
       <table class="sortable" cellpadding="5">
+          
           <tr class="titulo">
             <td width="70">Total iva facturado</td>
             <td width="100">Desde</td>
@@ -197,8 +228,7 @@
           </tr>
       </table>   
 
-      <div class="clear"></div>
-   </div>
+      
    <!--end contenedor-->
 
 
