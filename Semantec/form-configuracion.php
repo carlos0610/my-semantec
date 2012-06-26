@@ -20,7 +20,10 @@
   <script type="text/javascript" src="js/validador.js"></script>
   </head>
   <body>
-	
+	      <?php	if($_SESSION["rol_id"] !=1){
+			header("location:index-admin.php");
+	}
+?>
   <!-- start main --><!-- start main --><!-- start main --><!-- start main --><!-- start main -->
   <div id="main">
 
@@ -52,7 +55,7 @@
           
       <a href="lista-bancos.php"><input type="button" value="Banco ABM" class="botones" /></a>
       <a href="lista-rubros.php"><input type="button" value="Rubro ABM" class="botones" /></a>
-      
+
       <a href="lista-usuarios.php">
       <input type="button" value="Usuarios" class="botones" />
       </a>

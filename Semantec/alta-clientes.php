@@ -25,10 +25,17 @@
         
         /* GENERAMOS UN CÓDIGO DE UBICACIÓN EN LA TABLA UBICACIÓN */
         
-        $sql = "INSERT INTO ubicacion (provincias_id,partidos_id,localidades_id) VALUES ($provincia_id,1,1)";
-        mysql_query($sql);
-        echo $sql;
+        $error = 0; //variable para detectar error
+        mysql_query("BEGIN"); // Inicio de Transacción
+
+        
+      //  $sql = "INSERT INTO ubicacion (provincias_id,partidos_id,localidades_id) VALUES ($provincia_id,1,1)";
+      //  mysql_query($sql);
+      //  echo $sql;
+        $result=mysql_query("INSERT INTO ubicacion (provincias_id,partidos_id,localidades_id) VALUES ($provincia_id,1,1)");
         $ubicacion_id = mysql_insert_id();
+        if(!$result)
+            $error=1;
         echo $ubicacion_id;
         
             if (isset($_REQUEST['chkSucursal']))
@@ -52,11 +59,10 @@
                                                                                         '$cli_SucursalDetalle'
         										)";
                                                                                  
-                mysql_query($sql);
-                
-
-
-                
+               $result=mysql_query($sql);
+               if(!$result)
+                     $error=1;
+               
                 echo "QUERY DE INSERT CLIENTE : ".$sql;
                 
                 
@@ -66,8 +72,9 @@
                 /* CREAMOS UNA CUENTA CORRIENTE PARA EL CLIENTE INGRESADO SIEMPRE Y CUANDO NO SEA UNA SUCURSAL */
                 if (!isset($_REQUEST['chkSucursal'])){
                     $sql = "INSERT INTO cuentacorriente_cliente  (cli_id,estado) VALUES ($idCliente,1)";
-                    mysql_query($sql);
-                    
+                    $result=mysql_query($sql);
+                    if(!$result)
+                        $error=1;
                 } else {
                     /* SINO BUSCAMOS EL ID DE LA CUENTA CORRIENTE DE LA SUCURSAL Y LA INSERTAMOS COMO SU CUENTA CORRIENTE */
                         $sql = "select ccc_id  from cuentacorriente_cliente where cli_id = $sucursal";
@@ -77,8 +84,18 @@
                         $id_cuenta_corriente =  $cuenta_corriente['ccc_id'];
                         
                         $sql = "INSERT INTO cuentacorriente_cliente (ccc_id, cli_id, estado) VALUES ($id_cuenta_corriente, $idCliente, 1)";
-                        mysql_query($sql);
+                        $result=mysql_query($sql);
+                        if(!$result)
+                            $error=1;
+                        }
                         
+                        if($error) {
+                            mysql_query("ROLLBACK");
+                            echo "Error en la transaccion";
+                            header("location:ver-alta-clientes.php?action=4");
+                        } else {
+                        mysql_query("COMMIT");
+                        echo "Transacción exitosa";
                         }
                         
                         mysql_close();
