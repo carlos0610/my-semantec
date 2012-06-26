@@ -120,7 +120,7 @@
         $cuenta_corriente = mysql_query($sql);
         $id_cuenta = mysql_fetch_row($cuenta_corriente);
          
-        $sql = "INSERT INTO detalle_corriente_cliente (ord_id,ccc_id) VALUES ($ord_id,$id_cuenta[0])";
+        $sql = "INSERT INTO detalle_corriente_cliente (det_dcc_id,ccc_id) VALUES ($ord_id,$id_cuenta[0])";
         $result=mysql_query($sql);  // ACA LA TRANSACCION ME MARCA ERROR REVISAR
 
         
