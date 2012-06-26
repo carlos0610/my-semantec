@@ -12,7 +12,8 @@
         $usu_nombre = $_SESSION["usu_nombre"];
         $idFile = -1;
         include("conexion.php");
-        
+                $error = 0; //variable para detectar error
+                mysql_query("BEGIN"); // Inicio de Transacción
         
                     /*ADJUNTAR ARCHIVO PARA DETALLE*/
                     if($_FILES['userfile']['size']>0){      //SI ELIGIO UN ARCHIVO
@@ -35,8 +36,9 @@
         $sql_file = "INSERT INTO files (file_name, file_size, file_type, file_content,tabla ) ".
         "VALUES ('$fileName', '$fileSize', '$fileType', '$content','detalles_ordenes')";
 
-        mysql_query($sql_file);
-        
+        $result=mysql_query($sql_file);
+                if(!$result)
+                     $error=1;
         
 
         echo "<br>File $fileName uploaded<br>";
@@ -51,6 +53,8 @@
         // buscar nombre del estado
         $sql = "SELECT  est_id, est_nombre, est_color FROM estados WHERE est_id = $est_id ";
         $resultado3 = mysql_query($sql);
+        if(!$resultado3)
+                     $error=1;
         $fila3 = mysql_fetch_array($resultado3);
         $est_nombre= $fila3["est_nombre"];
         //echo $est_nombre;
@@ -91,8 +95,9 @@
         
                                                 }
        // echo $sql2;
-        mysql_query($sql2);
-        
+        $result=mysql_query($sql2);
+        if(!$result)
+                     $error=1;
         
         
 
@@ -105,9 +110,27 @@
         }else{
         $sql = "UPDATE ordenes SET ord_plazo = '$fecha' where ord_id = $ord_id";   
         }
-        mysql_query($sql);
-        mysql_close();
+        $result=mysql_query($sql);
+         if(!$result)
+                     $error=1;
+        
+        
+        
+        
+                      if($error) 
+                      {
+                            mysql_query("ROLLBACK");
+                            echo "Error en la transaccion";
+                             mysql_close();
+                          //  header("location:ver-alta-clientes.php?action=4");
+                        } 
+                        else 
+                        {
+                        mysql_query("COMMIT");
+                         mysql_close();
+                        echo "Transacción exitosa";
+                              header("location:ver-alta-ordenes.php?action=2"); 
+                        }
 
-	header("location:ver-alta-ordenes.php?action=2");
 
 ?>

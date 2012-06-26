@@ -21,7 +21,8 @@
         
         include("conexion.php");
         $idFile = -1;
-        
+                $error = 0; //variable para detectar error
+                mysql_query("BEGIN"); // Inicio de Transacción
         /*ADJUNTAR ARCHIVO PARA DETALLE*/
                     if($_FILES['userfile']['size']>0){      //SI ELIGIO UN ARCHIVO
         
@@ -43,8 +44,9 @@
         $sql_file = "INSERT INTO files (file_name, file_size, file_type, file_content,tabla ) ".
         "VALUES ('$fileName', '$fileSize', '$fileType', '$content','ordenes')";
 
-        mysql_query($sql_file);
-        
+        $result=mysql_query($sql_file);
+                        if(!$result)
+                     $error=1;
         
 
   //      echo "<br>File $fileName uploaded<br>";
@@ -67,8 +69,9 @@
                                                                  $ord_venta,
                                                                  1
         				    )";
-	mysql_query($sql);//alta de la orden
-        
+	$result=mysql_query($sql);//alta de la orden
+                     if(!$result)
+                     $error=1;
         $mensaje = $sql;
         
         //echo "QUERY".$sql;
@@ -104,8 +107,9 @@
                                                 )";      
                                                 }
  
-        mysql_query($sql2);
-        
+       $result=mysql_query($sql2);
+                     if(!$result)
+                     $error=1;
         
         
         /* INSERTAMOS ORDEN EN DETALLE DE CUENTA CORRIENTE */
@@ -117,15 +121,28 @@
         $id_cuenta = mysql_fetch_row($cuenta_corriente);
          
         $sql = "INSERT INTO detalle_corriente_cliente (ord_id,ccc_id) VALUES ($ord_id,$id_cuenta[0])";
-        mysql_query($sql);
-    
+        $result=mysql_query($sql);  // ACA LA TRANSACCION ME MARCA ERROR REVISAR
+
         
         //echo $sql2;
 	$_SESSION["ord_id"] = $ord_id;
         $_SESSION["query"] = $sql2;
-        mysql_close();
         
-        echo "MI AMIGO EL QUERY: ".$mensaje;
-	header("location:ver-alta-ordenes.php?action=1");
+        
+                              if($error) 
+                      {
+                            mysql_query("ROLLBACK");
+                            echo "Error en la transaccion";
+                             mysql_close();
+                          //  header("location:ver-alta-clientes.php?action=4");
+                        } 
+                        else 
+                        {
+                        mysql_query("COMMIT");
+                         mysql_close();
+                        echo "Transacción exitosa";
+                              header("location:ver-alta-ordenes.php?action=1");
+                        }
+
 
 ?>

@@ -10,7 +10,8 @@
     $Remito= $_POST["txtRemito"]; 
     $vencimiento = gfecha($_POST["vencimiento"]);
     $condicion_venta= $_POST["condicion_venta"];
-
+        $error = 0; //variable para detectar error
+        mysql_query("BEGIN"); // Inicio de Transacción
     
     $estado = 1;
     $idFile = -1;
@@ -34,12 +35,16 @@
                         }
         $sql_file = "INSERT INTO files (file_name, file_size, file_type, file_content,tabla ) ".
         "VALUES ('$fileName', '$fileSize', '$fileType', '$content','factura_venta')";
-        mysql_query($sql_file);
+        $result=mysql_query($sql_file);
+        if(!$result)
+                     $error=1;
         $idFile = mysql_insert_id(); // HAY QUE VALIDAR SI SE ROMPE LA TRANSACCIÓN DEL FILE 
        }
        
         $sql_grupo_ordenes= "INSERT INTO `grupo_ordenes`(`gru_fecha_alta`) VALUES (NOW()) ";
-        mysql_query($sql_grupo_ordenes);
+        $result=mysql_query($sql_grupo_ordenes);
+        if(!$result)
+                     $error=1;
         $id_grupo_ordenes = mysql_insert_id(); 
         
         //actualizo las ordenes
@@ -64,7 +69,9 @@
         {
         $query = "INSERT INTO factura_venta (gru_id,fav_fecha,fav_nota,  fav_remito, fav_condicion_vta ,fav_vencimiento, estado) VALUES ($id_grupo_ordenes,NOW(),'$nota',$Remito,'$condicion_venta','$vencimiento',1)";  
         }
-       $inserto = mysql_query($query);      
+       $inserto = mysql_query($query); 
+       if(!$inserto)
+                     $error=1;
         $nro_factura = mysql_insert_id();
        $i=1;
             $columnaDesc = "txtDescripcionItem".$i;
@@ -83,9 +90,24 @@
             $precio = $_POST[$columnaPrec]; 
             echo  $query;
         };
+        
+        
+                              if($error) 
+                      {
+                            mysql_query("ROLLBACK");
+                            echo "Error en la transaccion";
+                             mysql_close();
+                          //  header("location:ver-alta-clientes.php?action=4");
+                        } 
+                        else 
+                        {
+                        mysql_query("COMMIT");
+                         mysql_close();
+                        echo "Transacción exitosa";
+                              header("location:ver-alta-factura.php?fav_id=$nro_factura");   
+                        }
 
-            mysql_close();
 
-            header("location:ver-alta-factura.php?fav_id=$nro_factura");
+           
 
 ?>
