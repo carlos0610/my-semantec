@@ -111,14 +111,19 @@
     <td width="51%" class="titulo"><span id="ocultarParaImpresion">FACTURA N° 0001- </span><?php echo $fav_id ?></td>
     <td width="1%">&nbsp;</td>
   </tr>
+    <tr>
+    <td class="titulo"></td>
+    <td>&nbsp;</td>
+  </tr>
+  
+  
+  
+  
   <tr>
     <td class="titulo"><span id="ocultarParaImpresion">Buenos Aires,</span> <?php echo (tfecha($fila_fecha_factura["fav_fecha"])); ?></td>
     <td>&nbsp;</td>
   </tr>
-  <tr>
-    <td class="titulo"><span id="ocultarParaImpresion">CUIT: 30-70877618-8</span></td>
-    <td>&nbsp;</td>
-  </tr>
+
   <tr>
     <td class="titulo"> <div id="ocultarParaImpresion" align="center">Dr. Aleu 3139 (1651) - 1er piso of 11 - San Andrés <br>
       Provincia de Buenos Aires</div></td>
@@ -153,10 +158,10 @@
           </tr>
           <tr>
             <td class="titulo"><span id="ocultarParaImpresion">Condiciones de venta:</span></td>
-            <td style="background-color:#cbeef5"  align="left">&<?php echo $fila_fecha_factura["fav_condicion_vta"];?></td>
-            <td class="titulo"><span id="ocultarParaImpresion">Remito:</span></td>
-            <td style="background-color:#cbeef5" align="rigth">
-              <?php echo $fila_fecha_factura["fav_remito"];?>
+            <td style="background-color:#cbeef5"  align="left">&<?php echo $fila_fecha_factura["fav_condicion_vta"];?>&nbsp;&nbsp;</td>
+            <td style="background-color:#cbeef5"><span align="rigth"></span></td>
+            <td  align="rigth" style="background-color:#cbeef5" >
+              REMITO N°:<?php echo $fila_fecha_factura["fav_remito"];?>
             </td>
           </tr>
           <tr>
@@ -178,6 +183,7 @@
     <td></td>
   </tr>
   <tr>
+      <td width="2%">&nbsp;&nbsp;&nbsp;</td>
     <td width="82%" class="titulo"><div id="ocultarParaImpresion" align="center">Descripción</div></td>
     <td width="18%" class="titulo"><div id="ocultarParaImpresion" align="center">Total</div></td>
   </tr>
@@ -190,6 +196,7 @@
   
   
   <tr>
+      <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
     <td><label>   
         <div align="left">
           <?echo $item["det_fav_descripcion"]; ?>

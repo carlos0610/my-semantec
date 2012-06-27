@@ -1,10 +1,20 @@
 BODY {
-   font: 8pt Verdana, Geneva, Arial, Helvetica, sans-serif;
-   margin: 10 0 10 0px;
+   font: 9pt Verdana, Geneva, Arial, Helvetica, sans-serif;
+   margin: 40px 5px 100px 0px;
    text-align: center;
     background-color: #ffffff;
 } 
 
+.campos{
+	background-color:#edfbff;
+	border: 1px solid #a0ecff;
+	width: 300px;
+	margin-right:8px;
+        align:lefth
+}
+#contenedor2{
+position:relative;  top:60px; 
+}
 #login{
    visibility:hidden;
    display: none;
@@ -37,6 +47,11 @@ footer{
 
 #footer_factura{
    
-position:relative;  top:250px;
+position:relative;  top:420px;
    
-} 
+}
+.contenido_descripcion
+{
+  position:relative;  top:60px; 
+    
+}
