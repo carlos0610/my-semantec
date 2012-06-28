@@ -69,7 +69,7 @@
                     $cue_nrobancaria = $_POST["cue_nrobancaria"];
                     $cue_cbu         = $_POST["cue_cbu"];
                     $ban_id          = $_POST["ban_id"];
-                    $sql = "UPDATE cuentabanco_prv set cut_id =$cut_id,cue_nrobancaria =$cue_nrobancaria,cue_cbu = $cue_cbu , ban_id= $ban_id   where prv_id = $prv_id";
+                    $sql = "UPDATE cuentabanco_prv set cut_id =$cut_id,cue_nrobancaria ='$cue_nrobancaria',cue_cbu = '$cue_cbu' , ban_id= $ban_id   where prv_id = $prv_id";
                     $_SESSION["tienecuenta"]=true;
                     mysql_query($sql);
                     

@@ -218,7 +218,7 @@
           </tr>
           <tr>
             <td>Nro.Cuenta bancaria</td>
-            <td><input type="number" style="text-align:right" class="campos" id="cue_nrobancaria" name="cue_nrobancaria" disabled/></td>
+            <td><input type="text" style="text-align:right" class="campos" id="cue_nrobancaria" name="cue_nrobancaria" disabled/></td>
             <td></td>
           </tr>
           <tr>
@@ -236,7 +236,7 @@
           </tr>
           <tr>
             <td>CBU</td>
-            <td><input type="number" style="text-align:right" class="campos" id="cue_cbu" name="cue_cbu" disabled/></td>
+            <td><input type="text" style="text-align:right" class="campos" id="cue_cbu" name="cue_cbu" disabled/></td>
             <td></td>
           </tr> 
           

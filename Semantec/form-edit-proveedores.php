@@ -26,13 +26,13 @@
         $iva = mysql_query($sql);
         
                                      
-        $sql    = "SELECT rub_id,rub_nombre FROM rubros";
+        $sql    = "SELECT rub_id,rub_nombre FROM rubros where estado = 1";
         $rubros = mysql_query($sql);
                
         $sql = "select cut_id,cut_nombre FROM cuentatipo";
         $tipocuenta = mysql_query($sql);
         
-        $sql = "SELECT ban_id , ban_nombre FROM `banco` ";
+        $sql = "SELECT ban_id , ban_nombre FROM `banco` where estado = 1";
         $bancos = mysql_query($sql);
         
         
@@ -303,7 +303,7 @@
           </tr>
           <tr>
             <td>Nro.Cuenta bancaria</td>
-            <td><input type="number" style="text-align:right" class="campos" id="cue_nrobancaria" name="cue_nrobancaria" value="<? if($filas>0) 
+            <td><input type="text" style="text-align:right" class="campos" id="cue_nrobancaria" name="cue_nrobancaria" value="<? if($filas>0) 
                                                                                                     echo $fila_banco["cue_nrobancaria"];
                                                                                                         
                                                                                                         ?>" <? if($filas==0)
@@ -338,7 +338,7 @@
           </tr>        
           <tr>
               <td>Banco</td><td>
-          <select name="ban_id" id="ban_id" class="campos" >
+          <select name="ban_id" id="ban_id" class="campos" <? if($filas==0) echo " disabled";?>
     <?php
           while($fila = mysql_fetch_array($bancos)){
     ?>
