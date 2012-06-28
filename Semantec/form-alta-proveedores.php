@@ -6,13 +6,13 @@
         $sql = "SELECT  iva_id, iva_nombre FROM iva_tipo";
         $resultado1 = mysql_query($sql);
         
-        $sql = "SELECT rub_id, rub_nombre FROM rubros";
+        $sql = "SELECT rub_id, rub_nombre FROM rubros WHERE estado = 1";
         $rubros =  mysql_query($sql);
         
         $sql = "select cut_id,cut_nombre FROM cuentatipo";
         $tipocuenta = mysql_query($sql);
         
-        $sql = "SELECT ban_id , ban_nombre FROM `banco` ";
+        $sql = "SELECT ban_id , ban_nombre FROM `banco` WHERE estado = 1";
         $bancos = mysql_query($sql);
         
         $sql = "SELECT id, nombre FROM provincias";
