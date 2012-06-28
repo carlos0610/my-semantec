@@ -6,16 +6,16 @@
         $sql = "SELECT  iva_id, iva_nombre FROM iva_tipo";
         $resultado1 = mysql_query($sql);
         
-        $sql = "SELECT rub_id, rub_nombre FROM rubros WHERE estado = 1";
+        $sql = "SELECT rub_id, rub_nombre FROM rubros WHERE estado = 1 ORDER BY rub_nombre";
         $rubros =  mysql_query($sql);
         
-        $sql = "select cut_id,cut_nombre FROM cuentatipo";
+        $sql = "select cut_id,cut_nombre FROM cuentatipo ORDER BY cut_nombre ";
         $tipocuenta = mysql_query($sql);
         
-        $sql = "SELECT ban_id , ban_nombre FROM `banco` WHERE estado = 1";
+        $sql = "SELECT ban_id , ban_nombre FROM `banco` WHERE estado = 1 ORDER BY ban_nombre ";
         $bancos = mysql_query($sql);
         
-        $sql = "SELECT id, nombre FROM provincias";
+        $sql = "SELECT id, nombre FROM provincias ORder BY nombre";
         $provincias=mysql_query($sql);
         
         
@@ -150,6 +150,7 @@
             <td></td>
           </tr>
           
+          <?php /*
           <tr>
                         <td>Partido</td>
                         <td><label>
@@ -167,10 +168,14 @@
                                 </select>
                         </label></td>
                       </tr>
+          */ ?>
           
           
-          
-          
+          <tr>
+            <td>Sucursal</td>
+            <td><input type="text" class="campos" id="Sucursal" name="Sucursal" required/></td>
+            <td></td>
+          </tr>
           <tr>
             <td>Direcci&oacute;n</td>
             <td><input type="text" class="campos" id="prv_direccion" name="prv_direccion" required/></td>

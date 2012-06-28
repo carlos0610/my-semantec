@@ -17,7 +17,7 @@
           
         /* COMBOS DE PROVINCIAS , PARTIDOS, LOCALIDADES */
         
-        $sql = "SELECT id, nombre FROM provincias";
+        $sql = "SELECT id, nombre FROM provincias Order BY nombre";
         $listado_provincias =   mysql_query($sql);
         
         

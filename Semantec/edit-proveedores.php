@@ -12,7 +12,7 @@
         
         $iva_id = $_POST["iva_id"];
         $rub_id = utf8_decode($_POST["rub_id"]);
-        
+        $Sucursal = $_POST["Sucursal"];
         $ubicacion_id = $_POST["ubicacion_id"];
         $provincia_id =  $_POST["select1"];
         $partidos_id = $_POST["select2"];
@@ -35,7 +35,7 @@
         
         
         /* Actualizamos su ubicación*/
-        $sql = "UPDATE ubicacion SET localidades_id = $localidad_id, partidos_id = $partidos_id, provincias_id = $provincia_id WHERE id = $ubicacion_id";
+        $sql = "UPDATE ubicacion SET  provincias_id = $provincia_id WHERE id = $ubicacion_id";
         mysql_query($sql);
         //$mensaje = $sql;
         
@@ -57,7 +57,8 @@
                                         prv_urgencia  = '$prv_urgencia',
                                         prv_web   = '$prv_web',
                                         prv_email = '$prv_email',    
-        				prv_notas = '$prv_notas'
+        				prv_notas = '$prv_notas',
+                                        sucursal='$Sucursal'
         		WHERE prv_id = $prv_id";
 		mysql_query($sql);
 		$_SESSION["prv_id"] = $prv_id;

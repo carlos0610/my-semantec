@@ -4,7 +4,7 @@
 
         include("conexion.php");
         $prv_id = $_GET["prv_id"];
-        $sql0 = "SELECT prv_nombre, prv_cuit, iva_tipo.iva_nombre, rubros.rub_nombre, u.id as ubicacion_id, prv_direccion, prv_telefono,prv_fax,prv_cel,prv_alternativo,prv_urgencia,prv_web,prv_email,prv_notas 
+        $sql0 = "SELECT prv_nombre,sucursal, prv_cuit, iva_tipo.iva_nombre, rubros.rub_nombre, u.id as ubicacion_id, prv_direccion, prv_telefono,prv_fax,prv_cel,prv_alternativo,prv_urgencia,prv_web,prv_email,prv_notas 
 		FROM proveedores,rubros,iva_tipo,ubicacion u,provincias p, partidos pa,localidades l 
 		WHERE prv_id = $prv_id
 		AND proveedores.iva_id = iva_tipo.iva_id
@@ -26,12 +26,18 @@
         $iva = mysql_query($sql);
         
                                      
+
+        $sql    = "SELECT rub_id,rub_nombre FROM rubros  WHERE estado=1 ORDER BY rub_nombre";
+
         $sql    = "SELECT rub_id,rub_nombre FROM rubros where estado = 1";
         $rubros = mysql_query($sql);
                
         $sql = "select cut_id,cut_nombre FROM cuentatipo";
         $tipocuenta = mysql_query($sql);
         
+
+        $sql = "SELECT ban_id , ban_nombre FROM `banco` WHERE estado=1 ORDER BY ban_nombre";
+
         $sql = "SELECT ban_id , ban_nombre FROM `banco` where estado = 1";
         $bancos = mysql_query($sql);
         
@@ -213,6 +219,8 @@
             <td></td>
           </tr>
           
+          
+          <?php /*
           <tr>
                         <td>Partido</td>
                         <td><label>
@@ -249,6 +257,15 @@
                                 
                         </label></td>
                       </tr>
+           * 
+           */ ?>
+                    <tr>
+            <td>Sucursal</td>
+            <td><input type="text" value="<?php echo(utf8_encode($fila0["sucursal"])); ?>" class="campos" id="Sucursal" name="Sucursal" /></td>
+            <td></td>
+          </tr>
+          <tr>
+          
           <tr>
             <td>Direcci&oacute;n</td>
             <td><input type="text" value="<?php echo(utf8_encode($fila0["prv_direccion"])); ?>" class="campos" id="prv_direccion" name="prv_direccion" /></td>

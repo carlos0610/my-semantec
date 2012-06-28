@@ -99,14 +99,16 @@
             <td><?php echo($cliente["iva_nombre"]); ?></td>
             <td></td>
           </tr> 
-          <tr>
-            <td>Sucursal</td>
-            <td><?php echo(utf8_encode($cliente["sucursal"])); ?></td>
-            <td></td>
-          </tr>
+
           <tr>
             <td>Provincia</td>
             <td><?php echo(utf8_encode($cliente["provincia"])); ?></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>Sucursal</td>
+            <td><?php echo(utf8_encode($cliente["sucursal"])); ?></td>
             <td></td>
           </tr>
           <tr>

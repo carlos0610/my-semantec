@@ -25,7 +25,7 @@
         //unset($_SESSION["prv_id"]);
         
         
-        $sql = "SELECT prv_nombre, prv_cuit, iva_tipo.iva_nombre, rubros.rub_nombre, p.nombre as provincia,pa.nombre as partido,l.nombre as localidad, prv_direccion, prv_telefono,prv_fax,prv_cel,prv_alternativo,prv_urgencia,prv_web,prv_email,prv_notas 
+        $sql = "SELECT prv_nombre,sucursal, prv_cuit, iva_tipo.iva_nombre, rubros.rub_nombre, p.nombre as provincia,pa.nombre as partido,l.nombre as localidad, prv_direccion, prv_telefono,prv_fax,prv_cel,prv_alternativo,prv_urgencia,prv_web,prv_email,prv_notas 
 		FROM proveedores,rubros,iva_tipo,ubicacion u,provincias p, partidos pa,localidades l 
 		WHERE prv_id = $prv_id
 		AND proveedores.iva_id = iva_tipo.iva_id
@@ -137,11 +137,15 @@
             <td><?php echo(utf8_encode($fila_proveedor["rub_nombre"]));; ?></td>
             <td></td>
           </tr>
+          
+
+          
           <tr>
             <td>Provincia</td>
             <td><?php echo(utf8_encode($fila_proveedor["provincia"])); ?></td>
             <td></td>
           </tr>
+          <?PHP /*
           <tr>
             <td>Partido</td>
             <td><?php echo(utf8_encode($fila_proveedor["partido"])); ?></td>
@@ -150,6 +154,13 @@
           <tr>
             <td>Localidad</td>
             <td><?php echo(utf8_encode($fila_proveedor["localidad"])); ?></td>
+            <td></td>
+          </tr>
+           * 
+           */ ?>
+          <tr>
+            <td>Sucursal</td>
+            <td><?php echo(utf8_encode($fila_proveedor["sucursal"])); ?></td>
             <td></td>
           </tr>
           <tr>

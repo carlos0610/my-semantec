@@ -9,7 +9,7 @@
         $prv_cuit = "$cuitA$cuitB$cuitC";
         $iva_id = $_POST["iva_id"];
         $prv_rubro = utf8_decode($_POST["rub_id"]);
-        
+        $sucursal = $_POST["Sucursal"];
         
         
         /* OBTENEMOS LOS DATOS DE UBICACIÓN DE LOS SELECTS*/
@@ -21,7 +21,7 @@
         $error = 0; //variable para detectar error
         mysql_query("BEGIN"); // Inicio de Transacción
         
-        $sql = "INSERT INTO ubicacion (provincias_id,partidos_id,localidades_id) VALUES ($provincia_id,$partido_id,$localidad_id)";
+        $sql = "INSERT INTO ubicacion (provincias_id,partidos_id,localidades_id) VALUES ($provincia_id,1,1)";
         $result=mysql_query($sql);
         if(!$result)
         $error=1;
@@ -41,7 +41,7 @@
         $rbt_cuenta = $_POST["rbt_cuenta"];
 
         
-        $sql = "INSERT INTO proveedores (prv_nombre,prv_cuit,rub_id,iva_id,ubicacion_id,prv_direccion,prv_telefono,prv_fax,prv_cel,prv_alternativo,prv_urgencia,prv_web,prv_email,prv_notas,estado) VALUES (     										
+        $sql = "INSERT INTO proveedores (prv_nombre,prv_cuit,rub_id,iva_id,ubicacion_id,prv_direccion,prv_telefono,prv_fax,prv_cel,prv_alternativo,prv_urgencia,prv_web,prv_email,prv_notas,estado,sucursal) VALUES (     										
         										'$prv_nombre',
         										'$prv_cuit',
         										$prv_rubro,
@@ -56,7 +56,8 @@
                                                                                         '$prv_web',
                                                                                         '$prv_email',
         										'$prv_notas',
-                                                                                        1
+                                                                                        1,
+                                                                                        '$sucursal'
         										)";
 		
                 $result= mysql_query($sql);

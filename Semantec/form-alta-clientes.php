@@ -122,10 +122,7 @@
                 <input type="text" style="text-align:right" min="0" class="campos2" id="cli_cuit_parteC" name="cli_cuit_parteC" maxlength="1" size="1" onChange="return autenticaClienteCUIT();"  required />
                 <span id="error" style="font-family: Verdana, Arial, Helvetica,sans-serif;font-size: 9pt;color: #CC3300;position:relative;visibility:hidden;">Cuit Existente</span>            </td>
             <td></td>
-          </tr>
-          
-          
-          
+          </tr>  
           <tr>
             <td>Condici&oacute;n de IVA</td>
             <td>
@@ -141,11 +138,7 @@
                 </select>            </td>
             <td></td>
           </tr>
-          <tr>
-            <td>Sucursal</td>
-            <td><input type="text" class="campos" id="Sucursal" name="Sucursal" required/></td>
-            <td></td>
-          </tr>
+
  
           <tr>
             <td>Provincia</td>
@@ -162,6 +155,11 @@
                 </select>            </td>
             <td></td>
           </tr>
+          <tr>
+            <td>Sucursal</td>
+            <td><input type="text" class="campos" id="Sucursal" name="Sucursal" required/></td>
+            <td></td>
+          </tr>          
           <tr>
             <td>Direcci&oacute;n</td>
             <td><input type="text" class="campos" id="cli_direccion" name="cli_direccion" required/></td>
