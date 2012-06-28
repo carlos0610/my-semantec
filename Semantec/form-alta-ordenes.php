@@ -3,14 +3,19 @@
     $titulo = "Formulario de alta de una Orden de Servicio.";
         include("validar.php");
         include("conexion.php");
-        $sql = "SELECT sucursal_id,sucursal,cli_id,cli_nombre,p.nombre as provincia,pa.nombre as partido,l.nombre as localidad 
+        $sql = "SELECT sucursal_id,sucursal,cli_id,cli_nombre,p.nombre as provincia 
            FROM clientes,ubicacion u,provincias p, partidos pa,localidades l
            WHERE 
  	   clientes.ubicacion_id = u.id
            AND u.provincias_id = p.id
            AND u.partidos_id = pa.id
            AND u.localidades_id = l.id
-           AND clientes.estado = 1";
+           AND clientes.estado = 1
+           ORDER BY cli_nombre,provincia";
+        
+        
+        
+        
         $resultado1 = mysql_query($sql);
         $sql = "SELECT  prv_id, prv_nombre FROM proveedores WHERE estado=1";
         $resultado2 = mysql_query($sql);
