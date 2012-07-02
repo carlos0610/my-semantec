@@ -35,7 +35,7 @@
                     ORDER BY o.ord_alta DESC ";
     */
        
-        $sql = "SELECT ord_id, ord_codigo, ord_descripcion, cli_nombre, prv_nombre, est_nombre, est_color, ord_alta, ord_plazo, ord_costo, ord_venta
+        $sql = "SELECT ord_id, ord_codigo, ord_descripcion, cli_nombre, prv_nombre, est_nombre, est_color, ord_alta, ord_plazo, ord_costo, ord_venta,c.sucursal
                   FROM ordenes o, clientes c, estados e, proveedores p
                   WHERE o.cli_id = c.cli_id
                     AND o.est_id = e.est_id
@@ -174,7 +174,7 @@
   ?>
           <tr class="lista" bgcolor="<?php echo($colores[$i]);?>">
               <td><a href=form-edit-ordenes.php?ord_id=<?php echo($fila["ord_id"]);?>><?php echo($fila["ord_codigo"]);?></a></td>
-            <td><?php echo(utf8_encode($fila["cli_nombre"]));?></td>
+            <td><?php echo(utf8_encode($fila["cli_nombre"]));?>(<?php echo(utf8_encode($fila["sucursal"]))?>)</td>
             <td><?php echo(tfecha($fila["ord_alta"]));?></td>
             <td><?php echo(nl2br(utf8_encode($fila["ord_descripcion"])));?></td>
             <td><?php echo(utf8_encode($fila["prv_nombre"]));?></td>

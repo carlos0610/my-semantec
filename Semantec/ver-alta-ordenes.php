@@ -97,13 +97,13 @@
       <table class="forms" cellpadding="5">
           <tr class="titulo">
             <td colspan="2" align="center"> <?php echo($titulo)?> </td>
-            <td width="39" align="center">
+            <td width="43" align="center">
                 <a href="index-admin.php">
                     <img src="images/home.png"  alt="inicio" title="Volver al panel" width="32" height="32" border="none" />                </a>            </td>
           </tr>
           <tr>
-            <td width="157">C&oacute;digo de Orden</td>
-            <td width="309"><?php echo($fila0["ord_codigo"]);?></td>
+            <td width="137">C&oacute;digo de Orden</td>
+            <td width="422"><?php echo($fila0["ord_codigo"]);?></td>
             <td rowspan="8" align="center"><br>
             </br></td>
           </tr>
@@ -126,10 +126,13 @@
             <td>
                 <?php echo(utf8_encode($fila3["est_nombre"])); ?></td>
           </tr>
+          <?php if($fila0["ord_plazo"] != ""){?>
           <tr>
             <td>Plazo de Finalización</td>
-            <td><?php echo(tfecha($fila0["ord_plazo"]));?></td>
-          </tr>          <tr>
+            <td><?php echo(tfecha($fila0["ord_plazo"]));?>            </td>
+          </tr>
+          <?php }?> 
+          <tr>
             <td>Valor Costo de la Orden</td>
             <td><?php echo($fila0["ord_costo"]);?></td>
             </tr>          
@@ -138,8 +141,12 @@
             <td><?php echo($fila0["ord_venta"]);?></td>
           </tr>
           <tr>
-            <td>           
-            </td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td align="center">&nbsp;</td>
+          </tr>
+          <tr>
+            <td>            </td>
           <td>&nbsp;&nbsp;<a href="lista-ordenes.php">
     <input type="button" value="Ir al Listado" class="botones" />
                 </a>
@@ -148,8 +155,7 @@
                 </a>
                 <a href="form-alta-ordenes.php">
               <input type="button" value="Agregar otra orden" class="botones" />
-            </a> 
-          </td>
+            </a>          </td>
             <td></td>
           </tr>          
           <tr>

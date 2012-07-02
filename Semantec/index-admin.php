@@ -32,7 +32,7 @@
                     AND o.prv_id = p.prv_id  
                     AND o.estado = 1
                     AND o.est_id = 2
-		    AND DATEDIFF(ord_plazo_proveedor,now()) = (SELECT valor from parametros where par_id = 1) 
+		    AND DATEDIFF(ord_plazo_proveedor,now()) <= (SELECT valor from parametros where par_id = 1) 
                     ORDER BY o.ord_alta DESC";
         $alerta_plazo_proveedor = mysql_query($sql0);
         $fila_plazo_proveedor = mysql_num_rows($alerta_plazo_proveedor);
@@ -60,7 +60,7 @@
                     AND o.prv_id = p.prv_id  
                     AND o.estado = 1
                     AND o.est_id > 8
-		    AND DATEDIFF(ord_plazo,now()) = (SELECT valor from parametros where par_id = 2) 
+		    AND DATEDIFF(ord_plazo,now()) <= (SELECT valor from parametros where par_id = 2) 
                     ORDER BY o.ord_alta DESC";
         $alerta_plazo_finalizado = mysql_query($sql);
         $fila_plazo_finalizado = mysql_num_rows($alerta_plazo_finalizado);
@@ -215,7 +215,7 @@
                 <?php if ($fila_plazo_finalizado > 0) { ?>
          
     <td width="4%"><div align="right"><img src="images/warning.png" width="32" height="32"></div></td>
-    <td width="36%"><h5><a href="#" onclick="popup('lista-alertas-finalizado.php', 'Alerta')">Hay órdenes que no fueron terminadas y vence el plazo mañana.  </h5></td>
+    <td width="36%"><h5><a href="#" onclick="popup('lista-alertas-finalizado.php', 'Alerta')">Hay órdenes que no fueron terminadas y están proximas a vencer.  </h5></td>
           
          <?php } else { ?>
            

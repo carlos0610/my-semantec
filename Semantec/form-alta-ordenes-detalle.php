@@ -53,7 +53,7 @@
   
 
   </head>
-  <body>
+  <body onload="validarFacturacion(<?php echo $ord_costo ?>,<?php echo $orden_venta ?>)">
 	
   <!-- start main --><!-- start main --><!-- start main --><!-- start main --><!-- start main -->
   <div id="main">
@@ -89,7 +89,7 @@
           </tr>
           <tr>
             <td>Descripci&oacute;n de actualización</td>
-            <td><textarea class="campos" id="ord_descripcion" name="ord_descripcion" rows="9" required ></textarea></td>
+            <td><textarea class="campos" id="ord_descripcion" name="ord_descripcion" rows="9"></textarea></td>
             <td></td>
           </tr>
           <tr>

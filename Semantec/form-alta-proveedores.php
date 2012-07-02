@@ -28,6 +28,7 @@
     include("encabezado-main.php");
 ?>    
     <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="js/select_dependientes_3_niveles.js"></script>
     <script type="text/javascript">
       function lookup(prv_rubro) {
         if(prv_rubro.length == 0) {
@@ -47,6 +48,7 @@
         setTimeout("$('#suggestions').hide();", 200);
       }
     </script>
+    
     
     <link rel="stylesheet" href="css/suggestionsBox.css" type="text/css" />
     

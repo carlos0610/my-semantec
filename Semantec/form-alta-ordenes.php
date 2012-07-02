@@ -11,10 +11,9 @@
            AND u.partidos_id = pa.id
            AND u.localidades_id = l.id
            AND clientes.estado = 1
+           AND sucursal_id is null
            ORDER BY cli_nombre,provincia";
-        
-        
-        
+
         
         $resultado1 = mysql_query($sql);
         $sql = "SELECT  prv_id, prv_nombre FROM proveedores WHERE estado=1";
@@ -42,6 +41,7 @@
   });
   </script>    
   <script type="text/javascript" src="js/validador.js"></script>
+  <script type="text/javascript" src="js/select_dependientes_cliente_sucursal.js"></script>
   </head>
   <body>
 	
@@ -81,7 +81,7 @@
           </tr>
           <tr>
             <td>C&oacute;digo de Orden</td>
-            <td><input type="number"  style="text-align:right" class="campos" id="ord_codigo" name="ord_codigo" required min="0" onChange="return autentica();"/>
+            <td><input type="text"  style="text-align:right" class="campos" id="ord_codigo" name="ord_codigo" required />
                 <span id="error" style="font-family: Verdana, Arial, Helvetica,sans-serif;font-size: 9pt;color: #CC3300;position:relative;visibility:hidden;">Orden existente</span>
             </td>
             <td></td>
@@ -94,7 +94,8 @@
           <tr>
             <td>Cliente</td>
             <td>
-                <select name="cli_id" id="cli_id" class="campos" required >
+                <select name="cli_id" id="cli_id" class="campos" required onChange="cargaContenido(this.id)">
+                    <option value='0'>Seleccione</option>;
     <?php
           while($fila = mysql_fetch_array($resultado1)){
     ?>
@@ -102,6 +103,16 @@
     <?php
           }
     ?>
+                </select>
+            </td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>Sucursal</td>
+            <td>
+                <select name="suc_id" id="suc_id" class="campos" required >
+                <option value='0'>Seleccione</option>;    
                 </select>
             </td>
             <td></td>

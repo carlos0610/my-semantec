@@ -2,7 +2,6 @@
 $titulo = "Alerta de ordenes con vencimiento.";
         include("validar.php");
         include("funciones.php");
-        
         include("conexion.php");
         
         $sql0 =    "SELECT ord_id, u.usu_login,o.prv_id,ord_codigo, ord_descripcion, o.cli_id,cli_nombre, prv_nombre, est_nombre, est_color, ord_alta, ord_plazo,ord_plazo_proveedor, ord_costo, ord_venta
@@ -11,9 +10,9 @@ $titulo = "Alerta de ordenes con vencimiento.";
                     AND o.est_id = e.est_id
                     AND o.prv_id = p.prv_id  
                     AND o.estado = 1
-                    AND o.est_id > 8
+                    AND o.est_id = 10
                     AND o.usu_id = u.usu_id
-		    AND DATEDIFF(ord_plazo,now()) = 1";
+		    AND DATEDIFF(ord_plazo,now()) <= (SELECT valor from parametros where par_id = 2)";
                     if(isset($_REQUEST['btnMostrar'])){
                         $id_usuario = $_GET["comboUsuarios"];
                             if ($id_usuario != 0)
@@ -23,7 +22,7 @@ $titulo = "Alerta de ordenes con vencimiento.";
         $alerta_plazo_proveedor = mysql_query($sql0);
         
         
-        $tamPag=10;
+        $tamPag=50;
         include("paginado.php");
         $sql = "SELECT ord_id,u.usu_login,o.prv_id, ord_codigo, ord_descripcion, o.cli_id,cli_nombre, prv_nombre, est_nombre, est_color, ord_alta, ord_plazo,ord_plazo_proveedor, ord_costo, ord_venta
                   FROM ordenes o, clientes c, estados e, proveedores p,usuarios u
@@ -31,9 +30,9 @@ $titulo = "Alerta de ordenes con vencimiento.";
                     AND o.est_id = e.est_id
                     AND o.prv_id = p.prv_id  
                     AND o.estado = 1
-                    AND o.est_id > 8
+                    AND o.est_id = 10
                     AND o.usu_id = u.usu_id
-		    AND DATEDIFF(ord_plazo,now()) = 1";
+		    AND DATEDIFF(ord_plazo,now()) <= (SELECT valor from parametros where par_id = 2)";
                     if(isset($_REQUEST['btnMostrar'])){
                         $id_usuario = $_GET["comboUsuarios"];
                             if ($id_usuario != 0)
