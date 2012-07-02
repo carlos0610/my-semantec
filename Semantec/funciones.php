@@ -20,4 +20,9 @@
 			$salida = substr($fecha, 8,2)."/".substr($fecha, 5,2)."/".substr($fecha, 0,4);
 			return $salida;
 		}
+                function formatoNumeroFactura($c) {
+                        printf("%08d<br>",  $c);
+                } 
+                
+                
 ?>

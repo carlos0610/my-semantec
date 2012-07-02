@@ -3,15 +3,18 @@
         include("validar.php");
         include("funciones.php");
         include("conexion.php");
-        
-/* CALCULO PAGINADO */  ###############################################################################
-    $sql0="SELECT prv_id, prv_nombre, prv_cuit, prv_telefono FROM proveedores where estado = 1 and prv_id > 1";
+        $elementoBusqueda=$_POST['filtrartxt'];
+        if($elementoBusqueda!="")
+        {$sqlaux.=" AND prv_nombre like '$elementoBusqueda%' ";}
+
     $tamPag=20;
     
-    include("paginado.php");
 
-        $sql = "SELECT prv_id, prv_nombre,prv_cuit,prv_telefono FROM proveedores where estado = 1 and prv_id > 1";
-        $sql .= " LIMIT ".$limitInf.",".$tamPag; 
+        $sql = "SELECT prv_id, prv_nombre,prv_cuit,prv_telefono FROM proveedores where estado = 1 and prv_id > 1 ";
+                $sql.=$sqlaux;
+                $sql0=$sql;
+                include("paginado.php");
+        $sql .= " ORDER BY prv_nombre LIMIT ".$limitInf.",".$tamPag; 
         $resultado = mysql_query($sql);
         $cantidad = mysql_num_rows($resultado);
 
@@ -36,6 +39,13 @@
 		  });
 		});
 		</script>
+                  <script>
+          function transferirFiltros(pagina)
+{      
+	document.getElementById("filtro").action="lista-proveedores.php?pagina="+pagina;
+	document.getElementById("filtro").submit();
+}
+  </script> 
   </head>
   
   <body>
@@ -62,20 +72,25 @@
    <div id="contenedor" style="height:auto;">
       <h2>Panel de control - Listado de proveedores</h2>
       
-      		<table width="100%" border="0">
-              <tr>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-              </tr>
-              <tr>
-                <td width="16%"><div align="right">Buscar proveedor:</div></td>
-                <td width="84%"><input type="text" id="q" name="q" value="" /></td>
-              </tr>
-              <tr>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-              </tr>
-            </table>
+<div id="buscador" >     
+<form id="filtro" name="filtro" action="lista-proveedores.php" method="POST">
+     <table width="100%" border="0">
+       <tr>
+         <td><div align="right">Nombre: </div></td>
+         <td><input type="text" name="filtrartxt" class="campos" value="<?php echo $elementoBusqueda; ?>"  style="text-align:left" >
+             <input type="submit" name="filtrar" value="Filtrar" class="botones" ></td>
+         <td></td>
+       </tr>
+       <tr>
+         <td>&nbsp;</td>
+         <td>&nbsp;</td>
+         <td>&nbsp;</td>
+       </tr>
+     </table>
+     <p>&nbsp;</p>
+</form>
+      </div>  
+
    		<div id="busqueda"></div>
 
 <table class="sortable" cellpadding="5" id="latabla">

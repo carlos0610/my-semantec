@@ -4,8 +4,11 @@
         include("funciones.php");
 
         include("conexion.php");
+        $elementoBusqueda=$_POST['filtrartxt'];
+        if($elementoBusqueda!="")
+        {$sqlaux.=" AND cli_nombre like '$elementoBusqueda%' ";}
 /* CALCULO PAGINADO */  ###############################################################################
-    $sql0="SELECT sucursal_id, cli_id,cli_nombre, cli_cuit, iva_tipo.iva_nombre,p.nombre as provincia,pa.nombre as partido,l.nombre as localidad, cli_direccion,cli_direccion_fiscal, cli_telefono, cli_notas
+  /*  $sql0="SELECT sucursal_id, cli_id,cli_nombre, cli_cuit, iva_tipo.iva_nombre,p.nombre as provincia,pa.nombre as partido,l.nombre as localidad, cli_direccion,cli_direccion_fiscal, cli_telefono, cli_notas
            FROM clientes,iva_tipo,ubicacion u,provincias p, partidos pa,localidades l
            WHERE 
            clientes.iva_id = iva_tipo.iva_id
@@ -13,11 +16,10 @@
            AND u.provincias_id = p.id
            AND u.partidos_id = pa.id
            AND u.localidades_id = l.id
-           AND clientes.estado = 1";
+           AND clientes.estado = 1"; */
     
     $tamPag=20;
-    
-    include("paginado.php");        
+          
         $sql = "SELECT sucursal_id,cli_id,cli_nombre, cli_cuit, iva_tipo.iva_nombre,p.nombre as provincia,pa.nombre as partido,l.nombre as localidad, cli_direccion,cli_direccion_fiscal, cli_telefono, cli_notas, sucursal  
                 FROM clientes,iva_tipo,ubicacion u,provincias p, partidos pa,localidades l
                 WHERE clientes.iva_id = iva_tipo.iva_id
@@ -26,6 +28,10 @@
                 AND u.partidos_id = pa.id
                 AND u.localidades_id = l.id
                 AND clientes.estado = 1  ";
+                $sql.=$sqlaux;
+                $sql0=$sql;
+                include("paginado.php");
+                
                 $sql .= "ORDER BY cli_nombre  LIMIT ".$limitInf.",".$tamPag; 
         $resultado = mysql_query($sql);
         $cantidad = mysql_num_rows($resultado);
@@ -41,7 +47,13 @@
     include("encabezado-main.php");
     
 ?>    
-
+  <script>
+          function transferirFiltros(pagina)
+{      
+	document.getElementById("filtro").action="lista-clientes.php?pagina="+pagina;
+	document.getElementById("filtro").submit();
+}
+  </script> 
   </head>
   <body>
 	
@@ -67,6 +79,31 @@
    <div id="contenedor" style="height:auto;">
       <h2>Panel de control - Listado de clientes</h2>
 
+      
+      
+           <div id="buscador" >     
+<form id="filtro" name="filtro" action="lista-clientes.php" method="POST">
+     <table width="100%" border="0">
+       <tr>
+         <td><div align="right">Nombre: </div></td>
+         <td><input type="text" name="filtrartxt" class="campos" value="<?php echo $elementoBusqueda; ?>"  style="text-align:left" >
+             <input type="submit" name="filtrar" value="Filtrar" class="botones" ></td>
+         <td></td>
+       </tr>
+       <tr>
+         <td>&nbsp;</td>
+         <td>&nbsp;</td>
+         <td>&nbsp;</td>
+       </tr>
+     </table>
+     <p>&nbsp;</p>
+</form>
+      </div>  
+      
+      
+      
+      
+      
       <table class="sortable" cellpadding="5">
           <tr class="titulo">
             <td>Nombre</td>

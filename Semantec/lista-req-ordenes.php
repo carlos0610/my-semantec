@@ -2,28 +2,50 @@
     $titulo = "Listado de Ordenes de Servicio.";
         include("validar.php");
         include("funciones.php");
-
         include("conexion.php");
+        
+        
+                 // estados
+        $sql = "SELECT  est_id, est_nombre, est_color FROM estados";
+        $resultado3 = mysql_query($sql);
+        //proovedores
+        $sql = "SELECT  prv_id, prv_nombre FROM proveedores WHERE estado=1";
+        $resultado2 = mysql_query($sql);
+        //recibo los criterios y construyo la consulta
+        $elementoBusqueda=$_POST['filtrartxt'];
+        $proveedorFiltro=$_POST['prv_id'];
+        $estado_id=$_POST['est_id'];
+        $sqlaux="";
+        if($elementoBusqueda!="")
+        {$sqlaux.="AND ord_codigo like '$elementoBusqueda%' ";}
+        if($proveedorFiltro!="")
+        {$sqlaux.="AND o.prv_id = $proveedorFiltro ";}
+        if($estado_id!="")
+        {$sqlaux.="AND o.est_id = $estado_id ";}
+        
+   $tamPag=10;       
+        
 /* CALCULO PAGINADO */  ###############################################################################
-    $sql0 =  "SELECT ord_id, ord_codigo, ord_descripcion, cli_nombre, prv_nombre, est_nombre, est_color, ord_alta, ord_plazo, ord_costo, ord_venta
+  /*  $sql0 =  "SELECT ord_id, ord_codigo, ord_descripcion, cli_nombre, prv_nombre, est_nombre, est_color, ord_alta, ord_plazo, ord_costo, ord_venta
                   FROM ordenes o, clientes c, estados e, proveedores p
                   WHERE o.cli_id = c.cli_id
                     AND o.est_id = e.est_id
                     AND o.prv_id = p.prv_id
                     AND o.estado = 1 
                     ORDER BY o.ord_alta DESC ";
-    $tamPag=10;
-    
-    include("paginado.php");        
+    */
+       
         $sql = "SELECT ord_id, ord_codigo, ord_descripcion, cli_nombre, prv_nombre, est_nombre, est_color, ord_alta, ord_plazo, ord_costo, ord_venta
                   FROM ordenes o, clientes c, estados e, proveedores p
                   WHERE o.cli_id = c.cli_id
                     AND o.est_id = e.est_id
                     AND o.prv_id = p.prv_id
-                    AND o.estado = 1 
-                    ORDER BY o.ord_alta DESC ";
+                    AND o.estado = 1 ";
+                    $sql.=$sqlaux;
+                    $sql0=$sql;
+                    include("paginado.php");
                     
-                $sql .= " LIMIT ".$limitInf.",".$tamPag; 
+                $sql .= " ORDER BY o.ord_alta DESC LIMIT ".$limitInf.",".$tamPag; 
         $resultado = mysql_query($sql);
         $cantidad = mysql_num_rows($resultado);
 
@@ -65,7 +87,13 @@
     }
   }
 </script>
-
+      <script>
+          function transferirFiltros(pagina)
+{    
+	document.getElementById("filtro").action="lista-req-ordenes.php?pagina="+pagina;
+	document.getElementById("filtro").submit();
+}
+  </script>
   </head>
   <body>
 	
@@ -90,8 +118,43 @@
    <!--start contenedor-->
    <div id="contenedor" style="height:auto;">
       <h2>Panel de control - Listado de Órdenes de Servicio</h2>
-
-      <table class="sortable" cellpadding="5">
+      <div id="buscador" >     
+<form id="filtro" name="filtro" action="lista-req-ordenes.php" method="POST">
+     <table width="100%" border="0">
+       <tr>
+         <td width="15%">&nbsp;</td>
+         <td width="34%">&nbsp;</td>
+         <td width="51%">&nbsp;</td>
+       </tr>
+       <tr>
+         <td><div align="right">Proovedor</div></td>
+         <td><select name="prv_id" id="prv_id" class="campos" <?php if($proveedorFiltro==""){echo ("disabled");}?>>
+           <?php while($fila2 = mysql_fetch_array($resultado2)){ ?>
+           <option value="<?php echo($fila2["prv_id"]); ?>"<?php if($proveedorFiltro==$fila2["prv_id"]){echo(" selected=\"selected\"");} ?>><?php echo(utf8_encode($fila2["prv_nombre"])); ?></option>
+           <?php }?>
+         </select></td>
+         <td><input name="chkProovedor" type="checkbox" id="chkProovedor" value="si" onClick="habilitarFiltros('chkProovedor','prv_id')"  <?php if($proveedorFiltro!=""){echo ("checked");}?>></td>
+       </tr>
+       <tr>
+         <td><div align="right">Estado</div></td>
+         <td><select name="est_id" id="est_id" class="campos" value="si" <?php if($estado_id==""){echo ("disabled");}?>>
+           <?php  while($fila3 = mysql_fetch_array($resultado3)){  ?>
+           <option style="background-color:<?php echo($fila3["est_color"]); ?>" value="<?php echo($fila3["est_id"]); ?>"<?php if($estado_id==$fila3["est_id"]){echo(" selected=\"selected\"");} ?>><?php echo(utf8_encode($fila3["est_nombre"])); ?></option>
+           <?php    } ?>
+         </select></td>
+         <td><input name="chkEstado" type="checkbox" id="chkEstado" onClick="habilitarFiltros('chkEstado','est_id')" <?php if($estado_id!=""){echo ("checked");}?>></td>
+       </tr>
+       <tr>
+         <td><div align="right">N° Orden</div></td>
+         <td><input type="text" name="filtrartxt" class="campos" value="<?php echo $elementoBusqueda; ?>"  style="text-align:right" ></td>
+         <td><input type="submit" name="filtrar" value="Filtrar" class="botones" ></td>
+       </tr>
+     </table>
+     <p>&nbsp;</p>
+     </form>
+      </div>  
+      
+      <table class="lista" cellpadding="5">
           <tr class="titulo">
             <td width="70">C&oacute;digo</td>
             <td width="100">Cliente</td>

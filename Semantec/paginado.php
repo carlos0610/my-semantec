@@ -12,10 +12,10 @@
     }else{
        $pagina = $_GET["pagina"];
     }
-    //cálculo del l&iacute;mite inferior
+    //cï¿½lculo del l&iacute;mite inferior
     $limitInf=($pagina-1)*$tamPag;
 
-    //cálculo del número de páginas
+    //cï¿½lculo del nï¿½mero de pï¿½ginas
     $numPags=ceil($cant_registros/$tamPag);
     if(!isset($pagina))
     {
@@ -47,7 +47,8 @@ function verPaginado($cant_registros, $pagina, $inicio, $final, $numPags){
 
     if($pagina>1)
     {
-       $mensaje.="<a href='".$_SERVER["PHP_SELF"]."?pagina=".($pagina-1)."'>";
+     //  $mensaje.="<a href='".$_SERVER["PHP_SELF"]."?pagina=".($pagina-1)."'>";
+        $mensaje.="<a href='#' onclick='transferirFiltros(".($pagina-1).")'>";
        $mensaje.="anterior";
        $mensaje.="</a>  &nbsp; ";
     }
@@ -60,14 +61,16 @@ function verPaginado($cant_registros, $pagina, $inicio, $final, $numPags){
                $mensaje.="<strong>".$i."</strong> ";
             }
        }else{
-          $mensaje.=" <a href='".$_SERVER["PHP_SELF"]."?pagina=".$i."'>";
+         // $mensaje.=" <a href='".$_SERVER["PHP_SELF"]."?pagina=".$i."'>";
+           $mensaje.=" <a href='#' onclick='transferirFiltros(".($i).")' >";
           $mensaje.=$i;
           $mensaje.="</a> ";
        }
     }
     if($pagina<$numPags)
    {
-       $mensaje.=" &nbsp; <a href='".$_SERVER["PHP_SELF"]."?pagina=".($pagina+1)."'>";
+   //    $mensaje.=" &nbsp; <a href='".$_SERVER["PHP_SELF"]."?pagina=".($pagina+1)."'>";
+         $mensaje.=" <a href='#' onclick='transferirFiltros(".($pagina+1).")' >";
        $mensaje.="siguiente";
        $mensaje.="</a> ";
    }

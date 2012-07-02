@@ -94,7 +94,7 @@
    <table width="100%" border="0">
   <tr>
     <td rowspan="3"><a href="#" id="logo2"><img src="images/semantec-logo.jpg" width="401" height="71" alt="logo" /></a></td>
-    <td width="51%" class="titulo"><span id="ocultarParaImpresion">FACTURA N° 0001- </span><?php echo $fav_id ?></td>
+    <td width="51%" class="titulo"><span id="ocultarParaImpresion">FACTURA N° 0001- </span><?php echo (formatoNumeroFactura($fav_id)); ?></td>
     <td width="1%">&nbsp;</td>
   </tr>
   <tr>
@@ -132,8 +132,16 @@
         </div>
     </label></td>
     <td><label>
-      <div align="center">
-        <?echo $item["det_fco_preciounitario"]; ?>
+      <div align="right">
+        <?if($item["det_fco_preciounitario"]>0)
+        {
+            echo "$",$item["det_fco_preciounitario"];
+        }
+        else
+             echo "S/C";
+        
+        
+        ?>
         </div>
     </label></td>
   </tr>
@@ -183,8 +191,8 @@
     <tr>
       <td><div  id="ocultarParaImpresion" align="right">TOTAL</div></td>
       <td><label>
-        <div align="center">
-          <?php echo  $subtotal?>
+        <div align="right">
+         $<?php echo (number_format($subtotal, 2, '.', ''));?>
           </div>
       </label></td>
     </tr>

@@ -81,7 +81,13 @@ $resultado=mysql_query($sql);
 <?php
     include("encabezado-main.php");
 ?>  
-      
+      <script>
+          function transferirFiltros(pagina)
+{    
+	document.getElementById("filtro").action="lista-ordenes.php?pagina="+pagina;
+	document.getElementById("filtro").submit();
+}
+  </script>
   </head>
   <body>
 	
@@ -109,7 +115,7 @@ $resultado=mysql_query($sql);
 
       
       <div id="buscador" >     
-<form name="filtro" action="<?php echo $PHP_SELF;?>" method="POST">
+<form id="filtro" name="filtro" action="lista-ordenes.php<?php /*echo $PHP_SELF; */?>" method="POST">
      <table width="100%" border="0">
        <tr>
          <td width="15%">&nbsp;</td>

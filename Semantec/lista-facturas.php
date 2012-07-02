@@ -28,7 +28,7 @@
                 AND c.cli_id = cc.cli_id
                 AND f.estado = 1
                 ORDER BY f.fav_fecha desc"; */
-    $tamPag=10;
+    $tamPag=2;
     
     
         $sql = "SELECT distinct f.fav_id,f.fav_fecha,c.cli_nombre,cc.ccc_id,f.files_id,f.fav_fecha_pago 
@@ -56,7 +56,13 @@
 <?php
     include("encabezado-main.php");
 ?>  
-      
+  <script>
+          function transferirFiltros(pagina)
+{      
+	document.getElementById("filtro").action="lista-facturas.php?pagina="+pagina;
+	document.getElementById("filtro").submit();
+}
+  </script>  
   </head>
   <body>
 	
@@ -83,7 +89,7 @@
       <h2>Panel de control - Listado de Facturas</h2>
 
      <div id="buscador" >     
-<form name="filtro" action="<?php echo $PHP_SELF;?>" method="POST">
+<form id="filtro" name="filtro" action="lista-facturas.php" method="POST">
      <table width="100%" border="0">
        <tr>
          <td width="14%"><div align="right">Cliente</div></td>
