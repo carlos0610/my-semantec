@@ -11,7 +11,7 @@ $est_nombre = $_POST["est_nombre"];
 $codigo_orden= $_GET["usuario"];
 
 include("conexion.php");
-$sql = "SELECT `ord_codigo` FROM `ordenes` WHERE `ord_codigo` = $codigo_orden " ;
+$sql = "SELECT `ord_codigo` FROM `ordenes` WHERE `ord_codigo` = '$codigo_orden' " ;
 $result=mysql_query($sql); //alta de la orden
 
 

@@ -88,7 +88,7 @@
           </tr>
           <tr>
             <td>C&oacute;digo de Orden</td>
-            <td><input type="text"  style="text-align:right" class="campos" id="ord_codigo" name="ord_codigo" required />
+            <td><input type="text"  style="text-align:right" class="campos" id="ord_codigo" name="ord_codigo" onChange="autentica()" required />
                 <span id="error" style="font-family: Verdana, Arial, Helvetica,sans-serif;font-size: 9pt;color: #CC3300;position:relative;visibility:hidden;">Orden existente</span>
             </td>
             <td></td>

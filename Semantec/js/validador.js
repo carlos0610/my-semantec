@@ -136,7 +136,7 @@ function procesarRespuesta2(){
    }
 }
 
-// Funciones llamdas del Form
+// Funciones llamdas del Form  DE FACTURA!
 function autenticaOrden(){
  usuario = document.getElementById("id_orden").value;
  url = "existeNumeroOrden.php?usuario=" + usuario;
