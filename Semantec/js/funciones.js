@@ -154,6 +154,12 @@ function habilitarFiltros(nombre,gadet){
    
 }
 
+function agregarOrderBy(campo){
+ document.getElementById("orden").value=campo;
+  document.getElementById("contador").value++;
+ document.getElementById("filtro").submit();
+}
+
 function limpiarFrmAltaCliente(){
          document.getElementById("cli_cuit_parteA").value="";
          document.getElementById("cli_cuit_parteB").value="";

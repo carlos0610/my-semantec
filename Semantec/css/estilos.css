@@ -26,7 +26,9 @@ a img {border:none}
 aside, details, figcaption, figure, 
 footer, header, hgroup, menu, nav, section {display: block}
 
-
+	a:link       { font-size: 11pt; color: #FFFFFF; text-decoration:none;font-style: inherit; }
+	a:visited    {  font-size: 11pt; color: #FFFFFF; text-decoration:none; font-style: inherit;}
+	a:hover      {  text-decoration: none; color: #FFFFFF; font-size:12pt;font-style: inherit; }
 /***************************************************
 			      Global styles
 ***************************************************/
@@ -285,6 +287,8 @@ a.current:hover{
 	width:95%;
 	margin:auto;
 }
+
+
 .titulo{
 	background-color:#3abdd8;
 	color:#fff;

@@ -41,7 +41,7 @@
 /*if($_POST['est_id'])
     {  */
 
-$sql="SELECT ord_id, ord_codigo, ord_descripcion, cli_nombre, prv_nombre, est_nombre, est_color, ord_alta, ord_plazo, ord_costo, ord_venta,c.sucursal
+$sql="SELECT ord_id, ord_codigo, ord_descripcion, cli_nombre, prv_nombre, est_nombre, est_color, ord_alta, ord_plazo, ord_costo, ord_venta
                   FROM ordenes o, clientes c, estados e, proveedores p
                   WHERE o.cli_id = c.cli_id
                     AND o.est_id = e.est_id
@@ -168,7 +168,7 @@ $resultado=mysql_query($sql);
           <tr class="lista" bgcolor="<?php echo($colores[$i]);?>">
             <td><?php echo($fila["ord_codigo"]);?></td>
             <td><?php echo(tfecha($fila["ord_alta"]));?></td>
-            <td><?php echo(utf8_encode($fila["cli_nombre"]));?>(<?php echo(utf8_encode($fila["sucursal"]))?>)</td>
+            <td><?php echo(utf8_encode($fila["cli_nombre"]));?></td>
             <td><?php echo(nl2br(utf8_encode($fila["ord_descripcion"])));?></td>
             <td><?php echo(utf8_encode($fila["prv_nombre"]));?></td>
             <td>
