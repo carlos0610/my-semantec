@@ -28,7 +28,7 @@ function validaOpcion($opcionSeleccionada)
 }
 
 $selectDestino=$_GET["select"]; $opcionSeleccionada=$_GET["opcion"];
-
+$selectCampo2=$_GET["selected"];
 if(validaSelect($selectDestino) && validaOpcion($opcionSeleccionada))
 {
 	$tabla=$listadoSelects[$selectDestino];
@@ -38,7 +38,7 @@ if(validaSelect($selectDestino) && validaOpcion($opcionSeleccionada))
 	//conectar();
 	$consulta=mysql_query("SELECT cli_id, cli_nombre,sucursal FROM $tabla WHERE $relacion='$opcionSeleccionada' order by cli_nombre") or die(mysql_error());
 	//desconectar();
-	
+	echo $selectCampo2;
 	// Comienzo a imprimir el select
 	echo "<select name='".$selectDestino."' id='".$selectDestino."' onChange='cargaContenido(this.id)' class=campos>";
 	echo "<option value='0'>Elige</option>";
@@ -46,10 +46,15 @@ if(validaSelect($selectDestino) && validaOpcion($opcionSeleccionada))
 	{
 		// Convierto los caracteres conflictivos a sus entidades HTML correspondientes para su correcta visualizacion
 		$registro[1]=htmlentities($registro[1]);
-		// Imprimo las opciones del select
-		echo "<option value='".$registro[0]."'>".$registro[1]."(".utf8_decode($registro[2]).")</option>";
-                
+		// Imprimo las opciones del select  
+                $option="<option value='".$registro[0]."'";
+		/*echo "<option value='".$registro[0]."'    <?php if($registro[0]==$selectCampo2){echo(" selected=\"selected\"");} ?>   */  
+                if($registro[0]==$selectCampo2){
+                    $option.= " selected=\"selected\ "; }
+                $option.= ">".$registro[1]."(".utf8_decode($registro[2]).")</option>";
+                echo $option;
 	}			
 	echo "</select>";
-}
+        echo  $option;
+}       
 ?>

@@ -30,15 +30,11 @@
         $proveedorFiltro=$_POST['prv_id'];
         $estado_id=$_POST['est_id'];
         $cli_id = $_POST['suc_id'];
-        
+        echo $cli_id;
         $cli_idMaestro = $_POST['cli_id'];
         $cli_id_oculto = $_POST['suc_id_oculta'];
         
-        if($cli_id_oculto!="")
-            $cli_id=$cli_id_oculto;
-        else
-            $cli_id_oculto=$cli_id;
-        echo $cli_id;
+
         
         //ordenes de los headers de las tablas parte 1
         $unOrden=$_POST['orden'];
@@ -161,7 +157,7 @@ $resultado=mysql_query($sql);
        </tr>
        <tr>
          <td><div align="right">Cliente</div></td>
-         <td><select name="cli_id" id="cli_id" class="campos" required onChange="cargaContenido(this.id)" <?php if($cli_id==""){echo ("disabled");}?>>
+         <td><select name="cli_id" id="cli_id" class="campos" required onChange="cargaContenido(this.id,'<?php echo $cli_id ?>')" <?php if($cli_id==""){echo ("disabled");}?>>
           <?php if($cli_idMaestro==""){ ?> <option value='0'>Seleccione</option>
            <?php } ?>
     
