@@ -154,6 +154,16 @@ function habilitarFiltros(nombre,gadet){
    
 }
 
+function habilitarCombo2(nombre,gadet){
+    
+  if(document.getElementById(nombre).value>0){ 
+     document.getElementById(gadet).disabled=false;
+     document.getElementById(gadet).focus();
+  }else{
+      document.getElementById(gadet).disabled=true  ;
+  }
+
+}
 function agregarOrderBy(campo){
  document.getElementById("orden").value=campo;
   document.getElementById("contador").value++;

@@ -1,4 +1,5 @@
 <?php
+
     $titulo = "Listado de clientes.";
         include("validar.php");
         include("funciones.php");
