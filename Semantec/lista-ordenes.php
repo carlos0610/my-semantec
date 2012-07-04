@@ -31,7 +31,14 @@
         $estado_id=$_POST['est_id'];
         $cli_id = $_POST['suc_id'];
         
+        $cli_idMaestro = $_POST['cli_id'];
+        $cli_id_oculto = $_POST['suc_id_oculta'];
         
+        if($cli_id_oculto!="")
+            $cli_id=$cli_id_oculto;
+        else
+            $cli_id_oculto=$cli_id;
+        echo $cli_id;
         
         //ordenes de los headers de las tablas parte 1
         $unOrden=$_POST['orden'];
@@ -139,7 +146,8 @@ $resultado=mysql_query($sql);
            <?php while($fila2 = mysql_fetch_array($resultado2)){ ?>
            <option value="<?php echo($fila2["prv_id"]); ?>"<?php if($proveedorFiltro==$fila2["prv_id"]){echo(" selected=\"selected\"");} ?>><?php echo(utf8_encode($fila2["prv_nombre"])); ?></option>
            <?php }?>
-         </select></td>
+         </select>
+         </td>
          <td><input name="chkProovedor" type="checkbox" id="chkProovedor" value="si" onClick="habilitarFiltros('chkProovedor','prv_id')"  <?php if($proveedorFiltro!=""){echo ("checked");}?>></td>
        </tr>
        <tr>
@@ -153,28 +161,28 @@ $resultado=mysql_query($sql);
        </tr>
        <tr>
          <td><div align="right">Cliente</div></td>
-         <td><select name="cli_id" id="cli_id" class="campos" required onChange="cargaContenido(this.id)" disabled>
-           <option value='0'>Seleccione</option>
-           
+         <td><select name="cli_id" id="cli_id" class="campos" required onChange="cargaContenido(this.id)" <?php if($cli_id==""){echo ("disabled");}?>>
+          <?php if($cli_idMaestro==""){ ?> <option value='0'>Seleccione</option>
+           <?php } ?>
     
            <?php
           while($fila = mysql_fetch_array($resultado1)){
     ?>
-           <option value="<?php echo($fila["cli_id"]); ?>"><?php echo(utf8_encode($fila["cli_nombre"])); ?> (<?php echo(utf8_encode($fila["provincia"])); ?>/<?php echo(utf8_encode($fila["sucursal"])); ?>)</option>
+           <option value="<?php echo($fila["cli_id"]); ?>"<?php if($cli_idMaestro==$fila["cli_id"]){echo(" selected=\"selected\"");} ?>><?php echo(utf8_encode($fila["cli_nombre"])); ?> (<?php echo(utf8_encode($fila["provincia"])); ?>/<?php echo(utf8_encode($fila["sucursal"])); ?>)</option>
            <?php
           }
     ?>
          </select></td>
          <td><label>
-           <input type="checkbox" name="chkCliente" id="chkCliente" onClick="habilitarFiltros('chkCliente','cli_id')" >
+           <input type="checkbox" name="chkCliente" id="chkCliente" onClick="habilitarFiltros('chkCliente','cli_id')" <?php if($cli_idMaestro!=""){echo ("checked");}?>>
          </label></td>
        </tr>
        <tr>
          <td><div align="right">Sucursal</div></td>
-         <td><select name="suc_id" id="suc_id" class="campos" required disabled>
+         <td><select name="suc_id" id="suc_id" class="campos" required <?php if($cli_id==""){echo ("disabled");}?>>
            <option value='0'>Seleccione</option>
            </select></td>
-         <td>&nbsp;</td>
+         <td>&nbsp;</td><input type="hidden" name="suc_id_oculta" value="<?php echo $cli_id_oculto ?>" id="suc_id_oculta">
        </tr>
        <tr>
          <td><div align="right">N° Orden</div></td>
