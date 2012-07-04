@@ -56,9 +56,9 @@
         if($unOrden=="")
         {$unOrden=" o.ord_alta ";}
         if($contador%2)
-            $unOrdenCompleta.=" $unOrden DESC ";
-        else
             $unOrdenCompleta.=" $unOrden ASC ";
+        else
+            $unOrdenCompleta.=" $unOrden DESC ";
         //fin
 
 $sql="SELECT ord_id, ord_codigo, ord_descripcion, cli_nombre, prv_nombre, est_nombre, est_color, ord_alta, ord_plazo, ord_costo, ord_venta,c.sucursal
@@ -191,7 +191,7 @@ $resultado=mysql_query($sql);
      </form>
       </div>    
    
-      <table class="listado" cellpadding="5">
+      <table class="listados" cellpadding="5">
           <tr class="titulo">
             <td width="70"><a href="#" onClick="agregarOrderBy('ord_codigo')">C&oacute;digo</a></td>
             <td width="100"><a href="#" onClick="agregarOrderBy('ord_alta')">Fecha</a></td>

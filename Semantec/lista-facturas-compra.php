@@ -32,9 +32,9 @@
         if($unOrden=="")
         {$unOrden="  f.fco_fecha ";}
         if($contador%2)
-            $unOrdenCompleta.=" $unOrden DESC ";
-        else
             $unOrdenCompleta.=" $unOrden ASC ";
+        else
+            $unOrdenCompleta.=" $unOrden DESC ";
         //fin
     $tamPag=10;
     
