@@ -59,7 +59,7 @@
         $sql = "INSERT INTO ordenes (usu_id,ord_codigo,ord_descripcion,cli_id,prv_id,est_id,ord_alta,ord_costo,ord_venta,estado) VALUES (
         							
                                                                  $usu_id,
-								 $ord_codigo,
+								 '$ord_codigo',
         							'$ord_descripcion',
         						         $cli_id,
         							 $prv_id,
@@ -107,7 +107,7 @@
                                                 )";      
                                                 }
  
-       $result=mysql_query($sql2);
+                        $result=mysql_query($sql2);
                      if(!$result)
                      $error=1;
         
