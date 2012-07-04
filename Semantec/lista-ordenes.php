@@ -3,7 +3,22 @@
         include("validar.php");
         include("funciones.php");
         include("conexion.php");
-         $tamPag=15;    
+         $tamPag=10;
+         
+         //Clientes
+         $sql = "SELECT sucursal_id,sucursal,cli_id,cli_nombre,p.nombre as provincia 
+           FROM clientes,ubicacion u,provincias p, partidos pa,localidades l
+           WHERE 
+ 	   clientes.ubicacion_id = u.id
+           AND u.provincias_id = p.id
+           AND u.partidos_id = pa.id
+           AND u.localidades_id = l.id
+           AND clientes.estado = 1
+           AND sucursal_id is null
+           ORDER BY cli_nombre,provincia";
+        $resultado1 = mysql_query($sql);
+         
+         
          // estados
         $sql = "SELECT  est_id, est_nombre, est_color FROM estados";
         $resultado3 = mysql_query($sql);
@@ -14,6 +29,9 @@
         $elementoBusqueda=$_POST['filtrartxt'];
         $proveedorFiltro=$_POST['prv_id'];
         $estado_id=$_POST['est_id'];
+        $cli_id = $_POST['suc_id'];
+        
+        
         
         //ordenes de los headers de las tablas
         $unOrden=$_POST['orden'];
@@ -30,6 +48,9 @@
         {$sqlaux.="AND o.prv_id = $proveedorFiltro ";}
         if($estado_id!="")
         {$sqlaux.="AND o.est_id = $estado_id ";}
+        if($cli_id!="")
+        {$sqlaux.="AND o.cli_id = $cli_id ";}
+        
         
         //ordenamiento
         if($unOrden=="")
@@ -78,6 +99,7 @@ $resultado=mysql_query($sql);
 	document.getElementById("filtro").submit();
 }
   </script>
+  <script type="text/javascript" src="js/select_dependientes_cliente_sucursal.js"></script>
   </head>
   <body>
 	
@@ -105,7 +127,7 @@ $resultado=mysql_query($sql);
 
       
       <div id="buscador" >     
-<form id="filtro" name="filtro" action="lista-ordenes.php<?php /*echo $PHP_SELF; */?>" method="POST">
+    <form id="filtro" name="filtro" action="lista-ordenes.php<?php /*echo $PHP_SELF; */?>" method="POST">
      <table width="100%" border="0">
        <tr>
          <td width="15%">&nbsp;</td>
@@ -131,7 +153,32 @@ $resultado=mysql_query($sql);
          <td><input name="chkEstado" type="checkbox" id="chkEstado" onClick="habilitarFiltros('chkEstado','est_id')" <?php if($estado_id!=""){echo ("checked");}?>></td>
        </tr>
        <tr>
-         <td><div align="right">N° Orden </div></td>
+         <td><div align="right">Cliente</div></td>
+         <td><select name="cli_id" id="cli_id" class="campos" required onChange="cargaContenido(this.id)" disabled>
+           <option value='0'>Seleccione</option>
+           
+    
+           <?php
+          while($fila = mysql_fetch_array($resultado1)){
+    ?>
+           <option value="<?php echo($fila["cli_id"]); ?>"><?php echo(utf8_encode($fila["cli_nombre"])); ?> (<?php echo(utf8_encode($fila["provincia"])); ?>/<?php echo(utf8_encode($fila["sucursal"])); ?>)</option>
+           <?php
+          }
+    ?>
+         </select></td>
+         <td><label>
+           <input type="checkbox" name="chkCliente" id="chkCliente" onClick="habilitarFiltros('chkCliente','cli_id')" >
+         </label></td>
+       </tr>
+       <tr>
+         <td><div align="right">Sucursal</div></td>
+         <td><select name="suc_id" id="suc_id" class="campos" required disabled>
+           <option value='0'>Seleccione</option>
+           </select></td>
+         <td>&nbsp;</td>
+       </tr>
+       <tr>
+         <td><div align="right">N° Orden</div></td>
          <td><input type="text" name="filtrartxt" class="campos" value="<?php echo $elementoBusqueda; ?>"  style="text-align:right" ></td>
          <td><input type="submit" name="filtrar" value="Filtrar" class="botones" ></td>
        </tr> 

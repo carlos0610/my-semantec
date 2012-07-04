@@ -42,6 +42,13 @@
   </script>    
   <script type="text/javascript" src="js/validador.js"></script>
   <script type="text/javascript" src="js/select_dependientes_cliente_sucursal.js"></script>
+  <script>
+          function transferirFiltros(pagina)
+{    
+	document.getElementById("filtro").action="lista-ordenes.php?pagina="+pagina;
+	document.getElementById("filtro").submit();
+}
+  </script>
   </head>
   <body>
 	
@@ -68,7 +75,7 @@
 
 
       <h2>Panel de control</h2>
-
+      
       <form action="alta-ordenes.php" method="post" enctype="multipart/form-data" enctype="multipart/form-data" >
       <table class="forms" cellpadding="5">
           <tr class="titulo">
