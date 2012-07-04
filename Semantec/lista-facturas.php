@@ -5,6 +5,13 @@
         include("conexion.php");
         $sql = "SELECT  cli_id, cli_nombre FROM clientes WHERE estado=1";
         $resultado1 = mysql_query($sql);
+                //ordenes de los headers de las tablas
+        $unOrden=$_POST['orden'];
+        $contador=$_POST['contador'];
+        if($contador=="")
+         {$contadorinicial="3";}
+        else{$contadorinicial=$contador;}
+        //fin
         //recibo los criterios y construyo la consulta
         $elementoBusqueda=$_POST['filtrartxt'];
         $pagado=$_POST['pagado'];
@@ -16,18 +23,17 @@
         {$sqlaux.=" AND $pagado (f.fav_fecha_pago) ";}
         if($cli_id!="")
         {$sqlaux.=" AND c.cli_id  = $cli_id ";}
+                     //ordenamiento parte 2
+        if($unOrden=="")
+        {$unOrden=" f.fav_fecha ";}
+        if($contador%2)
+            $unOrdenCompleta.=" $unOrden DESC ";
+        else
+            $unOrdenCompleta.=" $unOrden ASC ";
+        //fin   
         
         
-        
-/* CALCULO PAGINADO */  ###############################################################################
- /*   $sql0 =    "SELECT distinct f.fav_id,f.fav_fecha,c.cli_nombre,cc.ccc_id,f.files_id,f.fav_fecha_pago 
-                FROM factura_venta f,ordenes o,clientes c,grupo_ordenes g_o,cuentacorriente_cliente cc
-                WHERE f.gru_id = g_o.gru_id
-                AND g_o.gru_id = o.gru_id
-                AND o.cli_id = c.cli_id
-                AND c.cli_id = cc.cli_id
-                AND f.estado = 1
-                ORDER BY f.fav_fecha desc"; */
+
     $tamPag=2;
     
     
@@ -42,7 +48,7 @@
                 $sql0=$sql;
                 include("paginado.php");
                 
-                $sql .= " ORDER BY f.fav_fecha desc LIMIT ".$limitInf.",".$tamPag;                      
+                $sql .= " ORDER BY $unOrdenCompleta LIMIT ".$limitInf.",".$tamPag;                      
         $resultado = mysql_query($sql);
         $cantidad = mysql_num_rows($resultado);
 
@@ -122,6 +128,10 @@
          <td>&nbsp;</td>
          <td>&nbsp;</td>
        </tr>
+              <!--- Datos necesarios para el header PARTE 3 -->
+       <input name="orden" type="hidden" id="orden" value="<?php echo $unOrden; ?>">
+       <input name="contador" type="hidden" id="contador" value="<?php echo $contadorinicial ?>">
+       <!--- FIN PARTE 3 -->
      </table>
      <p>&nbsp;</p>
 </form>
@@ -129,12 +139,12 @@
       
       
       
-      <table class="sortable" cellpadding="5">
+      <table class="listados" cellpadding="5">
           <tr class="titulo">
-            <td width="70">Factura Nro</td>
-            <td width="100">Fecha de emisión</td>
-            <td width="100">Cliente</td>
-            <td width="32">Pagada</td> 
+            <td width="70"><a href="#" onClick="agregarOrderBy('fav_id')">Factura Nro</a></td>
+            <td width="100"><a href="#" onClick="agregarOrderBy('fav_fecha')">Fecha de emisión</a></td>
+            <td width="100"><a href="#" onClick="agregarOrderBy('cli_nombre')">Cliente</a></td>
+            <td width="32"><a href="#" onClick="agregarOrderBy('fav_fecha_pago')">Pagada</a></td> 
             <td width="32">Archivo</td>
             <td width="32"></td>
             <td width="32">&nbsp;</td>

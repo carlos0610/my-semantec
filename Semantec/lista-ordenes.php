@@ -33,7 +33,7 @@
         
         
         
-        //ordenes de los headers de las tablas
+        //ordenes de los headers de las tablas parte 1
         $unOrden=$_POST['orden'];
         $contador=$_POST['contador'];
         if($contador=="")
@@ -52,15 +52,14 @@
         {$sqlaux.="AND o.cli_id = $cli_id ";}
         
         
-        //ordenamiento
+        //ordenamiento parte 2
         if($unOrden=="")
         {$unOrden=" o.ord_alta ";}
         if($contador%2)
             $unOrdenCompleta.=" $unOrden DESC ";
         else
             $unOrdenCompleta.=" $unOrden ASC ";
-/*if($_POST['est_id'])
-    {  */
+        //fin
 
 $sql="SELECT ord_id, ord_codigo, ord_descripcion, cli_nombre, prv_nombre, est_nombre, est_color, ord_alta, ord_plazo, ord_costo, ord_venta,c.sucursal
                   FROM ordenes o, clientes c, estados e, proveedores p
@@ -183,10 +182,10 @@ $resultado=mysql_query($sql);
          <td><input type="submit" name="filtrar" value="Filtrar" class="botones" ></td>
        </tr> 
        
-       <!--- Datos necesarios para el header  -->
+       <!--- Datos necesarios para el header PARTE 3 -->
        <input name="orden" type="hidden" id="orden" value="<?php echo $unOrden; ?>">
        <input name="contador" type="hidden" id="contador" value="<?php echo $contadorinicial ?>">
-       
+       <!--- FIN PARTE 3 -->
      </table>
      <p>&nbsp;</p>
      </form>

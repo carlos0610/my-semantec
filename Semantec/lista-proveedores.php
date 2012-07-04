@@ -3,10 +3,24 @@
         include("validar.php");
         include("funciones.php");
         include("conexion.php");
+         //ordenes de los headers de las tablas
+        $unOrden=$_POST['orden'];
+        $contador=$_POST['contador'];
+        if($contador=="")
+         {$contadorinicial="3";}
+        else{$contadorinicial=$contador;}
+        //fin
         $elementoBusqueda=$_POST['filtrartxt'];
         if($elementoBusqueda!="")
         {$sqlaux.=" AND prv_nombre like '$elementoBusqueda%' ";}
-
+                        //ordenamiento parte 2
+        if($unOrden=="")
+        {$unOrden=" prv_nombre ";}
+        if($contador%2)
+            $unOrdenCompleta.=" $unOrden DESC ";
+        else
+            $unOrdenCompleta.=" $unOrden ASC ";
+        //fin
     $tamPag=20;
     
 
@@ -14,7 +28,7 @@
                 $sql.=$sqlaux;
                 $sql0=$sql;
                 include("paginado.php");
-        $sql .= " ORDER BY prv_nombre LIMIT ".$limitInf.",".$tamPag; 
+        $sql .= " ORDER BY $unOrdenCompleta LIMIT ".$limitInf.",".$tamPag; 
         $resultado = mysql_query($sql);
         $cantidad = mysql_num_rows($resultado);
 
@@ -86,6 +100,10 @@
          <td>&nbsp;</td>
          <td>&nbsp;</td>
        </tr>
+              <!--- Datos necesarios para el header PARTE 3 -->
+       <input name="orden" type="hidden" id="orden" value="<?php echo $unOrden; ?>">
+       <input name="contador" type="hidden" id="contador" value="<?php echo $contadorinicial ?>">
+       <!--- FIN PARTE 3 -->
      </table>
      <p>&nbsp;</p>
 </form>
@@ -93,11 +111,11 @@
 
    		<div id="busqueda"></div>
 
-<table class="sortable" cellpadding="5" id="latabla">
+<table class="listados" cellpadding="5" id="latabla">
           <tr class="titulo">
-            <td>Nombre</td>
-            <td width="90">CUIT</td>
-            <td width="90">Tel&eacute;fono</td>
+            <td><a href="#" onClick="agregarOrderBy('prv_nombre')">Nombre</a></td>
+            <td width="90"><a href="#" onClick="agregarOrderBy('prv_cuit')">CUIT</a></td>
+            <td width="90"><a href="#" onClick="agregarOrderBy('prv_telefono')">Tel&eacute;fono</a></td>
             <td width="32">&nbsp;</td>
             <td width="32">&nbsp;</td>
             <td width="32">

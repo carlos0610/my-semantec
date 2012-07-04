@@ -2,21 +2,28 @@
     $titulo = "Listado de clientes.";
         include("validar.php");
         include("funciones.php");
-
         include("conexion.php");
+        
+        //ordenes de los headers de las tablas
+        $unOrden=$_POST['orden'];
+        $contador=$_POST['contador'];
+        if($contador=="")
+         {$contadorinicial="3";}
+        else{$contadorinicial=$contador;}
+        //fin
+        
         $elementoBusqueda=$_POST['filtrartxt'];
         if($elementoBusqueda!="")
         {$sqlaux.=" AND cli_nombre like '$elementoBusqueda%' ";}
-/* CALCULO PAGINADO */  ###############################################################################
-  /*  $sql0="SELECT sucursal_id, cli_id,cli_nombre, cli_cuit, iva_tipo.iva_nombre,p.nombre as provincia,pa.nombre as partido,l.nombre as localidad, cli_direccion,cli_direccion_fiscal, cli_telefono, cli_notas
-           FROM clientes,iva_tipo,ubicacion u,provincias p, partidos pa,localidades l
-           WHERE 
-           clientes.iva_id = iva_tipo.iva_id
-           AND clientes.ubicacion_id = u.id
-           AND u.provincias_id = p.id
-           AND u.partidos_id = pa.id
-           AND u.localidades_id = l.id
-           AND clientes.estado = 1"; */
+        
+                //ordenamiento parte 2
+        if($unOrden=="")
+        {$unOrden=" cli_nombre ";}
+        if($contador%2)
+            $unOrdenCompleta.=" $unOrden DESC ";
+        else
+            $unOrdenCompleta.=" $unOrden ASC ";
+        //fin
     
     $tamPag=20;
           
@@ -32,7 +39,8 @@
                 $sql0=$sql;
                 include("paginado.php");
                 
-                $sql .= "ORDER BY cli_nombre  LIMIT ".$limitInf.",".$tamPag; 
+                $sql .= "ORDER BY $unOrdenCompleta  LIMIT ".$limitInf.",".$tamPag; 
+               
         $resultado = mysql_query($sql);
         $cantidad = mysql_num_rows($resultado);
 
@@ -95,6 +103,11 @@
          <td>&nbsp;</td>
          <td>&nbsp;</td>
        </tr>
+              <!--- Datos necesarios para el header PARTE 3 -->
+       <input name="orden" type="hidden" id="orden" value="<?php echo $unOrden; ?>">
+       <input name="contador" type="hidden" id="contador" value="<?php echo $contadorinicial ?>">
+       <!--- FIN PARTE 3 -->
+       
      </table>
      <p>&nbsp;</p>
 </form>
@@ -104,11 +117,11 @@
       
       
       
-      <table class="sortable" cellpadding="5">
+      <table class="listados" cellpadding="5">
           <tr class="titulo">
-            <td>Nombre</td>
-            <td width="90">CUIT</td>
-            <td width="120">Tel&eacute;fono</td>
+            <td><a href="#" onClick="agregarOrderBy('cli_nombre')">Nombre</a></td>
+            <td width="90"><a href="#" onClick="agregarOrderBy('cli_cuit')">CUIT</a></td>
+            <td width="120"><a href="#" onClick="agregarOrderBy('cli_telefono')">Tel&eacute;fono</a></td>
             <td width="32">&nbsp;</td>
             <td width="32">&nbsp;</td>
             <td width="32">

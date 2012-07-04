@@ -7,6 +7,13 @@
         $resultado1 = mysql_query($sql);
         $sql = "SELECT  prv_id, prv_nombre FROM proveedores WHERE estado=1";
         $resultado2 = mysql_query($sql);
+        //ordenes de los headers de las tablas
+        $unOrden=$_POST['orden'];
+        $contador=$_POST['contador'];
+        if($contador=="")
+         {$contadorinicial="3";}
+        else{$contadorinicial=$contador;}
+        //fin
         //recibo los criterios y construyo la consulta
         $elementoBusqueda=$_POST['filtrartxt'];
         $pagado=$_POST['pagado'];
@@ -21,7 +28,14 @@
         {$sqlaux.=" AND c.cli_id  = $cli_id ";}
         if($prv_id!="")
         {$sqlaux.=" AND p.prv_id  = $prv_id ";}
-
+                        //ordenamiento parte 2
+        if($unOrden=="")
+        {$unOrden="  f.fco_fecha ";}
+        if($contador%2)
+            $unOrdenCompleta.=" $unOrden DESC ";
+        else
+            $unOrdenCompleta.=" $unOrden ASC ";
+        //fin
     $tamPag=10;
     
     
@@ -37,7 +51,7 @@
                 $sql0=$sql;
                 include("paginado.php");
                 
-                $sql .= " ORDER BY f.fco_fecha desc LIMIT ".$limitInf.",".$tamPag;                      
+                $sql .= " ORDER BY $unOrdenCompleta LIMIT ".$limitInf.",".$tamPag;                      
         $resultado = mysql_query($sql);
         $cantidad = mysql_num_rows($resultado);
 
@@ -131,6 +145,10 @@
          <td>&nbsp;</td>
          <td>&nbsp;</td>
        </tr>
+              <!--- Datos necesarios para el header PARTE 3 -->
+       <input name="orden" type="hidden" id="orden" value="<?php echo $unOrden; ?>">
+       <input name="contador" type="hidden" id="contador" value="<?php echo $contadorinicial ?>">
+       <!--- FIN PARTE 3 -->
      </table>
      <p>&nbsp;</p>
 </form>
@@ -140,10 +158,10 @@
       
       <table class="listados" cellpadding="5">
           <tr class="titulo">
-            <td width="70">Factura Nro</td>
-            <td width="100">Fecha de emisión</td>
-            <td width="100">Proveedor</td>
-            <td width="100">Nota</td>
+            <td width="70"><a href="#" onClick="agregarOrderBy('fco_id')">Factura Nro</a></td>
+            <td width="100"><a href="#" onClick="agregarOrderBy('fco_fecha')">Fecha de emisión</a></td>
+            <td width="100"><a href="#" onClick="agregarOrderBy('prv_nombre')">Proveedor</a></td>
+            <td width="100"><a href="#" onClick="agregarOrderBy('fco_nota')">Nota</a></td>
             <td width="32">Archivo</td>
             <td width="32">&nbsp;</td>
             <td width="32">
