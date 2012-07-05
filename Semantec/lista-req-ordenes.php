@@ -28,7 +28,25 @@
         $elementoBusqueda=$_POST['filtrartxt'];
         $proveedorFiltro=$_POST['prv_id'];
         $estado_id=$_POST['est_id'];
+               //filtros nuevos Cliente Sucursal
         $cli_id = $_POST['suc_id'];
+        $cli_idMaestro = $_POST['cli_id'];
+        if($cli_idMaestro=="")
+         {$cli_idMaestro="0";}
+        $sql = "SELECT cli_id, cli_nombre,sucursal 
+                FROM clientes
+           WHERE sucursal_id =$cli_idMaestro
+           ORDER BY cli_nombre";
+        $resultadoSucursales = mysql_query($sql);
+   
+                //ordenes de los headers de las tablas PARTE 1
+        $unOrden=$_POST['orden'];
+        $contador=$_POST['contador'];
+        if($contador=="")
+         {$contadorinicial="3";}
+        else{$contadorinicial=$contador;}
+        //fin
+        
         $sqlaux="";
         if($elementoBusqueda!="")
         {$sqlaux.="AND ord_codigo like '$elementoBusqueda%' ";}
@@ -38,18 +56,16 @@
         {$sqlaux.="AND o.est_id = $estado_id ";}
         if($cli_id!="")
         {$sqlaux.="AND o.cli_id = $cli_id ";} 
-        
+                //ordenamiento parte 2
+        if($unOrden=="")
+        {$unOrden=" o.ord_alta ";}
+        if($contador%2)
+            $unOrdenCompleta.=" $unOrden ASC ";
+        else
+            $unOrdenCompleta.=" $unOrden DESC ";
+        //fin
    $tamPag=10;       
         
-/* CALCULO PAGINADO */  ###############################################################################
-  /*  $sql0 =  "SELECT ord_id, ord_codigo, ord_descripcion, cli_nombre, prv_nombre, est_nombre, est_color, ord_alta, ord_plazo, ord_costo, ord_venta
-                  FROM ordenes o, clientes c, estados e, proveedores p
-                  WHERE o.cli_id = c.cli_id
-                    AND o.est_id = e.est_id
-                    AND o.prv_id = p.prv_id
-                    AND o.estado = 1 
-                    ORDER BY o.ord_alta DESC ";
-    */
        
         $sql = "SELECT ord_id, ord_codigo, ord_descripcion, cli_nombre, prv_nombre, est_nombre, est_color, ord_alta, ord_plazo, ord_costo, ord_venta,c.sucursal
                   FROM ordenes o, clientes c, estados e, proveedores p
@@ -61,7 +77,7 @@
                     $sql0=$sql;
                     include("paginado.php");
                     
-                $sql .= " ORDER BY o.ord_alta DESC LIMIT ".$limitInf.",".$tamPag; 
+                $sql .= " ORDER BY $unOrdenCompleta LIMIT ".$limitInf.",".$tamPag; 
         $resultado = mysql_query($sql);
         $cantidad = mysql_num_rows($resultado);
 
@@ -163,34 +179,51 @@
        </tr>
        <tr>
          <td><div align="right">Cliente</div></td>
-         <td><select name="cli_id" id="cli_id" class="campos" required onChange="cargaContenido(this.id)" disabled>
-           <option value='0'>Seleccione</option>
-           
+         <td><select name="cli_id" id="cli_id" class="campos" required onChange="habilitarCombo2('cli_id','suc_id')" <?php if($cli_id==""){echo ("disabled");}?>>
+          <?php if($cli_idMaestro==""){ ?> <option value='0'>Seleccione</option>
+           <?php } ?>
     
            <?php
           while($fila = mysql_fetch_array($resultado1)){
     ?>
-           <option value="<?php echo($fila["cli_id"]); ?>"><?php echo(utf8_encode($fila["cli_nombre"])); ?> (<?php echo(utf8_encode($fila["provincia"])); ?>/<?php echo(utf8_encode($fila["sucursal"])); ?>)</option>
+           <option value="<?php echo($fila["cli_id"]); ?>"<?php if($cli_idMaestro==$fila["cli_id"]){echo(" selected=\"selected\"");} ?>><?php echo(utf8_encode($fila["cli_nombre"])); ?> (<?php echo(utf8_encode($fila["provincia"])); ?>/<?php echo(utf8_encode($fila["sucursal"])); ?>)</option>
            <?php
           }
     ?>
          </select></td>
          <td><label>
-           <input type="checkbox" name="chkCliente" id="chkCliente" onClick="habilitarFiltros('chkCliente','cli_id')" >
+           <input type="checkbox" name="chkCliente" id="chkCliente" onClick="habilitarFiltrosClienteSucursal('chkCliente','cli_id','suc_id')" <?php if($cli_idMaestro!="0"){echo ("checked");}?>>
          </label></td>
        </tr>
        <tr>
          <td><div align="right">Sucursal</div></td>
-         <td><select name="suc_id" id="suc_id" class="campos" required disabled>
+         <td><select name="suc_id" id="suc_id" class="campos" required <?php if($cli_id==""){echo ("disabled");}?>>
            <option value='0'>Seleccione</option>
-           </select></td>        
+           
+           
+           
+           <?php
+          while($fila = mysql_fetch_array($resultadoSucursales)){
+    ?>
+           <option value="<?php echo($fila["cli_id"]); ?>"<?php if($cli_id==$fila["cli_id"]){echo(" selected=\"selected\"");} ?>><?php echo(utf8_encode($fila["cli_nombre"])); ?> (<?php echo(utf8_encode($fila["sucursal"])); ?>)</option>
+           <?php
+          }
+    ?>
+           
+           
+           
+           </select></td>
+         <td>&nbsp;</td>
        </tr>
        <tr>
          <td><div align="right">N° Orden</div></td>
          <td><input type="text" name="filtrartxt" class="campos" value="<?php echo $elementoBusqueda; ?>"  style="text-align:right" ></td>
          <td><input type="submit" name="filtrar" value="Filtrar" class="botones" ></td>
        </tr>
-  
+        <!--- Datos necesarios para el header PARTE 3 -->
+       <input name="orden" type="hidden" id="orden" value="<?php echo $unOrden; ?>">
+       <input name="contador" type="hidden" id="contador" value="<?php echo $contadorinicial ?>">
+       <!--- FIN PARTE 3 -->
      </table>
      <p>&nbsp;</p>
      </form>
@@ -198,12 +231,12 @@
       
       <table class="lista" cellpadding="5">
           <tr class="titulo">
-            <td width="70">C&oacute;digo</td>
-            <td width="100">Cliente</td>
-            <td width="100">Fecha Alta</td>
-            <td>Descripci&oacute;n</td>
-            <td width="100">Proveedor</td>
-            <td width="100">Estado</td>
+            <td width="70"><a href="#" onClick="agregarOrderBy('ord_codigo')">C&oacute;digo</a></td>
+            <td width="100"><a href="#" onClick="agregarOrderBy('cli_nombre')">Cliente</a></td>
+            <td width="100"><a href="#" onClick="agregarOrderBy('ord_alta')">Fecha Alta</a></td>
+            <td><a href="#" onClick="agregarOrderBy('ord_descripcion')">Descripci&oacute;n</a></td>
+            <td width="100"><a href="#" onClick="agregarOrderBy('prv_nombre')">Proveedor</a></td>
+            <td width="100"><a href="#" onClick="agregarOrderBy('est_nombre')">Estado</a></td>
             <td width="32">
                 <a href="index-admin.php">
                     <img src="images/home.png"  alt="inicio" title="Volver al panel" width="32" height="32" border="none" />

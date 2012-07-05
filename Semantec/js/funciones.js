@@ -154,11 +154,23 @@ function habilitarFiltros(nombre,gadet){
    
 }
 
+function habilitarFiltrosClienteSucursal(nombre,gadet,sucursal){
+  if(document.getElementById(nombre).checked){ 
+     document.getElementById(gadet).disabled=false;
+     document.getElementById(gadet).focus();
+  }else{
+      document.getElementById(gadet).disabled=true  ;
+      document.getElementById(sucursal).disabled=true  ;
+  }
+   
+}
+
 function habilitarCombo2(nombre,gadet){
     
   if(document.getElementById(nombre).value>0){ 
      document.getElementById(gadet).disabled=false;
      document.getElementById(gadet).focus();
+     document.getElementById("filtro").submit();
   }else{
       document.getElementById(gadet).disabled=true  ;
   }

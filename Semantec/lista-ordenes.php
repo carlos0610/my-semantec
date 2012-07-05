@@ -29,13 +29,17 @@
         $elementoBusqueda=$_POST['filtrartxt'];
         $proveedorFiltro=$_POST['prv_id'];
         $estado_id=$_POST['est_id'];
+        //filtros nuevos
         $cli_id = $_POST['suc_id'];
-        echo $cli_id;
         $cli_idMaestro = $_POST['cli_id'];
-        $cli_id_oculto = $_POST['suc_id_oculta'];
-        
-
-        
+        if($cli_idMaestro=="")
+         {$cli_idMaestro="0";}
+        $sql = "SELECT cli_id, cli_nombre,sucursal 
+                FROM clientes
+           WHERE sucursal_id =$cli_idMaestro
+           ORDER BY cli_nombre";
+        $resultadoSucursales = mysql_query($sql);
+    
         //ordenes de los headers de las tablas parte 1
         $unOrden=$_POST['orden'];
         $contador=$_POST['contador'];
@@ -157,7 +161,7 @@ $resultado=mysql_query($sql);
        </tr>
        <tr>
          <td><div align="right">Cliente</div></td>
-         <td><select name="cli_id" id="cli_id" class="campos" required onChange="cargaContenido(this.id,'<?php echo $cli_id ?>')" <?php if($cli_id==""){echo ("disabled");}?>>
+         <td><select name="cli_id" id="cli_id" class="campos" required onChange="habilitarCombo2('cli_id','suc_id')" <?php if($cli_id==""){echo ("disabled");}?>>
           <?php if($cli_idMaestro==""){ ?> <option value='0'>Seleccione</option>
            <?php } ?>
     
@@ -170,15 +174,28 @@ $resultado=mysql_query($sql);
     ?>
          </select></td>
          <td><label>
-           <input type="checkbox" name="chkCliente" id="chkCliente" onClick="habilitarFiltros('chkCliente','cli_id')" <?php if($cli_idMaestro!=""){echo ("checked");}?>>
+           <input type="checkbox" name="chkCliente" id="chkCliente" onClick="habilitarFiltrosClienteSucursal('chkCliente','cli_id','suc_id')" <?php if($cli_idMaestro!="0"){echo ("checked");}?>>
          </label></td>
        </tr>
        <tr>
          <td><div align="right">Sucursal</div></td>
          <td><select name="suc_id" id="suc_id" class="campos" required <?php if($cli_id==""){echo ("disabled");}?>>
            <option value='0'>Seleccione</option>
+           
+           
+           
+           <?php
+          while($fila = mysql_fetch_array($resultadoSucursales)){
+    ?>
+           <option value="<?php echo($fila["cli_id"]); ?>"<?php if($cli_id==$fila["cli_id"]){echo(" selected=\"selected\"");} ?>><?php echo(utf8_encode($fila["cli_nombre"])); ?> (<?php echo(utf8_encode($fila["sucursal"])); ?>)</option>
+           <?php
+          }
+    ?>
+           
+           
+           
            </select></td>
-         <td>&nbsp;</td><input type="hidden" name="suc_id_oculta" value="<?php echo $cli_id_oculto ?>" id="suc_id_oculta">
+         <td>&nbsp;</td>
        </tr>
        <tr>
          <td><div align="right">N° Orden</div></td>
