@@ -1,4 +1,7 @@
 
+
+
+
 // BAJA de ORDEN
 function eliminarOrden(id,nombre){
     if(confirm('¿Confirma Eliminar Orden: '+nombre+' ?')==true)

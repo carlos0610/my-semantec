@@ -5,6 +5,8 @@
 var req;
 var respuesta;
 
+
+
 function leer_doc(url) {
  req = false;
  
