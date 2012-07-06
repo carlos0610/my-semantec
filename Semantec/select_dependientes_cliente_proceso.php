@@ -38,7 +38,7 @@ if(validaSelect($selectDestino) && validaOpcion($opcionSeleccionada))
 	//conectar();
 	$consulta=mysql_query("SELECT cli_id, cli_nombre,sucursal FROM $tabla WHERE $relacion='$opcionSeleccionada' order by cli_nombre") or die(mysql_error());
 	//desconectar();
-	
+
 	// Comienzo a imprimir el select
 	echo "<select name='".$selectDestino."' id='".$selectDestino."' onChange='cargaContenido(this.id)' class=campos>";
 	echo "<option value='0'>Elige</option>";
