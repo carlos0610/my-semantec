@@ -4,7 +4,7 @@ $titulo = "Alerta de ordenes con vencimiento.";
         include("funciones.php");
         include("conexion.php");
         
-        $sql0 =    "SELECT ord_id, u.usu_login,o.prv_id,ord_codigo, ord_descripcion, o.cli_id,cli_nombre, prv_nombre, est_nombre, est_color, ord_alta, ord_plazo,ord_plazo_proveedor, ord_costo, ord_venta
+        $sql0 =    "SELECT ord_id, u.usu_login,o.prv_id,ord_codigo, ord_descripcion, o.cli_id,c.sucursal,cli_nombre, prv_nombre, est_nombre, est_color, ord_alta, ord_plazo,ord_plazo_proveedor, ord_costo, ord_venta
                     FROM ordenes o, clientes c, estados e, proveedores p,usuarios u
                     WHERE o.cli_id = c.cli_id
                     AND o.est_id = e.est_id
@@ -25,7 +25,7 @@ $titulo = "Alerta de ordenes con vencimiento.";
         
         $tamPag=50;
         include("paginado.php");
-        $sql = "SELECT ord_id, u.usu_login,o.prv_id,ord_codigo, ord_descripcion, o.cli_id,cli_nombre, prv_nombre, est_nombre, est_color, ord_alta, ord_plazo,ord_plazo_proveedor, ord_costo, ord_venta
+        $sql = "SELECT ord_id, u.usu_login,o.prv_id,ord_codigo, ord_descripcion, o.cli_id,c.sucursal,cli_nombre, prv_nombre, est_nombre, est_color, ord_alta, ord_plazo,ord_plazo_proveedor, ord_costo, ord_venta
                     FROM ordenes o, clientes c, estados e, proveedores p,usuarios u
                     WHERE o.cli_id = c.cli_id
                     AND o.est_id = e.est_id
@@ -56,7 +56,13 @@ $titulo = "Alerta de ordenes con vencimiento.";
 <?php
     include("encabezado-main.php");
 ?>  
-      
+  <script>
+          function transferirFiltros(pagina)
+{      
+	document.getElementById("filtro").action="lista-facturas.php?pagina="+pagina;
+	document.getElementById("filtro").submit();
+}
+  </script>     
   </head>
   <body>
 <div id="contenedor" style="height:auto;">
@@ -125,7 +131,7 @@ $titulo = "Alerta de ordenes con vencimiento.";
             <td><?php echo($fila["ord_codigo"]);?></td>
             <td><?php echo(tfecha($fila["ord_alta"]));?></td>
             <td><?php echo $fila["usu_login"];?></td>
-            <td><a href="ver-alta-clientes.php?cli_id=<?php echo$fila["cli_id"]?>&action=0"><?php echo($fila["cli_nombre"]);?></td>
+            <td><a href="ver-alta-clientes.php?cli_id=<?php echo$fila["cli_id"]?>&action=0"><?php echo($fila["cli_nombre"]);?>(<?php echo($fila["sucursal"]);?>)</td>
             <td><?php echo(nl2br(utf8_encode($fila["ord_descripcion"])));?></td>
             <td><a href="ver-alta-proveedores.php?prv_id=<?php echo$fila["prv_id"]?>&action=0"><?php echo($fila["prv_nombre"]);?></td>
             <td>

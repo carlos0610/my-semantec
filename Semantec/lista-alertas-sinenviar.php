@@ -7,7 +7,7 @@ $titulo = "Alerta de ordenes sin enviar a proveedor.";
         
         
         
-        $sql0 =    "SELECT ord_id, ord_codigo, u.usu_login,ord_descripcion, cli_nombre,c.cli_id, prv_nombre,p.prv_id, est_nombre, est_color, ord_alta, ord_plazo,ord_plazo_proveedor, ord_costo, ord_venta
+        $sql0 =    "SELECT ord_id, ord_codigo, u.usu_login,ord_descripcion, cli_nombre,c.sucursal,c.cli_id, prv_nombre,p.prv_id, est_nombre, est_color, ord_alta, ord_plazo,ord_plazo_proveedor, ord_costo, ord_venta
                     FROM ordenes o, clientes c, estados e, proveedores p,usuarios u
                     WHERE o.cli_id = c.cli_id
                     AND o.est_id = e.est_id
@@ -136,7 +136,7 @@ $titulo = "Alerta de ordenes sin enviar a proveedor.";
             <td><?php echo($fila["ord_codigo"]);?></td>
             <td><?php echo(tfecha($fila["ord_alta"]));?></td>
             <td><?php echo $fila["usu_login"];?></td>
-            <td><a href="ver-alta-clientes.php?cli_id=<?php echo $fila["cli_id"]?>&action=0"><?php echo($fila["cli_nombre"]);?></td>            
+            <td><a href="ver-alta-clientes.php?cli_id=<?php echo $fila["cli_id"]?>&action=0"><?php echo($fila["cli_nombre"]);?>(<?php echo($fila["sucursal"]);?>)</td>            
             <td><?php echo(nl2br(utf8_encode($fila["ord_descripcion"])));?></td>
             <td><a href="ver-alta-proveedores.php?prv_id=<?php echo $fila["prv_id"]?>&action=0"><?php echo($fila["prv_nombre"]);?></a></td>
             <td style="background-color: red;">
