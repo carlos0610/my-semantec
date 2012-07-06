@@ -172,7 +172,7 @@ $resultado=mysql_query($sql);
            <?php
           while($fila = mysql_fetch_array($resultado1)){
     ?>
-           <option value="<?php echo($fila["cli_id"]); ?>"><?php echo(utf8_encode($fila["cli_nombre"])); ?> (<?php echo(utf8_encode($fila["provincia"])); ?>/<?php echo(utf8_encode($fila["sucursal"])); ?>)</option>
+           <option value="<?php echo($fila["cli_id"]); ?>"<?php if($cli_idMaestro==$fila["cli_id"]){echo(" selected=\"selected\"");} ?>><?php echo(utf8_encode($fila["cli_nombre"])); ?> (<?php echo(utf8_encode($fila["provincia"])); ?>/<?php echo(utf8_encode($fila["sucursal"])); ?>)</option>
            <?php
           }
     ?>
@@ -183,7 +183,7 @@ $resultado=mysql_query($sql);
        </tr>
        <tr>
          <td><div align="right">Sucursal</div></td>
-         <td><select name="suc_id" id="suc_id" class="campos" required disabled>
+         <td><select name="suc_id" id="suc_id" class="campos" required <?php if($cli_id==""){echo ("disabled");}?>>
            <option value='todasLasSucursales'>Todas las Sucursales</option>
            
            
