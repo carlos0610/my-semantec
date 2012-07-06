@@ -79,7 +79,7 @@
                 include("paginado.php");
                 
                 $sql .= " ORDER BY $unOrdenCompleta LIMIT ".$limitInf.",".$tamPag;  
-                echo $sql;
+               
         $resultado = mysql_query($sql);
         $cantidad = mysql_num_rows($resultado);
 
@@ -142,7 +142,7 @@
           }
     ?>
          </select></td>
-         <td width="52%"><input name="chckCliente" type="checkbox" id="chckCliente" onClick="habilitarFiltros('chckCliente','cli_id')" <?php if($cli_id!=""){echo ("checked");}?>></td>
+         <td width="52%"><input name="chckCliente" type="checkbox" id="chckCliente" onClick="habilitarFiltrosClienteSucursal('chckCliente','cli_id','suc_id')" <?php if($cli_id!=""){echo ("checked");}?>></td>
        </tr>
        <tr>
          <td><div align="right">Sucursal</div></td>
