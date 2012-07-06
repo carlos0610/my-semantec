@@ -297,6 +297,11 @@ a.current:hover{
 	color:#fff;
 	border-top:1px solid #ccc;
 }
+.titulo a{
+				color:white;
+				text-decoration:none;
+		}
+
 .lista{
 	border-bottom:1px solid #ccc;
 }
