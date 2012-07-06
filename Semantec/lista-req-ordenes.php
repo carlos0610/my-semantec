@@ -54,15 +54,20 @@
         {$sqlaux.="AND o.prv_id = $proveedorFiltro ";}
         if($estado_id!="")
         {$sqlaux.="AND o.est_id = $estado_id ";}
-        if($cli_id!="")
-        {$sqlaux.="AND o.cli_id = $cli_id ";} 
+         if($cli_id!="")
+            if($cli_id=="todasLasSucursales")
+                {$sqlaux.=" AND c.sucursal_id = $cli_idMaestro ";}
+            else
+                {$sqlaux.=" AND o.cli_id = $cli_id ";}
                 //ordenamiento parte 2
         if($unOrden=="")
-        {$unOrden=" o.ord_alta ";}
+             {$unOrden=" o.ord_alta ";}
+        if($unOrden=="ord_codigo") // valores para ordenar de forma numerica expresada en varchar 
+             {$unOrdenCompleta=" ABS ";}
         if($contador%2)
-            $unOrdenCompleta.=" $unOrden ASC ";
+            $unOrdenCompleta.=" ( $unOrden ) ASC ";
         else
-            $unOrdenCompleta.=" $unOrden DESC ";
+            $unOrdenCompleta.=" ( $unOrden ) DESC ";
         //fin
    $tamPag=10;       
         
@@ -77,10 +82,9 @@
                     $sql0=$sql;
                     include("paginado.php");
                     
-                $sql .= " ORDER BY $unOrdenCompleta LIMIT ".$limitInf.",".$tamPag; 
+                $sql .= " ORDER BY  $unOrdenCompleta LIMIT ".$limitInf.",".$tamPag; 
         $resultado = mysql_query($sql);
         $cantidad = mysql_num_rows($resultado);
-
         $i = 0;
         $colores = array("#fff","#e8f7fa");
         $cant = count($colores);
@@ -89,9 +93,6 @@
         $cant2 = count($colores2);
         $numeroDeTablaDesplegable=0;
 ?>
-
-
-
 
 <!doctype html>
 <html>  
@@ -160,7 +161,7 @@
          <td width="51%">&nbsp;</td>
        </tr>
        <tr>
-         <td><div align="right">Proovedor</div></td>
+         <td><div align="right">Proveedor</div></td>
          <td><select name="prv_id" id="prv_id" class="campos" <?php if($proveedorFiltro==""){echo ("disabled");}?>>
            <?php while($fila2 = mysql_fetch_array($resultado2)){ ?>
            <option value="<?php echo($fila2["prv_id"]); ?>"<?php if($proveedorFiltro==$fila2["prv_id"]){echo(" selected=\"selected\"");} ?>><?php echo(utf8_encode($fila2["prv_nombre"])); ?></option>
@@ -180,8 +181,8 @@
        <tr>
          <td><div align="right">Cliente</div></td>
          <td><select name="cli_id" id="cli_id" class="campos" required onChange="habilitarCombo2('cli_id','suc_id')" <?php if($cli_id==""){echo ("disabled");}?>>
-          <?php if($cli_idMaestro==""){ ?> <option value='0'>Seleccione</option>
-           <?php } ?>
+          <option value='0'>Seleccione</option>
+          
     
            <?php
           while($fila = mysql_fetch_array($resultado1)){
@@ -198,7 +199,7 @@
        <tr>
          <td><div align="right">Sucursal</div></td>
          <td><select name="suc_id" id="suc_id" class="campos" required <?php if($cli_id==""){echo ("disabled");}?>>
-           <option value='0'>Seleccione</option>
+           <option value='todasLasSucursales'>Todas las Sucursales</option>
            
            
            
@@ -231,12 +232,12 @@
       
       <table class="lista" cellpadding="5">
           <tr class="titulo">
-            <td width="70"><a href="#" onClick="agregarOrderBy('ord_codigo')">C&oacute;digo</a></td>
-            <td width="100"><a href="#" onClick="agregarOrderBy('cli_nombre')">Cliente</a></td>
-            <td width="100"><a href="#" onClick="agregarOrderBy('ord_alta')">Fecha Alta</a></td>
-            <td><a href="#" onClick="agregarOrderBy('ord_descripcion')">Descripci&oacute;n</a></td>
-            <td width="100"><a href="#" onClick="agregarOrderBy('prv_nombre')">Proveedor</a></td>
-            <td width="100"><a href="#" onClick="agregarOrderBy('est_nombre')">Estado</a></td>
+            <td width="70"><a href="#" onClick="agregarOrderBy('ord_codigo')"><span style="color: white">C&oacute;digo</span></a></td>
+            <td width="100"><a href="#" onClick="agregarOrderBy('cli_nombre')"><span style="color: white">Cliente</span></a></td>
+            <td width="100"><a href="#" onClick="agregarOrderBy('ord_alta')"><span style="color: white">Fecha Alta</span></a></td>
+            <td>Descripci&oacute;n</td>
+            <td width="100"><a href="#" onClick="agregarOrderBy('prv_nombre')"><span style="color: white">Proveedor</span></a></td>
+            <td width="100"><a href="#" onClick="agregarOrderBy('est_nombre')"><span style="color: white">Estado</span></a></td>
             <td width="32">
                 <a href="index-admin.php">
                     <img src="images/home.png"  alt="inicio" title="Volver al panel" width="32" height="32" border="none" />

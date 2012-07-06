@@ -56,16 +56,21 @@
         if($estado_id!="")
         {$sqlaux.="AND o.est_id = $estado_id ";}
         if($cli_id!="")
-        {$sqlaux.="AND o.cli_id = $cli_id ";}
+            if($cli_id=="todasLasSucursales")
+                {$sqlaux.=" AND c.sucursal_id = $cli_idMaestro ";}
+            else
+                {$sqlaux.=" AND o.cli_id = $cli_id ";}
         
         
         //ordenamiento parte 2
         if($unOrden=="")
-        {$unOrden=" o.ord_alta ";}
+             {$unOrden=" o.ord_alta ";}
+        if($unOrden=="ord_codigo") // valores para ordenar de forma numerica expresada en varchar 
+             {$unOrdenCompleta=" ABS ";}
         if($contador%2)
-            $unOrdenCompleta.=" $unOrden ASC ";
+            $unOrdenCompleta.=" ( $unOrden ) ASC ";
         else
-            $unOrdenCompleta.=" $unOrden DESC ";
+            $unOrdenCompleta.=" ( $unOrden ) DESC ";
         //fin
 
 $sql="SELECT ord_id, ord_codigo, ord_descripcion, cli_nombre, prv_nombre, est_nombre, est_color, ord_alta, ord_plazo, ord_costo, ord_venta,c.sucursal
@@ -81,7 +86,7 @@ $sql="SELECT ord_id, ord_codigo, ord_descripcion, cli_nombre, prv_nombre, est_no
                //     ORDER BY o.ord_alta DESC ";
                     $sql0=$sql;
                     include("paginado.php");
-                    $sql .= " ORDER BY $unOrdenCompleta   LIMIT ".$limitInf.",".$tamPag;  
+                    $sql .= " ORDER BY  $unOrdenCompleta   LIMIT ".$limitInf.",".$tamPag;  
 
                     
 $resultado=mysql_query($sql);
@@ -162,8 +167,8 @@ $resultado=mysql_query($sql);
        <tr>
          <td><div align="right">Cliente</div></td>
          <td><select name="cli_id" id="cli_id" class="campos" required onChange="habilitarCombo2('cli_id','suc_id')" <?php if($cli_id==""){echo ("disabled");}?>>
-          <?php if($cli_idMaestro==""){ ?> <option value='0'>Seleccione</option>
-           <?php } ?>
+          <option value='0'>Seleccione</option>
+          
     
            <?php
           while($fila = mysql_fetch_array($resultado1)){
@@ -180,7 +185,7 @@ $resultado=mysql_query($sql);
        <tr>
          <td><div align="right">Sucursal</div></td>
          <td><select name="suc_id" id="suc_id" class="campos" required <?php if($cli_id==""){echo ("disabled");}?>>
-           <option value='0'>Seleccione</option>
+           <option value='todasLasSucursales'>Todas las Sucursales</option>
            
            
            
@@ -217,7 +222,7 @@ $resultado=mysql_query($sql);
             <td width="70"><a href="#" onClick="agregarOrderBy('ord_codigo')">C&oacute;digo</a></td>
             <td width="100"><a href="#" onClick="agregarOrderBy('ord_alta')">Fecha</a></td>
             <td width="100"><a href="#" onClick="agregarOrderBy('cli_nombre')">Cliente</a></td>
-            <td><a href="#" onClick="agregarOrderBy('ord_descripcion')">Descripci&oacute;n</a></td>
+            <td>Descripci&oacute;n</td>
             <td width="100"><a href="#" onClick="agregarOrderBy('prv_nombre')">Proveedor</a></td>
             <td width="100"><a href="#" onClick="agregarOrderBy('est_nombre')">Estado</a></td>
             <td width="32">&nbsp;</td>            

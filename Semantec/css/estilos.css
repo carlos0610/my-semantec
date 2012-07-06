@@ -26,9 +26,9 @@ a img {border:none}
 aside, details, figcaption, figure, 
 footer, header, hgroup, menu, nav, section {display: block}
 
-a:link       { font-size: 10pt; color: #FFFFFF; text-decoration:none;font-style: inherit; }
-	a:visited    {  font-size: 10pt; color: #FFFFFF; text-decoration:none; font-style: inherit;}
-	a:hover      {  text-decoration: none; color: #FFFFFF; font-size:11pt;font-style: inherit; }
+a:link       { font-size: 10pt;  text-decoration:none;font-style: inherit; }
+	a:visited    {  font-size: 10pt;  text-decoration:none; font-style: inherit;}
+	a:hover      {  text-decoration: none;  font-size:11pt;font-style: inherit; }
 /***************************************************
 			      Global styles
 ***************************************************/
@@ -263,7 +263,7 @@ a.current{
 	background-color:#00CCFF;
 	padding:10px 15px;
 	margin:5px 0px;
-	width:150px;
+	width:155px;
 	display: block;
 	color:white;
 	-o-border-radius: 8px;
@@ -287,7 +287,10 @@ a.current:hover{
 	width:95%;
 	margin:auto;
 }
-
+.listados a{
+				color:White;
+				text-decoration:none;
+		}
 
 .titulo{
 	background-color:#3abdd8;

@@ -112,43 +112,43 @@
    
      <section class="cajas">
      <h3>Órdenes</h3>
-      <p><a href="lista-ordenes.php" class="current">ir al listado</a></p>
-      <p><a href="form-alta-ordenes.php" class="current">nueva orden</a></p>
-      <p><a href=lista-req-ordenes.php class="current">seguimiento de órdenes</a></p>
+      <p><a href="lista-ordenes.php" class="current">Ir al listado</a></p>
+      <p><a href="form-alta-ordenes.php" class="current">Nueva orden</a></p>
+      <p><a href=lista-req-ordenes.php class="current">Seguimiento de órdenes</a></p>
      </section>
 
 
      <section class="cajas">
      <h3>Proveedores</h3>
-      <p><a href="lista-proveedores.php" class="current">ir al listado</a></p>
-      <p><a href="form-alta-proveedores.php" class="current">nuevo proveedor</a></p>
+      <p><a href="lista-proveedores.php" class="current">Ir al listado</a></p>
+      <p><a href="form-alta-proveedores.php" class="current">Nuevo proveedor</a></p>
      </section>
   
 
      <section class="cajas">
      <h3>Clientes</h3>
-      <p><a href="lista-clientes.php" class="current">ir al listado</a></p>
-      <p><a href="form-alta-clientes.php" class="current">nuevo cliente</a></p>
+      <p><a href="lista-clientes.php" class="current">Ir al listado</a></p>
+      <p><a href="form-alta-clientes.php" class="current">Nuevo cliente</a></p>
      </section>
       
            
      <section class="cajas">
      <h3>Cuenta corriente</h3>
-      <p><a href="form-seleccionar-cliente.php" class="current">de cliente</a></p>
-      <p><a href="form-seleccionar-proveedor.php?action=1" class="current">de proveedor</a></p>
+      <p><a href="form-seleccionar-cliente.php" class="current">De cliente</a></p>
+      <p><a href="form-seleccionar-proveedor.php?action=1" class="current">De proveedor</a></p>
      </section>
       
       <section class="cajas">
      <h3>Facturación</h3>
-      <p><a href="lista-facturas.php" class="current">ir al listado</a></p>
-      <p><a href="ver-generar-factura-nueva.php?cli_id=1&ocultar=si" class="current">nueva factura</a></p>
-      <p><a href="reporte-iva.php" class="current">reporte IVA</a></p>
+      <p><a href="lista-facturas.php" class="current">Ir al listado</a></p>
+      <p><a href="ver-generar-factura-nueva.php?cli_id=1&ocultar=si" class="current">Nueva factura</a></p>
+      <p><a href="reporte-iva.php" class="current">Reporte IVA</a></p>
      </section>
       
       <section class="cajas">
      <h3>Compras</h3>
-      <p><a href="lista-facturas-compra.php" class="current">ir al listado</a></p>
-      <p><a href="form-seleccionar-proveedor.php?action=2" class="current">nueva compra</a></p>
+      <p><a href="lista-facturas-compra.php" class="current">Ir al listado</a></p>
+      <p><a href="form-seleccionar-proveedor.php?action=2" class="current">Nueva compra</a></p>
      </section>
       
       
