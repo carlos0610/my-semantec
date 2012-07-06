@@ -1,4 +1,5 @@
 ﻿<?php
+
     header('Content-Type: text/html; charset=utf-8');
     $titulo = "Formulario de alta de una Orden de Servicio.";
         include("validar.php");
