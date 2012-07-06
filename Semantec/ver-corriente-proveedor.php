@@ -76,6 +76,7 @@
                 FROM ordenes o, ordenes_detalle od,clientes c,ubicacion u,provincias p,localidades l
                 WHERE 
                 o.ord_id IN (select ord_id from ordenes where prv_id = $prv_id)
+                AND o.estado = 1
                 AND o.ord_id = od.ord_id
                 AND o.cli_id = c.cli_id
                 AND u.id = c.ubicacion_id
@@ -100,6 +101,7 @@
        $sql = "INSERT INTO tabla_temp2
                SELECT dfc.det_fco_orden_id,sum(dfc.det_fco_preciounitario) as compras,o.ord_costo - SUM(dfc.det_fco_preciounitario) as saldoc from detalle_factura_compra dfc, ordenes o,clientes c
                WHERE dfc.det_fco_orden_id = o.ord_id
+               AND o.estado = 1
                AND o.prv_id = $prv_id
                AND o.cli_id = c.cli_id
                GROUP BY dfc.det_fco_orden_id;";

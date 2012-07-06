@@ -34,10 +34,10 @@
         
         
 
-    $tamPag=2;
+    $tamPag=20;
     
     
-        $sql = "SELECT distinct f.fav_id,f.fav_fecha,c.cli_nombre,cc.ccc_id,f.files_id,f.fav_fecha_pago 
+        $sql = "SELECT distinct f.fav_id,f.fav_fecha,c.cli_nombre,c.cli_id,c.sucursal,cc.ccc_id,f.files_id,f.fav_fecha_pago 
                 FROM factura_venta f,ordenes o,clientes c,grupo_ordenes g_o,cuentacorriente_cliente cc
                 WHERE f.gru_id = g_o.gru_id
                 AND g_o.gru_id = o.gru_id
@@ -143,9 +143,9 @@
           <tr class="titulo">
             <td width="70"><a href="#" onClick="agregarOrderBy('fav_id')">Factura Nro</a></td>
             <td width="100"><a href="#" onClick="agregarOrderBy('fav_fecha')">Fecha de emisión</a></td>
-            <td width="100"><a href="#" onClick="agregarOrderBy('cli_nombre')">Cliente</a></td>
+            <td width="100"><a href="#" onClick="agregarOrderBy('cli_nombre')">Sucursal</a></td>
             <td width="32"><a href="#" onClick="agregarOrderBy('fav_fecha_pago')">Pagada</a></td> 
-            <td width="32">Archivo</td>
+            <td width="32" align="center">Archivo</td>
             <td width="32"></td>
             <td width="32">&nbsp;</td>
             <td width="32">
@@ -161,7 +161,7 @@
           <tr class="lista" bgcolor="<?php echo($colores[$i]);?>">
             <td><?php echo($fila["fav_id"]);?></td>
             <td><?php echo(tfecha($fila["fav_fecha"]));?></td>
-            <td><?php echo(utf8_encode($fila["cli_nombre"]));?></td>
+            <td><a href="ver-alta-clientes.php?cli_id=<?php echo($fila["cli_id"]);?>&action=0"><?php echo(utf8_encode($fila["cli_nombre"]));?>(<?php echo(utf8_encode($fila["sucursal"]));?>)</a></td>
             <td><?php if($fila["fav_fecha_pago"]==NULL){
                         echo "No";
                             }else {

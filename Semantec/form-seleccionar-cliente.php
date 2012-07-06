@@ -5,19 +5,19 @@
 
         include("conexion.php");
 
-        $sql = "SELECT  cli_id, cli_nombre FROM clientes WHERE estado=1 and sucursal_id is null";
+        $sql = "SELECT  cli_id, cli_nombre FROM clientes WHERE estado=1 and sucursal_id is null order by cli_nombre";
         $resultado1 = mysql_query($sql);
         
         
         /* LISTADO DE MOVIMIENTOS DE CUENTAS CORRIENTES DE CLIENTE*/
         
-        $sql0 = "SELECT distinct (ccc_id),c.cli_id,c.cli_nombre,cc.fav_id,sum(o.ord_venta) as 'Monto',f.fav_fecha_pago,f.usu_nombre  from detalle_corriente_cliente cc, clientes c, factura_venta f, ordenes o,grupo_ordenes g_o
+        $sql0 = "SELECT distinct (ccc_id),c.cli_id,c.cli_nombre,c.sucursal,cc.fav_id,sum(o.ord_venta) as 'Monto',f.fav_fecha_pago,f.usu_nombre  from detalle_corriente_cliente cc, clientes c, factura_venta f, ordenes o,grupo_ordenes g_o
                 WHERE
                 cc.fav_id  	= f.fav_id
                 AND f.gru_id  	= g_o.gru_id
                 AND g_o.gru_id 	= o.gru_id
                 AND o.cli_id	= c.cli_id
-                AND c.cli_id = 1
+                AND c.cli_id  in (SELECT cli_id from clientes where estado = 1)
                 group by f.fav_id
                 order by fav_fecha_pago desc;";
         
@@ -124,7 +124,8 @@
    <table class="listados" cellpadding="5">
           <tr class="titulo">
             <td width="80">Cuenta corriente</td>
-            <td width="240">Cliente</td>            
+            <td width="240">Cliente</td> 
+            <td width="79">Sucursal</td>
             <td width="79">Factura nro</td> 
             <td width="115">Monto de pago</td>
             <td width="115">Fecha de pago</td>
@@ -141,7 +142,8 @@
             <a href="ver-alta-clientes.php?cli_id=<?php echo($fila["cli_id"]);?>&action=0">
             <?php echo(utf8_encode($fila["cli_nombre"]));?>
             </a>          
-            </td>            
+            </td>
+            <td><?php echo(utf8_encode($fila["sucursal"]));?></td>
             <td align="center"><?php echo $fila["fav_id"];?></td>          
             <td><?php echo $fila["Monto"];?></td>     
             <td width="115"><?php echo $fila[fav_fecha_pago];?> </td>

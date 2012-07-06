@@ -73,7 +73,7 @@
             $unOrdenCompleta.=" ( $unOrden ) DESC ";
         //fin
 
-$sql="SELECT ord_id, ord_codigo, ord_descripcion, cli_nombre, prv_nombre, est_nombre, est_color, ord_alta, ord_plazo, ord_costo, ord_venta,c.sucursal
+$sql="SELECT ord_id, ord_codigo, ord_descripcion, cli_nombre,c.cli_id, prv_nombre,o.prv_id, est_nombre, est_color, ord_alta, ord_plazo, ord_costo, ord_venta,c.sucursal
                   FROM ordenes o, clientes c, estados e, proveedores p
                   WHERE o.cli_id = c.cli_id
                     AND o.est_id = e.est_id
@@ -151,8 +151,7 @@ $resultado=mysql_query($sql);
            <?php while($fila2 = mysql_fetch_array($resultado2)){ ?>
            <option value="<?php echo($fila2["prv_id"]); ?>"<?php if($proveedorFiltro==$fila2["prv_id"]){echo(" selected=\"selected\"");} ?>><?php echo(utf8_encode($fila2["prv_nombre"])); ?></option>
            <?php }?>
-         </select>
-         </td>
+         </select></td>
          <td><input name="chkProovedor" type="checkbox" id="chkProovedor" value="si" onClick="habilitarFiltros('chkProovedor','prv_id')"  <?php if($proveedorFiltro!=""){echo ("checked");}?>></td>
        </tr>
        <tr>
@@ -173,7 +172,7 @@ $resultado=mysql_query($sql);
            <?php
           while($fila = mysql_fetch_array($resultado1)){
     ?>
-           <option value="<?php echo($fila["cli_id"]); ?>"<?php if($cli_idMaestro==$fila["cli_id"]){echo(" selected=\"selected\"");} ?>><?php echo(utf8_encode($fila["cli_nombre"])); ?> (<?php echo(utf8_encode($fila["provincia"])); ?>/<?php echo(utf8_encode($fila["sucursal"])); ?>)</option>
+           <option value="<?php echo($fila["cli_id"]); ?>"><?php echo(utf8_encode($fila["cli_nombre"])); ?> (<?php echo(utf8_encode($fila["provincia"])); ?>/<?php echo(utf8_encode($fila["sucursal"])); ?>)</option>
            <?php
           }
     ?>
@@ -184,7 +183,7 @@ $resultado=mysql_query($sql);
        </tr>
        <tr>
          <td><div align="right">Sucursal</div></td>
-         <td><select name="suc_id" id="suc_id" class="campos" required <?php if($cli_id==""){echo ("disabled");}?>>
+         <td><select name="suc_id" id="suc_id" class="campos" required disabled>
            <option value='todasLasSucursales'>Todas las Sucursales</option>
            
            
@@ -240,9 +239,9 @@ $resultado=mysql_query($sql);
           <tr class="lista" bgcolor="<?php echo($colores[$i]);?>">
             <td><?php echo($fila["ord_codigo"]);?></td>
             <td><?php echo(tfecha($fila["ord_alta"]));?></td>
-            <td><?php echo(utf8_encode($fila["cli_nombre"]));?>(<?php echo(utf8_encode($fila["sucursal"]))?>)</td>
+            <td><a href="ver-alta-clientes.php?cli_id=<?php echo($fila["cli_id"]);?>&action=0"><?php echo(utf8_encode($fila["cli_nombre"]));?>(<?php echo(utf8_encode($fila["sucursal"]))?>)</a></td>
             <td><?php echo(nl2br(utf8_encode($fila["ord_descripcion"])));?></td>
-            <td><?php echo(utf8_encode($fila["prv_nombre"]));?></td>
+            <td><a href="ver-alta-proveedores.php?prv_id=<?php echo $fila["prv_id"]?>&action=0"><?php echo(utf8_encode($fila["prv_nombre"]));?></a></td>
             <td>
                   <img src="images/estado.png" alt="estado" style="background-color:<?php echo($fila["est_color"]);?>">
                   <?php echo(utf8_encode($fila["est_nombre"]));?>

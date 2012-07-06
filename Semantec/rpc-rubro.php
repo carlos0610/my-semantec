@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 	
 	$db = mysql_connect('190.228.29.195', 'semantec' ,'s3m4nt3c');
 		mysql_select_db('semantec', $db);

@@ -49,14 +49,9 @@ function autentica(){
     
  usuario = document.getElementById("ord_codigo").value;
  url = "existeNumeroOrden.php?usuario=" + usuario;
- if (validarSiNumero(usuario))
- { 
  leer_doc(url);
- }
- else
-     {
-         document.getElementById("ord_codigo").value='';
-     }
+ 
+ 
 }
 
 function autenticaCUIT(){
