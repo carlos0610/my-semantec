@@ -3,7 +3,16 @@
         include("validar.php");
         include("funciones.php");
         include("conexion.php");
-        $sql = "SELECT  cli_id, cli_nombre FROM clientes WHERE estado=1";
+        $sql = "SELECT sucursal_id,sucursal,cli_id,cli_nombre,p.nombre as provincia 
+           FROM clientes,ubicacion u,provincias p, partidos pa,localidades l
+           WHERE 
+ 	   clientes.ubicacion_id = u.id
+           AND u.provincias_id = p.id
+           AND u.partidos_id = pa.id
+           AND u.localidades_id = l.id
+           AND clientes.estado = 1
+           AND sucursal_id is null
+           ORDER BY cli_nombre,provincia";
         $resultado1 = mysql_query($sql);
                 //ordenes de los headers de las tablas
         $unOrden=$_POST['orden'];
@@ -15,7 +24,23 @@
         //recibo los criterios y construyo la consulta
         $elementoBusqueda=$_POST['filtrartxt'];
         $pagado=$_POST['pagado'];
-        $cli_id=$_POST['cli_id'];
+        //$cli_id=$_POST['cli_id'];
+        
+        //filtros nuevos Cliente Sucursal
+        $cli_id = $_POST['suc_id'];
+        $cli_idMaestro = $_POST['cli_id'];
+        if($cli_idMaestro=="")
+         {$cli_idMaestro="0";}
+        $sql = "SELECT cli_id, cli_nombre,sucursal 
+                FROM clientes
+           WHERE sucursal_id =$cli_idMaestro
+           ORDER BY cli_nombre";
+        $resultadoSucursales = mysql_query($sql);
+        
+        
+        
+        
+        
         $sqlaux="";
         if($elementoBusqueda!="")
         {$sqlaux.=" AND fav_id like '$elementoBusqueda%' ";}
@@ -99,16 +124,39 @@
      <table width="100%" border="0">
        <tr>
          <td width="14%"><div align="right">Cliente</div></td>
-         <td width="34%"><select name="cli_id" id="cli_id" class="campos" <?php if($cli_id==""){echo ("disabled");}?>>
+         <td width="34%"><select name="cli_id" id="cli_id" class="campos" required onChange="habilitarCombo2('cli_id','suc_id')" <?php if($cli_id==""){echo ("disabled");}?>>
+          <option value='0'>Seleccione</option>
+          
+    
            <?php
           while($fila = mysql_fetch_array($resultado1)){
     ?>
-           <option value="<?php echo($fila["cli_id"]); ?>"<?php if($cli_id==$fila["cli_id"]){echo(" selected=\"selected\"");} ?>><?php echo(utf8_encode($fila["cli_nombre"])); ?></option>
+           <option value="<?php echo($fila["cli_id"]); ?>"<?php if($cli_idMaestro==$fila["cli_id"]){echo(" selected=\"selected\"");} ?>><?php echo(utf8_encode($fila["cli_nombre"])); ?> (<?php echo(utf8_encode($fila["provincia"])); ?>/<?php echo(utf8_encode($fila["sucursal"])); ?>)</option>
            <?php
           }
     ?>
          </select></td>
          <td width="52%"><input name="chckCliente" type="checkbox" id="chckCliente" onClick="habilitarFiltros('chckCliente','cli_id')" <?php if($cli_id!=""){echo ("checked");}?>></td>
+       </tr>
+       <tr>
+         <td><div align="right">Sucursal</div></td>
+         <td><select name="suc_id" id="suc_id" class="campos" required <?php if($cli_id==""){echo ("disabled");}?>>
+           <option value='todasLasSucursales'>Todas las Sucursales</option>
+           
+           
+           
+           <?php
+          while($fila = mysql_fetch_array($resultadoSucursales)){
+    ?>
+           <option value="<?php echo($fila["cli_id"]); ?>"<?php if($cli_id==$fila["cli_id"]){echo(" selected=\"selected\"");} ?>><?php echo(utf8_encode($fila["cli_nombre"])); ?> (<?php echo(utf8_encode($fila["sucursal"])); ?>)</option>
+           <?php
+          }
+    ?>
+           
+           
+           
+           </select></td>
+         <td>&nbsp; </td>
        </tr>
        <tr>
          <td><div align="right">Pagado</div></td>
