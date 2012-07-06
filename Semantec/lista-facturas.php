@@ -46,8 +46,13 @@
         {$sqlaux.=" AND fav_id like '$elementoBusqueda%' ";}
         if($pagado!="")
         {$sqlaux.=" AND $pagado (f.fav_fecha_pago) ";}
+
+                //filtros Cliente Sucursal PARTE B
         if($cli_id!="")
-        {$sqlaux.=" AND c.cli_id  = $cli_id ";}
+            if($cli_id=="todasLasSucursales")
+                {$sqlaux.=" AND c.sucursal_id = $cli_idMaestro ";}
+            else
+                {$sqlaux.=" AND o.cli_id = $cli_id ";}
                      //ordenamiento parte 2
         if($unOrden=="")
         {$unOrden=" f.fav_fecha ";}
@@ -73,7 +78,8 @@
                 $sql0=$sql;
                 include("paginado.php");
                 
-                $sql .= " ORDER BY $unOrdenCompleta LIMIT ".$limitInf.",".$tamPag;                      
+                $sql .= " ORDER BY $unOrdenCompleta LIMIT ".$limitInf.",".$tamPag;  
+                echo $sql;
         $resultado = mysql_query($sql);
         $cantidad = mysql_num_rows($resultado);
 

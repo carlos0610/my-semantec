@@ -29,7 +29,7 @@
         $elementoBusqueda=$_POST['filtrartxt'];
         $proveedorFiltro=$_POST['prv_id'];
         $estado_id=$_POST['est_id'];
-        //filtros nuevos
+        //filtros Cliente Sucursal PARTE A
         $cli_id = $_POST['suc_id'];
         $cli_idMaestro = $_POST['cli_id'];
         if($cli_idMaestro=="")
@@ -55,6 +55,7 @@
         {$sqlaux.="AND o.prv_id = $proveedorFiltro ";}
         if($estado_id!="")
         {$sqlaux.="AND o.est_id = $estado_id ";}
+        //filtros Cliente Sucursal PARTE B
         if($cli_id!="")
             if($cli_id=="todasLasSucursales")
                 {$sqlaux.=" AND c.sucursal_id = $cli_idMaestro ";}
