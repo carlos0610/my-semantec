@@ -28,7 +28,7 @@
         $prv_id = $fila0["prv_id"];
         $est_id = $fila0["est_id"];
 
-        $sql = "SELECT  cli_id, cli_nombre FROM clientes WHERE cli_id = $cli_id"; // datos de cliente
+        $sql = "SELECT  cli_id, cli_nombre,sucursal FROM clientes WHERE cli_id = $cli_id"; // datos de cliente
         $resultado1 = mysql_query($sql);
         $fila1 = mysql_fetch_array($resultado1);
 
@@ -114,7 +114,7 @@
           <tr>
             <td>Cliente</td>
             <td>
-                <?php echo(utf8_encode($fila1["cli_nombre"]));?>            </td>
+                <?php echo(utf8_encode($fila1["cli_nombre"]));?> (<?php echo(utf8_encode($fila1["sucursal"])); ?>)           </td>
           </tr>
           <tr>
             <td>Proveedor</td>

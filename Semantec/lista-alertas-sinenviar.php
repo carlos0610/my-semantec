@@ -108,7 +108,7 @@ $titulo = "Alerta de ordenes sin enviar a proveedor.";
         </form>
   </div>
     
-    <form>
+    <form id="filtro" name="filtro" action="lista-alertas-sinenviar.php" method="POST">
 <table class="listados" cellpadding="2">
           <tr class="titulo">
             <td width="70">C&oacute;digo</td>

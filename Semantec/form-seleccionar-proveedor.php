@@ -7,7 +7,7 @@
         
         $action = $_GET["action"];
 
-        $sql = "SELECT  prv_id, prv_nombre FROM proveedores WHERE estado = 1 and prv_id <> 1";
+        $sql = "SELECT  prv_id, prv_nombre FROM proveedores WHERE estado = 1 and prv_id <> 1 order by prv_nombre";
         $resultado1 = mysql_query($sql);
         
         if ($action == 1){

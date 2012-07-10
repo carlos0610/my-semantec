@@ -8,9 +8,16 @@
         
         if ($action == 1){
             $prv_id = $_POST["comboProveedor"];
+            $_SESSION['proveedor'] = $prv_id;
         }else {
-            $prv_id = $_GET["prv_id"];           
+            $prv_id = $_GET["prv_id"];
+            //$_SESSION['proveedor'] = $prv_id;
         }
+        
+     
+          $prv_id = $_SESSION['proveedor'];
+          
+          
         
                         
         /* OBTENGO DATOS DE PROVEEDOR */
@@ -193,8 +200,15 @@
 <html>  
   <head>
 <?php
-    include("encabezado-main.php");
-?>    
+    include("encabezado-main.php");    
+?>
+<script>
+          function transferirFiltros(pagina)
+{    
+	document.getElementById("filtro").action="ver-corriente-proveedor.php?pagina="+pagina;
+	document.getElementById("filtro").submit();
+}
+  </script>      
   </head>
   <body>
 	
@@ -285,6 +299,7 @@
    
    
    <div id="contenedor" style="height:auto;">
+       <form id="filtro" name="filtro" action="ver-corriente-proveedor.php" method="POST">
       <h2>Cuenta corriente de <?php echo utf8_encode($fila_datos_proveedor["prv_nombre"]);?></h2>
 
 <table class="listados" cellpadding="5">
@@ -336,7 +351,7 @@
             ?></td>
           </tr>
       </table>   
-
+</form>
      <div class="clear"></div>
           <br>
      <a href="form-seleccionar-proveedor.php?action=1"><input type="button" value="Volver" class="botones" /></a> &nbsp; &nbsp;
@@ -344,8 +359,8 @@
    <!--end contenedor-->
 
 
-
   </div>
+
    <!-- fin main --><!-- fin main --><!-- fin main --><!-- fin main --><!-- fin main -->
    
    <!--start footer-->
