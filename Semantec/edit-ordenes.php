@@ -18,11 +18,11 @@
 
         include("conexion.php");
         
-        
+      //  cli_id = $cli_id,
         $sql = "UPDATE ordenes SET 
 					ord_codigo = '$ord_codigo',
         				ord_descripcion = '$ord_descripcion',
-        				cli_id = $cli_id,
+        				
         				prv_id = $prv_id,
         				est_id = $est_id,
                                         ord_alta= '$ord_alta',";
