@@ -1,6 +1,7 @@
 <?php
     include("validar.php");
 
+    
     $action = $_GET["action"]; // 0
     if($action == 0){
           $titulo = "Datos de Orden de Servicio";

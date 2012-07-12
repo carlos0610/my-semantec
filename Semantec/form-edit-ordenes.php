@@ -3,7 +3,6 @@
     $titulo = "Formulario de modificaci&oacute;n de una Orden de Servicio.";
         include("validar.php");
         include("funciones.php");
-
         include("conexion.php");
         $ord_id = $_GET["ord_id"];
         $sql0 = "SELECT ord_codigo, ord_descripcion, o.cli_id,c.cli_nombre,c.sucursal, prv_id, est_id, ord_alta, ord_plazo,ord_plazo_proveedor, ord_costo, ord_venta 
