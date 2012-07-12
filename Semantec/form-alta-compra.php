@@ -72,6 +72,7 @@
               FROM `ordenes` 
               WHERE `prv_id` = $prv_id
               AND    est_id  >= 10 
+              AND    estado = 1
               AND ord_id in (select id from taula_temp)";
         mysql_query($sql);
         

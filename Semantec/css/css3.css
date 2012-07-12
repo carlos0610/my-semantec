@@ -5,7 +5,9 @@
 .pika-stage {height: 250px;}
 
 
-a{color:royalblue;}
+a{
+	color:royalblue;
+}
 .pikachoose {width: 506px; margin: 0 auto;}
 .pika-stage {position: relative;border: 3px solid #010101;
 	-moz-box-shadow: 5px 5px 2px #888;-webkit-box-shadow: 5px 5px 2px #888;box-shadow: 5px 5px 2px #888;	-moz-border-radius: 5px;
@@ -51,4 +53,3 @@ a{color:royalblue;}
 .jcarousel-skin-pika .jcarousel-container-horizontal { padding: 15px 20px; overflow:hidden;}
 .jcarousel-skin-pika .jcarousel-clip-horizontal {height: 90px; width: 485px;}
 .jcarousel-skin-pika .jcarousel-item-horizontal { margin-right: 10px;}
-

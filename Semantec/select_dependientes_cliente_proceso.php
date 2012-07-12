@@ -36,7 +36,7 @@ if(validaSelect($selectDestino) && validaOpcion($opcionSeleccionada))
         
 	include 'conexion.php';
 	//conectar();
-	$consulta=mysql_query("SELECT cli_id, cli_nombre,sucursal FROM $tabla WHERE $relacion='$opcionSeleccionada' order by cli_nombre") or die(mysql_error());
+	$consulta=mysql_query("SELECT cli_id, cli_nombre,sucursal FROM $tabla WHERE $relacion='$opcionSeleccionada' order by cli_nombre,sucursal") or die(mysql_error());
 	//desconectar();
 
 	// Comienzo a imprimir el select

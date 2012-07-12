@@ -18,6 +18,7 @@
                 AND g_o.gru_id 	= o.gru_id
                 AND o.cli_id	= c.cli_id
                 AND c.cli_id  in (SELECT cli_id from clientes where estado = 1)
+                AND cc.estado = 1
                 group by f.fav_id
                 order by fav_fecha_pago desc;";
         

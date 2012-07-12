@@ -32,6 +32,7 @@
                 AND o.estado = 1 
                 AND cc.estado = 1 
                 AND o.est_id >= 12
+                AND f.estado = 1
                 AND g_o.gru_id = f.gru_id
                 AND g_o.gru_id = o.gru_id";
     $tamPag=100;
@@ -44,9 +45,11 @@
                     AND o.estado = 1 
                     AND cc.estado = 1 
                     AND o.est_id >= 12
+                    AND f.estado = 1    
                     AND g_o.gru_id = f.gru_id
                     AND g_o.gru_id = o.gru_id";
                 $sql .= " LIMIT ".$limitInf.",".$tamPag; 
+                echo "QUERY: ".$sql;
         $resultado = mysql_query($sql);
         $cantidad = mysql_num_rows($resultado);
 

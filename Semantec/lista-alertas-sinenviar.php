@@ -22,7 +22,7 @@ $titulo = "Alerta de ordenes sin enviar a proveedor.";
                             $sql0 .= " AND o.usu_id = $id_usuario";
                         }
         $sql0 .=    " ORDER BY o.ord_alta DESC";
-        $alerta_orden_sinenviar = mysql_query($sql0);
+        mysql_query($sql0);
         
         
         $tamPag=10;
@@ -38,12 +38,15 @@ $titulo = "Alerta de ordenes sin enviar a proveedor.";
                     if(isset($_REQUEST['btnMostrar'])){
                         $id_usuario = $_GET["comboUsuarios"];
                             if ($id_usuario != 0)
-                                $sql0 .= " AND o.usu_id = $id_usuario";
+                                $sql .= " AND o.usu_id = $id_usuario";
                         }      
         $sql .=    " ORDER BY o.ord_alta DESC";
         $sql .= " LIMIT ".$limitInf.",".$tamPag;
-        $resultado = mysql_query($sql);
-        $cantidad = mysql_num_rows($resultado);
+        
+        //echo "QUERY ".$sql;
+        
+        $alerta_orden_sinenviar = mysql_query($sql);
+        $cantidad = mysql_num_rows($alerta_orden_sinenviar);
 
         $i = 0;
         $colores = array("#fff","#e8f7fa");
@@ -52,7 +55,7 @@ $titulo = "Alerta de ordenes sin enviar a proveedor.";
         
         $sql = "select usu_id,usu_login from usuarios";
         $resultado = mysql_query($sql);
-        //$fila = mysql_fetch_array($resultado);
+        
       
 ?>
 <html>  

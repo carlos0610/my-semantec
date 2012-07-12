@@ -5,7 +5,7 @@
         $ord_id = $_POST["ord_id"];
         $ord_codigo = $_POST["ord_codigo"];
         $ord_descripcion = utf8_decode($_POST["ord_descripcion"]);
-        $cli_id = $_POST["cli_id"];
+        $cli_id = $_POST["suc_id"];
         $prv_id = $_POST["prv_id"];
         $est_id = $_POST["est_id"];
         $ord_alta = date("Y-m-d");    // << -------

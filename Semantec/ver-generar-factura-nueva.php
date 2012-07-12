@@ -3,7 +3,7 @@
         $ord_id = $_GET["ord_id"];
         include("funciones.php");
         include("conexion.php");
-        $sql = "SELECT  cli_id, cli_nombre FROM clientes WHERE estado=1 and sucursal_id is null";
+        $sql = "SELECT  cli_id, cli_nombre FROM clientes WHERE estado=1 and sucursal_id is null ORDER BY cli_nombre";
         $resultado1 = mysql_query($sql);
        
         //$nro = mysql_num_rows($datos_cliente);
@@ -20,7 +20,7 @@
        
        $cli_id = $_GET["cli_id"];
        $sql = "SELECT c.cli_nombre, c.cli_cuit , i.iva_id , c.cli_rubro , c.cli_direccion , c.cli_direccion_fiscal ,
-                      i.iva_nombre ,p.nombre as provincia,pa.nombre as partido,l.nombre as localidad
+                      i.iva_nombre ,p.nombre as provincia,pa.nombre as partido,l.nombre as localidad,c.sucursal
         FROM clientes c , iva_tipo i ,ubicacion u,provincias p, partidos pa,localidades l
         WHERE  c.cli_id =$cli_id
         AND  c.iva_id = i.iva_id 
@@ -32,7 +32,7 @@
         $result=mysql_query($sql); 
         $fila_datos_cliente = mysql_fetch_array($result); 
        
-        $sql="SELECT `gru_id`,ord_codigo,`ord_descripcion`,`prv_id`,`est_id` ,ord_id ,pr.nombre as provincia,l.nombre as localidad
+        $sql="SELECT `gru_id`,ord_id,ord_codigo,`ord_descripcion`,`prv_id`,`est_id`,pr.nombre as provincia,l.nombre as localidad,c.sucursal
               FROM ordenes o ,clientes c,ubicacion u,provincias pr,localidades l 
               WHERE  o.cli_id in (select cli_id from clientes where cli_id = $cli_id or sucursal_id = $cli_id )
               AND    o.cli_id = c.cli_id 
@@ -150,10 +150,10 @@
             </td>
        </tr>
           <tr>
-            <td class="titulo">Domiclio:</td>
+            <td class="titulo">Domicilio:</td>
             <td width="24%" style="background-color:#cbeef5"><label id="domicilio"><?php echo utf8_encode($fila_datos_cliente["cli_direccion"]);?></label></td>
             <td width="9%" class="titulo">Localidad:</td>
-            <td width="52%" style="background-color:#cbeef5"><label id="localidad"><?php echo utf8_encode($fila_datos_cliente["provincia"]);?>/<?php echo utf8_encode($fila_datos_cliente["localidad"]);?> </label></td>
+            <td width="52%" style="background-color:#cbeef5"><label id="localidad"><?php echo utf8_encode($fila_datos_cliente["provincia"]);?>/<?php echo utf8_encode($fila_datos_cliente["sucursal"]);?> </label></td>
        </tr>
           <tr>
             <td class="titulo">IVA:</td>
@@ -185,7 +185,7 @@
                 <table width="100%" border="0" id="dataTableOrdenes">  
                       <tr>
                              <td width="5%" class="titulo"><div align="center">Selección</div></td>
-                             <td width="10%" class="titulo"><div align="center">Codigo</div></td>
+                             <td width="10%" class="titulo"><div align="center">Código</div></td>
                              <td width="18%" class="titulo"><div align="center">Descripción</div></td>
                              <td width="18%" class="titulo"><div align="center">Sucursal</div></td>
                       </tr>
@@ -202,8 +202,8 @@
                           </div>
                        </td>
                        <td><label>   
-                               <div align="right">
-                                        <? echo $item["ord_codigo"]; ?>
+                               <div align="center">
+                                        <a href="ver-alta-ordenes.php?ord_id=<?php echo($item["ord_id"]);?>&action=0" target="_blank"><? echo $item["ord_codigo"]; ?></a>
                                </div>
                            </label></td>
                        <td><label>
@@ -213,7 +213,7 @@
                            </label></td>
                            <td><label>
                                <div align="center">
-                                         <? echo utf8_encode($item["provincia"]); ?>/<? echo utf8_encode($item["localidad"]); ?>
+                                         <? echo utf8_encode($item["provincia"]); ?>/<? echo utf8_encode($item["sucursal"]); ?>
                                </div>
                            </label></td>
                    </tr>
@@ -253,7 +253,7 @@
                 &nbsp;&nbsp; &nbsp;
             </td>
             <td>
-                    <a href="#" onclick="popup('form-edit-ordenes.php?ord_id=<?php echo($filaDeLasOrdenesCheckeadas["ord_id"]);?>', 'Alerta')"># <?php echo $filaDeLasOrdenesCheckeadas["ord_codigo"]; ?></a>
+                    <a href="#" onClick="popup('form-edit-ordenes.php?ord_id=<?php echo($filaDeLasOrdenesCheckeadas["ord_id"]);?>', 'Alerta')"># <?php echo $filaDeLasOrdenesCheckeadas["ord_codigo"]; ?></a>
             </td>
         </tr>            
         <?php      
@@ -329,7 +329,7 @@
       </label></td>
       <td><div align="right">I.V.A INSCRIP
         <label>
-            <select name="comboIva" id="comboIva" onchange="return actualizarIva(1)">
+            <select name="comboIva" id="comboIva" onChange="return actualizarIva(1)">
             <?php while ($fila_iva = mysql_fetch_array($iva)){  ?>
                 <option value="<?php echo $fila_iva["idiva"]?>"><?php echo $fila_iva["valor"] ?></option>
                 <?php }?>
