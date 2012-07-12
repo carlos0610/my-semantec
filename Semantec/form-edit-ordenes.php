@@ -6,27 +6,28 @@
 
         include("conexion.php");
         $ord_id = $_GET["ord_id"];
-        $sql0 = "SELECT ord_codigo, ord_descripcion, cli_id, prv_id, est_id, ord_alta, ord_plazo,ord_plazo_proveedor, ord_costo, ord_venta 
-                    FROM ordenes 
-                    WHERE ord_id = $ord_id";
+        $sql0 = "SELECT ord_codigo, ord_descripcion, o.cli_id,c.cli_nombre,c.sucursal, prv_id, est_id, ord_alta, ord_plazo,ord_plazo_proveedor, ord_costo, ord_venta 
+                    FROM ordenes o,clientes c 
+                    WHERE ord_id = $ord_id
+                    AND o.cli_id = c.cli_id";
         $resultado0 = mysql_query($sql0);
         $fila0 = mysql_fetch_array($resultado0);
-
-        $sql = "SELECT sucursal_id,sucursal,cli_id,cli_nombre,p.nombre as provincia 
-           FROM clientes,ubicacion u,provincias p, partidos pa,localidades l
-           WHERE 
- 	   clientes.ubicacion_id = u.id
-           AND u.provincias_id = p.id
-           AND u.partidos_id = pa.id
-           AND u.localidades_id = l.id
-           AND clientes.estado = 1
-           AND sucursal_id is null
-           ORDER BY cli_nombre,provincia";
-        $resultado1 = mysql_query($sql);
+        //Se quita temporalmente el select de cliente/sucursal hasta fixearlo para que funcione en el edit
+        /*$sql = "SELECT sucursal_id,sucursal,cli_id,cli_nombre,p.nombre as provincia 
+                FROM clientes,ubicacion u,provincias p, partidos pa,localidades l
+                WHERE 
+                clientes.ubicacion_id = u.id
+                AND u.provincias_id = p.id
+                AND u.partidos_id = pa.id
+                AND u.localidades_id = l.id
+                AND clientes.estado = 1
+                AND sucursal_id is null
+                ORDER BY cli_nombre,provincia";
+        $resultado1 = mysql_query($sql);*/ 
         $sql = "SELECT  prv_id, prv_nombre FROM proveedores WHERE estado=1";
         $resultado2 = mysql_query($sql);
-        $sql = "SELECT  est_id, est_nombre, est_color FROM estados";
-        $resultado3 = mysql_query($sql);
+        //$sql = "SELECT  est_id, est_nombre, est_color FROM estados";
+        //$resultado3 = mysql_query($sql);
         // busqueda para  imprimir el nombre del estado.
 	$est_id= $fila0["est_id"];		
 	$sql = "SELECT  est_id, est_nombre, est_color FROM estados WHERE est_id = $est_id"; //datos del estado
@@ -85,20 +86,13 @@
             <td colspan="2"> <?php echo($titulo)?> </td>
             <td width="32">
                 <a href="index-admin.php">
-                    <img src="images/home.png"  alt="inicio" title="Volver al panel" width="32" height="32" border="none" />
-                </a>
-            </td>
+                    <img src="images/home.png"  alt="inicio" title="Volver al panel" width="32" height="32" border="none" />                </a>            </td>
           </tr>
           <tr>
             <td>C&oacute;digo de Orden</td>
             <td>
-                <?php echo($fila0["ord_codigo"]); ?>
-             </td>   
-            <td>
-                          
-               
-            
-            </td>
+                <?php echo($fila0["ord_codigo"]); ?>             </td>   
+            <td>            </td>
           </tr>
   
           
@@ -109,8 +103,7 @@
                  <?php echo(utf8_encode($fila4["est_nombre"])); ?> 
                 <input type="hidden" value="<?php echo($fila0["prv_id"]); ?>" name="provedor_id" id="provedor_id" />
                 <input type="submit" value="Cambiar" class="botones" id="botonAgregar" style="visibility:<?php if($fila0["prv_id"]==1){echo "hidden";}else{ echo "visible";} ?>"  />
-                </form>
-            </td>
+                </form>            </td>
             <td></td>
           </tr>
           
@@ -128,15 +121,7 @@
           <tr>
             <td>Cliente</td>
             <td>
-                <select name="cli_id" id="cli_id" class="campos">
-    <?php
-          while($fila = mysql_fetch_array($resultado1)){
-    ?>
-                    <option value="<?php echo($fila["cli_id"]); ?>"<?php if($fila0["cli_id"]==$fila["cli_id"]){echo(" selected=\"selected\"");} ?>><?php echo(utf8_encode($fila["cli_nombre"])); ?> (<?php echo(utf8_encode($fila["provincia"])); ?>/<?php echo(utf8_encode($fila["sucursal"])); ?>)</option>
-    <?php
-          }
-    ?>
-                </select>
+              <?php echo($fila0["cli_nombre"]); ?>(<?php echo($fila0["sucursal"]); ?>)             
             </td>
             <td></td>
           </tr>
@@ -151,8 +136,7 @@
     <?php
           }
     ?>
-                </select>
-            </td>
+                </select>            </td>
             <td></td>
           </tr>
           <?php if ($fila0["est_id"] ==  2){ ?>  
@@ -186,15 +170,14 @@
                 <a href="lista-ordenes.php"><input type="button" value="Ir al Listado" class="botones" /></a> &nbsp; &nbsp; 
                 <input type="reset" value="Restablecer" class="botones" /> &nbsp; &nbsp; 
                 <input type="submit" value="Modificar Orden" class="botones" />
-                <input type="hidden" value="<?php echo($ord_id); ?>" name="ord_id" id="ord_id" />
-            </td>
+                <input type="hidden" value="<?php echo($ord_id); ?>" name="ord_id" id="ord_id" />            </td>
             <td></td>
           </tr>
           <tr>
             <td colspan="3" class="pie_lista">&nbsp;</td>
           </tr>
       </table> 
-      </form>  
+    </form>  
       
       <div class="clear"></div>
 
