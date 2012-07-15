@@ -97,7 +97,7 @@ $pdf->Cell(40,7,$fila_fecha_factura["fav_remito"],0,1);
        $precio_item = $item["det_fav_precio"]; 
        
        $POsYoriginal=$pdf->GetY();
-       $pdf->MultiCell(140,8,$item["det_fav_descripcion"],0,L);
+       $pdf->MultiCell(140,6,$item["det_fav_descripcion"],0,L);
        $POsYDescpuesDeTExto=$pdf->GetY();
        $pdf-> SetXY(190,$POsYoriginal);  // ACA MOVES POS de PRECIO
       
