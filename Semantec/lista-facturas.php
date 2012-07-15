@@ -57,9 +57,9 @@
         if($unOrden=="")
         {$unOrden=" f.fav_fecha ";}
         if($contador%2)
-            $unOrdenCompleta.=" $unOrden DESC ";
-        else
             $unOrdenCompleta.=" $unOrden ASC ";
+        else
+            $unOrdenCompleta.=" $unOrden DESC ";
         //fin   
         
         
