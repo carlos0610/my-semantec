@@ -291,7 +291,11 @@ a.current:hover{
 				color:#0066FF;
 				text-decoration:none;
 		}
-
+.listadosALERTA{
+	width:95%;
+	margin:auto;
+        font-size:13px;
+}
 .titulo{
 	background-color:#3abdd8;
 	color:#fff;

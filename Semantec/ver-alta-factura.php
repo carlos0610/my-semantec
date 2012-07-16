@@ -59,7 +59,7 @@
 $pdf = new FPDF('P','mm','Letter');
 $pdf->AddPage();
 $pdf->SetFont('Arial','',10);
-$pdf->SetMargins(10, 10 ,10);
+$pdf->SetMargins(12, 10 ,10);
 #Establecemos el margen inferior:
 $pdf->SetAutoPageBreak(true,1);  
 // DATOS DE FACTURA PDF      Cell(unNumero)--Mover a la derecha ; Ln(unNumero) Salto de Linea
@@ -72,20 +72,20 @@ $pdf->Cell(120);
 $pdf->Cell(40,10,tfecha($fila_fecha_factura["fav_fecha"]),0,1,R);
 $pdf->Ln(22);
 // Sres
-$pdf->Cell(22);
+$pdf->Cell(25);
 $pdf->Cell(160,7,utf8_encode($fila_datos_cliente["cli_nombre"]),0,1);
 //Domicilio - Localidad
-$pdf->Cell(22);
+$pdf->Cell(25);
 $pdf->Cell(80,7,utf8_encode($fila_datos_cliente["cli_direccion"]),0);
 $pdf->Cell(40);
 $pdf->Cell(40,7,utf8_encode($fila_datos_cliente["provincia"]),0,1);
 //IVA - CUIT
-$pdf->Cell(22);
+$pdf->Cell(25);
 $pdf->Cell(80,7,$fila_datos_cliente["iva_nombre"],0);
 $pdf->Cell(40);
 $pdf->Cell(40,5,verCUIT($fila_datos_cliente["cli_cuit"]),0,1);
 //Condiciones de Venta - Remito
-$pdf->Cell(42);
+$pdf->Cell(45);
 $pdf->Cell(80,7,$fila_fecha_factura["fav_condicion_vta"],0);
 $pdf->Cell(20);
 $pdf->Cell(15,7,'REMITO:');

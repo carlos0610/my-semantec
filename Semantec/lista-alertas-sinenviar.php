@@ -1,8 +1,7 @@
 <?php
 $titulo = "Alerta de ordenes sin enviar a proveedor.";
         include("validar.php");
-        include("funciones.php");
-        
+        include("funciones.php");       
         include("conexion.php");
         
         
@@ -73,8 +72,9 @@ $titulo = "Alerta de ordenes sin enviar a proveedor.";
   </script>       
   </head>
   <body>
-<div id="contenedor" style="height:auto;">
-  <?php  if ($cantidad>0) {?>
+      <div id="main" >
+<div id="contenedor" style="height:auto;"  >
+ 
     <div id="mensaje" style="height:auto;">
         <form>
       <table width="100%" border="0">
@@ -110,27 +110,24 @@ $titulo = "Alerta de ordenes sin enviar a proveedor.";
     </table>
         </form>
   </div>
-    
+  <?php  if ($cantidad>0) {?>  
     <form id="filtro" name="filtro" action="lista-alertas-sinenviar.php" method="POST">
-<table class="listados" cellpadding="2">
+<table class="listadosALERTA" cellpadding="3" >
           <tr class="titulo">
             <td width="70">C&oacute;digo</td>
             <td width="100">Fecha alta orden</td>
-            <td width="100">Creada por</td>
-            <td width="100">Cliente</td>
+            <td width="70">Creada por</td>
+            <td width="160">Cliente</td>
             <td>Descripci&oacute;n</td>
             <td width="100">Proveedor</td>
-            <td width="100">Estado</td>
-            <td width="32"></td>
+            <td width="120">Estado</td>
             <td width="32">&nbsp;</td>
             <td width="32">&nbsp;</td>            
-            <td width="32">&nbsp;</td>
             <td width="32">
-                <a href="index-admin.php">
-                    <img src="images/home.png"  alt="inicio" title="Volver al panel" width="32" height="32" border="none" />
-                </a>
             </td>
           </tr>
+   
+          
   <?php
           while($fila = mysql_fetch_array($alerta_orden_sinenviar)){
               //echo($fila["ord_alta"]);
@@ -139,14 +136,13 @@ $titulo = "Alerta de ordenes sin enviar a proveedor.";
             <td><?php echo($fila["ord_codigo"]);?></td>
             <td><?php echo(tfecha($fila["ord_alta"]));?></td>
             <td><?php echo $fila["usu_login"];?></td>
-            <td><a href="ver-alta-clientes.php?cli_id=<?php echo $fila["cli_id"]?>&action=0"><?php echo($fila["cli_nombre"]);?>(<?php echo($fila["sucursal"]);?>)</td>            
+            <td><a style="font-size:13px" href="ver-alta-clientes.php?cli_id=<?php echo $fila["cli_id"]?>&action=0"><?php echo($fila["cli_nombre"]);?>(<?php echo($fila["sucursal"]);?>)</td>            
             <td><?php echo(nl2br(utf8_encode($fila["ord_descripcion"])));?></td>
             <td><a href="ver-alta-proveedores.php?prv_id=<?php echo $fila["prv_id"]?>&action=0"><?php echo($fila["prv_nombre"]);?></a></td>
-            <td style="background-color: red;">
+            <td >
                   <img src="images/estado.png" alt="estado" style="background-color:<?php echo($fila["est_color"]);?>">
                   <?php echo(utf8_encode($fila["est_nombre"]));?>
             </td>
-            <td></td>
             <td width="32"><a href="ver-alta-ordenes.php?ord_id=<?php echo($fila["ord_id"]); ?>&action=0"><img src="images/detalles.png" alt="editar" title="Ver detalle" width="32" height="32" border="none" /></a></td>            
             <td><a href="form-edit-ordenes.php?ord_id=<?php echo($fila["ord_id"]); ?>"><img src="images/editar.png" alt="editar" title="Modificar orden" width="32" height="32" border="none" /></a></td>
             <td><a href="#" onClick="eliminarOrden(<?php echo($fila["ord_id"]);?>,'<?php echo($fila["ord_codigo"]);?>')">
@@ -160,7 +156,7 @@ $titulo = "Alerta de ordenes sin enviar a proveedor.";
           }
   ?>
 </table>
-    <table class="listados" cellpadding="5">
+    <table class="listadosALERTA" cellpadding="5">
           <tr>
             <td colspan="8" class="pie_lista"><?php 
 /* PAGINADO */  ###############################################################################            
@@ -169,7 +165,7 @@ $titulo = "Alerta de ordenes sin enviar a proveedor.";
           </tr>
       </table>
     </form>
-    <?php } else { echo "<img src=images/ok.png> SIN NOVEDADES";}?>
+    <?php } else {   echo "<div align='center'>  <img src=images/ok.png> SIN NOVEDADES </div>";}?>
     
     
     
@@ -178,7 +174,7 @@ $titulo = "Alerta de ordenes sin enviar a proveedor.";
     
       <div class="clear"></div>
   </div>
-
+      </div>
 </body>
 </html>
 
