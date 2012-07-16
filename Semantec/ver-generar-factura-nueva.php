@@ -271,7 +271,9 @@
   <?php }else{ ?> <b>*No Posee Órdenes Pendientes a Facturar </b> <?php } ?>
       <!-- DESCRIPCION DE FACTURA  -->
  <?php if($ocultar=="no"){  // TOTAL de ORDENES?>  
-      <div id="totalLabel">Total Órdenes venta: $<?php echo $totalOrdenVenta; ?></div> 
+      <div id="totalLabel">Total : $<?php echo $totalOrdenVenta; ?></div> 
+      <div id="restaLabel">Resta: $<?php echo $totalOrdenVenta; ?></div> 
+      
       <input type="hidden" name="totalOrdenVentatxt" id="totalOrdenVentatxt" style="visibility:visible" value="<?php echo $totalOrdenVenta ?>">
       <input type="hidden" name="totalOrdenVenta" id="totalOrdenVenta" style="visibility:visible" value="<?php echo $totalOrdenVenta ?>">
 <div class="contenido_descripcion" style="visibility:none" enable="true" >

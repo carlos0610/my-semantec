@@ -209,13 +209,9 @@ ok=false;
 return ok;
 }
 
-function ActualizarTotal(cantidadDescripciones,factura){
-    
-    
+function ActualizarTotal(cantidadDescripciones,factura){  
     iva = document.getElementById("comboIva").value;
     document.getElementById("btnConfirma").style.visibility = "visible"; 
-    
-
     if (iva == 1){
          iva = 0.21;
     }else{
@@ -223,15 +219,15 @@ function ActualizarTotal(cantidadDescripciones,factura){
          } 
      
     subtotal = 0;
-    numeroDescripcion=0;
-    
+    resta=totalOrdenesVenta=document.getElementById("totalOrdenVentatxt").value; 
+    numeroDescripcion=0;   
     while(numeroDescripcion < cantidadDescripciones)
-    {
-        
+    {        
         numeroDescripcion++;
         if (validarSiNumeroYComa(document.getElementById("txtTotalItem"+numeroDescripcion).value))
         {
              subtotal += parseFloat(document.getElementById("txtTotalItem"+numeroDescripcion).value); 
+             resta-=parseFloat(document.getElementById("txtTotalItem"+numeroDescripcion).value); 
         }else
         {document.getElementById("txtTotalItem"+numeroDescripcion).value="0.00";}
     }
@@ -248,12 +244,21 @@ function ActualizarTotal(cantidadDescripciones,factura){
     totalOrdenesVenta=document.getElementById("totalOrdenVenta").value;  
     totalIva=totalOrdenesVenta*iva;
     totalOrdenesVenta2 = parseFloat(totalOrdenesVenta) + parseFloat(totalIva);
-    document.getElementById('totalLabel').innerHTML ="Total Órdenes venta: $ "+(totalOrdenesVenta2).toFixed(2);
-    if(document.getElementById("txtTotalFactura").value==totalOrdenesVenta2)
+    
+    document.getElementById('restaLabel').innerHTML ="Resta: $ "+(resta).toFixed(2);
+    
+    if(document.getElementById("totalOrdenVentatxt").value==subtotal)
         {document.getElementById("btnConfirma").style.visibility = "visible";}
-        else{alert("La factura no iguala el total aceptado");
-          document.getElementById("btnConfirma").style.visibility = "hidden";}
-    } else {
+    else{
+            if(document.getElementById("totalOrdenVentatxt").value<=subtotal)
+            {          
+               alert("La factura supera el total aceptado");
+               document.getElementById("btnConfirma").style.visibility = "hidden";}
+           else{document.getElementById("btnConfirma").style.visibility = "hidden"; }
+        }
+    } 
+    // FACTURA COMPRA
+    else {
     percepciones = parseFloat(document.getElementById("txtPercepciones").value);
     document.getElementById("txtTotalFactura").value =  subtotal + percepciones;      
     }
@@ -278,18 +283,20 @@ function actualizarIva(factura){
          //2 = FACTURA COMPRA
             if (factura == 1)
             {
-                document.getElementById("txtTotalFactura").value = parseFloat(total_iva) + parseFloat(subtotal);
+                document.getElementById("txtTotalFactura").value = (parseFloat(total_iva) + parseFloat(subtotal)).toFixed(2);
             
                     totalOrdenesVenta=document.getElementById("totalOrdenVenta").value;  
                      totalIva=totalOrdenesVenta*iva;
                      totalOrdenesVenta2 = parseFloat(totalOrdenesVenta) + parseFloat(totalIva);
-                     document.getElementById('totalLabel').innerHTML ="Total Órdenes venta: $ "+(totalOrdenesVenta2).toFixed(2);
+                     //document.getElementById('totalLabel').innerHTML ="Total Órdenes venta: $ "+(totalOrdenesVenta2).toFixed(2);
+                     /*
                      if(document.getElementById("txtTotalFactura").value>totalOrdenesVenta2)
                      {
                          alert("La factura supera el monto total aceptado");
                          document.getElementById("btnConfirma").style.visibility = "hidden"; 
-                     }else{document.getElementById("btnConfirma").style.visibility = "visible";}
-            }   
+                     }else{document.getElementById("btnConfirma").style.visibility = "visible";} */
+            }
+            //FACTURA COMPRA
             else
                 document.getElementById("txtTotalFactura").value = parseFloat(total_iva) + parseFloat(subtotal) +  parseFloat(document.getElementById("txtPercepciones").value);    
 }
