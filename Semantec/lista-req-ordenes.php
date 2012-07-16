@@ -36,7 +36,8 @@
         $sql = "SELECT cli_id, cli_nombre,sucursal 
                 FROM clientes
            WHERE sucursal_id =$cli_idMaestro
-           ORDER BY cli_nombre";
+           AND clientes.estado = 1
+           ORDER BY cli_nombre,sucursal";
         $resultadoSucursales = mysql_query($sql);
    
                 //ordenes de los headers de las tablas PARTE 1
@@ -249,7 +250,7 @@
              $numeroDeTablaDesplegable++;   
   ?>
           <tr class="lista" bgcolor="<?php echo($colores[$i]);?>">
-              <td><a href=form-edit-ordenes.php?ord_id=<?php echo($fila["ord_id"]);?>><?php echo($fila["ord_codigo"]);?></a></td>
+              <td><a href=form-edit-ordenes.php?ord_id=<?php echo($fila["ord_id"]);?>&action=1 target="_blank"><?php echo($fila["ord_codigo"]);?></a></td>
             <td><?php echo(utf8_encode($fila["cli_nombre"]));?>(<?php echo(utf8_encode($fila["sucursal"]))?>)</td>
             <td><?php echo(tfecha($fila["ord_alta"]));?></td>
             <td><?php echo(nl2br(utf8_encode($fila["ord_descripcion"])));?></td>

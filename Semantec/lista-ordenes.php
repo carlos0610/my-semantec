@@ -37,7 +37,8 @@
         $sql = "SELECT cli_id, cli_nombre,sucursal 
                 FROM clientes
            WHERE sucursal_id =$cli_idMaestro
-           ORDER BY cli_nombre";
+           AND clientes.estado = 1
+           ORDER BY cli_nombre,sucursal";
         $resultadoSucursales = mysql_query($sql);
     
         //ordenes de los headers de las tablas parte 1
@@ -90,8 +91,8 @@ $sql="SELECT ord_id, ord_codigo, ord_descripcion, cli_nombre,c.cli_id, prv_nombr
                     $sql .= " ORDER BY  $unOrdenCompleta   LIMIT ".$limitInf.",".$tamPag;  
 
                     
-$resultado=mysql_query($sql);
- $cantidad = mysql_num_rows($resultado);   
+                    $resultado=mysql_query($sql);
+                    $cantidad = mysql_num_rows($resultado);   
 
 
         $i = 0;
@@ -147,7 +148,7 @@ $resultado=mysql_query($sql);
          <td width="51%">&nbsp;</td>
        </tr>
        <tr>
-         <td><div align="right">Proovedor</div></td>
+         <td><div align="right">Proveedor</div></td>
          <td><select name="prv_id" id="prv_id" class="campos" <?php if($proveedorFiltro==""){echo ("disabled");}?>>
            <?php while($fila2 = mysql_fetch_array($resultado2)){ ?>
            <option value="<?php echo($fila2["prv_id"]); ?>"<?php if($proveedorFiltro==$fila2["prv_id"]){echo(" selected=\"selected\"");} ?>><?php echo(utf8_encode($fila2["prv_nombre"])); ?></option>
@@ -248,7 +249,7 @@ $resultado=mysql_query($sql);
                   <?php echo(utf8_encode($fila["est_nombre"]));?>
             </td>
             <td width="32"><a href="ver-alta-ordenes.php?ord_id=<?php echo($fila["ord_id"]); ?>&action=0"><img src="images/detalles.png" alt="editar" title="Ver detalle" width="32" height="32" border="none" /></a></td>            
-            <td><a href="form-edit-ordenes.php?ord_id=<?php echo($fila["ord_id"]); ?>"><img src="images/editar.png" alt="editar" title="Modificar orden" width="32" height="32" border="none" /></a></td>
+            <td><a href="form-edit-ordenes.php?ord_id=<?php echo($fila["ord_id"]); ?>&action=0"><img src="images/editar.png" alt="editar" title="Modificar orden" width="32" height="32" border="none" /></a></td>
             <td><a href="#" onClick="eliminarOrden(<?php echo($fila["ord_id"]);?>,'<?php echo($fila["ord_codigo"]);?>')">
                 <img src="images/eliminar.png" alt="eliminar" title="Eliminar orden" width="32" height="32" border="none" /></a></td>
           </tr>

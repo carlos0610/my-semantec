@@ -4,7 +4,11 @@
         include("validar.php");
         include("funciones.php");
         include("conexion.php");
+        
         $ord_id = $_GET["ord_id"];
+        $action = $_GET["action"];
+        
+        
         $sql0 = "SELECT ord_codigo, ord_descripcion, o.cli_id,c.cli_nombre,c.sucursal, prv_id, est_id, ord_alta, ord_plazo,ord_plazo_proveedor, ord_costo, ord_venta 
                     FROM ordenes o,clientes c 
                     WHERE ord_id = $ord_id
@@ -166,7 +170,11 @@
           <tr>
             <td>&nbsp;</td>
             <td>
+                <?php if ($action == 0){?>
                 <a href="lista-ordenes.php"><input type="button" value="Ir al Listado" class="botones" /></a> &nbsp; &nbsp; 
+                    <?php } else {?>
+                <a href="lista-req-ordenes.php"><input type="button" value="Ir al Listado" class="botones" /></a> &nbsp; &nbsp;
+                <?php } ?>
                 <input type="reset" value="Restablecer" class="botones" /> &nbsp; &nbsp; 
                 <input type="submit" value="Modificar Orden" class="botones" />
                 <input type="hidden" value="<?php echo($ord_id); ?>" name="ord_id" id="ord_id" />            </td>

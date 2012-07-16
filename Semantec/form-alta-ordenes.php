@@ -17,7 +17,7 @@
 
         
         $resultado1 = mysql_query($sql);
-        $sql = "SELECT  prv_id, prv_nombre FROM proveedores WHERE estado=1";
+        $sql = "SELECT  prv_id, prv_nombre FROM proveedores WHERE estado=1 and prv_id > 1 ORDER BY prv_nombre";
         $resultado2 = mysql_query($sql);
         // BORRAR
         $sql = "SELECT  est_id, est_nombre, est_color FROM estados WHERE est_id=1";
@@ -129,6 +129,7 @@
             <td>Proveedor</td>
             <td>
                 <select name="prv_id" id="prv_id" class="campos" required>
+                    <option value="1">Sin asociar</option>    
     <?php
           while($fila2 = mysql_fetch_array($resultado2)){
     ?>
