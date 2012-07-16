@@ -64,6 +64,7 @@ $titulo = "Alerta de ordenes con vencimiento.";
   </script>     
   </head>
   <body>
+       <div id="main" >
 <div id="contenedor" style="height:auto;">
   <?php  if ($cantidad>0) {?>
     <div id="mensaje" style="height:auto;">
@@ -103,7 +104,7 @@ $titulo = "Alerta de ordenes con vencimiento.";
     </div>
     
     
-<table class="sortable" cellpadding="5">
+<table class="listadosALERTA" cellpadding="3">
           <tr class="titulo">
             <td width="70">C&oacute;digo</td>
             <td width="100">Fecha alta orden</td>
@@ -116,11 +117,6 @@ $titulo = "Alerta de ordenes con vencimiento.";
             <td width="32">&nbsp;</td>
             <td width="32">&nbsp;</td>            
             <td width="32">&nbsp;</td>
-            <td width="32">
-                <a href="index-admin.php">
-                    <img src="images/home.png"  alt="inicio" title="Volver al panel" width="32" height="32" border="none" />
-                </a>
-            </td>
           </tr>
   <?php
           while($fila = mysql_fetch_array($alerta_plazo_proveedor)){
@@ -151,7 +147,7 @@ $titulo = "Alerta de ordenes con vencimiento.";
           }
   ?>
 </table>
-    <table class="listados" cellpadding="5">
+    <table class="listadosALERTA" cellpadding="5">
           <tr>
             <td colspan="8" class="pie_lista"><?php 
 /* PAGINADO */  ###############################################################################            
@@ -169,6 +165,6 @@ $titulo = "Alerta de ordenes con vencimiento.";
     
       <div class="clear"></div>
   </div>
-
+       </div>
 </body>
 </html>
