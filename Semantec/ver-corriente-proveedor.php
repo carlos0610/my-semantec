@@ -9,10 +9,9 @@
         if ($action == 1){
             $prv_id = $_POST["comboProveedor"];
             $_SESSION['proveedor'] = $prv_id;
-        }else {
+        }else   {
             $prv_id = $_GET["prv_id"];
-            //$_SESSION['proveedor'] = $prv_id;
-        }
+                }
         
      
           $prv_id = $_SESSION['proveedor'];
@@ -21,7 +20,7 @@
         
                         
         /* OBTENGO DATOS DE PROVEEDOR */
-        $sql = "SELECT prv.prv_id,prv_nombre,prv_direccion,prv_cuit,iva_nombre,prv_telefono,cc.ccp_id, p.nombre as provincia,pa.nombre as partido,l.nombre as localidad
+        $sql = "SELECT prv.prv_id,prv_nombre,prv_direccion,prv_cuit,iva_nombre,prv_telefono,cc.ccp_id, p.nombre as provincia,pa.nombre as partido,l.nombre as localidad,prv.sucursal
                 FROM proveedores prv ,iva_tipo i,ubicacion u,provincias p, partidos pa,localidades l,cuentacorriente_prv cc
                 WHERE prv.estado = 1 
                 AND prv.prv_id = $prv_id
@@ -39,28 +38,17 @@
         
         
 /* CALCULO PAGINADO - DATOS DE LISTADO DE CUENTA CORRIENTE */  ###############################################################################
-       
-    /* ANTES DE LA MAGIA*/   
-    /*$sql0="SELECT o.ord_id,ord_codigo,c.cli_nombre,p.nombre as provincia,l.nombre as localidad,o.ord_descripcion,o.est_id,sum(od.ord_det_monto) as Adelantos,o.ord_costo Presupuesto,o.ord_costo - sum(od.ord_det_monto) as Saldo 
-            FROM ordenes o, ordenes_detalle od,clientes c,ubicacion u,provincias p,localidades l
-            WHERE 
-            o.ord_id IN (select ord_id from ordenes where prv_id = $prv_id)
-            AND o.ord_id = od.ord_id
-            AND o.cli_id = c.cli_id
-            AND u.id = c.ubicacion_id
-            AND u.provincias_id = p.id
-            AND u.localidades_id = l.id
-            GROUP BY o.ord_id";*/
-    
     /*CON LA MAGIA*/
        
        
      /* CREAMOS TABLA TEMPORAL QUE VA ALMACENAR EL REPORTE CON LOS ADELANTOS */  
         $sql = "CREATE TEMPORARY TABLE tabla_temp
 					(
-					      ord_id int NOT NULL,
-					      ord_codigo varchar(30)  not null,
+                                                ord_id int NOT NULL,
+                                                ord_codigo varchar(30)  not null,
+                                                cli_id     int        not null,
 					    	cli_nombre varchar(100) not null,
+                                                sucursal   varchar(100) ,
 					    	provincia  varchar(100) not null,
 					    	localidad  varchar(100) not null,
 					    	ord_descripcion varchar(250) not null,
@@ -79,16 +67,18 @@
         /* INSERTAMOS EN LA TABLA TEMPORAL EL RESULTADO DE LA CONSULTA QUE AVERIGUA LOS ADELANTOS VS ORD_COSTO */
         
         $sql = "INSERT INTO tabla_temp	      
-		SELECT o.ord_id,ord_codigo,c.cli_nombre,p.nombre as provincia,l.nombre as localidad,o.ord_descripcion,o.est_id,sum(od.ord_det_monto) as adelantos,round (o.ord_costo,2) as presupuesto ,o.ord_costo - sum(od.ord_det_monto) as Saldo,0,round (o.ord_costo,2) as presupuesto 
+		SELECT o.ord_id,ord_codigo,c.cli_id,c.cli_nombre,c.sucursal,p.nombre as provincia,l.nombre as localidad,o.ord_descripcion,o.est_id,sum(od.ord_det_monto) as adelantos,round (o.ord_costo,2) as presupuesto ,o.ord_costo - sum(od.ord_det_monto) as Saldo,0,round (o.ord_costo,2) as presupuesto 
                 FROM ordenes o, ordenes_detalle od,clientes c,ubicacion u,provincias p,localidades l
                 WHERE 
-                o.ord_id IN (select ord_id from ordenes where prv_id = $prv_id)
+                o.ord_id IN (select ord_id from ordenes where prv_id = $prv_id AND estado = 1)
                 AND o.estado = 1
                 AND o.ord_id = od.ord_id
                 AND o.cli_id = c.cli_id
                 AND u.id = c.ubicacion_id
                 AND u.provincias_id = p.id
                 AND u.localidades_id = l.id
+                AND o.ord_costo <> 0
+                AND o.est_id <> 8           
                 GROUP BY o.ord_id;"; 
      
         mysql_query($sql);
@@ -106,7 +96,8 @@
        
             /* INSERTAMOS EN LA TABLA TEMPORAL 2 , LA CONSULTA QUE COMPARA EL ORD COSTO VS LOS DETALLES DE FACTURA DE COMPRA */
        $sql = "INSERT INTO tabla_temp2
-               SELECT dfc.det_fco_orden_id,sum(dfc.det_fco_preciounitario) as compras,o.ord_costo - SUM(dfc.det_fco_preciounitario) as saldoc from detalle_factura_compra dfc, ordenes o,clientes c
+               SELECT dfc.det_fco_orden_id,sum(dfc.det_fco_preciounitario) as compras,o.ord_costo - SUM(dfc.det_fco_preciounitario) as saldoc 
+               FROM detalle_factura_compra dfc, ordenes o,clientes c
                WHERE dfc.det_fco_orden_id = o.ord_id
                AND o.estado = 1
                AND o.prv_id = $prv_id
@@ -132,22 +123,6 @@
        
      
        $sql0 = $sql;
-    /*$sql0 = "SELECT o.ord_id,ord_codigo,c.cli_nombre,p.nombre as provincia,l.nombre as localidad,o.ord_descripcion,o.est_id,sum(od.ord_det_monto) as Adelantos,round (o.ord_costo,2) as costo,ROUND(SUM(dfc.det_fco_preciounitario)/2,2) as compras ,ROUND(o.ord_costo - SUM(dfc.det_fco_preciounitario)/2,2) as saldoc,o.ord_costo - sum(od.ord_det_monto) as Saldo 
-            FROM ordenes o, ordenes_detalle od,clientes c,ubicacion u,provincias p,localidades l,detalle_factura_compra dfc
-            WHERE 
-            o.ord_id IN (select ord_id from ordenes where prv_id = $prv_id)
-            AND o.ord_id = od.ord_id
-            AND o.cli_id = c.cli_id
-            AND o.gru_id_compra is not null
-            AND o.ord_id = dfc.det_fco_orden_id
-            AND dfc.det_fco_orden_id = o.ord_id
-				AND u.id = c.ubicacion_id
-            AND u.provincias_id = p.id
-            AND u.localidades_id = l.id
-            GROUP BY o.ord_id";
-      */
-     
-    
     
     $tamPag=20;
     
@@ -171,6 +146,11 @@
         
         $resultado = mysql_query($sql);
         
+        /*Hacemos un SUM para calcular el total de la deuda*/
+        $total = mysql_query("SELECT sum(costo) as total from tabla_temp;");
+        $totalDeuda = mysql_fetch_array($total);
+        
+        
         $cantidad = mysql_num_rows($resultado);
         
         
@@ -179,11 +159,7 @@
         $colores = array("#fff","#e8f7fa");
         $cant = count($colores);
         
-        
-        
-        $totalDeuda = 0;
-   
-        
+    
         /* DROPEAMOS LAS TABLAS TEMPORALES PARA QUE NO QUEDEN EN MEMORIA */
        $sql = "DROP TABLE tabla_temp;";
        mysql_query($sql);
@@ -230,7 +206,7 @@
     <!--fin header-->
 
 
-   <!--start datos_cliente-->
+   <!--start datos_proveedor-->
    <div id="datos_cliente">
    <table width="100%" border="0" id="dataTable">
 <tr>
@@ -244,7 +220,7 @@
             <td class="titulo">Domiclio:</td>
             <td width="24%" style="background-color:#cbeef5"><?php echo utf8_encode($fila_datos_proveedor["prv_direccion"]);?></td>
             <td width="9%" class="titulo">Localidad:</td>
-            <td width="52%" style="background-color:#cbeef5"><?php echo utf8_encode($fila_datos_proveedor["provincia"]);?>/<?php echo utf8_encode($fila_datos_proveedor["localidad"]);?></td>
+            <td width="52%" style="background-color:#cbeef5"><?php echo utf8_encode($fila_datos_proveedor["provincia"]);?>/<?php echo utf8_encode($fila_datos_proveedor["sucursal"]);?></td>
        </tr>
           <tr>
             <td class="titulo">IVA:</td>
@@ -321,15 +297,14 @@
           while($fila = mysql_fetch_array($resultado)){
   ?>
           <tr class="lista" bgcolor="<?php echo($colores[$i]);?>">
-              <td><a href="ver-alta-ordenes.php?ord_id=<?php echo($fila["ord_id"]);?>&action=0" target="_blank"><?php echo($fila["ord_codigo"]);?></a></td>
-            <td><?php echo(utf8_encode($fila["cli_nombre"]));?> (<?php echo(utf8_encode($fila["provincia"]));?>)</td>
-            <td><?php echo(utf8_encode($fila["ord_descripcion"]));?></td>
-            <td><?php echo $fila["costo"];?></td>
-            <td><?php echo $fila["adelantos"];?></td>
-            <td><?php echo $fila["saldo_a"];?></td>
-            <td><?php echo $fila["compras"];?></td>
-            
-    <td><?php echo $fila["saldo_c"];?></td>
+                <td><a href="ver-alta-ordenes.php?ord_id=<?php echo($fila["ord_id"]);?>&action=0" target="_blank"><?php echo($fila["ord_codigo"]);?></a></td>
+                <td><a href="ver-alta-clientes.php?cli_id=<?php echo($fila["cli_id"]);?>&action=0"><?php echo(utf8_encode($fila["cli_nombre"]));?> (<?php echo(utf8_encode($fila["provincia"]));?>/<?php echo(utf8_encode($fila["sucursal"]));?>)</a></td>
+                <td><?php echo(utf8_encode($fila["ord_descripcion"]));?></td>
+                <td><?php echo $fila["costo"];?></td>
+                <td><?php echo $fila["adelantos"];?></td>
+                <td><?php echo $fila["saldo_a"];?></td>
+                <td><?php echo $fila["compras"];?></td>
+                <td><?php echo $fila["saldo_c"];?></td>
     
         </tr>
   <?php
@@ -337,11 +312,11 @@
             if($i==$cant){$i=0;}
             
              
-            $totalDeuda += $fila["saldo_a"];
+           // $totalDeuda += $fila["saldo_a"];
             
           } // FIN_WHILE
           
-          echo "<tr><td colspan=8 align=right>Total deuda con proveedor: <b>$totalDeuda</b> pesos</td></tr>";
+          echo "<tr><td colspan=8 align=right>Total deuda con proveedor: <b>".$totalDeuda['total']."</b> pesos</td></tr>";
           
   ?>
           <tr>
