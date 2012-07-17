@@ -49,7 +49,7 @@
                     AND g_o.gru_id = f.gru_id
                     AND g_o.gru_id = o.gru_id";
                 $sql .= " LIMIT ".$limitInf.",".$tamPag; 
-                echo "QUERY: ".$sql;
+                //echo "QUERY: ".$sql;
         $resultado = mysql_query($sql);
         $cantidad = mysql_num_rows($resultado);
 

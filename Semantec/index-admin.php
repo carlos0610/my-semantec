@@ -86,10 +86,10 @@
 
     <!--start header-->
     <header>
-    <a href="#" id="logo"><img src="images/semantec-logo.jpg" width="470" height="100" alt="logo" /></a>
+    <a href="#" id="logo"><img src="images/semantec.png" width="578" height="102" alt="logo" /></a>
 	  <!-- form login -->
 
-    <div id ="login">
+<div id ="login">
          <span id="mensaje_top" style="text-align:right;">
           <?php if($_SESSION["rol_id"] == 1){?>
              Configuración

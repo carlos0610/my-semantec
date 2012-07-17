@@ -2,7 +2,7 @@
     include ("funciones.php");
     include ("conexion.php");
 
-
+    
     $cantidadCheckboxs = $_POST["cantidadOrdenesAceptadas"];
     $items   = $_GET["items"];
     $nota    = $_POST["txtNota"];
