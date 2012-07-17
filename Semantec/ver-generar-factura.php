@@ -88,7 +88,7 @@
    <div id="contenido1" style="height:auto">
    <table width="100%" border="0">
   <tr>
-    <td rowspan="3"><a href="#" id="logo2"><img src="images/semantec-logo.jpg" width="401" height="71" alt="logo" /></a></td>
+    <td rowspan="3"><a href="#" id="logo2"><img src="images/semantec.png" width="401" height="71" alt="logo" /></a></td>
     <td width="51%" class="titulo"><span id="ocultarParaImpresion">FACTURA N° 0001- </span> xxxx-xxxx</td>
     <td width="1%">&nbsp;</td>
   </tr>

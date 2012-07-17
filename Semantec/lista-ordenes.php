@@ -121,7 +121,7 @@ $sql="SELECT ord_id, ord_codigo, ord_descripcion, cli_nombre,c.cli_id, prv_nombr
 
     <!--start header-->
     <header>
-    <a href="#" id="logo"><img src="images/semantec-logo.jpg" width="470" height="100" alt="logo" /></a>
+    <a href="#" id="logo"><img src="images/semantec.png" width="470" height="100" alt="logo" /></a>
 	  <!-- form login -->
 
     <div id ="login">
