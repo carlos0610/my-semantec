@@ -200,18 +200,26 @@ return ok;
 }
 
 
-function validarSoloNumero(object)
+/*function validarSoloNumero(object)
 {
 numero = object.value;
 if (!/^([0-9])*$/.test(numero))
 object.value = numero.substring(0,numero.length-1);
+}  */
+function validarSoloNumero(object)
+{
+numero = object.value;
+var patron = /^[0-9]+[\.]$/;
+if (!/^[0-9]+[\.]{0,1}\d*$/.test(numero)&& numero.search(patron))
+object.value = numero.substring(0,numero.length-1);
 }
-
 // ENGANCHES a VALIDADOREs-----------------------------
 function validarCostoDeLaOrden(){
 validarSoloNumero(document.getElementById("ord_costo"));
 }
-
+function validarReal(nombreCampo){
+validarSoloNumero(document.getElementById(nombreCampo));
+}
 function validarVentaDeLaOrden(){
 validarSoloNumero(document.getElementById("ord_venta"));
 }

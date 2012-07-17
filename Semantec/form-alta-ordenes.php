@@ -156,12 +156,12 @@
           <td></td>
           <tr>
             <td>Valor Costo de la Orden</td>
-            <td><input type="number" style="text-align:right" class="campos" id="ord_costo" name="ord_costo" value="0"  min="0" required OnKeyUp="return validarCostoDeLaOrden();" /></td>
+            <td><input type="text" style="text-align:right" class="campos" id="ord_costo" name="ord_costo" value="0"  min="0" required OnKeyUp="return validarCostoDeLaOrden();" /></td>
             <td></td>
           </tr>          
           <tr>
             <td>Valor Venta de la Orden</td>
-            <td><input type="number" style="text-align:right" class="campos" id="ord_venta" name="ord_venta" value="0"  min="0" required  OnKeyUp="return validarVentaDeLaOrden();" /></td>
+            <td><input type="text" style="text-align:right" class="campos" id="ord_venta" name="ord_venta" value="0"  min="0" required  OnKeyUp="return validarVentaDeLaOrden();" /></td>
             <td></td>
           </tr>
           <tr>

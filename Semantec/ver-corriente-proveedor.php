@@ -260,7 +260,7 @@
          </label></td>
          <td width="16%">Adelanto: 
            <label>
-           <input name="txtAdelanto" type="text" class="campos2" id="txtAdelanto" value="0.00" size="8">
+           <input name="txtAdelanto" type="text" class="campos2" id="txtAdelanto" value="0.00" size="8" OnKeyUp="return validarReal('txtAdelanto');">
          </label></td>
          <td width="62%">Descripción: 
            <label>

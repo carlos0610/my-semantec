@@ -160,11 +160,11 @@
           
            <tr>
             <td>Valor Costo de la Orden</td>
-            <td><input type="number" style="text-align:right" value="<?php echo($fila0["ord_costo"]); ?>" class="campos" id="ord_costo" name="ord_costo" required /></td>
+            <td><input type="text" style="text-align:right" value="<?php echo($fila0["ord_costo"]); ?>" class="campos" id="ord_costo" name="ord_costo" required OnKeyUp="return validarReal('ord_costo');"/></td>
             <td></td>
           </tr>          <tr>
             <td>Valor Venta de la Orden</td>
-            <td><input type="number" style="text-align:right" value="<?php echo($fila0["ord_venta"]); ?>" class="campos" id="ord_venta" name="ord_venta"  required/></td>
+            <td><input type="text" style="text-align:right" value="<?php echo($fila0["ord_venta"]); ?>" class="campos" id="ord_venta" name="ord_venta"  required OnKeyUp="return validarReal('ord_venta');"/></td>
             <td></td>
           </tr>
           <tr>

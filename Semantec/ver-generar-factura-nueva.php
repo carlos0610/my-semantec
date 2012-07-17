@@ -10,7 +10,7 @@
        
        //+++++configuracion  de descripciones a imprimir en pantalla+++++
        $numeroDescripcion=0;
-       $totalDescripcion=7;
+       $totalDescripcion=20;
        
        
        $_SESSION["ord_id"] = $ord_id;
@@ -232,7 +232,7 @@
         $i=0;
         $totalOrdenVenta=0;
         while ($i <$cantOrdenesChecadas)
-        { $i++;  
+        { $i++;    $usu_nombre = $_SESSION["usu_nombre"]; echo $usu_nombre;
                 $unord_ID=$_GET["ord_check$i"];
                 $sql5="SELECT `gru_id`,`ord_codigo`,`ord_descripcion`,`prv_id`,`est_id` ,ord_id ,ord_venta
               FROM `ordenes` 
@@ -250,7 +250,7 @@
         <tr>
             <td>
             
-                &nbsp;&nbsp; &nbsp;
+                &nbsp;&nbsp; &nbsp; 
             </td>
             <td>
                     <a href="#" onClick="popup('form-edit-ordenes.php?ord_id=<?php echo($filaDeLasOrdenesCheckeadas["ord_id"]);?>', 'Alerta')"># <?php echo $filaDeLasOrdenesCheckeadas["ord_codigo"]; ?></a>
