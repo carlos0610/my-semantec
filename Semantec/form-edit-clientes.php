@@ -168,7 +168,7 @@
           </tr>
           <tr>
             <td>Sucursal</td>
-            <td><input value="<?php echo($fila_clientes["sucursal"]); ?>" type="text" style="text-align:left" class="campos" id="sucursal" name="sucursal" /></td>
+            <td><input value="<?php echo(utf8_encode($fila_clientes["sucursal"])); ?>" type="text" style="text-align:left" class="campos" id="sucursal" name="sucursal" /></td>
             <td></td>
           </tr>
           
