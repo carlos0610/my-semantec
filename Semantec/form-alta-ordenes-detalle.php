@@ -77,7 +77,7 @@
 
 	
       <h2>Panel de control</h2>
-      <form action="alta-ordenes-detalle.php" method="post" enctype="multipart/form-data">
+      <form id="altaordenDetalle" action="alta-ordenes-detalle.php" method="post" enctype="multipart/form-data">
           
       <input type="hidden" value="<?php echo $orden_id; ?>" name="ord_id"  id="ord_id">
       <table class="forms" cellpadding="5">
@@ -129,7 +129,7 @@
       
           <tr>
             <td>Adelanto</td>
-            <td><input type="number" class="campos" id="ord_det_monto" name="ord_det_monto" min="0" required value="0" style="text-align:right" onChange="return validarAdelanto(<?php echo $ord_costo ?>)"/>
+            <td><input type="text" class="campos" id="ord_det_monto" name="ord_det_monto" min="0" required value="0" style="text-align:right" OnKeyUp="return validarReal('ord_det_monto');"  />
                 <span id="errorAdelanto" style="font-family: Verdana, Arial, Helvetica,sans-serif;font-size: 9pt;color: #CC3300;position:relative;visibility:hidden;">Supera al valor costo</span>            </td>
             <td></td>
           </tr>
@@ -144,7 +144,7 @@
                 <a href="form-edit-ordenes.php?ord_id=<?php echo($orden_id)?>">
                 <input type="button" value="  Volver   " class="botones" /></a> &nbsp; &nbsp;
                 <input type="reset"  value="Restablecer" class="botones" /> &nbsp; &nbsp; 
-                <input type="submit" value="  Guardar  " class="botones" id="guardarDetalle" />
+                <input type="button" value="  Guardar  " class="botones" id="guardarDetalle" onClick="return validarAdelanto(<?php echo $ord_costo ?>)"/>
                 <input type="hidden" name="MAX_FILE_SIZE" value="200000000000">            </td>
             <td></td>
           </tr>

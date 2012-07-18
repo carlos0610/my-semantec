@@ -352,16 +352,19 @@ if((document.getElementById("est_id").value == 11)&(costo==0)&(venta==0))
 
 
 function validarAdelanto(costo){
-
+// validacion q no este vacio
+if((document.getElementById("ord_det_monto").value == ''))
+    document.getElementById("ord_det_monto").value = 0;
 if((document.getElementById("ord_det_monto").value > costo))
     {
         document.getElementById("errorAdelanto").style.visibility = "visible"; 
-        document.getElementById("guardarDetalle").style.visibility = "hidden";
+    //    document.getElementById("guardarDetalle").style.visibility = "hidden";
     }
     else
         {
            document.getElementById("errorAdelanto").style.visibility = "hidden"; 
            document.getElementById("guardarDetalle").style.visibility = "visible";
+           document.getElementById("altaordenDetalle").submit();
         }
 }
 
