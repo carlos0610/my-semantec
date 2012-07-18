@@ -3,6 +3,7 @@
 
         $action = $_GET["action"];
         $fav_id = $_GET["fav_id"];
+        echo $$fav_id;
         include("funciones.php");
         include("conexion.php");
         
@@ -53,7 +54,62 @@
        mysql_close();
        //$_SESSION["ord_id"] = $ord_id;
         $subtotal = 0;
+               $fav_idPDF= ($fav_id);
+        
+       require('fpdf.php');
+
+$pdf = new FPDF('P','mm','Letter');
+$pdf->AddPage();
+$pdf->SetFont('Arial','',10);
+$pdf->SetMargins(12, 10 ,10);
+#Establecemos el margen inferior:
+$pdf->SetAutoPageBreak(true,1);  
+// DATOS DE FACTURA PDF      Cell(unNumero)--Mover a la derecha ; Ln(unNumero) Salto de Linea
+//Numero de FActura
+$pdf->Cell(120);
+$pdf->Cell(40,10,$fav_id,0,1,R);
+$pdf->Ln(3);
+$pdf->Ln(55);
+
+// DEscripcion - Total
+  $pdf->Ln(14);
+  $POsXoriginal=$pdf->GetX();
+  while($item = mysql_fetch_array($descripcion_factura)){
+       $precio_item = $item["det_fco_preciounitario"]; 
        
+       $POsYoriginal=$pdf->GetY();
+       $pdf->MultiCell(140,6,utf8_decode($item["det_fco_descripcion"]),0,L);
+       $POsYDescpuesDeTExto=$pdf->GetY();
+       $pdf-> SetXY(190,$POsYoriginal);  // ACA MOVES POS de PRECIO
+      
+         if($item["det_fco_preciounitario"]>0)
+        {
+            $pdf->Cell(2,8,'$',0,0,R);
+            $pdf->Cell(15,8,$item["det_fco_preciounitario"],0,0,R);
+        }
+        else
+        { $pdf->Cell(17,8,'S/C',0,0,R);}
+        $pdf-> SetXY($POsXoriginal,$POsYDescpuesDeTExto);
+        
+  $subtotal += $precio_item;
+  }
+//Vencimiento - SUBTOTAL
+$pdf-> SetY(222);
+$pdf->Cell(40);
+$pdf->Cell(40,10,$fila_fecha_factura["fav_vencimiento"]);
+$pdf->Cell(100);
+$pdf->Cell(2,10,'$',0,0,R);
+$pdf->Cell(15,10,number_format($subtotal, 2, '.', ''),0,1,R);
+//NOTA - IVA INSC - TOTAL IVA INSC
+$pdf->Cell(20);
+$pdf->MultiCell(90,10,utf8_decode($fila_fecha_factura["fco_nota"]),0);
+
+$pdf->SetXY(150,232); // despues de un multycell no puede ir cell 
+        
+
+$pdf->Cell(20,10,$fila_iva["valor"],0,0,R);
+
+$pdf->Output();
 ?>
 <!doctype html>
 <html>  
@@ -204,7 +260,7 @@
                     ?>>
     <input type="button" value="volver"s class="botones" />
                 </a>  </td>
-      <td><a href="ver-alta-factura-compra-pdf.php?action=1&fav_id=<?php echo $fav_id ?>">
+      <td><a href="javascript:window.print()">
               <img id="logoImpresora" src="images/imprimir.png" heigth="48" width="48"/></a>
           
       </td>
