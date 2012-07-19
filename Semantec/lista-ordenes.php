@@ -4,6 +4,7 @@
         include("funciones.php");
         include("conexion.php");
          $tamPag=10;
+         $action = $_GET["action"];
          
          //Clientes
          $sql = "SELECT sucursal_id,sucursal,cli_id,cli_nombre,p.nombre as provincia 
@@ -86,12 +87,31 @@ $sql="SELECT ord_id, ord_codigo, ord_descripcion, cli_nombre,c.cli_id, prv_nombr
                //     AND o.est_id = $estado_id
                //     AND o.prv_id = $proveedorFiltro
                //     ORDER BY o.ord_alta DESC ";
-                    $sql0=$sql;
+                    if($action ==  0){
+                        $sql0=$sql;
+                        $_SESSION["sql0"] = $sql0;
+                        
+                    }else{
+                        $sql0=$_SESSION["sql0"];
+                    }
+                    
                     include("paginado.php");
                     $sql .= " ORDER BY  $unOrdenCompleta   LIMIT ".$limitInf.",".$tamPag;  
 
                     
-                    $resultado=mysql_query($sql);
+                    /*Recuperamos el accion para saber si regresa de editar una orden - action = 1*/
+                    
+                    
+                    
+                    if ($action==0){
+                        $_SESSION["sql"] = $sql;
+                        $resultado=mysql_query($sql);
+                    }else{
+                        $resultado=mysql_query($_SESSION["sql"]); 
+                        echo $_SESSION["sql"];
+                    }
+                    
+                    
                     $cantidad = mysql_num_rows($resultado);   
 
 

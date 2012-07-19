@@ -147,7 +147,7 @@
         $resultado = mysql_query($sql);
         
         /*Hacemos un SUM para calcular el total de la deuda*/
-        $total = mysql_query("SELECT sum(costo) as total from tabla_temp;");
+        $total = mysql_query("SELECT sum(saldo_c) as total_compra,sum(saldo_a) as total_adelanto from tabla_temp;");
         $totalDeuda = mysql_fetch_array($total);
         
         
@@ -316,7 +316,7 @@
             
           } // FIN_WHILE
           
-          echo "<tr><td colspan=8 align=right>Total deuda con proveedor: <b>".$totalDeuda['total']."</b> pesos</td></tr>";
+          echo "<tr><td colspan=8 align=right>Total deuda con proveedor: <b style=color:red>".$totalDeuda['total_adelanto']."</b> pesos -- Total deuda del proveedor: <b style=color:blue>".$totalDeuda['total_compra']."</b> pesos</td></tr>";
           
   ?>
           <tr>

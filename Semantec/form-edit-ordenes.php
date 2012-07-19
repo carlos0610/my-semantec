@@ -171,7 +171,7 @@
             <td>&nbsp;</td>
             <td>
                 <?php if ($action == 0){?>
-                <a href="lista-ordenes.php"><input type="button" value="Ir al Listado" class="botones" /></a> &nbsp; &nbsp; 
+                <a href="lista-ordenes.php?action=1"><input type="button" value="Ir al Listado" class="botones" /></a> &nbsp; &nbsp; 
                     <?php } else {?>
                 <a href="lista-req-ordenes.php"><input type="button" value="Ir al Listado" class="botones" /></a> &nbsp; &nbsp;
                 <?php } ?>
