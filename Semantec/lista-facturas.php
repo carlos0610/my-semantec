@@ -24,6 +24,9 @@
         //recibo los criterios y construyo la consulta
         $elementoBusqueda=$_POST['filtrartxt'];
         $pagado=$_POST['pagado'];
+        $chkCanceladas=$_POST['chkCanceladas'];
+         if($chkCanceladas=="")
+             {$chkCanceladas="1";}
         //$cli_id=$_POST['cli_id'];
         
         //filtros nuevos Cliente Sucursal
@@ -73,9 +76,11 @@
                 AND g_o.gru_id = o.gru_id
                 AND o.cli_id = c.cli_id
                 AND c.cli_id = cc.cli_id
-                AND f.estado = 1";
+                AND f.estado = $chkCanceladas";
                 $sql.=$sqlaux;
                 $sql0=$sql;
+                
+          
                 include("paginado.php");
                 
                 $sql .= " ORDER BY $unOrdenCompleta LIMIT ".$limitInf.",".$tamPag;  
@@ -175,14 +180,15 @@
        <tr>
          <td><div align="right">N° Factura </div></td>
          <td><input type="text" name="filtrartxt" class="campos" value="<?php echo $elementoBusqueda; ?>"  style="text-align:right" ></td>
-         <td><input type="submit" name="filtrar" value="Filtrar" class="botones" ></td>
+         <td></td>
        </tr>
        <tr>
-         <td>&nbsp;</td>
-         <td>&nbsp;</td>
-         <td>&nbsp;</td>
+         <td><div align="right">Anuladas</div>
+             </td>
+         <td><input name="chkCanceladas" type="checkbox" id="chkCanceladas" onClick="colocarvalor('chkCanceladas','0')" value=<?php echo $chkCanceladas ?>  <?php if($chkCanceladas=="0"){echo ("checked");}?>></td>
+         <td><input type="submit" name="filtrar" value="Filtrar" class="botones" ></td>
        </tr>
-              <!--- Datos necesarios para el header PARTE 3 -->
+              <!--- Datos necesarios para el Ordenamiento header PARTE 3 -->
        <input name="orden" type="hidden" id="orden" value="<?php echo $unOrden; ?>">
        <input name="contador" type="hidden" id="contador" value="<?php echo $contadorinicial ?>">
        <!--- FIN PARTE 3 -->
@@ -227,17 +233,22 @@
             <td width="60" align="center"><?php if ($id!=null) echo "<a href=descargar.php?id=$id><img src=images/download.png title=Descargar /></a>";?></td>
             
             <td width="32" align="center">
+            <div  <?php if($chkCanceladas=="0"){echo ("  style='visibility:hidden'");}?>>
             <?php if($fila["fav_fecha_pago"]==NULL){?>
             <a href="#" onClick="pagarFactura(<?php echo($fila["fav_id"]);?> ,<?php echo($fila["ccc_id"]);?>)">
             <img src="images/pagar_factura.png" title="Registrar pago de factura">
             </a>
             
             <?php }?>
-   
+            </div>
             </td>
             <td width="32" align="center"><a href="ver-alta-factura.php?fav_id=<?php echo($fila["fav_id"]); ?>"><img src="images/detalles.png" alt="editar" title="Ver detalle" width="32" height="32" border="none" /></a></td>            
-            <td><a href="#" onClick="eliminarFactura(<?php echo($fila["fav_id"]);?> )">
-                <img src="images/eliminar.png" alt="eliminar" title="Eliminar Factura" width="32" height="32" border="none" /></a></td>
+            <td> <div  <?php if($chkCanceladas=="0"){echo ("  style='visibility:hidden'");}?>>
+                <a href="#" onClick="eliminarFactura(<?php echo($fila["fav_id"]);?> )"   >
+                <img src="images/eliminar.png" alt="eliminar" title="Eliminar Factura" width="32" height="32" border="none" />
+                </a>
+                </div>
+            </td>
           </tr>
   <?php
             $i++;

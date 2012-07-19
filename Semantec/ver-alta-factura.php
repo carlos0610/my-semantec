@@ -46,10 +46,12 @@
        
        
       //DIOGETE $sql = "select fav_fecha,fav_nota from factura_venta where ord_id = $ord_id";
-       $sql = "select fav_fecha,fav_nota, fav_remito, fav_condicion_vta, fav_vencimiento from factura_venta where fav_id = $fav_id";
+       $sql = "select fav_fecha,fav_nota, fav_remito, fav_condicion_vta, fav_vencimiento, gru_id 
+               from factura_venta 
+               where fav_id = $fav_id";
        $fecha_factura = mysql_query($sql);
        $fila_fecha_factura = mysql_fetch_array($fecha_factura);
-       
+      //busca Codigo de Ordenes asociadas a esta factura
        
        
      //DIEGOTE  $sql = "select * from detalle_factura_venta where fav_id = (select fav_id from factura_venta where ord_id = $ord_id)";
@@ -157,7 +159,7 @@
           </tr>
           <tr>
             <td class="titulo" height="20" ><span id="ocultarParaImpresion">Condiciones de venta:</span></td>
-            <td style="background-color:#cbeef5"  align="left">&<?php echo $fila_fecha_factura["fav_condicion_vta"];?>&nbsp;&nbsp;</td>
+            <td style="background-color:#cbeef5"  align="left"><?php echo $fila_fecha_factura["fav_condicion_vta"];?>&nbsp;&nbsp;</td>
             <td style="background-color:#cbeef5"></td>
             <td  align="rigth" style="background-color:#cbeef5" >
               REMITO N°:<?php echo $fila_fecha_factura["fav_remito"];?>
@@ -182,7 +184,7 @@
     <td></td>
   </tr>
   <tr>
-      <td width="2%">&nbsp;&nbsp;&nbsp;</td>
+   
     <td width="82%" class="titulo"><div id="ocultarParaImpresion" align="center">Descripción</div></td>
     <td width="18%" class="titulo"><div id="ocultarParaImpresion" align="center">Total</div></td>
   </tr>
@@ -195,7 +197,7 @@
   
   
   <tr>
-      <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    
     <td><label>   
         <div align="left">
           <?echo $item["det_fav_descripcion"]; ?>

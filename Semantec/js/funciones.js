@@ -157,6 +157,14 @@ function habilitarFiltros(nombre,gadet){
    
 }
 
+function colocarvalor(nombre,valor){
+  if(document.getElementById(nombre).checked){ 
+     document.getElementById(nombre).value=valor;
+  }else{
+      document.getElementById(nombre).value=1  ;
+  }
+   
+}
 function habilitarFiltrosClienteSucursal(nombre,gadet,sucursal){
   if(document.getElementById(nombre).checked){ 
      document.getElementById(gadet).disabled=false;
