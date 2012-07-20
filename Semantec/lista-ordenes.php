@@ -5,7 +5,7 @@
         include("conexion.php");
          $tamPag=10;
          $action = $_GET["action"];
-         
+         $pagina = $_GET["pagina"];
          //Clientes
          $sql = "SELECT sucursal_id,sucursal,cli_id,cli_nombre,p.nombre as provincia 
            FROM clientes,ubicacion u,provincias p, partidos pa,localidades l
@@ -18,18 +18,28 @@
            AND sucursal_id is null
            ORDER BY cli_nombre,provincia";
         $resultado1 = mysql_query($sql);
-         
-         
+         //borro las session
+            unset($_SESSION["filtrartxt"]);
+             unset(     $_SESSION["prv_id"]);
+            unset(      $_SESSION["est_id"]);
+             unset(     $_SESSION["suc_id"]);
+            unset(      $_SESSION["cli_id"]);
+           unset(       $_SESSION["orden"]);
+           unset(       $_SESSION["pagina"]);
          // estados
         $sql = "SELECT  est_id, est_nombre, est_color FROM estados";
         $resultado3 = mysql_query($sql);
         //proovedores
         $sql = "SELECT  prv_id, prv_nombre FROM proveedores WHERE estado=1";
         $resultado2 = mysql_query($sql);
-        //recibo los criterios y construyo la consulta
+        //recibo los criterios y construyo la consulta si action=1 recupero datos del session
+        
         $elementoBusqueda=$_POST['filtrartxt'];
+        
         $proveedorFiltro=$_POST['prv_id'];
+        
         $estado_id=$_POST['est_id'];
+        
         //filtros Cliente Sucursal PARTE A
         $cli_id = $_POST['suc_id'];
         $cli_idMaestro = $_POST['cli_id'];
@@ -37,9 +47,9 @@
          {$cli_idMaestro="0";}
         $sql = "SELECT cli_id, cli_nombre,sucursal 
                 FROM clientes
-           WHERE sucursal_id =$cli_idMaestro
-           AND clientes.estado = 1
-           ORDER BY cli_nombre,sucursal";
+                WHERE sucursal_id =$cli_idMaestro
+                AND clientes.estado = 1
+                ORDER BY cli_nombre,sucursal";
         $resultadoSucursales = mysql_query($sql);
     
         //ordenes de los headers de las tablas parte 1
@@ -83,33 +93,14 @@ $sql="SELECT ord_id, ord_codigo, ord_descripcion, cli_nombre,c.cli_id, prv_nombr
                     AND o.prv_id = p.prv_id  
                     AND o.estado = 1 ";
                     $sql.=$sqlaux;
-               //     AND ord_codigo like '$elementoBusqueda%' 
-               //     AND o.est_id = $estado_id
-               //     AND o.prv_id = $proveedorFiltro
-               //     ORDER BY o.ord_alta DESC ";
-                    if($action ==  0){
-                        $sql0=$sql;
-                        $_SESSION["sql0"] = $sql0;
-                        
-                    }else{
-                        $sql0=$_SESSION["sql0"];
-                    }
+                    $sql0=$sql;
+
                     
                     include("paginado.php");
                     $sql .= " ORDER BY  $unOrdenCompleta   LIMIT ".$limitInf.",".$tamPag;  
 
-                    
-                    /*Recuperamos el accion para saber si regresa de editar una orden - action = 1*/
-                    
-                    
-                    
-                    if ($action==0){
-                        $_SESSION["sql"] = $sql;
                         $resultado=mysql_query($sql);
-                    }else{
-                        $resultado=mysql_query($_SESSION["sql"]); 
-                        echo $_SESSION["sql"];
-                    }
+
                     
                     
                     $cantidad = mysql_num_rows($resultado);   
@@ -268,8 +259,15 @@ $sql="SELECT ord_id, ord_codigo, ord_descripcion, cli_nombre,c.cli_id, prv_nombr
                   <img src="images/estado.png" alt="estado" style="background-color:<?php echo($fila["est_color"]);?>">
                   <?php echo(utf8_encode($fila["est_nombre"]));?>
             </td>
-            <td width="32"><a href="ver-alta-ordenes.php?ord_id=<?php echo($fila["ord_id"]); ?>&action=0" target="_blank"><img src="images/detalles.png" alt="editar" title="Ver detalle" width="32" height="32" border="none" /></a></td>            
-            <td><a href="form-edit-ordenes.php?ord_id=<?php echo($fila["ord_id"]); ?>&action=0"><img src="images/editar.png" alt="editar" title="Modificar orden" width="32" height="32" border="none" /></a></td>
+            <td width="32">
+                <a href="#" onClick="transferirFiltrosAOtroForm('filtro','ver-alta-ordenes.php?ord_id=<?php echo($fila["ord_id"]); ?>&action=0&origen=listadoOrdenesDirecto&pagina=<?php echo $pagina ?>')">
+                    <img src="images/detalles.png" alt="editar" title="Ver detalle" width="32" height="32" border="none" />
+                </a>
+            </td>            
+            <td><a href="#"    onClick="transferirFiltrosAOtroForm('filtro','form-edit-ordenes.php?ord_id=<?php echo($fila["ord_id"]); ?>&action=0&pagina=<?php echo $pagina ?>')">
+                    <img src="images/editar.png" alt="editar" title="Modificar orden" width="32" height="32" border="none" />
+                </a>
+            </td>
             <td><a href="#" onClick="eliminarOrden(<?php echo($fila["ord_id"]);?>,'<?php echo($fila["ord_codigo"]);?>')">
                 <img src="images/eliminar.png" alt="eliminar" title="Eliminar orden" width="32" height="32" border="none" /></a></td>
           </tr>

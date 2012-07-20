@@ -192,7 +192,12 @@ function agregarOrderBy(campo){
   document.getElementById("contador").value++;
  document.getElementById("filtro").submit();
 }
+//pasar filtro a otro Form
+function transferirFiltrosAOtroForm(nombreFiltro,url){
 
+	document.getElementById(nombreFiltro).action=url;
+	document.getElementById(nombreFiltro).submit();
+}
 function limpiarFrmAltaCliente(){
          document.getElementById("cli_cuit_parteA").value="";
          document.getElementById("cli_cuit_parteB").value="";

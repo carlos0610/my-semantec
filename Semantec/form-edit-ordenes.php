@@ -7,7 +7,26 @@
         
         $ord_id = $_GET["ord_id"];
         $action = $_GET["action"];
-        
+        $pagina = $_GET["pagina"];
+        // obtengo datos del listado de ordenes action =0
+        if($action==0)
+        {
+                  $elementoBusqueda=$_POST['filtrartxt'];
+                  $proveedorFiltro=$_POST['prv_id']; 
+                  $estado_id=$_POST['est_id'];
+                  $cli_id = $_POST['suc_id'];
+                  $cli_idMaestro = $_POST['cli_id'];  
+                  $unOrden=$_POST['orden'];
+                  $contador=$_POST['contador'];
+                  //pruebas  con session 
+                  $_SESSION["filtrartxt"]=$elementoBusqueda;
+                  $_SESSION["prv_id"]=$proveedorFiltro;
+                  $_SESSION["est_id"]=$estado_id;
+                  $_SESSION["suc_id"]=$cli_id;
+                  $_SESSION["cli_id"]=$cli_idMaestro;
+                  $_SESSION["orden"]=$unOrden;
+                  $_SESSION["pagina"]=$pagina;
+        }
         
         $sql0 = "SELECT ord_codigo, ord_descripcion, o.cli_id,c.cli_nombre,c.sucursal, prv_id, est_id, ord_alta, ord_plazo,ord_plazo_proveedor, ord_costo, ord_venta 
                     FROM ordenes o,clientes c 
@@ -80,7 +99,16 @@
    <div id="contenedor" style="height:auto;">
 
       <h2>Panel de control</h2>
-
+      <!--datos de los filtro de listado de ordenes-->
+      <form id="filtro" name="filtro" action=''  method="POST">
+                          <input type="hidden" value="<?php echo($elementoBusqueda); ?>" name="filtrartxt" id="filtrartxt" />  
+          <input type="hidden" value="<?php echo($proveedorFiltro); ?>" name="prv_id" id="prv_id" />  
+          <input type="hidden" value="<?php echo($estado_id); ?>" name="est_id" id="est_id" />  
+          <input type="hidden" value="<?php echo($cli_id); ?>" name="suc_id" id="suc_id" />  
+          <input type="hidden" value="<?php echo($cli_idMaestro); ?>" name="cli_id" id="cli_id" /> 
+          <input type="hidden" value="<?php echo($unOrden); ?>" name="orden" id="orden" /> 
+          <input type="hidden" value="<?php echo($contador); ?>" name="contador" id="contador" /> 
+      </form>
       
           
       
@@ -113,9 +141,21 @@
           
         
           <tr>
-            <form action="edit-ordenes.php" method="post" id="frm" >
-              <input type="hidden" value="<?php echo($fila0["ord_codigo"]); ?>" class="campos" style="text-align:right" id="ord_codigo" name="ord_codigo" min="0" required/>  
-             <input type="hidden" value="<?php echo($est_id); ?>" name="est_id" id="est_id" />
+            <form action="edit-ordenes.php?pagina=<?php echo $pagina ?>&action=<?php echo $action?>" method="post" id="frm" >
+            <!--Dato de filtros transferidos al ver cuando hace modificar--> 
+          <input type="hidden" value="<?php echo($elementoBusqueda); ?>" name="filtrartxt" id="filtrartxt" />  
+          <input type="hidden" value="<?php echo($proveedorFiltro); ?>" name="prv_id" id="prv_id" />  
+          <input type="hidden" value="<?php echo($estado_id); ?>" name="est_id" id="est_id" />  
+          <input type="hidden" value="<?php echo($cli_id); ?>" name="suc_id" id="suc_id" />  
+          <input type="hidden" value="<?php echo($cli_idMaestro); ?>" name="cli_id" id="cli_id" /> 
+          <input type="hidden" value="<?php echo($unOrden); ?>" name="orden" id="orden" /> 
+          <input type="hidden" value="<?php echo($contador); ?>" name="contador" id="contador" /> 
+                
+                
+                
+                
+                <input type="hidden" value="<?php echo($fila0["ord_codigo"]); ?>" class="campos" style="text-align:right" id="ord_codigo" name="ord_codigo" min="0" required/>  
+             <input type="hidden" value="<?php echo($est_id); ?>" name="est_idEdit" id="est_idEdit" />
              <input type="hidden" value="<?php echo($fila0["ord_id"]); ?>" name="ord_id2" >
             <td>Descripci&oacute;n de Orden</td>
             <td><textarea class="campos" id="ord_descripcion" name="ord_descripcion" rows="9" required><?php echo(utf8_encode($fila0["ord_descripcion"])); ?></textarea></td>
@@ -131,7 +171,7 @@
           <tr>
             <td>Proveedor</td>
             <td>
-                <select name="prv_id" id="prv_id" class="campos" onChange="return VerificarProveedor();">
+                <select name="prv_idEdit" id="prv_idEdit" class="campos" onChange="return VerificarProveedor();">
     <?php
           while($fila2 = mysql_fetch_array($resultado2)){
     ?>
@@ -171,7 +211,8 @@
             <td>&nbsp;</td>
             <td>
                 <?php if ($action == 0){?>
-                <a href="lista-ordenes.php?action=1"><input type="button" value="Ir al Listado" class="botones" /></a> &nbsp; &nbsp; 
+                <a href="#" onClick="transferirFiltrosAOtroForm('filtro','lista-ordenes.php?pagina=<?php echo $pagina ?>')">
+                    <input type="button" value="Ir al Listado" class="botones" /></a> &nbsp; &nbsp; 
                     <?php } else {?>
                 <a href="lista-req-ordenes.php"><input type="button" value="Ir al Listado" class="botones" /></a> &nbsp; &nbsp;
                 <?php } ?>
