@@ -119,6 +119,16 @@
        
        
        $sql = "SELECT * FROM tabla_temp";
+       
+       /*Filtro para ver ordenes con saldo pendiente */
+       $filtro = $_POST["comboFiltro"];
+       switch($filtro){
+         case 1:    $sql.=" ";break;
+         case 2:    $sql.=" WHERE saldo_a <> 0";break;
+         case 3:    $sql.=" WHERE saldo_a = 0";break; 
+             
+        }
+        
        $resultado = mysql_query($sql);
        
      
@@ -166,8 +176,7 @@
        
        $sql = "DROP TABLE tabla_temp2;";
        mysql_query($sql);
-        
-        
+       
        mysql_close();
         
         
@@ -242,6 +251,9 @@
           </tr>
      </table>
    </div>
+   <!--end datos_cliente-->
+   
+   <!-- adelanto -->
    <div id="adelanto">
      <table width="100%" border="0">
        <tr>
@@ -255,7 +267,6 @@
                    <?php while($filita = mysql_fetch_array($resultado)){ ?>
                    <option value="<?php echo $filita['ord_id']?>"><?php echo $filita['ord_codigo']?></option>
                    <?php } mysql_data_seek($resultado, 0) ?>
-                   
            </select>
          </label></td>
          <td width="16%">Adelanto: 
@@ -265,13 +276,47 @@
          <td width="62%">Descripción: 
            <label>
            <input name="txtDescripcion" type="text" class="campos" id="txtDescripcion" value="Ingrese una descripción">
-           <input type="button" name="btnEmitir" id="btnEmitir" value="Emitir" onclick="emitirAdelanto()">
+           <input type="button" name="btnEmitir" id="btnEmitir" value="Emitir" onClick="emitirAdelanto()">
          </label></td>
+       </tr>
+       <tr>
+         <td>&nbsp;</td>
+         <td>&nbsp;</td>
+         <td>&nbsp;</td>
+         <td>&nbsp;</td>
        </tr>
      </table>
     </div>
+   <!-- div adelantos -->
    
-   <!--end datos_cliente-->
+   <div id="filtros">
+       <form id="filtro" name="filtro" action="ver-corriente-proveedor.php" method="POST">
+   <table width="100%" border="0">
+   <tr>
+     <td colspan="4"><h2>Filtrar</h2></td>
+   <tr>
+   <tr>
+     <td width="8%">&nbsp;</td>
+     <td width="19%"><label>
+       <select name="comboFiltro" id="comboFiltro">
+           <option value="0">Seleccione </option>
+         <option value="1" <?php if ($filtro==1) echo "selected"?> >Todos</option>
+         <option value="2" <?php if ($filtro==2) echo "selected"?>>Pendientes de pago</option>
+         <option value="3" <?php if ($filtro==3) echo "selected"?>>Canceladas</option>
+       </select>
+     </label></td>
+     <td width="33%"><label>
+     <input type="submit" name="filtrar" value="Filtrar" class="botones" onclick="return validaSeleccione('comboFiltro', 'Seleccione un filtro')">
+     </label></td>
+     <td width="40%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td colspan="2">&nbsp;</td>
+     <td colspan="2">&nbsp;</td>
+   </tr>
+   </table>
+           </form>
+   </div>
    
    
    <div id="contenedor" style="height:auto;">
@@ -297,7 +342,7 @@
           while($fila = mysql_fetch_array($resultado)){
   ?>
           <tr class="lista" bgcolor="<?php echo($colores[$i]);?>">
-                <td><a href="ver-alta-ordenes.php?ord_id=<?php echo($fila["ord_id"]);?>&action=0" target="_blank"><?php echo($fila["ord_codigo"]);?></a></td>
+                <td><a href="lista-req-ordenes.php?orden=<?php echo($fila["ord_codigo"]);?>&action=1" target="_blank"><?php echo($fila["ord_codigo"]);?></a></td>
                 <td><a href="ver-alta-clientes.php?cli_id=<?php echo($fila["cli_id"]);?>&action=0"><?php echo(utf8_encode($fila["cli_nombre"]));?> (<?php echo(utf8_encode($fila["provincia"]));?>/<?php echo(utf8_encode($fila["sucursal"]));?>)</a></td>
                 <td><?php echo(utf8_encode($fila["ord_descripcion"]));?></td>
                 <td><?php echo $fila["costo"];?></td>

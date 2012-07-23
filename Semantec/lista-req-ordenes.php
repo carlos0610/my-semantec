@@ -60,6 +60,14 @@
                 {$sqlaux.=" AND c.sucursal_id = $cli_idMaestro ";}
             else
                 {$sqlaux.=" AND o.cli_id = $cli_id ";}
+                
+                /* Si viene desde la cuenta corriente */
+                $action = $_GET["action"];
+                if ($action == 1){
+                    $codigo = $_GET["orden"];
+                    $sqlaux=" AND ord_codigo like '$codigo'";
+                }
+                
                 //ordenamiento parte 2
         if($unOrden=="")
              {$unOrden=" o.ord_alta ";}

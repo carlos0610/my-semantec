@@ -267,7 +267,7 @@ function ActualizarTotal(cantidadDescripciones,factura){
             {          
                alert("La factura supera el total aceptado");
                document.getElementById("btnConfirma").style.visibility = "hidden";}
-           else{document.getElementById("btnConfirma").style.visibility = "hidden"; }
+           else{document.getElementById("btnConfirma").style.visibility = "hidden";}
         }
     } 
     // FACTURA COMPRA
@@ -556,4 +556,15 @@ function eliminarItem(id,nombre,url){
     {
         window.location=url+id;   
     }
+}
+
+function validaSeleccione(id,mensaje){
+    //alert("ENTROOOO");
+    if (document.getElementById(id).selectedIndex == 0){
+            alert (mensaje);
+            return false;
+        }
+        
+        return true;
+  
 }

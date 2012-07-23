@@ -107,7 +107,7 @@ $titulo = "Alerta de ordenes con vencimiento.";
   <script>
           function transferirFiltros(pagina)
 {      
-	document.getElementById("filtro").action="lista-facturas.php?pagina="+pagina;
+	document.getElementById("filtro").action="lista-alertas-finalizado.php?pagina="+pagina;
 	document.getElementById("filtro").submit();
 }
   </script>     
@@ -180,7 +180,7 @@ $titulo = "Alerta de ordenes con vencimiento.";
     </form>
     </div>
     
-    
+<form id="filtro" name="filtro" action="lista-alertas-finalizado.php" method="POST">    
 <table class="listadosALERTA" cellpadding="3">
           <tr class="titulo">
             <td width="61">C&oacute;digo</td>
@@ -232,7 +232,7 @@ $titulo = "Alerta de ordenes con vencimiento.";
             ?></td>
           </tr>
       </table>
-    
+</form>
     <?php } else { echo "<img src=images/ok.png> SIN NOVEDADES";}?>
     
     
