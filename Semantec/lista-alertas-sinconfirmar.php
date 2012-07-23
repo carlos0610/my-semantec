@@ -112,7 +112,7 @@ $titulo = "Alerta de ordenes sin enviar a proveedor.";
   <body>
       <div id="main" >
 <div id="contenedor" style="height:auto;">
-  <?php  if ($cantidad>0) {?>
+  
     <div id="mensaje" style="height:auto;">
         <form id="filtro" name="filtro" action="lista-alertas-sinconfirmar.php" method="POST">
       <table width="100%" border="0">
@@ -176,7 +176,7 @@ $titulo = "Alerta de ordenes sin enviar a proveedor.";
     </table>
       </form>
   </div>
-    
+ <?php  if ($cantidad>0) {?>   
     <form>
 <table class="listadosALERTA" cellpadding="2">
           <tr class="titulo">
@@ -230,7 +230,7 @@ $titulo = "Alerta de ordenes sin enviar a proveedor.";
           </tr>
       </table>
     </form>
-    <?php } else { echo "<img src=images/ok.png> SIN NOVEDADES";}?>
+    <?php } else { echo "<div align='center'> <img src=images/ok.png> SIN NOVEDADES </div>";}?>
     
     
     

@@ -62,10 +62,10 @@ $titulo = "Alerta de ordenes con vencimiento.";
                 
                  $sql0.= $sqlaux;  
         $sql0 .=    " ORDER BY o.ord_alta DESC";
-        $alerta_plazo_proveedor = mysql_query($sql0);
         
         
-        $tamPag=50;
+        
+        $tamPag=10;
         include("paginado.php");
         $sql = "SELECT ord_id, u.usu_login,o.prv_id,ord_codigo, ord_descripcion, o.cli_id,c.sucursal,cli_nombre, prv_nombre, est_nombre, est_color, ord_alta, ord_plazo,ord_plazo_proveedor, ord_costo, ord_venta
                     FROM ordenes o, clientes c, estados e, proveedores p,usuarios u
@@ -89,6 +89,7 @@ $titulo = "Alerta de ordenes con vencimiento.";
         
         $sql .=    " ORDER BY o.ord_alta DESC";
         $sql .= " LIMIT ".$limitInf.",".$tamPag;
+        $alerta_plazo_proveedor = mysql_query($sql);
         $resultado = mysql_query($sql);
         $cantidad = mysql_num_rows($resultado);
 
@@ -107,7 +108,7 @@ $titulo = "Alerta de ordenes con vencimiento.";
   <script>
           function transferirFiltros(pagina)
 {      
-	document.getElementById("filtro").action="lista-facturas.php?pagina="+pagina;
+	document.getElementById("filtro").action="lista-alertas.php?pagina="+pagina;
 	document.getElementById("filtro").submit();
 }
   </script>     
@@ -115,7 +116,7 @@ $titulo = "Alerta de ordenes con vencimiento.";
   <body>
       <div id="main" >
 <div id="contenedor" style="height:auto;">
-  <?php  if ($cantidad>0) {?>
+  
     <div id="mensaje" style="height:auto;">
   <form id="filtro" name="filtro" action="lista-alertas.php" method="POST">
       <table width="100%" border="0">
@@ -168,17 +169,20 @@ $titulo = "Alerta de ordenes con vencimiento.";
           <option value="<?php echo($fila2["prv_id"]); ?>"<?php if($proveedorFiltro==$fila2["prv_id"]){echo(" selected=\"selected\"");} ?>><?php echo(utf8_encode($fila2["prv_nombre"])); ?></option>
           <?php }?>
         </select>
-          <input name="chkProovedor" type="checkbox" id="chkProovedor" value="si" onClick="habilitarFiltros('chkProovedor','prv_id')"  <?php if($proveedorFiltro!=""){echo ("checked");}?>></td>
+          <input name="chkProovedor" type="checkbox" id="chkProovedor" value="si" onClick="habilitarFiltros('chkProovedor','prv_id')"  <?php if($proveedorFiltro!=""){echo ("checked");}?>>
+          
+        </td>
+      
       </tr>
       <tr>
         <td>&nbsp;</td>
-        <td>&nbsp;</td>
+        <td><input type="submit" name="filtrar" value="Filtrar" class="botones" ></td>
       </tr>
     </table>
   </form>
     </div>
     
-    
+  <?php  if ($cantidad>0) {?>  
 <table class="listadosALERTA" cellpadding="3">
           <tr class="titulo">
             <td width="70">C&oacute;digo</td>
@@ -231,7 +235,7 @@ $titulo = "Alerta de ordenes con vencimiento.";
           </tr>
       </table>
     
-    <?php } else { echo "<img src=images/ok.png> SIN NOVEDADES";}?>
+    <?php } else { echo "<div align='center'> <img src=images/ok.png> SIN NOVEDADES </div>";}?>
     
     
     

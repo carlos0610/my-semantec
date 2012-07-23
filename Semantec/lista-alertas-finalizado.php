@@ -57,12 +57,11 @@ $titulo = "Alerta de ordenes con vencimiento.";
          
        if($proveedorFiltro!="")
         {$sqlaux.=" AND o.prv_id = $proveedorFiltro ";}         
-                
-                
+                               
                  $sql0.= $sqlaux;       
        
         $sql0 .=" ORDER BY o.ord_alta DESC";
-        $alerta_plazo_proveedor = mysql_query($sql0);
+        
         
         
         $tamPag=10;
@@ -90,6 +89,7 @@ $titulo = "Alerta de ordenes con vencimiento.";
         $sql .=" ORDER BY o.ord_alta DESC";
         $sql .= " LIMIT ".$limitInf.",".$tamPag;
         $resultado = mysql_query($sql);
+        $alerta_plazo_proveedor = mysql_query($sql);
         $cantidad = mysql_num_rows($resultado);
 
         $i = 0;
@@ -115,9 +115,9 @@ $titulo = "Alerta de ordenes con vencimiento.";
   <body>
        <div id="main" >
 <div id="contenedor" style="height:auto;">
-  <?php  if ($cantidad>0) {?>
+  
     <div id="mensaje" style="height:auto;">
-        <form id="filtro" name="filtro" action="lista-alertas-finalizado.php" method="POST">
+   <form id="filtro" name="filtro" action="lista-alertas-finalizado.php" method="POST">
       <table width="100%" border="0">
       <tr>
         <td width="18%"><div align="right"><img src="images/warning.png" width="48" height="48"></div></td>
@@ -179,7 +179,7 @@ $titulo = "Alerta de ordenes con vencimiento.";
     </table>
     </form>
     </div>
-    
+ <?php  if ($cantidad>0) {?>   
 <form id="filtro" name="filtro" action="lista-alertas-finalizado.php" method="POST">    
 <table class="listadosALERTA" cellpadding="3">
           <tr class="titulo">
@@ -233,7 +233,7 @@ $titulo = "Alerta de ordenes con vencimiento.";
           </tr>
       </table>
 </form>
-    <?php } else { echo "<img src=images/ok.png> SIN NOVEDADES";}?>
+    <?php } else { echo " <div align='center'> <img src=images/ok.png> SIN NOVEDADES </div> ";}?>
     
     
     

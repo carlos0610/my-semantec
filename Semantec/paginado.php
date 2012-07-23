@@ -2,7 +2,7 @@
  /* INICIO CALCULO PAGINADO */  ###############################################################################
     $result=mysql_query($sql0);
     $cant_registros=mysql_num_rows($result);
-
+    
 //pagina actual si no esta definida y l&iacute;mites
     if(!isset($_GET["pagina"]))
     {
@@ -10,7 +10,7 @@
        $inicio=1;
        $final=$tamPag;
     }else{
-       $pagina = $_GET["pagina"];
+       $pagina = $_GET["pagina"]; 
     }
     //c�lculo del l&iacute;mite inferior
     $limitInf=($pagina-1)*$tamPag;
