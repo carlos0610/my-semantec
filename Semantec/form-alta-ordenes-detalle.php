@@ -141,8 +141,9 @@
           <tr>
             <td>&nbsp;</td>
             <td>
-                <a href="form-edit-ordenes.php?ord_id=<?php echo($orden_id)?>">
-                <input type="button" value="  Volver   " class="botones" /></a> &nbsp; &nbsp;
+                <a href="form-edit-ordenes.php?ord_id=<?php echo($orden_id)?>&action=2">
+                <input type="button" value="  Volver   " class="botones" />
+                </a> &nbsp; &nbsp;
                 <input type="reset"  value="Restablecer" class="botones" /> &nbsp; &nbsp; 
                 <input type="button" value="  Guardar  " class="botones" id="guardarDetalle" onClick="return validarAdelanto(<?php echo $ord_costo ?>)"/>
                 <input type="hidden" name="MAX_FILE_SIZE" value="200000000000">            </td>

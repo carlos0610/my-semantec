@@ -8,6 +8,8 @@
         $ord_id = $_GET["ord_id"];
         $action = $_GET["action"];
         $pagina = $_GET["pagina"];
+        if($pagina=='')
+        {$pagina=$_SESSION["pagina"];}
         // obtengo datos del listado de ordenes action =0
         if($action==0)
         {
@@ -27,7 +29,17 @@
                   $_SESSION["orden"]=$unOrden;
                   $_SESSION["pagina"]=$pagina;
         }
-        
+                if($action==2) // vuelve del edit ordenes detalle le avisa q cargue de session
+        {                      // caso q no modifico nada en detalle
+                  $elementoBusqueda=$_SESSION['filtrartxt'];
+                  $proveedorFiltro=$_SESSION['prv_id']; 
+                  $estado_id=$_SESSION['est_id'];
+                  $cli_id = $_SESSION['suc_id'];
+                  $cli_idMaestro = $_SESSION['cli_id'];  
+                  $unOrden=$_SESSION['orden'];
+                  $contador=$_SESSION['contador'];
+
+        }
         $sql0 = "SELECT ord_codigo, ord_descripcion, o.cli_id,c.cli_nombre,c.sucursal, prv_id, est_id, ord_alta, ord_plazo,ord_plazo_proveedor, ord_costo, ord_venta 
                     FROM ordenes o,clientes c 
                     WHERE ord_id = $ord_id
@@ -210,7 +222,7 @@
           <tr>
             <td>&nbsp;</td>
             <td>
-                <?php if ($action == 0){?>
+                <?php if (($action == 0)or($action==2)){?>
                 <a href="#" onClick="transferirFiltrosAOtroForm('filtro','lista-ordenes.php?pagina=<?php echo $pagina ?>')">
                     <input type="button" value="Ir al Listado" class="botones" /></a> &nbsp; &nbsp; 
                     <?php } else {?>
