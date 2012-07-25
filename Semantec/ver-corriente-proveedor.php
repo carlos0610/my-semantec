@@ -46,6 +46,7 @@
 					(
                                                 ord_id int NOT NULL,
                                                 ord_codigo varchar(30)  not null,
+                                                ord_det_fecha datetime  not null,
                                                 cli_id     int        not null,
 					    	cli_nombre varchar(100) not null,
                                                 sucursal   varchar(100) ,
@@ -67,7 +68,7 @@
         /* INSERTAMOS EN LA TABLA TEMPORAL EL RESULTADO DE LA CONSULTA QUE AVERIGUA LOS ADELANTOS VS ORD_COSTO */
         
         $sql = "INSERT INTO tabla_temp	      
-		SELECT o.ord_id,ord_codigo,c.cli_id,c.cli_nombre,c.sucursal,p.nombre as provincia,l.nombre as localidad,o.ord_descripcion,o.est_id,sum(od.ord_det_monto) as adelantos,round (o.ord_costo,2) as presupuesto ,o.ord_costo - sum(od.ord_det_monto) as Saldo,0,round (o.ord_costo,2) as presupuesto 
+		SELECT o.ord_id,ord_codigo,ord_det_fecha,c.cli_id,c.cli_nombre,c.sucursal,p.nombre as provincia,l.nombre as localidad,o.ord_descripcion,o.est_id,sum(od.ord_det_monto) as adelantos,round (o.ord_costo,2) as presupuesto ,o.ord_costo - sum(od.ord_det_monto) as Saldo,0,round (o.ord_costo,2) as presupuesto 
                 FROM ordenes o, ordenes_detalle od,clientes c,ubicacion u,provincias p,localidades l
                 WHERE 
                 o.ord_id IN (select ord_id from ordenes where prv_id = $prv_id AND estado = 1)
@@ -129,6 +130,14 @@
              
         }
         
+        if (isset($_POST["filtrar2"])){
+            $desde = $_POST["fecha_inicio"];
+            $hasta = $_POST["fecha_fin"];
+            $desde = gfecha($desde);
+            $hasta = gfecha($hasta);
+            $sql.=" WHERE est_id = 11 AND ord_det_fecha BETWEEN convert('$desde',datetime) AND convert('$hasta 23:59:59',datetime)";
+        }
+       
        $resultado = mysql_query($sql);
        
      
@@ -157,7 +166,7 @@
         $resultado = mysql_query($sql);
         
         /*Hacemos un SUM para calcular el total de la deuda*/
-        $total = mysql_query("SELECT sum(saldo_c) as total_compra,sum(saldo_a) as total_adelanto from tabla_temp;");
+        $total = mysql_query("SELECT sum(saldo_c) as total_compra,sum(saldo_a) as total_adelanto,sum(costo) as total from tabla_temp;");
         $totalDeuda = mysql_fetch_array($total);
         
         
@@ -193,7 +202,32 @@
 	document.getElementById("filtro").action="ver-corriente-proveedor.php?pagina="+pagina;
 	document.getElementById("filtro").submit();
 }
-  </script>      
+  </script>
+  <link rel="stylesheet" type="text/css" href="css/jquery.datepick.css" />
+  <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+  <script type="text/javascript" src="js/jquery.datepick.js"></script>
+  <script type="text/javascript" src="js/jquery.datepick-es.js"></script>
+  <script type="text/javascript">
+  $(function() {
+     
+    $('#fecha_inicio').datepick();
+        /* Obtenemos mes y a;o actual */
+                var fecha = new Date();
+                var mes  = fecha.getMonth()+1;
+                var anho = fecha.getFullYear();
+        /*Armamos la fecha para setear el primer dia del mes por defecto como -fecha de inicio- */
+                var primerDiaDelMesActual =("01/"+mes+"/"+anho);
+      
+      $("#fecha_inicio").datepick("setDate" , primerDiaDelMesActual);
+  })
+  
+  $(function() {
+      $('#fecha_fin').datepick();
+  }); 
+ </script>
+  
+  
+  
   </head>
   <body>
 	
@@ -293,8 +327,7 @@
        <form id="filtro" name="filtro" action="ver-corriente-proveedor.php" method="POST">
    <table width="100%" border="0">
    <tr>
-     <td colspan="4"><h2>Filtrar</h2></td>
-   <tr>
+     <td colspan="5"><h2>Filtrar por estado de orden</h2></td>
    <tr>
      <td width="8%">&nbsp;</td>
      <td width="19%"><label>
@@ -305,17 +338,27 @@
          <option value="3" <?php if ($filtro==3) echo "selected"?>>Canceladas</option>
        </select>
      </label></td>
-     <td width="33%"><label>
-     <input type="submit" name="filtrar" value="Filtrar" class="botones" onclick="return validaSeleccione('comboFiltro', 'Seleccione un filtro')">
+     <td colspan="2"><label>
+     <input type="submit" name="filtrar" id="filtrar" value="Filtrar" class="botones" onClick="return validaSeleccione('comboFiltro', 'Seleccione un filtro')">
      </label></td>
      <td width="40%">&nbsp;</td>
    </tr>
    <tr>
-     <td colspan="2">&nbsp;</td>
-     <td colspan="2">&nbsp;</td>
+     <td colspan="5"><h2>Filtrar órdenes finalizadas (pendiente de facturación)</h2></td>
+     </tr>
+   <tr>
+     <td>Desde</td>
+     <td><label>
+       <input type="text" name="fecha_inicio" id="fecha_inicio">
+     </label></td>
+     <td width="9%">Hasta</td>
+     <td width="24%"><label>
+     <input type="text" name="fecha_fin" id="fecha_fin">
+     </label></td>
+     <td><input type="submit" name="filtrar2" id="filtrar2" value="Filtrar" class="botones" onClick=""></td>
    </tr>
    </table>
-           </form>
+     </form>
    </div>
    
    
@@ -362,7 +405,7 @@
           } // FIN_WHILE
           
           echo "<tr><td colspan=8 align=right>Total deuda con proveedor: <b style=color:red>".$totalDeuda['total_adelanto']."</b> pesos -- Total deuda del proveedor: <b style=color:blue>".$totalDeuda['total_compra']."</b> pesos</td></tr>";
-          
+          echo "<tr><td colspan=8 align=right>Monto total de órdenes : <b>".$totalDeuda['total']."</b> pesos";
   ?>
           <tr>
             <td colspan="8" class="pie_lista"><?php 
