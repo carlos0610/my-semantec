@@ -68,6 +68,14 @@
                     $sqlaux=" AND ord_codigo like '$codigo'";
                 }
                 
+                /* Si viene desde delete-adelantos */
+                if ($action == 2){
+                    $codigo = $_GET["orden"];
+                    $sqlaux=" AND ord_id = $codigo";
+                }
+                
+                
+                
                 //ordenamiento parte 2
         if($unOrden=="")
              {$unOrden=" o.ord_alta ";}
@@ -138,7 +146,8 @@
   </script>
   <script type="text/javascript" src="js/select_dependientes_cliente_sucursal.js"></script>
   </head>
-  <body>
+  
+  <body  <?php if($action == 2){?>onload="confirmacionAdelanto()"<? } ?>>
 	
   <!-- start main --><!-- start main --><!-- start main --><!-- start main --><!-- start main -->
   <div id="main">
@@ -162,7 +171,7 @@
    <div id="contenedor" style="height:auto;">
       <h2>Panel de control - Listado de Órdenes de Servicio</h2>
       <div id="buscador" >     
-<form id="filtro" name="filtro" action="lista-req-ordenes.php" method="POST">
+    <form id="filtro" name="filtro" action="lista-req-ordenes.php" method="POST" >
      <table width="100%" border="0">
        <tr>
          <td width="15%">&nbsp;</td>
@@ -227,7 +236,7 @@
        </tr>
        <tr>
          <td><div align="right">N° Orden</div></td>
-         <td><input type="text" name="filtrartxt" class="campos" value="<?php echo $elementoBusqueda; ?>"  style="text-align:right" ></td>
+         <td><input type="text" name="filtrartxt" class="campos" value="<?php echo $elementoBusqueda; ?>"  style="text-align:right;" ></td>
          <td><input type="submit" name="filtrar" value="Filtrar" class="botones" ></td>
        </tr>
         <!--- Datos necesarios para el header PARTE 3 -->
@@ -286,7 +295,9 @@
                       <td width="100">Estado</td>
                       <td width="100">Adelanto</td>
                       <td width="100">Usuario </td>
-                      <td witdh="100">Archivo</td>
+                      <td width="100">Archivo</td>
+                      <td width="100">Cancelar</td>
+                      
                     </tr>
               <?php
                 $orden = $fila["ord_id"];
@@ -307,8 +318,11 @@
                       <td width="100"><?php echo(utf8_encode($fila_req["ord_det_monto"])); ?></td>
                       <td width="100"><?php echo(utf8_encode($fila_req["usu_nombre"])); ?></td>
                       <?php //echo(utf8_encode($fila_req["files_id"]));
-                         $id = $fila_req["files_id"] ?>
-                      <td width="100"><?php if ($id!=null) echo "<a href=descargar.php?id=$id><img src=images/download.png /></a>";?></td>
+                         $id = $fila_req["files_id"]; 
+                         $ord_id = $fila["ord_id"];
+                         $ord_det_id = $fila_req["ord_det_id"];?>
+                      <td width="100" style="text-align: center;"><?php if ($id!=null) echo "<a href=descargar.php?id=$id><img src=images/download.png /></a>";?></td>
+                      <td width="100" style="text-align: center;"><?php if($fila_req["ord_det_monto"]>0){?><a href="#"><img src="images/adelanto_cancel.png" alt="Cancelar adelanto" onclick="cancelarAdelanto('<?echo $ord_id?>', '<?echo $ord_det_id?>')" /></a><?}?></td>
                     </tr>
 
               <?php

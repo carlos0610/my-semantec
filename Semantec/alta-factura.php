@@ -2,7 +2,7 @@
     include ("funciones.php");
     include ("conexion.php");
 
-
+    /* FALTA TRANSACCION */
     $idOrden = $_GET["ord_id"];
     $items   = $_GET["items"];
     $nota    = $_POST["txtNota"];

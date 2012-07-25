@@ -64,6 +64,22 @@ function pagarFactura(id,cuenta){
     }
 }
 
+function cancelarAdelanto(id,detalle_id){
+    
+    if(confirm('¿Confirma la anulación del adelanto : '+id+'? ')==true)
+    {
+        window.location="delete-adelantos.php?ord_det_id="+detalle_id;
+        
+    }
+}
+
+function confirmacionAdelanto(){
+    alert('El adelanto ha sido cancelado correctamente');
+    
+}
+
+
+
 function emitirAdelanto(){
     var orden       = document.getElementById("comboOrdenes").value;
     var index = document.getElementById("comboOrdenes").selectedIndex;
