@@ -17,12 +17,19 @@
            AND sucursal_id is null
            ORDER BY cli_nombre,provincia";
         $resultado1 = mysql_query($sql);
-  
+           //borro las session
+            unset($_SESSION["filtrartxt"]);
+             unset(     $_SESSION["prv_id"]);
+            unset(      $_SESSION["est_id"]);
+             unset(     $_SESSION["suc_id"]);
+            unset(      $_SESSION["cli_id"]);
+           unset(       $_SESSION["orden"]);
+           unset(       $_SESSION["pagina"]);
                  // estados
         $sql = "SELECT  est_id, est_nombre, est_color FROM estados";
         $resultado3 = mysql_query($sql);
                 //proovedores
-        $sql = "SELECT  prv_id, prv_nombre FROM proveedores WHERE estado=1";
+        $sql = "SELECT  prv_id, prv_nombre FROM proveedores WHERE estado=1 ORDER BY prv_nombre ASC ";
         $resultado2 = mysql_query($sql);
                 //recibo los criterios y construyo la consulta
         $elementoBusqueda=$_POST['filtrartxt'];
@@ -267,7 +274,8 @@
              $numeroDeTablaDesplegable++;   
   ?>
           <tr class="lista" bgcolor="<?php echo($colores[$i]);?>">
-              <td><a href=form-edit-ordenes.php?ord_id=<?php echo($fila["ord_id"]);?>&action=1 target="_blank"><?php echo($fila["ord_codigo"]);?></a></td>
+              <td><a href="#"    onClick="transferirFiltrosAOtroForm('filtro','form-edit-ordenes.php?ord_id=<?php echo($fila["ord_id"]); ?>&action=1&pagina=<?php echo $pagina ?>')">
+                  <?php echo($fila["ord_codigo"]);?></a></td>
             <td><?php echo(utf8_encode($fila["cli_nombre"]));?>(<?php echo(utf8_encode($fila["sucursal"]))?>)</td>
             <td><?php echo(tfecha($fila["ord_alta"]));?></td>
             <td><?php echo(nl2br(utf8_encode($fila["ord_descripcion"])));?></td>

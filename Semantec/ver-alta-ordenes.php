@@ -2,15 +2,17 @@
     include("validar.php");
         $pagina = $_GET["pagina"];
         $origen = $_GET["origen"];
+        $action = $_GET["action"]; 
         if($origen=='listadoOrdenes'){ // si viene de modificar un dato
             // datos de filtro de listado
                   $elementoBusqueda=$_GET['filtrartxt']; 
-                  $proveedorFiltro=$_GET['prv_id']; 
-                  $estado_id=$_GET['est_id'];
+                 $_SESSION["prv_id"]= $proveedorFiltro=$_GET['prv_id']; 
+                  $_SESSION["est_id"]= $estado_id=$_GET['est_id'];
                   $cli_id = $_GET['suc_id'];
                   $cli_idMaestro = $_GET['cli_id'];  
                   $unOrden=$_GET['orden'];
                   $contador=$_GET['contador'];
+                  
         }
         else // si es listadoOrdenesDirecto viene directo del inco ver de listado ordenes
         { if($origen=='listadoOrdenesDirecto')
@@ -23,22 +25,33 @@
                   $cli_idMaestro = $_POST['cli_id'];  
                   $unOrden=$_POST['orden'];
                   $contador=$_POST['contador'];
+                  //pruebas  con session 
+                  $_SESSION["filtrartxt"]=$elementoBusqueda;
+                  $_SESSION["prv_id"]=$proveedorFiltro;
+                  $_SESSION["est_id"]=$estado_id; 
+                  $_SESSION["suc_id"]=$cli_id;
+                  $_SESSION["cli_id"]=$cli_idMaestro;
+                  $_SESSION["orden"]=$unOrden;
+                  $_SESSION["pagina"]=$pagina;
+                  $_SESSION["action"]=$action;
             }else  // pruebo las variables session aplicadas en cambio de estado
             {
                   $elementoBusqueda=$_SESSION['filtrartxt']; 
-                  $proveedorFiltro=$_SESSION['prv_id']; 
-                  $estado_id=$_SESSION['est_id'];
+                  $proveedorFiltro=$_GET['prv_id']; 
+                  $estado_id=$_GET['est_id'];
                   $cli_id = $_SESSION['suc_id'];
                   $cli_idMaestro = $_SESSION['cli_id'];  
                   $unOrden=$_SESSION['orden'];
                   $contador=$_SESSION['contador'];
-                  $origen='listadoOrdenes';
                   $pagina=$_SESSION['pagina'];
+                  $actionOrigen = $_SESSION["action"];  
+                  if($actionOrigen==0)
+                     {$origen='listadoOrdenes';}
+                  
             }
         }
-            
+          
         // fin 
-    $action = $_GET["action"]; // 0
     if($action == 0){
           $titulo = "Datos de Orden de Servicio";
           $ord_id = $_GET["ord_id"];
@@ -128,7 +141,7 @@
    <div id="contenedor" style="height:auto;">
 
 
-      <h2>Panel de control</h2>
+      <h2>Panel de control</h2> 
       
       <form id="filtro" name="filtro" action=''  method="POST">
           <input type="hidden" value="<?php echo($elementoBusqueda); ?>" name="filtrartxt" id="filtrartxt" />  
@@ -193,11 +206,11 @@
           </tr>
           <tr>
             <td>            </td>
-          <td>&nbsp;&nbsp;
+          <td>&nbsp;&nbsp; 
               <?php if(($origen=='listadoOrdenes')or($origen=='listadoOrdenesDirecto')){ ?>
                  <a href="#" onClick="transferirFiltrosAOtroForm('filtro','lista-ordenes.php?pagina=<?php echo $pagina ?>')">
-             <?php }else { ?> 
-                 <a href="lista-ordenes.php">                 
+             <?php }else { // volver a listado ordenes detalle?> 
+                 <a href="#" onClick="transferirFiltrosAOtroForm('filtro','lista-req-ordenes.php?pagina=<?php echo $pagina ?>')">               
              <?php }?>
                      
                  <input type="button" value="Ir al Listado" class="botones" />
@@ -205,10 +218,12 @@
             <a href="form-alta-ordenes.php">
               <input type="button" value="Agregar otra orden" class="botones" />
             </a>
-                     <span  <?php if(($origen=='listadoOrdenes')or($origen=='listadoOrdenesDirecto')){echo ("  style='visibility:hidden'");}?>>
-                              <a href="form-edit-ordenes.php?ord_id=<?php echo($ord_id)?>">
-                             <input type="button" value="Modificar datos" class="botones" />
-                               </a>
+                     <span  <?php if(($origen=='listadoOrdenes3')or($origen=='listadoOrdenesDirecto3')){echo ("  style='visibility:hidden'");}?>>
+           
+                       <a href="form-edit-ordenes.php?ord_id=<?php echo($ord_id)?>&action=2&est_id=<?php  echo $estado_id; ?>&prv_id=<?php echo $proveedorFiltro ?>">
+                                <input type="button" value="Modificar datos" class="botones" />  
+                          
+                       </a>
                      </span>
          </td>
             <td></td>

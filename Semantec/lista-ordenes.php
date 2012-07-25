@@ -30,7 +30,7 @@
         $sql = "SELECT  est_id, est_nombre, est_color FROM estados";
         $resultado3 = mysql_query($sql);
         //proovedores
-        $sql = "SELECT  prv_id, prv_nombre FROM proveedores WHERE estado=1";
+        $sql = "SELECT  prv_id, prv_nombre FROM proveedores WHERE estado=1 ORDER by prv_nombre ASC";
         $resultado2 = mysql_query($sql);
         //recibo los criterios y construyo la consulta si action=1 recupero datos del session
         

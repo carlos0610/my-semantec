@@ -18,6 +18,10 @@
         $orden_id=$_GET['ord_id'];
         $ord_costo=$_GET['ord_costo'];
         $orden_venta=$_GET['ord_venta'];
+        $action=$_GET['action']; 
+        $estado_id_filtro=$_GET['estado_id_filtro']; 
+        $prov_filtro=$_GET['prov_filtro']; 
+        echo $estado_id_filtro,$prov_filtro;
         
         //----------------------------------
         $sql0 = "SELECT ord_codigo, ord_descripcion, cli_id, prv_id, est_id, ord_alta, ord_plazo, ord_costo, ord_venta 
@@ -77,7 +81,7 @@
 
 	
       <h2>Panel de control</h2>
-      <form id="altaordenDetalle" action="alta-ordenes-detalle.php" method="post" enctype="multipart/form-data">
+      <form id="altaordenDetalle" action="alta-ordenes-detalle.php?estado_id_filtro=<?php echo $estado_id_filtro ?>&prov_filtro=<?php echo $prov_filtro ?>" method="post" enctype="multipart/form-data">
           
       <input type="hidden" value="<?php echo $orden_id; ?>" name="ord_id"  id="ord_id">
       <table class="forms" cellpadding="5">
@@ -128,6 +132,17 @@
           </tr>
       
           <tr>
+              <td>Valor Costo</td>
+            <td>$ <?php echo $ord_costo ?></td>
+            <td></td>
+          </tr>
+          <tr>
+              <td>Valor Venta</td>
+            <td>$ <?php echo $orden_venta ?></td>
+            <td></td>
+          </tr>
+          
+          <tr>
             <td>Adelanto</td>
             <td><input type="text" class="campos" id="ord_det_monto" name="ord_det_monto" min="0" required value="0" style="text-align:right" OnKeyUp="return validarReal('ord_det_monto');"  />
                 <span id="errorAdelanto" style="font-family: Verdana, Arial, Helvetica,sans-serif;font-size: 9pt;color: #CC3300;position:relative;visibility:hidden;">Supera al valor costo</span>            </td>
@@ -139,9 +154,11 @@
               </td>
           </tr>
           <tr>
-            <td>&nbsp;</td>
             <td>
-                <a href="form-edit-ordenes.php?ord_id=<?php echo($orden_id)?>&action=2">
+                
+            </td>
+            <td>
+                <a href="form-edit-ordenes.php?ord_id=<?php echo($orden_id)?>&action=2&est_id=<?php  echo $estado_id_filtro; ?>&prv_id=<?php echo $prov_filtro ?>">
                 <input type="button" value="  Volver   " class="botones" />
                 </a> &nbsp; &nbsp;
                 <input type="reset"  value="Restablecer" class="botones" /> &nbsp; &nbsp; 

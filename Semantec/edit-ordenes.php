@@ -7,7 +7,7 @@
         $ord_descripcion = utf8_decode($_POST["ord_descripcion"]); 
        // $cli_id = $_POST["suc_id"];
         $prv_id = $_POST["prv_idEdit"];  
-        $est_id = $_POST["est_idEdit"];  
+        $est_id = $_POST["est_idEdit"];  echo $est_id;
         $ord_alta = date("Y-m-d");    // << -------
         $fecha = gfecha($_POST["fecha"]); 
         $ord_costo = $_POST["ord_costo"];
@@ -23,7 +23,10 @@
 
                   $pagina = $_GET["pagina"];
                   $action = $_GET["action"];
+        
                   if($action==0){$action='listadoOrdenes';}
+                  if($action==1){$action='listadoOrdenesMovimientos';}
+               
         // fin 
         include("conexion.php");
         

@@ -8,6 +8,8 @@
         $ord_descripcion = utf8_decode($_POST["ord_descripcion"]);
         $ord_det_monto=$_POST["ord_det_monto"];
         $est_id = $_POST["est_id"];
+        $estado_id_filtro = $_GET["estado_id_filtro"];
+        $prov_filtro = $_GET["prov_filtro"];
         $fecha =  gfecha($_POST["fecha"]);
         $usu_nombre = $_SESSION["usu_nombre"];
         $idFile = -1;
@@ -128,8 +130,8 @@
                         {
                         mysql_query("COMMIT");
                          mysql_close();
-                        echo "Transacción exitosa";
-                              header("location:ver-alta-ordenes.php?action=2"); 
+                        echo "Transacción exitosa"; echo $estado_id=$_SESSION['est_id'];
+                              header("location:ver-alta-ordenes.php?action=2&est_id=$estado_id_filtro&prv_id=$prov_filtro"); 
                         }
 
 

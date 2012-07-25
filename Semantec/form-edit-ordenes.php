@@ -10,8 +10,8 @@
         $pagina = $_GET["pagina"];
         if($pagina=='')
         {$pagina=$_SESSION["pagina"];}
-        // obtengo datos del listado de ordenes action =0
-        if($action==0)
+        // 1=listaordenes 2=lista-req-orden
+        if(($action==0)or($action==1))
         {
                   $elementoBusqueda=$_POST['filtrartxt'];
                   $proveedorFiltro=$_POST['prv_id']; 
@@ -28,18 +28,21 @@
                   $_SESSION["cli_id"]=$cli_idMaestro;
                   $_SESSION["orden"]=$unOrden;
                   $_SESSION["pagina"]=$pagina;
-        }
+                  $_SESSION["action"]=$action;   
+        }  
                 if($action==2) // vuelve del edit ordenes detalle le avisa q cargue de session
         {                      // caso q no modifico nada en detalle
                   $elementoBusqueda=$_SESSION['filtrartxt'];
-                  $proveedorFiltro=$_SESSION['prv_id']; 
-                  $estado_id=$_SESSION['est_id'];
+                  $proveedorFiltro=$_GET['prv_id']; 
+                  $estado_id=$_GET['est_id'];
+                 
                   $cli_id = $_SESSION['suc_id'];
                   $cli_idMaestro = $_SESSION['cli_id'];  
                   $unOrden=$_SESSION['orden'];
                   $contador=$_SESSION['contador'];
-
+                  $action=$_SESSION['action'];// vuelve al action original para saber de que lista vino 0=listaordenes 1=lista-req-orden
         }
+        
         $sql0 = "SELECT ord_codigo, ord_descripcion, o.cli_id,c.cli_nombre,c.sucursal, prv_id, est_id, ord_alta, ord_plazo,ord_plazo_proveedor, ord_costo, ord_venta 
                     FROM ordenes o,clientes c 
                     WHERE ord_id = $ord_id
@@ -110,7 +113,7 @@
    <!--start contenedor-->
    <div id="contenedor" style="height:auto;">
 
-      <h2>Panel de control</h2>
+      <h2>Panel de control</h2> <?php echo $estado_id;  // AAAAAAAAAAAAAACCCCCCCCCCCCCCCCAAAAAAAAAAA?>
       <!--datos de los filtro de listado de ordenes-->
       <form id="filtro" name="filtro" action=''  method="POST">
                           <input type="hidden" value="<?php echo($elementoBusqueda); ?>" name="filtrartxt" id="filtrartxt" />  
@@ -121,9 +124,8 @@
           <input type="hidden" value="<?php echo($unOrden); ?>" name="orden" id="orden" /> 
           <input type="hidden" value="<?php echo($contador); ?>" name="contador" id="contador" /> 
       </form>
-      
           
-      
+                                                                                   
       <table class="forms" cellpadding="5">
           <tr class="titulo">
             <td colspan="2"> <?php echo($titulo)?> </td>
@@ -140,9 +142,9 @@
   
           
           <tr>
-            <td>Estado</td>
-            <td><!--Guardo proveedor oculto y cambio de estado-->
-                <form action="form-alta-ordenes-detalle.php?ord_id=<?php echo($ord_id); ?>&ord_costo=<?php echo($fila0["ord_costo"]); ?>&ord_venta=<?php echo($fila0["ord_venta"]); ?>&cli_id=" method="post" id="frm" >
+            <td>Estado</td>  
+            <td><!--Guardo proveedor oculto y cambio de estado--> 
+                <form action="form-alta-ordenes-detalle.php?ord_id=<?php echo($ord_id); ?>&ord_costo=<?php echo($fila0["ord_costo"]); ?>&ord_venta=<?php echo($fila0["ord_venta"]); ?>&action=<?php echo $action ?>&estado_id_filtro=<?php echo $estado_id ?>&prov_filtro=<?php echo $proveedorFiltro ?>" method="post" id="frm" >
                  <?php echo(utf8_encode($fila4["est_nombre"])); ?> 
                 <input type="hidden" value="<?php echo($fila0["prv_id"]); ?>" name="provedor_id" id="provedor_id" />
                 <input type="submit" value="Cambiar" class="botones" id="botonAgregar" style="visibility:<?php if($fila0["prv_id"]==1){echo "hidden";}else{ echo "visible";} ?>"  />
@@ -152,8 +154,8 @@
           
           
         
-          <tr>
-            <form action="edit-ordenes.php?pagina=<?php echo $pagina ?>&action=<?php echo $action?>" method="post" id="frm" >
+          <tr> 
+           <form action="edit-ordenes.php?pagina=<?php echo $pagina ?>&action=<?php echo $action?>" method="post" id="frm" >
             <!--Dato de filtros transferidos al ver cuando hace modificar--> 
           <input type="hidden" value="<?php echo($elementoBusqueda); ?>" name="filtrartxt" id="filtrartxt" />  
           <input type="hidden" value="<?php echo($proveedorFiltro); ?>" name="prv_id" id="prv_id" />  
@@ -222,11 +224,12 @@
           <tr>
             <td>&nbsp;</td>
             <td>
-                <?php if (($action == 0)or($action==2)){?>
+                <?php if (($action == 0)){?>
                 <a href="#" onClick="transferirFiltrosAOtroForm('filtro','lista-ordenes.php?pagina=<?php echo $pagina ?>')">
                     <input type="button" value="Ir al Listado" class="botones" /></a> &nbsp; &nbsp; 
-                    <?php } else {?>
-                <a href="lista-req-ordenes.php"><input type="button" value="Ir al Listado" class="botones" /></a> &nbsp; &nbsp;
+                    <?php } else {// si es action 1 vuelve al listado req ordenes?>
+                <a href="#" onClick="transferirFiltrosAOtroForm('filtro','lista-req-ordenes.php?pagina=<?php echo $pagina ?>')">
+                    <input type="button" value="Ir al Listado" class="botones" /></a> &nbsp; &nbsp;
                 <?php } ?>
                 <input type="reset" value="Restablecer" class="botones" /> &nbsp; &nbsp; 
                 <input type="submit" value="Modificar Orden" class="botones" />
