@@ -1,23 +1,6 @@
 <?php
     include("validar.php");
-
-    /* $action = $_GET["action"]; // 0
-    if($action == 0){
-          $titulo = "Datos de Orden de Servicio";
-          $ord_id = $_GET["ord_id"];
-    }
-    else if($action == 1){
-          $titulo = "Se ha dado de alta la siguiente Orden de Servicio";
-          $ord_id = $_SESSION["ord_id"];
-    }
-    else{  2
-          $titulo = "Se han modificado los datos del la siguiente Orden de Servicio"; 
-          $ord_id = $_SESSION["ord_id"];
-    }
-    
-     
-     */
-        //$ord_id = $_GET["ord_id"];
+    $origen = $_GET["origen"]; 
         $fav_id = $_GET["fav_id"];
         include("funciones.php");
         include("conexion.php");
@@ -275,9 +258,15 @@
     
     <tr>
       <td>&nbsp;</td>
-      <td><a href="lista-facturas.php">
-    <input type="button" value="Ir al Listado"s class="botones" />
-                </a>  </td>
+      <td>
+          <?php if ($origen!='externo')  {?>
+                <a href="lista-facturas.php">
+                     <input type="button" value="Ir al Listado"s class="botones" />
+                </a>  
+          <?php }else { ?>
+                 <input type="button" class="botones" value="Volver" onclick="goBack()" />
+          <?php } ?>
+      </td>
       <td><a href="ver-alta-factura-pdf.php?fav_id=<?php echo$fav_id; ?>">
               <img id="logoImpresora" src="images/imprimir.png" heigth="48" width="48"/></a>
           

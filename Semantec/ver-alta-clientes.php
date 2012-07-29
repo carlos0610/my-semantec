@@ -1,6 +1,7 @@
 <?php
     include("validar.php");
     include("funciones.php");
+    $origen = $_GET["origen"];
     $action = $_GET["action"];
     if($action == 0){
           $titulo = "Datos de Cliente";
@@ -134,9 +135,14 @@
           <tr>
             <td>&nbsp;</td>
             <td>
+                <?php if ($origen!='externo')  {?>
                 <a href="lista-clientes.php"><input type="button" value="Ir al Listado" class="botones" /></a> &nbsp; &nbsp; 
                 <a href="form-edit-clientes.php?cli_id=<?php echo($cli_id)?>"><input type="button" value="Modificar datos" class="botones" /></a> &nbsp; &nbsp; 
-                <a href="form-alta-clientes.php"><input type="button" value="Agregar otro cliente" class="botones" /></a>            </td>
+                <a href="form-alta-clientes.php"><input type="button" value="Agregar otro cliente" class="botones" /></a> 
+                <?php }else { ?>
+                    <input type="button" class="botones" value="Volver" onclick="goBack()" />
+                <?php } ?>
+            </td>
             <td></td>
           </tr>
           <tr>

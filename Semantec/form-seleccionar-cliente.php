@@ -140,7 +140,7 @@
           <tr class="lista" bgcolor="<?php echo($colores[$i]);?>">
             <td><?php echo($fila["ccc_id"]);?></td>
             <td>
-            <a href="ver-alta-clientes.php?cli_id=<?php echo($fila["cli_id"]);?>&action=0">
+            <a href="ver-alta-clientes.php?cli_id=<?php echo($fila["cli_id"]);?>&action=0&origen=externo">
             <?php echo(utf8_encode($fila["cli_nombre"]));?>
             </a>          
             </td>
@@ -149,7 +149,7 @@
             <td><?php echo $fila["Monto"];?></td>     
             <td width="115"><?php echo $fila[fav_fecha_pago];?> </td>
             <td width="95" align="center"><?php echo $fila[usu_nombre]; ?></td>
-            <td width="72" align="center"><a href="ver-alta-factura.php?fav_id=<?php echo($fila["fav_id"]); ?>"><img src="images/detalles.png" alt="editar" title="Ver detalle" width="32" height="32" border="none" /></a></td>            
+            <td width="72" align="center"><a href="ver-alta-factura.php?fav_id=<?php echo($fila["fav_id"]); ?>&origen=externo"><img src="images/detalles.png" alt="editar" title="Ver detalle" width="32" height="32" border="none" /></a></td>            
         </tr>
   <?php
             $i++;

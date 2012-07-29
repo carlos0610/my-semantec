@@ -1,4 +1,8 @@
-
+//volver a pagina anteior
+function goBack()
+  {
+  window.history.back()
+  }
 
 
 
