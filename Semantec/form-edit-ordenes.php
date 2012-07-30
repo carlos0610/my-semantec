@@ -113,7 +113,7 @@
    <!--start contenedor-->
    <div id="contenedor" style="height:auto;">
 
-      <h2>Panel de control</h2> <?php echo $estado_id;  // AAAAAAAAAAAAAACCCCCCCCCCCCCCCCAAAAAAAAAAA?>
+      <h2>Panel de control</h2> 
       <!--datos de los filtro de listado de ordenes-->
       <form id="filtro" name="filtro" action=''  method="POST">
                           <input type="hidden" value="<?php echo($elementoBusqueda); ?>" name="filtrartxt" id="filtrartxt" />  
@@ -199,7 +199,7 @@
           <?php if ($fila0["est_id"] ==  2){ ?>  
           <tr>
               <td><label id="texto_respuesta"><?php echo "Fecha respuesta proveedor" ?></label></td>
-              <td><input type="text" class="campos" id="fecha" name="fecha" value="<?php echo mfecha($fila0["ord_plazo_proveedor"])?>"/></td>
+              <td><input type="text" class="campos" id="fecha" name="fecha" value="<?php echo tfecha($fila0["ord_plazo_proveedor"])?>"/></td>
             <td></td>
           </tr>
           
@@ -207,7 +207,7 @@
           
           <tr>
               <td><label id="texto_respuesta"><?php echo "Plazo de finalización" ?></label></td>
-            <td><input type="text" class="campos" id="fecha" name="fecha" value="<?php echo mfecha($fila0["ord_plazo"])?>"/></td>
+            <td><input type="text" class="campos" id="fecha" name="fecha" value="<?php echo tfecha($fila0["ord_plazo"])?>"/></td>
             <td></td>
           </tr>
           <?php } ?>
