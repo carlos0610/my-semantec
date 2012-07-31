@@ -100,6 +100,26 @@
     <td ></td>
     <td>&nbsp;</td>
   </tr>
+  
+  
+    <tr>
+    <td class="titulo"><span id="ocultarParaImpresion">Buenos Aires</span> </td>
+    <td>&nbsp;</td>
+  </tr>
+
+  <tr>
+    <td class="titulo"> <div id="ocultarParaImpresion" align="center">Dr. Aleu 3139 (1651) - 1er piso of 11 - San Andrés <br>
+      Provincia de Buenos Aires</div></td>
+    <td class="titulo"><span id="ocultarParaImpresion">Ing.Brutos : 902-820067 -3</span></td>
+    <td rowspan="2">&nbsp;</td>
+  </tr>
+  <tr>
+    <td class="titulo"><div align="center" id="ocultarParaImpresion"><strong>I.V.A Responsable inscripto</strong></div></td>
+    <td bgcolor="#F0F0F0" class="titulo"><span id="ocultarParaImpresion">Inicio de actividades: 01/06/2004</span></td>
+  </tr>
+  
+  
+  
 </table>
    </div>
   
@@ -107,7 +127,7 @@
    
 <div class="contenido_descripcion">
   <form name="frmGenerarFactura" method="post" enctype="multipart/form-data" action="alta-factura.php?ord_id=<?php echo $ord_id ?>&items=<?php echo $totalDescripcion?>">
-  <table width="100%" border="0">
+  <table width="99%" border="0">
   <tr>
     <td>&nbsp;</td>
     <td></td>
@@ -155,7 +175,7 @@
    <br>
 <div id="footer_factura">
   
-  <table width="100%" border="0">
+  <table width="99%" border="0">
     <tr>
       <td width="12%"><span id="ocultarParaImpresion"></span></td>
       <td width="31%"><label>

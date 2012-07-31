@@ -2,6 +2,7 @@
     include("validar.php");
         $pagina = $_GET["pagina"];
         $origen = $_GET["origen"];
+        $origenOtroForm = $_GET["origenOtroForm"];
         $action = $_GET["action"]; 
         if($origen=='listadoOrdenes'){ // si viene de modificar un dato
             // datos de filtro de listado
@@ -206,25 +207,27 @@
           </tr>
           <tr>
             <td>            </td>
-          <td>&nbsp;&nbsp; 
+          <td>
+          <?php   if ($origenOtroForm!='externo')  {?>
+              
               <?php if(($origen=='listadoOrdenes')or($origen=='listadoOrdenesDirecto')){ ?>
                  <a href="#" onClick="transferirFiltrosAOtroForm('filtro','lista-ordenes.php?pagina=<?php echo $pagina ?>')">
-             <?php }else { // volver a listado ordenes detalle?> 
+              <?php }else { // volver a listado ordenes detalle?> 
                  <a href="#" onClick="transferirFiltrosAOtroForm('filtro','lista-req-ordenes.php?pagina=<?php echo $pagina ?>')">               
-             <?php }?>
-                     
-                 <input type="button" value="Ir al Listado" class="botones" />
+              <?php }?>                   
+                   <input type="button" value="Ir al Listado" class="botones" />
                 </a>  
-            <a href="form-alta-ordenes.php">
-              <input type="button" value="Agregar otra orden" class="botones" />
-            </a>
-                     <span  <?php if(($origen=='listadoOrdenes3')or($origen=='listadoOrdenesDirecto3')){echo ("  style='visibility:hidden'");}?>>
-           
-                       <a href="form-edit-ordenes.php?ord_id=<?php echo($ord_id)?>&action=2&est_id=<?php  echo $estado_id; ?>&prv_id=<?php echo $proveedorFiltro ?>">
-                                <input type="button" value="Modificar datos" class="botones" />  
-                          
-                       </a>
-                     </span>
+                <a href="form-alta-ordenes.php">
+                   <input type="button" value="Agregar otra orden" class="botones" />
+                </a>
+                <span  <?php if(($origen=='listadoOrdenes3')or($origen=='listadoOrdenesDirecto3')){echo ("  style='visibility:hidden'");}?>>         
+                   <a href="form-edit-ordenes.php?ord_id=<?php echo($ord_id)?>&action=2&est_id=<?php  echo $estado_id; ?>&prv_id=<?php echo $proveedorFiltro ?>">
+                       <input type="button" value="Modificar datos" class="botones" />                           
+                   </a>
+                </span>
+          <?php }else { ?>
+                  <input type="button" class="botones" value="Volver" onclick="goBack()" />
+          <?php } ?>            
          </td>
             <td></td>
           </tr>          

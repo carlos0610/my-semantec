@@ -34,9 +34,13 @@
                where fav_id = $fav_id";
        $fecha_factura = mysql_query($sql);
        $fila_fecha_factura = mysql_fetch_array($fecha_factura);
-      //busca Codigo de Ordenes asociadas a esta factura
-       
-       
+      //busca Codigo de Ordenes asociadas a esta factura dado un  gru_id , transformar en funcion
+       $grupo_id=$fila_fecha_factura["gru_id"]; 
+       $sql = "SELECT `ord_codigo`,ord_id 
+               FROM `ordenes` 
+               WHERE `gru_id` = $grupo_id";  
+       $codigo_de_ordenesFav = mysql_query($sql);
+      // $codDeFaV = mysql_fetch_array($codigo_de_ordenesFav);
      //DIEGOTE  $sql = "select * from detalle_factura_venta where fav_id = (select fav_id from factura_venta where ord_id = $ord_id)";
        $sql = "select * from detalle_factura_venta where fav_id = $fav_id";
        $descripcion_factura = mysql_query($sql);
@@ -157,6 +161,15 @@
      </table>   
        
    </div>
+   <!-- IMPRESION DE CODIGO DE ORDENES ASOCIADAS  -->
+   <div  style="height:auto;">
+       Código de Ordenes Asociadas :
+     <?php 
+      while($cod = mysql_fetch_array($codigo_de_ordenesFav)){?>
+       <a href="ver-alta-ordenes.php?ord_id=<?php   echo $cod["ord_id"]; ?>&origenOtroForm=externo"> <?php   echo ' N° ',$cod["ord_codigo"],'  '; ?> </a>&nbsp;&nbsp;
+    <?php   }
+  ?>
+    </div>
    <!-- DESCRIPCION DE FACTURA  -->
    
 <div class="contenido_descripcion">

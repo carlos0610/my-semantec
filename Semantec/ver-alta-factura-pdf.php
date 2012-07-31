@@ -59,37 +59,37 @@
 $pdf = new FPDF('P','mm','Letter');
 $pdf->AddPage();
 $pdf->SetFont('Arial','',10);
-$pdf->SetMargins(12, 10 ,10);
+$pdf->SetMargins(12, 1 ,10);// margenes izq, top , derecha
 #Establecemos el margen inferior:
 $pdf->SetAutoPageBreak(true,1);  
 // DATOS DE FACTURA PDF      Cell(unNumero)--Mover a la derecha ; Ln(unNumero) Salto de Linea
 //Numero de FActura
 $pdf->Cell(120);
-$pdf->Cell(40,10,$fav_id,0,1,R);
-$pdf->Ln(3);
+$pdf->Cell(40,6,$fav_id,0,1,R);
+$pdf->Ln(2);//antes 3
 //Fecha
 $pdf->Cell(120);
 $pdf->Cell(40,10,tfecha($fila_fecha_factura["fav_fecha"]),0,1,R);
 $pdf->Ln(22);
 // Sres
 $pdf->Cell(25);
-$pdf->Cell(160,7,($fila_datos_cliente["cli_nombre"]),0,1);
+$pdf->Cell(160,6,($fila_datos_cliente["cli_nombre"]),0,1);
 //Domicilio - Localidad
 $pdf->Cell(25);
-$pdf->Cell(80,7,($fila_datos_cliente["cli_direccion"]),0);
-$pdf->Cell(40);
-$pdf->Cell(40,7,($fila_datos_cliente["provincia"]),0,1);
+$pdf->Cell(80,6,($fila_datos_cliente["cli_direccion"]),0);
+$pdf->Cell(35);// antes 40
+$pdf->Cell(40,6,($fila_datos_cliente["provincia"]),0,1);
 //IVA - CUIT
 $pdf->Cell(25);
-$pdf->Cell(80,7,$fila_datos_cliente["iva_nombre"],0);
-$pdf->Cell(40);
+$pdf->Cell(80,6,$fila_datos_cliente["iva_nombre"],0);
+$pdf->Cell(35);// antes 40
 $pdf->Cell(40,5,verCUIT($fila_datos_cliente["cli_cuit"]),0,1);
 //Condiciones de Venta - Remito
 $pdf->Cell(45);
-$pdf->Cell(80,7,utf8_decode($fila_fecha_factura["fav_condicion_vta"]),0);
-$pdf->Cell(20);
-$pdf->Cell(15,7,'REMITO:');
-$pdf->Cell(40,7,$fila_fecha_factura["fav_remito"],0,1);
+$pdf->Cell(80,6,utf8_decode($fila_fecha_factura["fav_condicion_vta"]),0);
+$pdf->Cell(15);//// antes 20
+$pdf->Cell(15,6,'REMITO:');
+$pdf->Cell(40,6,$fila_fecha_factura["fav_remito"],0,1);
 // DEscripcion - Total
   $pdf->Ln(14);
   $POsXoriginal=$pdf->GetX();
@@ -115,25 +115,25 @@ $pdf->Cell(40,7,$fila_fecha_factura["fav_remito"],0,1);
 //Vencimiento - SUBTOTAL
 $pdf-> SetY(222);
 $pdf->Cell(40);
-$pdf->Cell(40,10,$fila_fecha_factura["fav_vencimiento"]);
+$pdf->Cell(40,12,$fila_fecha_factura["fav_vencimiento"]);
 $pdf->Cell(100);
-$pdf->Cell(2,10,'$',0,0,R);
-$pdf->Cell(15,10,number_format($subtotal, 2, '.', ''),0,1,R);
+$pdf->Cell(2,12,'$',0,0,R);
+$pdf->Cell(15,12,number_format($subtotal, 2, '.', ''),0,1,R);
 //NOTA - IVA INSC - TOTAL IVA INSC
 $pdf->Cell(20);
-$pdf->MultiCell(90,10,utf8_decode($fila_fecha_factura["fav_nota"]),0);
+$pdf->MultiCell(90,12,utf8_decode($fila_fecha_factura["fav_nota"]),0);
 
 $pdf->SetXY(150,232); // despues de un multycell no puede ir cell 
         
 
-$pdf->Cell(20,10,$fila_iva["valor"],0,0,R);
+$pdf->Cell(20,12,$fila_iva["valor"],0,0,R);
 $iva_total = $subtotal*0.21;
 $pdf->Cell(20);
-$pdf->Cell(2,10,'$',0,0,R);
-$pdf->Cell(15,10,$iva_total,0,1,R);
+$pdf->Cell(2,12,'$',0,0,R);
+$pdf->Cell(15,12,$iva_total,0,1,R);
 //IVA NO INSC
 $pdf->Cell(180);
-$pdf->Cell(17,10,'-',0,1,R);
+$pdf->Cell(17,12,'-',0,1,R);
 // TOTAL
 $pdf->Cell(180);
 $pdf->Cell(2,10,'$',0,0,R);

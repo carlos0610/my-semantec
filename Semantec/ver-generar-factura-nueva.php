@@ -232,7 +232,7 @@
         $i=0;
         $totalOrdenVenta=0;
         while ($i <$cantOrdenesChecadas)
-        { $i++;    $usu_nombre = $_SESSION["usu_nombre"]; echo $usu_nombre;
+        { $i++;    $usu_nombre = $_SESSION["usu_nombre"]; 
                 $unord_ID=$_GET["ord_check$i"];
                 $sql5="SELECT `gru_id`,`ord_codigo`,`ord_descripcion`,`prv_id`,`est_id` ,ord_id ,ord_venta
               FROM `ordenes` 
