@@ -78,13 +78,14 @@
                 AND c.cli_id = cc.cli_id
                 AND f.estado = $chkCanceladas";
                 $sql.=$sqlaux;
+                $sql.=" GROUP BY  f.fav_id ";
                 $sql0=$sql;
                 
           
                 include("paginado.php");
                 
                 $sql .= " ORDER BY $unOrdenCompleta LIMIT ".$limitInf.",".$tamPag;  
-               
+           
         $resultado = mysql_query($sql);
         $cantidad = mysql_num_rows($resultado);
 

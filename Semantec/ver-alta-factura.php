@@ -5,7 +5,7 @@
         include("funciones.php");
         include("conexion.php");
         
-        $sql = "SELECT c.cli_nombre,c.cli_direccion,i.iva_nombre,c.cli_cuit ,p.nombre as provincia,pa.nombre as partido,l.nombre as localidad
+        $sql = "SELECT c.cli_nombre,c.cli_direccion,i.iva_nombre,c.cli_cuit ,p.nombre as provincia,pa.nombre as partido,l.nombre as localidad,  c.cli_direccion_fiscal,c.sucursal_id
                 FROM ordenes o,clientes c,iva_tipo i,factura_venta f,grupo_ordenes g_o , ubicacion u,provincias p, partidos pa,localidades l
                 WHERE 
                 f.fav_id 	= $fav_id
@@ -21,8 +21,24 @@
        $cliente = mysql_query($sql); 
        $fila_datos_cliente = mysql_fetch_array($cliente); 
        
-        //$nro = mysql_num_rows($datos_cliente);
-       
+              //Busco Sucursal Matriz
+       $SucursalMatriz=$fila_datos_cliente['sucursal_id'];
+       $SucursalMatrizLocalidad=$fila_datos_cliente["provincia"];
+       if($SucursalMatriz!=null)
+       {
+           $sql = "SELECT  c.cli_id , c.sucursal_id, c.ubicacion_id, c.cli_nombre,c.cli_cuit, c.iva_id, c.cli_rubro, c.cli_direccion, c.cli_direccion_fiscal, c.cli_telefono, c.sucursal,
+                            p.nombre as provincia,pa.nombre as partido,l.nombre as localidad
+                   FROM  clientes c , ubicacion u,provincias p, partidos pa,localidades l
+                   WHERE c.cli_id  =$SucursalMatriz
+                   AND c.ubicacion_id = u.id
+                   AND u.provincias_id = p.id
+                   AND u.partidos_id = pa.id
+                   AND u.localidades_id = l.id
+                    ";
+           $sucursal = mysql_query($sql); 
+           $fila_sucursal_Matriz = mysql_fetch_array($sucursal); 
+           $SucursalMatrizLocalidad=$fila_sucursal_Matriz['provincia']; 
+       }
        //+++++configuracion  de descripciones a imprimir en pantalla+++++
        $numeroDescripcion=0;
        $totalDescripcion=5;
@@ -134,9 +150,9 @@
        </tr>
           <tr>
             <td class="titulo" height="20" ><span id="ocultarParaImpresion">Domiclio:</span></td>
-            <td width="23%" style="background-color:#cbeef5"  align="left"><?php echo utf8_encode($fila_datos_cliente["cli_direccion"]);?></td>
+            <td width="23%" style="background-color:#cbeef5"  align="left"><?php echo utf8_encode($fila_datos_cliente["cli_direccion_fiscal"]);?></td>
             <td width="8%" class="titulo"><span id="ocultarParaImpresion">Localidad:</span></td>
-            <td width="35%" style="background-color:#cbeef5"  align="rigth"><?php echo utf8_encode($fila_datos_cliente["provincia"]);?>/<?php echo utf8_encode($fila_datos_cliente["localidad"]);?></td>
+            <td width="35%" style="background-color:#cbeef5"  align="rigth"><?php echo utf8_encode($SucursalMatrizLocalidad);?></td>
        </tr>
           <tr>
             <td class="titulo" height="20" ><span id="ocultarParaImpresion">IVA:</span></td>
@@ -280,7 +296,7 @@
                  <input type="button" class="botones" value="Volver" onclick="goBack()" />
           <?php } ?>
       </td>
-      <td><a href="ver-alta-factura-pdf.php?fav_id=<?php echo$fav_id; ?>">
+      <td><a href="ver-alta-factura-pdf.php?fav_id=<?php echo$fav_id; ?> "target="_blank">
               <img id="logoImpresora" src="images/imprimir.png" heigth="48" width="48"/></a>
           
       </td>
