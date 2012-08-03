@@ -146,21 +146,8 @@
     $tamPag=20;
     
     include("paginado.php");        
-        /*$sql = "SELECT o.ord_id,ord_codigo,c.cli_nombre,p.nombre as provincia,l.nombre as localidad,o.ord_descripcion,o.est_id,sum(od.ord_det_monto) as Adelantos,round (o.ord_costo,2) as costo,ROUND(SUM(dfc.det_fco_preciounitario)/2,2) as compras ,ROUND(o.ord_costo - SUM(dfc.det_fco_preciounitario)/2,2) as saldoc,o.ord_costo - sum(od.ord_det_monto) as Saldo 
-            FROM ordenes o, ordenes_detalle od,clientes c,ubicacion u,provincias p,localidades l,detalle_factura_compra dfc";
-         
-        $sql .= " WHERE 
-            o.ord_id IN (select ord_id from ordenes where prv_id = $prv_id)
-            AND o.ord_id = od.ord_id
-            AND o.cli_id = c.cli_id
-            AND o.gru_id_compra is not null
-            AND o.ord_id = dfc.det_fco_orden_id
-            AND dfc.det_fco_orden_id = o.ord_id
-				AND u.id = c.ubicacion_id
-            AND u.provincias_id = p.id
-            AND u.localidades_id = l.id
-            GROUP BY o.ord_id";*/
-        $sql .= " LIMIT ".$limitInf.",".$tamPag;
+       
+   $sql .= " LIMIT ".$limitInf.",".$tamPag;
          
         
         $resultado = mysql_query($sql);
