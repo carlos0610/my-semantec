@@ -1,7 +1,7 @@
 ﻿<?php
 
     header('Content-Type: text/html; charset=utf-8');
-    $titulo = "Formulario de alta de una Orden de Servicio.";
+    $titulo = "Formulario de registro de pago y retenciones";
         include("validar.php");
         include("conexion.php");
         
@@ -15,7 +15,17 @@
         $sql = "SELECT ban_id,ban_nombre FROM banco WHERE estado = 1 ORDER BY ban_nombre";
         $bancos     = mysql_query($sql);
         
+        /* PROVINCIAS */
+        $sql = "SELECT id,nombre FROM provincias ORDER BY nombre";
+        $provincias = mysql_query($sql);
         
+        /* IVA */
+        $sql = "SELECT idiva,valor FROM iva WHERE idiva in (2,3)";
+        $iva        = mysql_query($sql);
+        
+        /* CUENTABANCO */
+        $sql = "SELECT id,nombre FROM cuentabanco";
+        $cuentabanco = mysql_query($sql);
         
         
 
@@ -32,7 +42,16 @@
   <script type="text/javascript" src="js/jquery.datepick-es.js"></script>
   <script type="text/javascript">
   $(function() {
-      $('#ord_alta').datepick();
+      /* Pago */
+      $('#txtFechaTransferencia').datepick();
+      $('#txtFechaEmision').datepick();   
+      $('#txtFechaVto').datepick();
+      /* Retenciones */
+      $('#txtFecha1').datepick();   // Ganancias
+      $('#txtFecha2').datepick();   // IVA
+      $('#txtFecha3').datepick();   // IIBB
+      $('#txtFecha4').datepick();   // SUSS
+      
   });
   </script>    
   <script type="text/javascript" src="js/validador.js"></script>
@@ -78,7 +97,7 @@
 
       <h2>Panel de control</h2>
       
-      <form action="alta-ordenes.php" method="post" enctype="multipart/form-data" enctype="multipart/form-data" >
+      <form action="alta-pago.php" method="post" enctype="multipart/form-data" enctype="multipart/form-data" >
       <table width="100%" cellpadding="5" class="forms">
           <tr class="titulo">
             <td colspan="5"> <?php echo($titulo)?> </td>
@@ -105,7 +124,7 @@
           <tr>
             <td>Nro Operacion</td>
             <td><label>
-              <input name="txtNroOperacion" type="text" class="campos2" id="txtNroOperacion" disabled>
+              <input name="txtNroOperacion" type="text" class="campos2" id="txtNroOperacion">
             </label></td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
@@ -123,7 +142,7 @@
                         <option value="<?php echo $fila_banco["ban_id"]?>"><?php echo $fila_banco["ban_nombre"]?></option>
                   <?php } ?>
                                           </select>
-            </label</td>
+            </label></td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
@@ -134,6 +153,32 @@
             <td>Sucursal</td>
             <td><label>
               <input name="txtSucursal" type="text" class="campos2" id="txtSucursal">
+            </label></td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Cuenta</td>
+            <td><label>
+              <select name="comboCuenta" class="campos2" id="comboCuenta">
+                  <?php
+                    while ($fila_cuenta = mysql_fetch_array($cuentabanco)){
+                ?>  
+                  <option value="<?php echo$fila_cuenta["id"]?>"><?php echo $fila_cuenta["nombre"]?></option>
+              <?php } ?>            
+              </select>
+            </label></td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Fecha transf</td>
+            <td><label>
+              <input name="txtFechaTransferencia" type="text" class="campos2" id="txtFechaTransferencia">
             </label></td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
@@ -191,7 +236,7 @@
           <tr>
             <td>Adjuntar archivo</td>
             <td><label>
-              <input type="file" name="file_pago" id="file_pago">
+              <input type="file" name="userfile" id="userfile">
             </label></td>
             <td>                            </td>
             <td>&nbsp;</td>
@@ -201,127 +246,122 @@
           </table>
           
 <div class="retenciones">
-          <form>
+          <form action="alta-pago.php" method="post" enctype="multipart/form-data" enctype="multipart/form-data" >
           <table class="forms">
           <tr>
-            <td colspan="4" bgcolor="#0099CC"><div align="center" class="Estilo1">Retenciones</div></td>
+            <td colspan="3" bgcolor="#0099CC"><div align="center" class="Estilo1">Retenciones</div></td>
         </tr>
           <tr>
-            <td></td>
-            <td></td>
+            <td width="13%"></td>
+            <td width="20%"></td>
           <tr>
             <td>&nbsp;</td>
-            <td>Ganancias</td>
-            <td>&nbsp;</td>
-            <td><label></label></td>
+            <td><input type="checkbox" name="chkGanancias" id="chkGanancias">
+            Ganancias            </td>
+            <td width="66%">&nbsp;</td>
             </tr>          
           <tr>
             <td>Fecha:</td>
-            <td><input type="text" style="text-align:right" class="campos2" id="ord_costo" name="ord_costo"  min="0" required  /></td>
+            <td><input name="txtFecha1" type="text" class="campos2" id="txtFecha1" style="text-align:right" size="12"  min="0" required  /></td>
             <td>Prefijo:
-            <input name="ord_venta" type="text" class="campos2" id="ord_venta" style="text-align:right" size="5"  min="0" required   />
+            <input name="txtPrefijo" type="text" class="campos2" id="txtPrefijo" style="text-align:right" size="5"  min="0"    />
             <label>Nro:
             <input name="txtNro" type="text" class="campos2" id="txtNro" size="20">
-            <input type="checkbox" name="chkGanancias" id="chkGanancias">
             </label></td>
-            <td><label></label></td>
             </tr>
           <tr>
             <td>Importe:</td>
             <td><label>
               <input name="txtImporte" type="text" class="campos2" id="txtImporte" size="8">
             </label></td>
-            <td>Adjuntar archivo: 
-            <input name="userfile2" type="file" class="" id="userfile2" size="10" /></td>
             <td>&nbsp;</td>
             </tr>
           <tr>
             <td>&nbsp;</td>
-            <td>IVA</td>
-            <td>&nbsp;</td>
+            <td><input type="checkbox" name="chkIva" id="chkIva">
+            IVA            </td>
             <td>&nbsp;</td>
             </tr>
           <tr>
             <td>Fecha:</td>
-            <td><input type="text" style="text-align:right" class="campos2" id="ord_costo2" name="ord_costo2"  min="0" required  /></td>
+            <td><input name="txtFecha2" type="text" class="campos2" id="txtFecha2" style="text-align:right" size="12"  min="0" required  /></td>
             <td>Prefijo:
-            <input name="ord_venta2" type="text" class="campos2" id="ord_venta2" style="text-align:right" size="5"  min="0" required   />
+            <input name="txtPrefijo2" type="text" class="campos2" id="txtPrefijo2" style="text-align:right" size="5"  min="0"    />
             Nro:
-            <input name="txtNro2" type="text" class="campos2" id="txtNro2" size="20">
-            <input type="checkbox" name="chkGanancias2" id="chkGanancias2"></td>
-            <td>&nbsp;</td>
+            <input name="txtNro2" type="text" class="campos2" id="txtNro2" size="20"></td>
             </tr>
           <tr>
             <td>Importe:</td>
             <td><input name="txtImporte2" type="text" class="campos2" id="txtImporte2" size="8"></td>
-            <td>Adjuntar archivo:
-            <input name="userfile" type="file" class="" id="userfile" size="10" /></td>
-            <td>&nbsp;</td>
+            <td>%: 
+              
+              <select name="comboIva" class="campos2" id="comboIva">
+                  <?php
+                    while ($fila_iva = mysql_fetch_array($iva)){
+                ?>
+                  <option value="<?php echo $fila_iva["idiva"]?>"><?php echo $fila_iva["valor"]?></option>
+                  <?php }?>
+              </select>
+            </td>
             </tr>
           <tr>
             <td>&nbsp;</td>
-            <td>IIBB</td>
-            <td>&nbsp;</td>
+            <td><input type="checkbox" name="chkIIBB" id="chkIIBB">
+            IIBB            </td>
             <td>&nbsp;</td>
             </tr>
           <tr>
             <td>Fecha:</td>
-            <td><input type="text" style="text-align:right" class="campos2" id="ord_costo3" name="ord_costo3"  min="0" required  /></td>
+            <td><input name="txtFecha3" type="text" class="campos2" id="txtFecha3" style="text-align:right" size="12"  min="0" required  /></td>
             <td>Prefijo:
-              <input name="ord_venta3" type="text" class="campos2" id="ord_venta3" style="text-align:right" size="5"  min="0" required   />
+              <input name="txtPrefijo3" type="text" class="campos2" id="txtPrefijo3" style="text-align:right" size="5"  min="0"    />
 Nro:
-<input name="txtNro3" type="text" class="campos2" id="txtNro3" size="20">
-<input type="checkbox" name="chkGanancias3" id="chkGanancias3"></td>
-            <td>&nbsp;</td>
+<input name="txtNro3" type="text" class="campos2" id="txtNro3" size="20"></td>
             </tr>
           <tr>
             <td>Importe:</td>
             <td><input name="txtImporte3" type="text" class="campos2" id="txtImporte3" size="8"></td>
-            <td>Adjuntar archivo:
-            <input name="userfile3" type="file" class="" id="userfile3" size="10" /></td>
             <td>&nbsp;</td>
-          </tr>
+            </tr>
           <tr>
             <td>&nbsp;</td>
-            <td>SUSS</td>
+            <td><input type="checkbox" name="chkSUSS" id="chkSUSS">
+            SUSS            </td>
             <td>&nbsp;</td>
-            <td>&nbsp;</td>
-          </tr>
+            </tr>
           <tr>
             <td>Fecha:</td>
-            <td><input type="text" style="text-align:right" class="campos2" id="ord_costo4" name="ord_costo4"  min="0" required  /></td>
+            <td><input name="txtFecha4" type="text" class="campos2" id="txtFecha4" style="text-align:right" size="12"  min="0" required  /></td>
             <td>Prefijo:
-              <input name="ord_venta4" type="text" class="campos2" id="ord_venta4" style="text-align:right" size="5"  min="0" required   />
+              <input name="txtPrefijo4" type="text" class="campos2" id="txtPrefijo4" style="text-align:right" size="5"  min="0"  />
 Nro:
-<input name="txtNro4" type="text" class="campos2" id="txtNro4" size="20">
-<input type="checkbox" name="chkGanancias4" id="chkGanancias4"></td>
-            <td>&nbsp;</td>
-          </tr>
+<input name="txtNro4" type="text" class="campos2" id="txtNro4" size="20"></td>
+            </tr>
           <tr>
             <td>Importe:</td>
             <td><input name="txtImporte4" type="text" class="campos2" id="txtImporte4" size="8"></td>
-            <td>Adjuntar archivo:
-            <input name="userfile4" type="file" class="" id="userfile4" size="10" /></td>
-            <td>&nbsp;</td>
-          </tr>
-          <tr>
-            <td>Provincia</td>
-            <td><label>
+            <td>Provincia:
               <select name="comboProvincias" class="campos2" id="comboProvincias">
-              </select>
-            </label></td>
+                <?php
+                    while ($fila_provincia = mysql_fetch_array($provincias)){
+                ?>
+                <option value="<?php echo $fila_provincia["id"]?>"><?php echo $fila_provincia["nombre"]?> </option>
+                <?php } ?>
+              </select></td>
+            </tr>
+          <tr>
             <td>&nbsp;</td>
+          <td><label></label></td>
             <td>&nbsp;</td>
-          </tr>
+            </tr>
           <tr>
             <td>&nbsp;</td>
             <td><input type="submit" value="Agregar Orden" class="botones" style="visibility:visible" id="botonAgregar" /></td>
             <td>&nbsp; &nbsp;
               <input type="reset" value="Restablecer" class="botones" /></td>
-            <td>&nbsp;</td>
             </tr>
           <tr>
-            <td colspan="4" class="pie_lista">&nbsp;</td>
+            <td colspan="3" class="pie_lista">&nbsp;</td>
           </tr>
       </table> 
       </form> 
