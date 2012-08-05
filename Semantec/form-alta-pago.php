@@ -6,6 +6,7 @@
         include("conexion.php");
         
         
+        
         /*TIPOS DE PAGO*/
         
         $sql = "SELECT id,nombre FROM tipo_pago WHERE estado = 1";
