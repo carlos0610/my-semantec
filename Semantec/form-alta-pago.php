@@ -126,7 +126,7 @@
           <tr>
             <td>Nro Operación</td>
             <td><label>
-              <input name="txtNroOperacion1" type="text" class="campos2" id="txtNroOperacion1" >
+              <input name="txtNroOperacion1" type="text" class="campos2" id="txtNroOperacion1" required >
             </label></td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
@@ -136,7 +136,7 @@
           <tr>
             <td>Banco</td>
             <td>
-                    <select name="comboBanco1" class="campos2" id="comboBanco1" disabled>
+                    <select name="comboBanco1" class="campos2" id="comboBanco1" disabled required>
                     <?php
                     while ($fila_banco = mysql_fetch_array($bancos)){
                 
@@ -146,30 +146,30 @@
                                           </select>
             </label></td>
             <td>Sucursal</td>
-            <td><input name="txtSucursal" type="text" class="campos2" id="txtSucursal1" disabled></td>
+            <td><input name="txtSucursal" type="text" class="campos2" id="txtSucursal1" disabled required> </td>
             <td>&nbsp;</td>
             <td></td>
           </tr>
           
           <tr>
             <td>Fecha emisión</td>
-            <td><input name="txtFechaEmision" type="text" class="campos2" id="txtFechaEmision1" disabled></td>
+            <td><input name="txtFechaEmision" type="text" class="campos2" id="txtFechaEmision1" disabled required></td>
             <td>Fecha vto:</td>
-            <td><input name="txtFechaVto1" type="text" class="campos2" id="txtFechaVto1" disabled></td>
+            <td><input name="txtFechaVto1" type="text" class="campos2" id="txtFechaVto1" disabled required></td>
             <td>&nbsp;</td>
             <td></td>
           </tr>
           <tr>
             <td>Firmante</td>
-            <td><input name="txtFirmante1" type="text" class="campos2" id="txtFirmante1" disabled></td>
+            <td><input name="txtFirmante1" type="text" class="campos2" id="txtFirmante1" disabled required></td>
             <td>CUIT firmante</td>
-            <td><input name="txtCuit1" type="text" class="campos2" id="txtCuit1" disabled></td>
+            <td><input name="txtCuit1" type="text" class="campos2" id="txtCuit1" disabled required></td>
             <td>&nbsp;</td>
             <td></td>
           </tr>
           <tr>
             <td>Cuenta</td>
-            <td><select name="comboCuenta1" class="campos2" id="comboCuenta1" disabled>
+            <td><select name="comboCuenta1" class="campos2" id="comboCuenta1" disabled required>
               <?php
                     while ($fila_cuenta = mysql_fetch_array($cuentabanco)){
                 ?>
@@ -177,13 +177,13 @@
               <?php } ?>
             </select></td>
             <td>Fecha transf</td>
-            <td><input name="txtFechaTransferencia1" type="text" class="campos2" id="txtFechaTransferencia1" disabled></td>
+            <td><input name="txtFechaTransferencia1" type="text" class="campos2" id="txtFechaTransferencia1" disabled required></td>
             <td>&nbsp;</td>
             <td></td>
           </tr>
           <tr>
             <td>Importe</td>
-            <td><input name="txtImportePago1" type="text" class="campos2" id="txtImportePago1" disabled></td>
+            <td><input name="txtImportePago1" type="text" class="campos2" id="txtImportePago1" disabled required></td>
             <td>Adjuntar archivo</td>
             <td><input type="file" name="userfile1" id="userfile1"></td>
             <td>&nbsp;</td>
@@ -212,13 +212,13 @@
             <td>Prefijo :
               <input name="txtPrefijo1" type="text" class="campos2" id="txtPrefijo1" style="text-align:right" size="5"  min="0"  disabled  />
             <label>Nro :
-              <input name="txtNro1" type="text" class="campos2" id="txtNro1" size="20" disabled>
+              <input name="txtNro1" type="text" class="campos2" id="txtNro1" size="20" required disabled>
             </label></td>
             </tr>
           <tr>
             <td>Importe:</td>
             <td><label>
-              <input name="txtImporte1" type="text" class="campos2" id="txtImporte1" size="8" disabled>
+              <input name="txtImporte1" type="text" class="campos2" id="txtImporte1" size="8" required disabled>
             </label></td>
             <td>&nbsp;</td>
             </tr>
@@ -235,14 +235,14 @@
               
               <input name="txtPrefijo2" type="text" class="campos2" id="txtPrefijo2" style="text-align:right" size="5"  min="0" disabled   />
               Nro :
-<input name="txtNro2" type="text" class="campos2" id="txtNro2" size="20" disabled></td>
+<input name="txtNro2" type="text" class="campos2" id="txtNro2" size="20" disabled required></td>
             </tr>
           <tr>
             <td>Importe:</td>
-            <td><input name="txtImporte2" type="text" class="campos2" id="txtImporte2" size="8" disabled></td>
+            <td><input name="txtImporte2" type="text" class="campos2" id="txtImporte2" size="8" disabled required></td>
             <td>%: 
               
-              <select name="comboIva" class="campos2" id="comboIva" disabled>
+              <select name="comboIva" class="campos2" id="comboIva" disabled required>
                   <?php
                     while ($fila_iva = mysql_fetch_array($iva)){
                 ?>
@@ -263,11 +263,11 @@
             <td>Prefijo :
               <input name="txtPrefijo3" type="text" class="campos2" id="txtPrefijo3" style="text-align:right" size="5"  min="0" disabled   />
 Nro :
-<input name="txtNro3" type="text" class="campos2" id="txtNro3" size="20" disabled></td>
+<input name="txtNro3" type="text" class="campos2" id="txtNro3" size="20" disabled required></td>
             </tr>
           <tr>
             <td>Importe:</td>
-            <td><input name="txtImporte3" type="text" class="campos2" id="txtImporte3" size="8" disabled></td>
+            <td><input name="txtImporte3" type="text" class="campos2" id="txtImporte3" size="8" disabled required></td>
             <td>&nbsp;</td>
             </tr>
           <tr>
@@ -282,11 +282,11 @@ Nro :
             <td>Prefijo :
               <input name="txtPrefijo4" type="text" class="campos2" id="txtPrefijo4" style="text-align:right" size="5"  min="0" disabled />
 Nro :
-<input name="txtNro4" type="text" class="campos2" id="txtNro4" size="20" disabled ></td>
+<input name="txtNro4" type="text" class="campos2" id="txtNro4" size="20" disabled required></td>
             </tr>
           <tr>
             <td>Importe:</td>
-            <td><input name="txtImporte4" type="text" class="campos2" id="txtImporte4" size="8" disabled></td>
+            <td><input name="txtImporte4" type="text" class="campos2" id="txtImporte4" size="8" disabled required></td>
             <td>Provincia:
               <select name="comboProvincias" class="campos2" id="comboProvincias" disabled>
                 <?php

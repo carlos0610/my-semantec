@@ -2,8 +2,9 @@
     $titulo = "Listado de clientes.";
         include("validar.php");
         include("funciones.php");
-
         include("conexion.php");
+        include("modelo/modeloCuentaTipo.php");
+        include("modelo/modeloBanco.php");
 /* CALCULO PAGINADO */  ###############################################################################
     $sql0="SELECT `id`, `cut_id`, `ban_id`, `nro`, `nombre`, `cbu`, `estado` 
            FROM `cuentabanco` 
@@ -29,6 +30,8 @@
         
         $sql = "SELECT ban_id , ban_nombre FROM `banco` WHERE estado = 1 ORDER BY ban_nombre ";
         $bancos = mysql_query($sql);
+        
+
 ?>
 <!doctype html>
 <html>  
@@ -72,7 +75,7 @@
             <td>Tipo Cuenta</td>
             <td>
           <select name="cut_id" id="cut_id" class="campos" required >
-    <?php
+    <?php 
           while($fila = mysql_fetch_array($tipocuenta)){
     ?>
                     <option value="<?php echo($fila["cut_id"]); ?>"><?php echo(utf8_encode($fila["cut_nombre"])); ?></option>
@@ -144,7 +147,7 @@
       <table class="sortable" cellpadding="3">
           <tr class="titulo">
             <td>Nombre</td>
-            <td width="90">Banco</td>
+            <td width="120">Banco</td>
             <td width="120">Tipo Cuenta</td>
             <td width="120">Número</td>
             <td width="120">CBU</td>
@@ -160,8 +163,8 @@
   ?>
           <tr class="lista" bgcolor="<?php echo($colores[$i]);?>">
               <td><?php echo(utf8_encode($fila["nombre"])); ?></td>
-            <td><?php echo(utf8_encode($fila["ban_id"]));?></td>
-            <td><?php echo($fila["cut_id"]);?></td>   
+            <td><?php echo(utf8_encode(getBancoNombre($fila["ban_id"])));?></td>
+            <td><?php echo(utf8_encode( getCuentaTipoNombre($fila["cut_id"])));?></td>   
             <td><?php echo($fila["nro"]);?></td> 
             <td><?php echo($fila["cbu"]);?></td> 
             <td>
