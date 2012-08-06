@@ -29,10 +29,11 @@ include "funciones.php";
         $sucursal           = $_POST["txtSucursal1"];
         $fechaEmision       = gfecha($_POST["txtFechaEmision1"]);
         $fechaVencimiento   = gfecha($_POST["txtFechaVto"]);
-        $firmante           = $_POST["txtFirmante"];
-        $cuit               = $_POST["txtCuit"];
-        $importe            = $_POST["txtImportePago"];
-        $cuenta             = $_POST["comboCuenta"];
+        $firmante           = $_POST["txtFirmante1"];
+        $cuit               = $_POST["txtCuit1"];
+        $importe            = $_POST["txtImportePago1"];
+        $cuenta             = $_POST["comboCuenta1"];
+        $fechaTransferencia     = $_POST["txtFechaTransferencia1"];
          
         
         /*** ADJUNTAR ARCHIVO ***/
@@ -85,9 +86,9 @@ include "funciones.php";
           
           /* Transferencia bancaria*/
           case 3:       if ($idFile == -1)
-                            $sql = "INSERT INTO cobros_detalle_pago (cobros_id,nro,cuentabanco_id,importe) VALUES ($cobro_id,'$nro',$cuenta,$importe)"; // Sin file           
+                            $sql = "INSERT INTO cobros_detalle_pago (cobros_id,nro,cuentabanco_id,importe,fecha_transferencia) VALUES ($cobro_id,'$nro',$cuenta,$importe,$fechaTransferencia)"; // Sin file           
                         else
-                            $sql = "INSERT INTO cobros_detalle_pago (cobros_id,nro,cuentabanco_id,importe,files_id) VALUES ($cobro_id,'$nro',$cuenta,$importe,$idFile)"; // Sin file
+                            $sql = "INSERT INTO cobros_detalle_pago (cobros_id,nro,cuentabanco_id,importe,files_id,fecha_transferencia) VALUES ($cobro_id,'$nro',$cuenta,$importe,$idFile,$fechaTransferencia)"; // Sin file
                             break;
                         }
                         

@@ -161,15 +161,15 @@
           </tr>
           <tr>
             <td>Firmante</td>
-            <td><input name="txtFirmante" type="text" class="campos2" id="txtFirmante" disabled></td>
+            <td><input name="txtFirmante1" type="text" class="campos2" id="txtFirmante1" disabled></td>
             <td>CUIT firmante</td>
-            <td><input name="txtCuit" type="text" class="campos2" id="txtCuit" disabled></td>
+            <td><input name="txtCuit1" type="text" class="campos2" id="txtCuit1" disabled></td>
             <td>&nbsp;</td>
             <td></td>
           </tr>
           <tr>
             <td>Cuenta</td>
-            <td><select name="comboCuenta" class="campos2" id="comboCuenta" disabled>
+            <td><select name="comboCuenta1" class="campos2" id="comboCuenta1" disabled>
               <?php
                     while ($fila_cuenta = mysql_fetch_array($cuentabanco)){
                 ?>
@@ -177,13 +177,13 @@
               <?php } ?>
             </select></td>
             <td>Fecha transf</td>
-            <td><input name="txtFechaTransferencia" type="text" class="campos2" id="txtFechaTransferencia" disabled></td>
+            <td><input name="txtFechaTransferencia" type="text" class="campos2" id="txtFechaTransferencia1" disabled></td>
             <td>&nbsp;</td>
             <td></td>
           </tr>
           <tr>
             <td>Importe</td>
-            <td><input name="txtImportePago" type="text" class="campos2" id="txtImportePago"></td>
+            <td><input name="txtImportePago" type="text" class="campos2" id="txtImportePago1"></td>
             <td>Adjuntar archivo</td>
             <td><input type="file" name="userfile" id="userfile"></td>
             <td>&nbsp;</td>
