@@ -4,7 +4,7 @@
     $titulo = "Formulario de registro de pago y retenciones";
         include("validar.php");
         include("conexion.php");
-        
+        $fav_id     =  $_GET["fav_id"]; 
         
         
         /*TIPOS DE PAGO*/
@@ -44,9 +44,9 @@
   <script type="text/javascript">
   $(function() {
       /* Pago */
-      $('#txtFechaTransferencia').datepick();
-      $('#txtFechaEmision').datepick();   
-      $('#txtFechaVto').datepick();
+      $('#txtFechaTransferencia1').datepick();
+      $('#txtFechaEmision1').datepick();   
+      $('#txtFechaVto1').datepick();
       /* Retenciones */
       $('#txtFecha1').datepick();   // Ganancias
       $('#txtFecha2').datepick();   // IVA
@@ -98,7 +98,7 @@
 
       <h2>Panel de control</h2>
       
-      <form action="alta-pago.php" method="post" enctype="multipart/form-data" enctype="multipart/form-data" >
+      <form action="alta-pago.php?fav_id=<?php echo $fav_id ?>" method="post" enctype="multipart/form-data" enctype="multipart/form-data" >
       <table width="100%" cellpadding="5" class="listados">
           <tr class="titulo">
             <td colspan="5"> <?php echo($titulo)?> </td>
@@ -136,7 +136,7 @@
           <tr>
             <td>Banco</td>
             <td>
-                    <select name="comboBanco" class="campos2" id="comboBanco1" disabled>
+                    <select name="comboBanco1" class="campos2" id="comboBanco1" disabled>
                     <?php
                     while ($fila_banco = mysql_fetch_array($bancos)){
                 
@@ -155,7 +155,7 @@
             <td>Fecha emisión</td>
             <td><input name="txtFechaEmision" type="text" class="campos2" id="txtFechaEmision1" disabled></td>
             <td>Fecha vto:</td>
-            <td><input name="txtFechaVto" type="text" class="campos2" id="txtFechaVto" disabled></td>
+            <td><input name="txtFechaVto1" type="text" class="campos2" id="txtFechaVto1" disabled></td>
             <td>&nbsp;</td>
             <td></td>
           </tr>
@@ -177,15 +177,15 @@
               <?php } ?>
             </select></td>
             <td>Fecha transf</td>
-            <td><input name="txtFechaTransferencia" type="text" class="campos2" id="txtFechaTransferencia1" disabled></td>
+            <td><input name="txtFechaTransferencia1" type="text" class="campos2" id="txtFechaTransferencia1" disabled></td>
             <td>&nbsp;</td>
             <td></td>
           </tr>
           <tr>
             <td>Importe</td>
-            <td><input name="txtImportePago" type="text" class="campos2" id="txtImportePago1"></td>
+            <td><input name="txtImportePago1" type="text" class="campos2" id="txtImportePago1" disabled></td>
             <td>Adjuntar archivo</td>
-            <td><input type="file" name="userfile" id="userfile"></td>
+            <td><input type="file" name="userfile1" id="userfile1"></td>
             <td>&nbsp;</td>
             <td></td>
           </tr>

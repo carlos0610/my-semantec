@@ -194,42 +194,43 @@ function filtroTipoDePago(valorCombo,numero){
     {
       valor = false;
     }
-    document.getElementById("txtNroOperacion").disabled = valor;   
-    document.getElementById("comboBanco").disabled = valor;  
-    document.getElementById("txtSucursal").disabled = valor;  
-    document.getElementById("txtFechaEmision").disabled = valor;  
-    document.getElementById("txtFechaVto").disabled = valor;  
-    document.getElementById("txtFirmante").disabled = valor;  
-    document.getElementById("txtCuit").disabled = valor;  
-    document.getElementById("comboCuenta").disabled = valor;  
-    document.getElementById("txtFechaTransferencia").disabled = valor;  
-    document.getElementById("txtImportePago").disabled = valor;  
-    document.getElementById("userfile").disabled = valor;  
+    document.getElementById("txtNroOperacion"+numero).disabled = valor;   
+    document.getElementById("comboBanco"+numero).disabled = valor;  
+    document.getElementById("txtSucursal"+numero).disabled = valor; 
+    document.getElementById("txtFechaEmision"+numero).disabled = valor;   
+    document.getElementById("txtFechaVto"+numero).disabled = valor;  
+    document.getElementById("txtFirmante"+numero).disabled = valor;  
+    document.getElementById("txtCuit"+numero).disabled = valor;  
+    document.getElementById("comboCuenta"+numero).disabled = valor;  
+    document.getElementById("txtFechaTransferencia"+numero).disabled = valor;  
+    document.getElementById("txtImportePago"+numero).disabled = valor;  
+    document.getElementById("userfile"+numero).disabled = valor;  
     valor = true;
+    
     if(valorCombo=="1")//cheque
         {
-                document.getElementById("comboCuenta").disabled = valor;  
-                document.getElementById("txtFechaTransferencia").disabled = valor;  
+                document.getElementById("comboCuenta"+numero).disabled = valor;  
+                document.getElementById("txtFechaTransferencia"+numero).disabled = valor;  
         }
     if(valorCombo=="2")// Efectivo
         {
-            document.getElementById("comboBanco").disabled = valor;  
-            document.getElementById("txtSucursal").disabled = valor;  
-            document.getElementById("txtFechaEmision").disabled = valor;  
-            document.getElementById("txtFechaVto").disabled = valor;  
-            document.getElementById("txtFirmante").disabled = valor;  
-            document.getElementById("txtCuit").disabled = valor;  
-            document.getElementById("comboCuenta").disabled = valor;  
-            document.getElementById("txtFechaTransferencia").disabled = valor;  
+            document.getElementById("comboBanco"+numero).disabled = valor;  
+            document.getElementById("txtSucursal"+numero).disabled = valor;  
+            document.getElementById("txtFechaEmision"+numero).disabled = valor;  
+            document.getElementById("txtFechaVto"+numero).disabled = valor;  
+            document.getElementById("txtFirmante"+numero).disabled = valor;  
+            document.getElementById("txtCuit"+numero).disabled = valor;  
+            document.getElementById("comboCuenta"+numero).disabled = valor;  
+            document.getElementById("txtFechaTransferencia"+numero).disabled = valor;  
         }
     if(valorCombo=="3")//transferencia
         {
-                document.getElementById("comboBanco").disabled = valor;  
-                document.getElementById("txtSucursal").disabled = valor;  
-                document.getElementById("txtFechaEmision").disabled = valor;  
-                document.getElementById("txtFechaVto").disabled = valor;  
-                document.getElementById("txtFirmante").disabled = valor;  
-                document.getElementById("txtCuit").disabled = valor;  
+                document.getElementById("comboBanco"+numero).disabled = valor;  
+                document.getElementById("txtSucursal"+numero).disabled = valor;  
+                document.getElementById("txtFechaEmision"+numero).disabled = valor;  
+                document.getElementById("txtFechaVto"+numero).disabled = valor;  
+                document.getElementById("txtFirmante"+numero).disabled = valor;  
+                document.getElementById("txtCuit"+numero).disabled = valor;  
         }
 }
 
