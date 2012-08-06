@@ -166,6 +166,72 @@ function habilitarComboCliente(formulario){
             }
     document.forms[nombre].comboClientes.disabled = valor;   
 }
+function habilitarRetenciones(formulario,numero){
+    
+    var nombre = formulario;
+    var valor = true; 
+    if(document.getElementById(nombre).checked)
+    {
+      valor = false;
+    }
+    document.getElementById("txtFecha"+numero).disabled = valor;   
+    document.getElementById("txtPrefijo"+numero).disabled = valor;  
+    document.getElementById("txtNro"+numero).disabled = valor;  
+    document.getElementById("txtImporte"+numero).disabled = valor;  
+    if(nombre=="chkIva")
+        {
+            document.getElementById("comboIva").disabled = valor;  
+        }
+    if(nombre=="chkSUSS")
+        {
+            document.getElementById("comboProvincias").disabled = valor;  
+        }
+}
+
+function filtroTipoDePago(valorCombo,numero){
+    var valor = true; 
+    if(valorCombo!=0)
+    {
+      valor = false;
+    }
+    document.getElementById("txtNroOperacion").disabled = valor;   
+    document.getElementById("comboBanco").disabled = valor;  
+    document.getElementById("txtSucursal").disabled = valor;  
+    document.getElementById("txtFechaEmision").disabled = valor;  
+    document.getElementById("txtFechaVto").disabled = valor;  
+    document.getElementById("txtFirmante").disabled = valor;  
+    document.getElementById("txtCuit").disabled = valor;  
+    document.getElementById("comboCuenta").disabled = valor;  
+    document.getElementById("txtFechaTransferencia").disabled = valor;  
+    document.getElementById("txtImportePago").disabled = valor;  
+    document.getElementById("userfile").disabled = valor;  
+    valor = true;
+    if(valorCombo=="1")//cheque
+        {
+                document.getElementById("comboCuenta").disabled = valor;  
+                document.getElementById("txtFechaTransferencia").disabled = valor;  
+        }
+    if(valorCombo=="2")// Efectivo
+        {
+            document.getElementById("comboBanco").disabled = valor;  
+            document.getElementById("txtSucursal").disabled = valor;  
+            document.getElementById("txtFechaEmision").disabled = valor;  
+            document.getElementById("txtFechaVto").disabled = valor;  
+            document.getElementById("txtFirmante").disabled = valor;  
+            document.getElementById("txtCuit").disabled = valor;  
+            document.getElementById("comboCuenta").disabled = valor;  
+            document.getElementById("txtFechaTransferencia").disabled = valor;  
+        }
+    if(valorCombo=="3")//transferencia
+        {
+                document.getElementById("comboBanco").disabled = valor;  
+                document.getElementById("txtSucursal").disabled = valor;  
+                document.getElementById("txtFechaEmision").disabled = valor;  
+                document.getElementById("txtFechaVto").disabled = valor;  
+                document.getElementById("txtFirmante").disabled = valor;  
+                document.getElementById("txtCuit").disabled = valor;  
+        }
+}
 
 function habilitarFiltros(nombre,gadet){
   if(document.getElementById(nombre).checked){ 

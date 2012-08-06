@@ -9,7 +9,7 @@ include "funciones.php";
         mysql_query("BEGIN"); // Inicio de Transacción
         $error      = 0;
         
-        $tipoPago   =  $_POST["comboTipoPago"];
+        $tipoPago   =  $_POST["comboTipoPago1"];
         $usu_id     =  $_SESSION["usu_id"];
         $fav_id     =  $_GET["fav_id"]; 
         $fav_id     = 20;           //modificar 
@@ -24,10 +24,10 @@ include "funciones.php";
             $cobro_id = mysql_insert_id ();
      
         /*** Obtenemos datos del pago ***/
-        $nro                = $_POST["txtNroOperacion"];
-        $banco              = $_POST["comboBanco"];
-        $sucursal           = $_POST["txtSucursal"];
-        $fechaEmision       = gfecha($_POST["txtFechaEmision"]);
+        $nro                = $_POST["txtNroOperacion1"];
+        $banco              = $_POST["comboBanco1"];
+        $sucursal           = $_POST["txtSucursal1"];
+        $fechaEmision       = gfecha($_POST["txtFechaEmision1"]);
         $fechaVencimiento   = gfecha($_POST["txtFechaVto"]);
         $firmante           = $_POST["txtFirmante"];
         $cuit               = $_POST["txtCuit"];
@@ -102,9 +102,9 @@ include "funciones.php";
 
     if (isset($_POST["chkGanancias"])){
         $fecha      = gfecha($_POST["txtFecha1"]);
-        $prefijo    = $_POST["txtPrefijo"];
-        $importe    = $_POST["txtImporte"];
-        $nro        = $_POST["txtNro"];
+        $prefijo    = $_POST["txtPrefijo1"];
+        $importe    = $_POST["txtImporte1"];
+        $nro        = $_POST["txtNro1"];
 
        $sql = "INSERT INTO cobros_detalle_retencion (cobros_id,ret_id,ret_fecha,ret_prefijo,ret_codigo,ret_importe) VALUES ($cobro_id,1,'$fecha','$prefijo','$nro',$importe)"; 
        $result = mysql_query($sql);

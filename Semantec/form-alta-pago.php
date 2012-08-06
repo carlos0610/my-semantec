@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
     header('Content-Type: text/html; charset=utf-8');
     $titulo = "Formulario de registro de pago y retenciones";
@@ -99,17 +99,18 @@
       <h2>Panel de control</h2>
       
       <form action="alta-pago.php" method="post" enctype="multipart/form-data" enctype="multipart/form-data" >
-      <table width="100%" cellpadding="5" class="forms">
+      <table width="100%" cellpadding="5" class="listados">
           <tr class="titulo">
             <td colspan="5"> <?php echo($titulo)?> </td>
-            <td width="63">
+            <td width="66">
                 <a href="index-admin.php">
                     <img src="images/home.png"  alt="inicio" title="Volver al panel" width="32" height="32" border="none" />                </a>            </td>
           </tr>
           <tr>
-            <td width="83">Tipo de pago</td>
-          <td width="88">
-      <select name="comboTipoPago" class="campos2" id="comboTipoPago">
+            <td width="120">Tipo de pago</td>
+          <td width="146">
+      <select name="comboTipoPago1" class="campos2" id="comboTipoPago1" onClick="filtroTipoDePago(value,1)">
+          <option value="0">Seleccione </option>
                 <?php
                     while ($fila = mysql_fetch_array($tipo_pago)){
                 
@@ -117,15 +118,15 @@
                     <option value="<?php echo $fila["id"]?>"><?php echo $fila["nombre"]?> </option>
                     <?php } ?>
                 </select></td>
-            <td width="172"><label></label></td>
-            <td width="56">&nbsp;</td>
-            <td width="104">&nbsp;</td>
+            <td width="194"><label></label></td>
+            <td width="238">&nbsp;</td>
+            <td width="44">&nbsp;</td>
             <td></td>
           </tr>
           <tr>
-            <td>Nro Operacion</td>
+            <td>Nro Operación</td>
             <td><label>
-              <input name="txtNroOperacion" type="text" class="campos2" id="txtNroOperacion">
+              <input name="txtNroOperacion1" type="text" class="campos2" id="txtNroOperacion1" >
             </label></td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
@@ -135,7 +136,7 @@
           <tr>
             <td>Banco</td>
             <td>
-                    <select name="comboBanco" class="campos2" id="comboBanco">
+                    <select name="comboBanco" class="campos2" id="comboBanco1" disabled>
                     <?php
                     while ($fila_banco = mysql_fetch_array($bancos)){
                 
@@ -144,103 +145,47 @@
                   <?php } ?>
                                           </select>
             </label></td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
+            <td>Sucursal</td>
+            <td><input name="txtSucursal" type="text" class="campos2" id="txtSucursal1" disabled></td>
             <td>&nbsp;</td>
             <td></td>
           </tr>
           
           <tr>
-            <td>Sucursal</td>
-            <td><label>
-              <input name="txtSucursal" type="text" class="campos2" id="txtSucursal">
-            </label></td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Cuenta</td>
-            <td><label>
-              <select name="comboCuenta" class="campos2" id="comboCuenta">
-                  <?php
-                    while ($fila_cuenta = mysql_fetch_array($cuentabanco)){
-                ?>  
-                  <option value="<?php echo$fila_cuenta["id"]?>"><?php echo $fila_cuenta["nombre"]?></option>
-              <?php } ?>            
-              </select>
-            </label></td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Fecha transf</td>
-            <td><label>
-              <input name="txtFechaTransferencia" type="text" class="campos2" id="txtFechaTransferencia">
-            </label></td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td></td>
-          </tr>
-          <tr>
             <td>Fecha emisión</td>
-            <td><label>
-              <input name="txtFechaEmision" type="text" class="campos2" id="txtFechaEmision">
-            </label></td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td></td>
-          </tr>
-          <tr>
+            <td><input name="txtFechaEmision" type="text" class="campos2" id="txtFechaEmision1" disabled></td>
             <td>Fecha vto:</td>
-            <td><label>
-              <input name="txtFechaVto" type="text" class="campos2" id="txtFechaVto">
-            </label></td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
+            <td><input name="txtFechaVto" type="text" class="campos2" id="txtFechaVto" disabled></td>
             <td>&nbsp;</td>
             <td></td>
           </tr>
           <tr>
             <td>Firmante</td>
-            <td><label>
-              <input name="txtFirmante" type="text" class="campos2" id="txtFirmante">
-            </label></td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
+            <td><input name="txtFirmante" type="text" class="campos2" id="txtFirmante" disabled></td>
+            <td>CUIT firmante</td>
+            <td><input name="txtCuit" type="text" class="campos2" id="txtCuit" disabled></td>
             <td>&nbsp;</td>
             <td></td>
           </tr>
           <tr>
-            <td>CUIT firmante</td>
-            <td><label>
-              <input name="txtCuit" type="text" class="campos2" id="txtCuit">
-            </label></td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
+            <td>Cuenta</td>
+            <td><select name="comboCuenta" class="campos2" id="comboCuenta" disabled>
+              <?php
+                    while ($fila_cuenta = mysql_fetch_array($cuentabanco)){
+                ?>
+              <option value="<?php echo$fila_cuenta["id"]?>"><?php echo $fila_cuenta["nombre"]?></option>
+              <?php } ?>
+            </select></td>
+            <td>Fecha transf</td>
+            <td><input name="txtFechaTransferencia" type="text" class="campos2" id="txtFechaTransferencia" disabled></td>
             <td>&nbsp;</td>
             <td></td>
           </tr>
           <tr>
             <td>Importe</td>
             <td><input name="txtImportePago" type="text" class="campos2" id="txtImportePago"></td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td></td>
-          </tr>
-          <tr>
             <td>Adjuntar archivo</td>
-            <td><label>
-              <input type="file" name="userfile" id="userfile">
-            </label></td>
-            <td>                            </td>
-            <td>&nbsp;</td>
+            <td><input type="file" name="userfile" id="userfile"></td>
             <td>&nbsp;</td>
             <td></td>
           </tr>
@@ -248,55 +193,56 @@
           
 <div class="retenciones">
           <form action="alta-pago.php" method="post" enctype="multipart/form-data" enctype="multipart/form-data" >
-          <table class="forms">
+          <table class="listados">
           <tr>
             <td colspan="3" bgcolor="#0099CC"><div align="center" class="Estilo1">Retenciones</div></td>
         </tr>
           <tr>
-            <td width="13%"></td>
-            <td width="20%"></td>
+            <td width="7%"></td>
+            <td width="18%"></td>
           <tr>
-            <td>&nbsp;</td>
-            <td><input type="checkbox" name="chkGanancias" id="chkGanancias">
+            <td bgcolor="#CDDCDA">&nbsp;</td>
+            <td bgcolor="#CDDCDA"><input type="checkbox" name="chkGanancias" id="chkGanancias" onClick="habilitarRetenciones('chkGanancias',1)">
             Ganancias            </td>
-            <td width="66%">&nbsp;</td>
+            <td width="75%" bgcolor="#CDDCDA">&nbsp;</td>
             </tr>          
           <tr>
             <td>Fecha:</td>
-            <td><input name="txtFecha1" type="text" class="campos2" id="txtFecha1" style="text-align:right" size="12"  min="0" required  /></td>
-            <td>Prefijo:
-            <input name="txtPrefijo" type="text" class="campos2" id="txtPrefijo" style="text-align:right" size="5"  min="0"    />
-            <label>Nro:
-            <input name="txtNro" type="text" class="campos2" id="txtNro" size="20">
+            <td><input name="txtFecha1" type="text" class="campos2" id="txtFecha1" style="text-align:right" size="12"  min="0" required disabled  /></td>
+            <td>Prefijo :
+              <input name="txtPrefijo1" type="text" class="campos2" id="txtPrefijo1" style="text-align:right" size="5"  min="0"  disabled  />
+            <label>Nro :
+              <input name="txtNro1" type="text" class="campos2" id="txtNro1" size="20" disabled>
             </label></td>
             </tr>
           <tr>
             <td>Importe:</td>
             <td><label>
-              <input name="txtImporte" type="text" class="campos2" id="txtImporte" size="8">
+              <input name="txtImporte1" type="text" class="campos2" id="txtImporte1" size="8" disabled>
             </label></td>
             <td>&nbsp;</td>
             </tr>
           <tr>
-            <td>&nbsp;</td>
-            <td><input type="checkbox" name="chkIva" id="chkIva">
+            <td bgcolor="#CDDCDA">&nbsp;</td>
+            <td bgcolor="#CDDCDA"><input type="checkbox" name="chkIva" id="chkIva" onClick="habilitarRetenciones('chkIva',2)">
             IVA            </td>
-            <td>&nbsp;</td>
+            <td bgcolor="#CDDCDA">&nbsp;</td>
             </tr>
           <tr>
             <td>Fecha:</td>
-            <td><input name="txtFecha2" type="text" class="campos2" id="txtFecha2" style="text-align:right" size="12"  min="0" required  /></td>
-            <td>Prefijo:
-            <input name="txtPrefijo2" type="text" class="campos2" id="txtPrefijo2" style="text-align:right" size="5"  min="0"    />
-            Nro:
-            <input name="txtNro2" type="text" class="campos2" id="txtNro2" size="20"></td>
+            <td><input name="txtFecha2" type="text" class="campos2" id="txtFecha2" style="text-align:right" size="12"  min="0" required disabled /></td>
+            <td>Prefijo :
+              
+              <input name="txtPrefijo2" type="text" class="campos2" id="txtPrefijo2" style="text-align:right" size="5"  min="0" disabled   />
+              Nro :
+<input name="txtNro2" type="text" class="campos2" id="txtNro2" size="20" disabled></td>
             </tr>
           <tr>
             <td>Importe:</td>
-            <td><input name="txtImporte2" type="text" class="campos2" id="txtImporte2" size="8"></td>
+            <td><input name="txtImporte2" type="text" class="campos2" id="txtImporte2" size="8" disabled></td>
             <td>%: 
               
-              <select name="comboIva" class="campos2" id="comboIva">
+              <select name="comboIva" class="campos2" id="comboIva" disabled>
                   <?php
                     while ($fila_iva = mysql_fetch_array($iva)){
                 ?>
@@ -306,43 +252,43 @@
             </td>
             </tr>
           <tr>
-            <td>&nbsp;</td>
-            <td><input type="checkbox" name="chkIIBB" id="chkIIBB">
+            <td bgcolor="#CDDCDA">&nbsp;</td>
+            <td bgcolor="#CDDCDA"><input type="checkbox" name="chkIIBB" id="chkIIBB" onClick="habilitarRetenciones('chkIIBB',3)">
             IIBB            </td>
-            <td>&nbsp;</td>
+            <td bgcolor="#CDDCDA">&nbsp;</td>
             </tr>
           <tr>
             <td>Fecha:</td>
-            <td><input name="txtFecha3" type="text" class="campos2" id="txtFecha3" style="text-align:right" size="12"  min="0" required  /></td>
-            <td>Prefijo:
-              <input name="txtPrefijo3" type="text" class="campos2" id="txtPrefijo3" style="text-align:right" size="5"  min="0"    />
-Nro:
-<input name="txtNro3" type="text" class="campos2" id="txtNro3" size="20"></td>
+            <td><input name="txtFecha3" type="text" class="campos2" id="txtFecha3" style="text-align:right" size="12"  min="0" required disabled /></td>
+            <td>Prefijo :
+              <input name="txtPrefijo3" type="text" class="campos2" id="txtPrefijo3" style="text-align:right" size="5"  min="0" disabled   />
+Nro :
+<input name="txtNro3" type="text" class="campos2" id="txtNro3" size="20" disabled></td>
             </tr>
           <tr>
             <td>Importe:</td>
-            <td><input name="txtImporte3" type="text" class="campos2" id="txtImporte3" size="8"></td>
+            <td><input name="txtImporte3" type="text" class="campos2" id="txtImporte3" size="8" disabled></td>
             <td>&nbsp;</td>
             </tr>
           <tr>
-            <td>&nbsp;</td>
-            <td><input type="checkbox" name="chkSUSS" id="chkSUSS">
+            <td bgcolor="#CDDCDA">&nbsp;</td>
+            <td bgcolor="#CDDCDA"><input type="checkbox" name="chkSUSS" id="chkSUSS" onClick="habilitarRetenciones('chkSUSS',4)">
             SUSS            </td>
-            <td>&nbsp;</td>
+            <td bgcolor="#CDDCDA">&nbsp;</td>
             </tr>
           <tr>
             <td>Fecha:</td>
-            <td><input name="txtFecha4" type="text" class="campos2" id="txtFecha4" style="text-align:right" size="12"  min="0" required  /></td>
-            <td>Prefijo:
-              <input name="txtPrefijo4" type="text" class="campos2" id="txtPrefijo4" style="text-align:right" size="5"  min="0"  />
-Nro:
-<input name="txtNro4" type="text" class="campos2" id="txtNro4" size="20"></td>
+            <td><input name="txtFecha4" type="text" class="campos2" id="txtFecha4" style="text-align:right" size="12"  min="0" required disabled /></td>
+            <td>Prefijo :
+              <input name="txtPrefijo4" type="text" class="campos2" id="txtPrefijo4" style="text-align:right" size="5"  min="0" disabled />
+Nro :
+<input name="txtNro4" type="text" class="campos2" id="txtNro4" size="20" disabled ></td>
             </tr>
           <tr>
             <td>Importe:</td>
-            <td><input name="txtImporte4" type="text" class="campos2" id="txtImporte4" size="8"></td>
+            <td><input name="txtImporte4" type="text" class="campos2" id="txtImporte4" size="8" disabled></td>
             <td>Provincia:
-              <select name="comboProvincias" class="campos2" id="comboProvincias">
+              <select name="comboProvincias" class="campos2" id="comboProvincias" disabled>
                 <?php
                     while ($fila_provincia = mysql_fetch_array($provincias)){
                 ?>
@@ -357,16 +303,17 @@ Nro:
             </tr>
           <tr>
             <td>&nbsp;</td>
-            <td><input type="submit" value="Agregar Orden" class="botones" style="visibility:visible" id="botonAgregar" /></td>
-            <td>&nbsp; &nbsp;
-              <input type="reset" value="Restablecer" class="botones" /></td>
+            <td>&nbsp;</td>
+            <td>&nbsp; <input type="submit" value="Agregar Orden" class="botones" style="visibility:visible" id="botonAgregar" />
+              &nbsp;
+            <input type="reset" value="Restablecer" class="botones" /></td>
             </tr>
           <tr>
             <td colspan="3" class="pie_lista">&nbsp;</td>
           </tr>
       </table> 
       </form> 
-      </div>
+</div>
  
       
       <div class="clear"></div>

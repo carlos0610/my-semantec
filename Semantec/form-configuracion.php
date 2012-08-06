@@ -62,6 +62,10 @@
       <a href="form-edit-alertas.php">
       <input type="button" value="Alertas" class="botones" />
       </a>
+      
+      <a href="lista-cuentasbanco.php">
+      <input type="button" value="Cuenta Banco" class="botones" />
+      </a>
       </div>
       <div class="clear"></div>
 
