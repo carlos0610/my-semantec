@@ -12,7 +12,7 @@ include "funciones.php";
         $tipoPago   =  $_POST["comboTipoPago1"];
         $usu_id     =  $_SESSION["usu_id"];
         $fav_id     =  $_GET["fav_id"]; 
-        $fav_id     = 20;           //modificar 
+        //$fav_id     = 20;           //modificar 
         $sql        = "INSERT INTO cobros(tipo_pago_id,usu_id,fav_id,fecha,estado) VALUES ($tipoPago,$usu_id,$fav_id,NOW(),1)";
         
         echo "QUERY : ".$sql;

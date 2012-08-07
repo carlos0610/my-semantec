@@ -28,6 +28,20 @@
         $sql = "SELECT id,nombre FROM cuentabanco";
         $cuentabanco = mysql_query($sql);
         
+        /* FACTURA */
+        $sql = "SELECT f.fav_id,SUM(o.ord_venta) as ord_venta
+                FROM ordenes o,cuentacorriente_cliente cc ,factura_venta f,grupo_ordenes g_o
+                WHERE cc.cli_id = o.cli_id 
+                AND f.fav_id = $fav_id
+                AND o.estado = 1 
+                AND cc.estado = 1 
+                AND o.est_id >= 11
+                AND f.estado = 1
+                AND g_o.gru_id = f.gru_id
+                AND g_o.gru_id = o.gru_id";
+        
+        $factura    = mysql_query($sql);
+        $fila_factura = mysql_fetch_array($factura);
         
 
 ?>
@@ -107,6 +121,14 @@
                     <img src="images/home.png"  alt="inicio" title="Volver al panel" width="32" height="32" border="none" />                </a>            </td>
           </tr>
           <tr>
+            <td>Factura nro:</td>
+            <td><?php echo $fila_factura["fav_id"]?></td>
+            <td>Orden venta:</td>
+            <td><?php echo $fila_factura["ord_venta"]?></td>
+            <td>&nbsp;</td>
+            <td></td>
+          </tr>
+          <tr>
             <td width="120">Tipo de pago</td>
           <td width="146">
       <select name="comboTipoPago1" class="campos2" id="comboTipoPago1" onClick="filtroTipoDePago(value,1)">
@@ -183,7 +205,7 @@
           </tr>
           <tr>
             <td>Importe</td>
-            <td><input name="txtImportePago1" type="text" class="campos2" id="txtImportePago1" disabled required></td>
+            <td><input name="txtImportePago1" type="text" disabled class="campos2" id="txtImportePago1" onChange="actualizarDetallePago('<?php echo $fila_factura["ord_venta"]?>')" value="0"></td>
             <td>Adjuntar archivo</td>
             <td><input type="file" name="userfile1" id="userfile1"></td>
             <td>&nbsp;</td>
@@ -218,7 +240,7 @@
           <tr>
             <td>Importe:</td>
             <td><label>
-              <input name="txtImporte1" type="text" class="campos2" id="txtImporte1" size="8" required disabled>
+                    <input name="txtImporte1" type="text" disabled class="campos2" id="txtImporte1" onChange="actualizarDetallePago('<?php echo $fila_factura["ord_venta"]?>')" value="0" size="8">
             </label></td>
             <td>&nbsp;</td>
             </tr>
@@ -239,7 +261,7 @@
             </tr>
           <tr>
             <td>Importe:</td>
-            <td><input name="txtImporte2" type="text" class="campos2" id="txtImporte2" size="8" disabled required></td>
+            <td><input name="txtImporte2" type="text" disabled class="campos2" id="txtImporte2" onChange="actualizarDetallePago('<?php echo $fila_factura["ord_venta"]?>')" value="0" size="8"></td>
             <td>%: 
               
               <select name="comboIva" class="campos2" id="comboIva" disabled required>
@@ -248,8 +270,7 @@
                 ?>
                   <option value="<?php echo $fila_iva["idiva"]?>"><?php echo $fila_iva["valor"]?></option>
                   <?php }?>
-              </select>
-            </td>
+              </select>            </td>
             </tr>
           <tr>
             <td bgcolor="#CDDCDA">&nbsp;</td>
@@ -267,7 +288,7 @@ Nro :
             </tr>
           <tr>
             <td>Importe:</td>
-            <td><input name="txtImporte3" type="text" class="campos2" id="txtImporte3" size="8" disabled required></td>
+            <td><input name="txtImporte3" type="text" disabled class="campos2" id="txtImporte3" onChange="actualizarDetallePago('<?php echo $fila_factura["ord_venta"]?>')" value="0" size="8"></td>
             <td>&nbsp;</td>
             </tr>
           <tr>
@@ -286,7 +307,7 @@ Nro :
             </tr>
           <tr>
             <td>Importe:</td>
-            <td><input name="txtImporte4" type="text" class="campos2" id="txtImporte4" size="8" disabled required></td>
+            <td><input name="txtImporte4" type="text" disabled class="campos2" id="txtImporte4" onChange="actualizarDetallePago('<?php echo $fila_factura["ord_venta"]?>')" value="0" size="8"></td>
             <td>Provincia:
               <select name="comboProvincias" class="campos2" id="comboProvincias" disabled>
                 <?php
@@ -297,14 +318,60 @@ Nro :
               </select></td>
             </tr>
           <tr>
+            <td colspan="3" bgcolor="#0099CC"><label></label>
+            <div align="center"><span class="Estilo1">Detalle del pago</span></div></td>
+          </tr>
+          <tr>
+            <td>Depósito</td>
+            <td><label>
+              <input name="txtDeposito" type="text" class="campos2" id="txtDeposito" disabled>
+            </label></td>
             <td>&nbsp;</td>
-          <td><label></label></td>
+          </tr>
+          <tr>
+            <td>Ganancias</td>
+            <td><label>
+              <input name="txtGanancias" type="text" class="campos2" id="txtGanancias" disabled>
+            </label></td>
             <td>&nbsp;</td>
-            </tr>
+          </tr>
+          <tr>
+            <td>IVA</td>
+            <td><label>
+              <input name="txtIva" type="text" class="campos2" id="txtIva" disabled>
+            </label></td>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td>IIBB</td>
+            <td><label>
+              <input name="txtIIBB" type="text" class="campos2" id="txtIIBB" disabled>
+            </label></td>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td>SUSS</td>
+            <td><label>
+              <input name="txtSUSS" type="text" class="campos2" id="txtSUSS" disabled>
+            </label></td>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td>Total</td>
+            <td><label>
+              <input name="txtTotal" type="text" class="campos2" id="txtTotal" disabled>
+            </label></td>
+            <td>&nbsp;</td>
+          </tr>
           <tr>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
-            <td>&nbsp; <input type="submit" value="Agregar Orden" class="botones" style="visibility:visible" id="botonAgregar" />
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp; <input type="submit" value="Registrar pago" class="botones" style="visibility:visible" id="botonRegistrar" />
               &nbsp;
             <input type="reset" value="Restablecer" class="botones" /></td>
             </tr>

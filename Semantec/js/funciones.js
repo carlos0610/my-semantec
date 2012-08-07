@@ -63,8 +63,8 @@ function pagarFactura(id,cuenta){
     
     if(confirm('¿Confirma el pago de la factura nro: '+id+'? ')==true)
     {
-        window.location="pagar-factura.php?fav_id="+id+"&ccc_id="+cuenta;
-        
+        //window.location="pagar-factura.php?fav_id="+id+"&ccc_id="+cuenta;
+        window.location="form-alta-pago.php?fav_id="+id;
     }
 }
 
@@ -176,8 +176,12 @@ function habilitarRetenciones(formulario,numero){
     }
     document.getElementById("txtFecha"+numero).disabled = valor;   
     document.getElementById("txtPrefijo"+numero).disabled = valor;  
-    document.getElementById("txtNro"+numero).disabled = valor;  
-    document.getElementById("txtImporte"+numero).disabled = valor;  
+    document.getElementById("txtNro"+numero).disabled = valor;
+    document.getElementById("txtImporte"+numero).disabled = valor;
+    if(valor)
+        document.getElementById("txtImporte"+numero).value = 0.00;
+    
+    
     if(nombre=="chkIva")
         {
             document.getElementById("comboIva").disabled = valor;  
@@ -186,6 +190,9 @@ function habilitarRetenciones(formulario,numero){
         {
             document.getElementById("comboProvincias").disabled = valor;  
         }
+        
+        actualizarDetallePago();
+        
 }
 
 function filtroTipoDePago(valorCombo,numero){
@@ -658,4 +665,33 @@ function validaSeleccione(id,mensaje){
         
         return true;
   
+}
+
+function actualizarDetallePago(ord_venta){
+
+    //alert("Ord venta "+ord_venta);
+    deposito    = parseFloat(document.getElementById("txtImportePago1").value);
+    ganancias   = parseFloat(document.getElementById("txtImporte1").value);
+    iva         = parseFloat(document.getElementById("txtImporte2").value);
+    iibb        = parseFloat(document.getElementById("txtImporte3").value);
+    suss        = parseFloat(document.getElementById("txtImporte4").value);
+    
+    /* Completamos los datos */
+    document.getElementById("txtDeposito").value    = deposito;
+    document.getElementById("txtGanancias").value   = ganancias;
+    document.getElementById("txtIva").value         = iva;
+    document.getElementById("txtIIBB").value        = iibb;
+    document.getElementById("txtSUSS").value        = suss;
+    
+    document.getElementById("txtTotal").value = deposito+ ganancias +iva + suss;
+    total = parseFloat(document.getElementById("txtTotal").value);
+    
+    
+    //alert("Ord venta: "+ord_venta+" total: "+total);
+    if (parseFloat(ord_venta) != total)
+        document.getElementById("botonRegistrar").style.visibility = "hidden";
+    else
+        document.getElementById("botonRegistrar").style.visibility = "visible";
+    
+    
 }
