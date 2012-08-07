@@ -132,10 +132,10 @@
             </td>
           </tr>
           <tr>
-            <td>Factura nro:</td>
-            <td><?php echo $fila_factura["fav_id"]?></td>
-            <td>Total Factura:</td>
-            <td><?php echo $fila_factura["ord_venta"]?></td>
+            <td><big>Factura nro:</big></td>
+            <td><big><b><?php echo $fila_factura["fav_id"]?></b></big></td>
+            <td><big>Total Factura:</big></td>
+            <td><big><b><?php echo $fila_factura["ord_venta"]?></b></big></td>
             <td>&nbsp;</td>
             <td></td>
           </tr>
@@ -146,7 +146,7 @@
             <td><input name="cantidadTip" type="number" class="campos2" id="cantidadTip" required style="text-align:right" size="12"  min="1" max="30" value="1" ></td>
             <td><input type="submit" value="Generar" class="botones"  id="generar" /></td>
             </form>
-            <td>(Importante: se debe confeccionar la cantidad correcta en primera instancia)               
+            <td>(Atención: se debe confeccionar la cantidad correcta en primera instancia)               
             </td>
             <td>&nbsp;</td>
             <td></td>
@@ -159,7 +159,7 @@
           <tr>
             <td width="138" bgcolor="#CDDCDA">Tipo de pago</td>
           <td width="164" bgcolor="#CDDCDA">
-      <select name="comboTipoPago<?php echo $i ?>" class="campos2" id="comboTipoPago<?php echo $i ?>" onClick="filtroTipoDePago(value,<?php echo $i ?>)">
+      <select name="comboTipoPago<?php echo $i ?>" class="campos2" id="comboTipoPago<?php echo $i ?>" onClick="filtroTipoDePago(value,<?php echo $i ?>)" required>
           <option value="0">Seleccione </option>
                 <?php
                     $sql = "SELECT id,nombre FROM tipo_pago WHERE estado = 1";
@@ -239,7 +239,7 @@
           <tr>
             <td>Importe</td>
 
-            <td><input name="txtImportePago<?php echo $i ?>" type="text" disabled required class="campos2" id="txtImportePago<?php echo $i ?>" onChange="actualizarDetallePago('<?php echo $fila_factura["ord_venta"]?>',<?php echo $cantTipoPago ?>)" value="0" style="text-align:right">
+            <td><input name="txtImportePago<?php echo $i ?>" type="text" disabled required class="campos2" id="txtImportePago<?php echo $i ?>" onChange="actualizarDetallePago('<?php echo $fila_factura["ord_venta"]?>',<?php echo $cantTipoPago; ?>)" value="0" style="text-align:right">
             </td>
 
             <td>Adjuntar archivo</td>
@@ -264,7 +264,7 @@
             <td width="18%"></td>
           <tr>
             <td bgcolor="#CDDCDA">&nbsp;</td>
-            <td bgcolor="#CDDCDA"><input type="checkbox" name="chkGanancias" id="chkGanancias" onClick="habilitarRetenciones('chkGanancias',1)">
+            <td bgcolor="#CDDCDA"><input type="checkbox" name="chkGanancias" id="chkGanancias" onClick="habilitarRetencionesYActualizarDetalle('chkGanancias',1,'<?php echo $fila_factura["ord_venta"]?>',<?php echo $cantTipoPago; ?>)">
             Ganancias            </td>
             <td width="75%" bgcolor="#CDDCDA">&nbsp;</td>
             </tr>          
@@ -280,13 +280,13 @@
           <tr>
             <td>Importe:</td>
             <td><label>
-                    <input name="txtImporte1" type="text" disabled class="campos2" id="txtImporte1" onChange="actualizarDetallePago('<?php echo $fila_factura["ord_venta"]?>',<?php echo $cantTipoPago ?>)" value="0" size="8" style="text-align:right">
+                    <input name="txtImporte1" type="text" disabled class="campos2" id="txtImporte1" onChange="actualizarDetallePago('<?php echo $fila_factura["ord_venta"]?>',<?php echo $cantTipoPago; ?>)" value="0" size="8" style="text-align:right">
             </label></td>
             <td>&nbsp;</td>
             </tr>
           <tr>
             <td bgcolor="#CDDCDA">&nbsp;</td>
-            <td bgcolor="#CDDCDA"><input type="checkbox" name="chkIva" id="chkIva" onClick="habilitarRetenciones('chkIva',2)">
+            <td bgcolor="#CDDCDA"><input type="checkbox" name="chkIva" id="chkIva" onClick="habilitarRetencionesYActualizarDetalle('chkIva',2,'<?php echo $fila_factura["ord_venta"]?>',<?php echo $cantTipoPago; ?>)">
             IVA            </td>
             <td bgcolor="#CDDCDA">&nbsp;</td>
             </tr>
@@ -314,7 +314,7 @@
             </tr>
           <tr>
             <td bgcolor="#CDDCDA">&nbsp;</td>
-            <td bgcolor="#CDDCDA"><input type="checkbox" name="chkIIBB" id="chkIIBB" onClick="habilitarRetenciones('chkIIBB',3)">
+            <td bgcolor="#CDDCDA"><input type="checkbox" name="chkIIBB" id="chkIIBB" onClick="habilitarRetencionesYActualizarDetalle('chkIIBB',3,'<?php echo $fila_factura["ord_venta"]?>',<?php echo $cantTipoPago; ?>)">
             IIBB            </td>
             <td bgcolor="#CDDCDA">&nbsp;</td>
             </tr>
@@ -333,7 +333,7 @@ Nro :
             </tr>
           <tr>
             <td bgcolor="#CDDCDA">&nbsp;</td>
-            <td bgcolor="#CDDCDA"><input type="checkbox" name="chkSUSS" id="chkSUSS" onClick="habilitarRetenciones('chkSUSS',4)">
+            <td bgcolor="#CDDCDA"><input type="checkbox" name="chkSUSS" id="chkSUSS" onClick="habilitarRetencionesYActualizarDetalle('chkSUSS',4,'<?php echo $fila_factura["ord_venta"]?>',<?php echo $cantTipoPago; ?>)">
             SUSS            </td>
             <td bgcolor="#CDDCDA">&nbsp;</td>
             </tr>

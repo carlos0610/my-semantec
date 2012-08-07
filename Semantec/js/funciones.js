@@ -194,7 +194,10 @@ function habilitarRetenciones(formulario,numero){
         actualizarDetallePago();
         
 }
-
+function habilitarRetencionesYActualizarDetalle(formulario,numero,ord_venta,cantidadTipoPago){
+   habilitarRetenciones(formulario,numero);
+   actualizarDetallePago(ord_venta,cantidadTipoPago);
+}
 function filtroTipoDePago(valorCombo,numero){
     var valor = true; 
     if(valorCombo!=0)
@@ -675,7 +678,6 @@ function actualizarDetallePago(ord_venta,cantidadTipoPago){
     iva         = parseFloat(document.getElementById("txtImporte2").value);
     iibb        = parseFloat(document.getElementById("txtImporte3").value);
     suss        = parseFloat(document.getElementById("txtImporte4").value);
-    
     /* Completamos los datos */
     totalDeposito=0.00;
      for ($i = 1; $i <= cantidadTipoPago; $i++) 
@@ -684,10 +686,10 @@ function actualizarDetallePago(ord_venta,cantidadTipoPago){
           totalDeposito=(parseFloat(totalDeposito)+parseFloat(deposito) ).toFixed(2)
      }
     document.getElementById("txtDeposito").value    = (parseFloat(totalDeposito)).toFixed(2);
-    document.getElementById("txtGanancias").value   = ganancias;
-    document.getElementById("txtIva").value         = iva;
-    document.getElementById("txtIIBB").value        = iibb;
-    document.getElementById("txtSUSS").value        = suss;
+    document.getElementById("txtGanancias").value   = (parseFloat(ganancias)).toFixed(2);
+    document.getElementById("txtIva").value         = (parseFloat(iva)).toFixed(2);
+    document.getElementById("txtIIBB").value        = (parseFloat(iibb)).toFixed(2);
+    document.getElementById("txtSUSS").value        = (parseFloat(suss)).toFixed(2);
     
     depositoActual=document.getElementById("txtDeposito").value;
     document.getElementById("txtTotal").value = (parseFloat(ganancias) +parseFloat(iva) + parseFloat(suss)+parseFloat(depositoActual)).toFixed(2);
