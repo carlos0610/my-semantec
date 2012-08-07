@@ -29,21 +29,21 @@ include "funciones.php";
         
         for ($i = 1; $i <= $cantTipoPago; $i++) {
         /*** Obtenemos datos del pago ***/
-        $nro                = $_POST["txtNroOperacion"+$i];
-        $banco              = $_POST["comboBanco"+$i];
-        $sucursal           = $_POST["txtSucursal"];
-        $fechaEmision       = gfecha($_POST["txtFechaEmision"+$i]);
-        $fechaVencimiento   = gfecha($_POST["txtFechaVto"+$i]);
-        $firmante           = $_POST["txtFirmante"+$i];
-        $cuit               = $_POST["txtCuit"+$i];
-        $importe            = $_POST["txtImportePago"+$i]; echo 'ACA: ',$importe,' la i: ',$i;
-        $cuenta             = $_POST["comboCuenta"+$i];
-        $fechaTransferencia     = $_POST["txtFechaTransferencia"+$i];
+        $nro                = $_POST["txtNroOperacion$i"];
+        $banco              = $_POST["comboBanco$i"];
+        $sucursal           = $_POST["txtSucursal$i"];
+        $fechaEmision       = gfecha($_POST["txtFechaEmision$i"]);
+        $fechaVencimiento   = gfecha($_POST["txtFechaVto$i"]);
+        $firmante           = $_POST["txtFirmante$i"];
+        $cuit               = $_POST["txtCuit$i"];
+        $importe            = $_POST["txtImportePago$i"]; 
+        $cuenta             = $_POST["comboCuenta$i"];
+        $fechaTransferencia     = $_POST["txtFechaTransferencia$i"];
          
         
         /*** ADJUNTAR ARCHIVO ***/
                     $idFile = -1;
-                    $userfile='userfile'+$i;
+                    $userfile="userfile$i";
                     if($_FILES[$userfile]['size']>0){      //SI ELIGIO UN ARCHIVO
         
                                 $fileName = $_FILES[$userfile]['name'];

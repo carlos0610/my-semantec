@@ -28,8 +28,13 @@
         $sql = "SELECT id,nombre FROM cuentabanco";
         $cuentabanco = mysql_query($sql);
         /* Cantidad de Tipo Pago */
+        
         $cantTipoPago=1;
-
+        $cantTipoPagogene  =  $_POST["cantidadTip"]; 
+        if($cantTipoPagogene>0)
+            {
+                  $cantTipoPago=$cantTipoPagogene;            
+            }
         
         /* FACTURA */
         $sql = "SELECT f.fav_id,SUM(o.ord_venta) as ord_venta
@@ -116,11 +121,11 @@
 
       <h2>Panel de control</h2>
       
-      <form action="alta-pago.php?fav_id=<?php echo $fav_id ?>&cantTipoPago=<?php echo $cantTipoPago ?>" method="post" enctype="multipart/form-data" enctype="multipart/form-data" >
-      <table width="100%" cellpadding="5" class="listados">
+      
+<table width="100%" cellpadding="5" class="listados" >
           <tr class="titulo">
             <td colspan="5"> <?php echo($titulo)?> </td>
-            <td width="66">
+            <td width="32">
                 <a href="index-admin.php">
                     <img src="images/home.png"  alt="inicio" title="Volver al panel" width="32" height="32" border="none" />                
                 </a>            
@@ -134,31 +139,46 @@
             <td>&nbsp;</td>
             <td></td>
           </tr>
+          
+          <tr>
+            <td>Agregar tipo Pago</td>
+            <form action="form-alta-pago.php?fav_id=<?php echo $fav_id ?>" method="post">
+            <td><input name="cantidadTip" type="number" class="campos2" id="cantidadTip" required style="text-align:right" size="12"  min="1" max="30" value="1" ></td>
+            <td><input type="submit" value="Generar" class="botones"  id="generar" /></td>
+            </form>
+            <td>(Importante: se debe confeccionar la cantidad correcta en primera instancia)               
+            </td>
+            <td>&nbsp;</td>
+            <td></td>
+          </tr>
+          <form action="alta-pago.php?fav_id=<?php echo $fav_id ?>&cantTipoPago=<?php echo $cantTipoPago ?>" method="post" enctype="multipart/form-data" >
            <!--Bucle Generador de Tipos Pagos-->
           
        <?php for ($i = 1; $i <= $cantTipoPago; $i++) { ?>
 
           <tr>
-            <td width="120">Tipo de pago</td>
-          <td width="146">
+            <td width="138" bgcolor="#CDDCDA">Tipo de pago</td>
+          <td width="164" bgcolor="#CDDCDA">
       <select name="comboTipoPago<?php echo $i ?>" class="campos2" id="comboTipoPago<?php echo $i ?>" onClick="filtroTipoDePago(value,<?php echo $i ?>)">
           <option value="0">Seleccione </option>
                 <?php
+                    $sql = "SELECT id,nombre FROM tipo_pago WHERE estado = 1";
+                    $tipo_pago = mysql_query($sql);
                     while ($fila = mysql_fetch_array($tipo_pago)){
                 
                 ?>    
                     <option value="<?php echo $fila["id"]?>"><?php echo $fila["nombre"]?> </option>
                     <?php } ?>
                 </select></td>
-            <td width="194"><label></label></td>
-            <td width="238">&nbsp;</td>
-            <td width="44">&nbsp;</td>
-            <td></td>
+            <td width="115" bgcolor="#CDDCDA"><label></label></td>
+            <td width="346" bgcolor="#CDDCDA">&nbsp;</td>
+            <td width="1" bgcolor="#CDDCDA">&nbsp;</td>
+            <td bgcolor="#CDDCDA"></td>
           </tr>
           <tr>
-            <td>Nro Operación</td>
+            <td>Nro Operación </td>
             <td><label>
-              <input name="txtNroOperacion<?php echo $i ?>" type="text" class="campos2" id="txtNroOperacion<?php echo $i ?>" required >
+              <input name="txtNroOperacion<?php echo $i ?>" type="text" class="campos2" id="txtNroOperacion<?php echo $i ?>" required style="text-align:right" >
             </label></td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
@@ -169,7 +189,8 @@
             <td>Banco</td>
             <td>
                     <select name="comboBanco<?php echo $i ?>" class="campos2" id="comboBanco<?php echo $i ?>" disabled required>
-                    <?php
+                    <?php        $sql = "SELECT ban_id,ban_nombre FROM banco WHERE estado = 1 ORDER BY ban_nombre";
+                                $bancos     = mysql_query($sql);
                     while ($fila_banco = mysql_fetch_array($bancos)){
                 
                 ?>  
@@ -185,9 +206,9 @@
           
           <tr>
             <td>Fecha emisión</td>
-            <td><input name="txtFechaEmision<?php echo $i ?>" type="text" class="campos2" id="txtFechaEmision<?php echo $i ?>" disabled required></td>
+            <td><input name="txtFechaEmision<?php echo $i ?>" type="text" class="campos2" id="txtFechaEmision<?php echo $i ?>" disabled required style="text-align:center"></td>
             <td>Fecha vto:</td>
-            <td><input name="txtFechaVto<?php echo $i ?>" type="text" class="campos2" id="txtFechaVto<?php echo $i ?>" disabled required></td>
+            <td><input name="txtFechaVto<?php echo $i ?>" type="text" class="campos2" id="txtFechaVto<?php echo $i ?>" disabled required style="text-align:center"></td>
             <td>&nbsp;</td>
             <td></td>
           </tr>
@@ -195,7 +216,7 @@
             <td>Firmante</td>
             <td><input name="txtFirmante<?php echo $i ?>" type="text" class="campos2" id="txtFirmante<?php echo $i ?>" disabled required></td>
             <td>CUIT firmante</td>
-            <td><input name="txtCuit<?php echo $i ?>" type="text" class="campos2" id="txtCuit<?php echo $i ?>" disabled required></td>
+            <td><input name="txtCuit<?php echo $i ?>" type="text" class="campos2" id="txtCuit<?php echo $i ?>" disabled required style="text-align:right" ></td>
             <td>&nbsp;</td>
             <td></td>
           </tr>
@@ -203,27 +224,30 @@
             <td>Cuenta</td>
             <td><select name="comboCuenta<?php echo $i ?>" class="campos2" id="comboCuenta<?php echo $i ?>" disabled required>
               <?php
+                     $sql = "SELECT id,nombre FROM cuentabanco";
+                     $cuentabanco = mysql_query($sql);
                     while ($fila_cuenta = mysql_fetch_array($cuentabanco)){
                 ?>
               <option value="<?php echo$fila_cuenta["id"]?>"><?php echo $fila_cuenta["nombre"]?></option>
               <?php } ?>
             </select></td>
             <td>Fecha transf</td>
-            <td><input name="txtFechaTransferencia<?php echo $i ?>" type="text" class="campos2" id="txtFechaTransferencia<?php echo $i ?>" disabled required></td>
+            <td><input name="txtFechaTransferencia<?php echo $i ?>" type="text" class="campos2" id="txtFechaTransferencia<?php echo $i ?>" disabled required style="text-align:center"></td>
             <td>&nbsp;</td>
             <td></td>
           </tr>
           <tr>
             <td>Importe</td>
 
-            <td><input name="txtImportePago<?php echo $i ?>" type="text" disabled required class="campos2" id="txtImportePago<?php echo $i ?>" onChange="actualizarDetallePago('<?php echo $fila_factura["ord_venta"]?>')" value="0"></td>
+            <td><input name="txtImportePago<?php echo $i ?>" type="text" disabled required class="campos2" id="txtImportePago<?php echo $i ?>" onChange="actualizarDetallePago('<?php echo $fila_factura["ord_venta"]?>',<?php echo $cantTipoPago ?>)" value="0" style="text-align:right">
+            </td>
 
             <td>Adjuntar archivo</td>
 
             <td><input type="file" name="userfile<?php echo $i ?>" id="userfile<?php echo $i ?>"></td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
-            <td></td>
+            <td width="0"></td>
           </tr>
           <?php } ?>
                   
@@ -246,17 +270,17 @@
             </tr>          
           <tr>
             <td>Fecha:</td>
-            <td><input name="txtFecha1" type="text" class="campos2" id="txtFecha1" style="text-align:right" size="12"  min="0" required disabled  /></td>
+            <td><input name="txtFecha1" type="text" class="campos2" id="txtFecha1"  size="12"  min="0" required disabled style="text-align:center" /></td>
             <td>Prefijo :
               <input name="txtPrefijo1" type="text" class="campos2" id="txtPrefijo1" style="text-align:right" size="5"  min="0"  disabled  />
             <label>Nro :
-              <input name="txtNro1" type="text" class="campos2" id="txtNro1" size="20" required disabled>
+              <input name="txtNro1" type="text" class="campos2" id="txtNro1" size="20" required disabled style="text-align:right">
             </label></td>
             </tr>
           <tr>
             <td>Importe:</td>
             <td><label>
-                    <input name="txtImporte1" type="text" disabled class="campos2" id="txtImporte1" onChange="actualizarDetallePago('<?php echo $fila_factura["ord_venta"]?>')" value="0" size="8">
+                    <input name="txtImporte1" type="text" disabled class="campos2" id="txtImporte1" onChange="actualizarDetallePago('<?php echo $fila_factura["ord_venta"]?>',<?php echo $cantTipoPago ?>)" value="0" size="8" style="text-align:right">
             </label></td>
             <td>&nbsp;</td>
             </tr>
@@ -268,17 +292,17 @@
             </tr>
           <tr>
             <td>Fecha:</td>
-            <td><input name="txtFecha2" type="text" class="campos2" id="txtFecha2" style="text-align:right" size="12"  min="0" required disabled /></td>
+            <td><input name="txtFecha2" type="text" class="campos2" id="txtFecha2"  size="12"  min="0" required disabled style="text-align:center"/></td>
             <td>Prefijo :
               
               <input name="txtPrefijo2" type="text" class="campos2" id="txtPrefijo2" style="text-align:right" size="5"  min="0" disabled   />
               Nro :
-<input name="txtNro2" type="text" class="campos2" id="txtNro2" size="20" disabled required></td>
+<input name="txtNro2" type="text" class="campos2" id="txtNro2" size="20" disabled required style="text-align:right"></td>
             </tr>
           <tr>
             <td>Importe:</td>
-            <td><input name="txtImporte2" type="text" disabled class="campos2" id="txtImporte2" onChange="actualizarDetallePago('<?php echo $fila_factura["ord_venta"]?>')" value="0" size="8"></td>
-            <td>%: 
+            <td><input name="txtImporte2" type="text" disabled class="campos2" id="txtImporte2" onChange="actualizarDetallePago('<?php echo $fila_factura["ord_venta"]?>',<?php echo $cantTipoPago ?>)" value="0" size="8" style="text-align:right"></td>
+            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; %  
               
               <select name="comboIva" class="campos2" id="comboIva" disabled required>
                   <?php
@@ -296,15 +320,15 @@
             </tr>
           <tr>
             <td>Fecha:</td>
-            <td><input name="txtFecha3" type="text" class="campos2" id="txtFecha3" style="text-align:right" size="12"  min="0" required disabled /></td>
+            <td><input name="txtFecha3" type="text" class="campos2" id="txtFecha3"  size="12"  min="0" required disabled style="text-align:center" /></td>
             <td>Prefijo :
               <input name="txtPrefijo3" type="text" class="campos2" id="txtPrefijo3" style="text-align:right" size="5"  min="0" disabled   />
 Nro :
-<input name="txtNro3" type="text" class="campos2" id="txtNro3" size="20" disabled required></td>
+<input name="txtNro3" type="text" class="campos2" id="txtNro3" size="20" disabled required style="text-align:right"></td>
             </tr>
           <tr>
             <td>Importe:</td>
-            <td><input name="txtImporte3" type="text" disabled class="campos2" id="txtImporte3" onChange="actualizarDetallePago('<?php echo $fila_factura["ord_venta"]?>')" value="0" size="8"></td>
+            <td><input name="txtImporte3" type="text" disabled class="campos2" id="txtImporte3" onChange="actualizarDetallePago('<?php echo $fila_factura["ord_venta"]?>',<?php echo $cantTipoPago ?>)" value="0" size="8" style="text-align:right"></td>
             <td>&nbsp;</td>
             </tr>
           <tr>
@@ -315,15 +339,15 @@ Nro :
             </tr>
           <tr>
             <td>Fecha:</td>
-            <td><input name="txtFecha4" type="text" class="campos2" id="txtFecha4" style="text-align:right" size="12"  min="0" required disabled /></td>
+            <td><input name="txtFecha4" type="text" class="campos2" id="txtFecha4"  size="12"  min="0" required disabled style="text-align:center" /></td>
             <td>Prefijo :
               <input name="txtPrefijo4" type="text" class="campos2" id="txtPrefijo4" style="text-align:right" size="5"  min="0" disabled />
 Nro :
-<input name="txtNro4" type="text" class="campos2" id="txtNro4" size="20" disabled required></td>
+<input name="txtNro4" type="text" class="campos2" id="txtNro4" size="20" disabled required style="text-align:right"></td>
             </tr>
           <tr>
             <td>Importe:</td>
-            <td><input name="txtImporte4" type="text" disabled class="campos2" id="txtImporte4" onChange="actualizarDetallePago('<?php echo $fila_factura["ord_venta"]?>')" value="0" size="8"></td>
+            <td><input name="txtImporte4" type="text" disabled class="campos2" id="txtImporte4" onChange="actualizarDetallePago('<?php echo $fila_factura["ord_venta"]?>',<?php echo $cantTipoPago ?>)" value="0" size="8" style="text-align:right"></td>
             <td>Provincia:
               <select name="comboProvincias" class="campos2" id="comboProvincias" disabled>
                 <?php
@@ -340,42 +364,42 @@ Nro :
           <tr>
             <td>Depósito</td>
             <td><label>
-              <input name="txtDeposito" type="text" class="campos2" id="txtDeposito" disabled>
+              <input name="txtDeposito" type="text" class="campos2" id="txtDeposito" value="0" disabled style="text-align:right"  size="12">
             </label></td>
             <td>&nbsp;</td>
           </tr>
           <tr>
             <td>Ganancias</td>
             <td><label>
-              <input name="txtGanancias" type="text" class="campos2" id="txtGanancias" disabled>
+              <input name="txtGanancias" type="text" class="campos2" id="txtGanancias"  value="0"disabled style="text-align:right"  size="12">
             </label></td>
             <td>&nbsp;</td>
           </tr>
           <tr>
             <td>IVA</td>
             <td><label>
-              <input name="txtIva" type="text" class="campos2" id="txtIva" disabled>
+              <input name="txtIva" type="text" class="campos2" id="txtIva"  value="0"disabled style="text-align:right"  size="12">
             </label></td>
             <td>&nbsp;</td>
           </tr>
           <tr>
             <td>IIBB</td>
             <td><label>
-              <input name="txtIIBB" type="text" class="campos2" id="txtIIBB" disabled>
+              <input name="txtIIBB" type="text" class="campos2" id="txtIIBB" value="0" disabled style="text-align:right"  size="12">
             </label></td>
             <td>&nbsp;</td>
           </tr>
           <tr>
             <td>SUSS</td>
             <td><label>
-              <input name="txtSUSS" type="text" class="campos2" id="txtSUSS" disabled>
+              <input name="txtSUSS" type="text" class="campos2" id="txtSUSS"  value="0"disabled style="text-align:right"  size="12">
             </label></td>
             <td>&nbsp;</td>
           </tr>
           <tr>
             <td>Total</td>
             <td><label>
-              <input name="txtTotal" type="text" class="campos2" id="txtTotal" disabled>
+              <input name="txtTotal" type="text" class="campos2" id="txtTotal" value="0" disabled style="text-align:right"  size="12">
             </label></td>
             <td>&nbsp;</td>
           </tr>

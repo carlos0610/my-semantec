@@ -667,27 +667,34 @@ function validaSeleccione(id,mensaje){
   
 }
 
-function actualizarDetallePago(ord_venta){
-
+function actualizarDetallePago(ord_venta,cantidadTipoPago){
+    
     //alert("Ord venta "+ord_venta);
-    deposito    = parseFloat(document.getElementById("txtImportePago1").value);
+
     ganancias   = parseFloat(document.getElementById("txtImporte1").value);
     iva         = parseFloat(document.getElementById("txtImporte2").value);
     iibb        = parseFloat(document.getElementById("txtImporte3").value);
     suss        = parseFloat(document.getElementById("txtImporte4").value);
     
     /* Completamos los datos */
-    document.getElementById("txtDeposito").value    = deposito;
+    totalDeposito=0.00;
+     for ($i = 1; $i <= cantidadTipoPago; $i++) 
+     {
+         deposito    = parseFloat(document.getElementById("txtImportePago"+$i).value);
+          totalDeposito=(parseFloat(totalDeposito)+parseFloat(deposito) ).toFixed(2)
+     }
+    document.getElementById("txtDeposito").value    = (parseFloat(totalDeposito)).toFixed(2);
     document.getElementById("txtGanancias").value   = ganancias;
     document.getElementById("txtIva").value         = iva;
     document.getElementById("txtIIBB").value        = iibb;
     document.getElementById("txtSUSS").value        = suss;
     
-    document.getElementById("txtTotal").value = deposito+ ganancias +iva + suss;
+    depositoActual=document.getElementById("txtDeposito").value;
+    document.getElementById("txtTotal").value = (parseFloat(ganancias) +parseFloat(iva) + parseFloat(suss)+parseFloat(depositoActual)).toFixed(2);
     total = parseFloat(document.getElementById("txtTotal").value);
     
     
-    //alert("Ord venta: "+ord_venta+" total: "+total);
+    //alert("Ord venta: "+ord_venta+" total: "+total);   
     if (parseFloat(ord_venta) != total)
         document.getElementById("botonRegistrar").style.visibility = "hidden";
     else
