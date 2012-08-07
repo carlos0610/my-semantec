@@ -216,11 +216,15 @@ function filtroTipoDePago(valorCombo,numero){
     document.getElementById("txtImportePago"+numero).disabled = valor;  
     document.getElementById("userfile"+numero).disabled = valor;  
     valor = true;
-    
+            $(".filaTransferencia"+numero).show();   // show( selectedEffect, options, 500, callback );
+           // $(".filaCheque"+numero).show(); 
+           $(".filaCheque"+numero).show(); 
     if(valorCombo=="1")//cheque
         {
                 document.getElementById("comboCuenta"+numero).disabled = valor;  
                 document.getElementById("txtFechaTransferencia"+numero).disabled = valor;  
+                $(".filaTransferencia"+numero).hide(500,''); 
+           //     $(".filaCheque"+numero).removeAttr( "style" ).hide().fadeIn(); 
         }
     if(valorCombo=="2")// Efectivo
         {
@@ -232,6 +236,8 @@ function filtroTipoDePago(valorCombo,numero){
             document.getElementById("txtCuit"+numero).disabled = valor;  
             document.getElementById("comboCuenta"+numero).disabled = valor;  
             document.getElementById("txtFechaTransferencia"+numero).disabled = valor;  
+            $(".filaTransferencia"+numero).hide(); 
+            $(".filaCheque"+numero).hide(500,''); 
         }
     if(valorCombo=="3")//transferencia
         {
@@ -241,6 +247,7 @@ function filtroTipoDePago(valorCombo,numero){
                 document.getElementById("txtFechaVto"+numero).disabled = valor;  
                 document.getElementById("txtFirmante"+numero).disabled = valor;  
                 document.getElementById("txtCuit"+numero).disabled = valor;  
+                $(".filaCheque"+numero).hide(500,''); 
         }
 }
 

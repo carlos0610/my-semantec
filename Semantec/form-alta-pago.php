@@ -79,7 +79,14 @@
       $('#txtFecha4').datepick();   // SUSS
       
   };
-  </script>    
+  </script>
+  
+    <script>  
+        function oculto(){
+            $(".filaTransferencia1").hide()
+        }
+      </script>  
+      
   <script type="text/javascript" src="js/validador.js"></script>
   <script type="text/javascript" src="js/select_dependientes_cliente_sucursal.js"></script>
   <script>
@@ -110,7 +117,7 @@
          <a href="logout.php"><img src="images/salir.png"  alt="salir" title="Salir" width="32" height="32" border="none" valign="middle" hspace="8" /></a>
          </span>
     </div>
-
+        
     </header>
     <!--fin header-->
 
@@ -122,10 +129,10 @@
       <h2>Panel de control</h2>
       
       
-<table width="100%" cellpadding="5" class="listados" >
+<table width="100%" cellpadding="5" class="listados">
           <tr class="titulo">
             <td colspan="5"> <?php echo($titulo)?> </td>
-            <td width="32">
+            <td width="34">
                 <a href="index-admin.php">
                     <img src="images/home.png"  alt="inicio" title="Volver al panel" width="32" height="32" border="none" />                
                 </a>            
@@ -143,8 +150,9 @@
           <tr>
             <td>Agregar tipo Pago</td>
             <form action="form-alta-pago.php?fav_id=<?php echo $fav_id ?>" method="post">
-            <td><input name="cantidadTip" type="number" class="campos2" id="cantidadTip" required style="text-align:right" size="12"  min="1" max="30" value="1" ></td>
-            <td><input type="submit" value="Generar" class="botones"  id="generar" /></td>
+            <td><input name="cantidadTip" type="number" class="campos2" id="cantidadTip" required style="text-align:right" size="12"  min="1" max="30" value="1" >
+              <input type="submit" value="Generar" class="botones"  id="generar" /></td>
+            <td>&nbsp;</td>
             </form>
             <td>(Atención: se debe confeccionar la cantidad correcta en primera instancia)               
             </td>
@@ -157,8 +165,8 @@
        <?php for ($i = 1; $i <= $cantTipoPago; $i++) { ?>
 
           <tr>
-            <td width="138" bgcolor="#CDDCDA">Tipo de pago</td>
-          <td width="164" bgcolor="#CDDCDA">
+            <td width="133" bgcolor="#CDDCDA">Tipo de pago</td>
+          <td width="190" bgcolor="#CDDCDA">
       <select name="comboTipoPago<?php echo $i ?>" class="campos2" id="comboTipoPago<?php echo $i ?>" onClick="filtroTipoDePago(value,<?php echo $i ?>)" required>
           <option value="0">Seleccione </option>
                 <?php
@@ -170,24 +178,14 @@
                     <option value="<?php echo $fila["id"]?>"><?php echo $fila["nombre"]?> </option>
                     <?php } ?>
                 </select></td>
-            <td width="115" bgcolor="#CDDCDA"><label></label></td>
-            <td width="346" bgcolor="#CDDCDA">&nbsp;</td>
+            <td width="99" bgcolor="#CDDCDA"><label>Nro Operación </label></td>
+            <td width="351" bgcolor="#CDDCDA"><input name="txtNroOperacion<?php echo $i ?>" type="text" class="campos2" id="txtNroOperacion<?php echo $i ?>" required style="text-align:right" ></td>
             <td width="1" bgcolor="#CDDCDA">&nbsp;</td>
             <td bgcolor="#CDDCDA"></td>
           </tr>
-          <tr>
-            <td>Nro Operación </td>
-            <td><label>
-              <input name="txtNroOperacion<?php echo $i ?>" type="text" class="campos2" id="txtNroOperacion<?php echo $i ?>" required style="text-align:right" >
-            </label></td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Banco</td>
-            <td>
+          <tr class="filaCheque<?php echo $i ?>"   style="display:none;">
+            <td width="169">Banco</td>
+            <td width="146">
                     <select name="comboBanco<?php echo $i ?>" class="campos2" id="comboBanco<?php echo $i ?>" disabled required>
                     <?php        $sql = "SELECT ban_id,ban_nombre FROM banco WHERE estado = 1 ORDER BY ban_nombre";
                                 $bancos     = mysql_query($sql);
@@ -196,15 +194,14 @@
                 ?>  
                         <option value="<?php echo $fila_banco["ban_id"]?>"><?php echo $fila_banco["ban_nombre"]?></option>
                   <?php } ?>
-                                          </select>
-            </label></td>
-            <td>Sucursal</td>
-            <td><input name="txtSucursal<?php echo $i ?>" type="text" class="campos2" id="txtSucursal<?php echo $i ?>" disabled required> </td>
-            <td>&nbsp;</td>
-            <td></td>
+                                          </select></td>
+            <td width="108">Sucursal</td>
+            <td width="352"><input name="txtSucursal<?php echo $i ?>" type="text" class="campos2" id="txtSucursal<?php echo $i ?>" disabled required> </td>
+            <td width="4">&nbsp;</td>
+            <td width="32"></td>
           </tr>
           
-          <tr>
+          <tr class="filaCheque<?php echo $i ?>" style="display:none;">
             <td>Fecha emisión</td>
             <td><input name="txtFechaEmision<?php echo $i ?>" type="text" class="campos2" id="txtFechaEmision<?php echo $i ?>" disabled required style="text-align:center"></td>
             <td>Fecha vto:</td>
@@ -212,7 +209,7 @@
             <td>&nbsp;</td>
             <td></td>
           </tr>
-          <tr>
+          <tr class="filaCheque<?php echo $i ?>" style="display:none;">
             <td>Firmante</td>
             <td><input name="txtFirmante<?php echo $i ?>" type="text" class="campos2" id="txtFirmante<?php echo $i ?>" disabled required></td>
             <td>CUIT firmante</td>
@@ -220,9 +217,9 @@
             <td>&nbsp;</td>
             <td></td>
           </tr>
-          <tr>
-            <td>Cuenta</td>
-            <td><select name="comboCuenta<?php echo $i ?>" class="campos2" id="comboCuenta<?php echo $i ?>" disabled required>
+          <tr class="filaTransferencia<?php echo $i ?>" style="display:none;">
+            <td width="169">Cuenta</td>
+            <td width="146"><select name="comboCuenta<?php echo $i ?>" class="campos2" id="comboCuenta<?php echo $i ?>" disabled required>
               <?php
                      $sql = "SELECT id,nombre FROM cuentabanco";
                      $cuentabanco = mysql_query($sql);
@@ -231,10 +228,10 @@
               <option value="<?php echo$fila_cuenta["id"]?>"><?php echo $fila_cuenta["nombre"]?></option>
               <?php } ?>
             </select></td>
-            <td>Fecha transf</td>
-            <td><input name="txtFechaTransferencia<?php echo $i ?>" type="text" class="campos2" id="txtFechaTransferencia<?php echo $i ?>" disabled required style="text-align:center"></td>
-            <td>&nbsp;</td>
-            <td></td>
+            <td width="108">Fecha transf</td>
+            <td width="352"><input name="txtFechaTransferencia<?php echo $i ?>" type="text" class="campos2" id="txtFechaTransferencia<?php echo $i ?>" disabled required style="text-align:center"></td>
+            <td width="4">&nbsp;</td>
+            <td width="32"></td>
           </tr>
           <tr>
             <td>Importe</td>
@@ -247,7 +244,7 @@
             <td><input type="file" name="userfile<?php echo $i ?>" id="userfile<?php echo $i ?>"></td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
-            <td width="0"></td>
+            
           </tr>
           <?php } ?>
                   
