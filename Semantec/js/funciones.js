@@ -64,7 +64,7 @@ function pagarFactura(id,cuenta){
     if(confirm('¿Confirma el pago de la factura nro: '+id+'? ')==true)
     {
         //window.location="pagar-factura.php?fav_id="+id+"&ccc_id="+cuenta;
-        window.location="form-alta-pago.php?fav_id="+id;
+        window.location="form-alta-pago.php?fav_id="+id+"&ccc_id="+cuenta;
     }
 }
 

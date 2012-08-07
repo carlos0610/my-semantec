@@ -5,8 +5,7 @@
         include("validar.php");
         include("conexion.php");
         $fav_id     =  $_GET["fav_id"]; 
-        
-        
+        $ccc_id     =  $_GET["ccc_id"];
         /*TIPOS DE PAGO*/
         
         $sql = "SELECT id,nombre FROM tipo_pago WHERE estado = 1";
@@ -149,7 +148,7 @@
           
           <tr>
             <td>Agregar tipo Pago</td>
-            <form action="form-alta-pago.php?fav_id=<?php echo $fav_id ?>" method="post">
+            <form action="form-alta-pago.php?fav_id=<?php echo $fav_id ?>&cantTipoPago=<?php echo $cantTipoPago ?>&ccc_id=<?php echo $ccc_id ?>" method="post">
             <td><input name="cantidadTip" type="number" class="campos2" id="cantidadTip" required style="text-align:right" size="12"  min="1" max="30" value="1" >
               <input type="submit" value="Generar" class="botones"  id="generar" /></td>
             <td>&nbsp;</td>
@@ -159,7 +158,7 @@
             <td>&nbsp;</td>
             <td></td>
           </tr>
-          <form action="alta-pago.php?fav_id=<?php echo $fav_id ?>&cantTipoPago=<?php echo $cantTipoPago ?>" method="post" enctype="multipart/form-data" >
+          <form action="alta-pago.php?fav_id=<?php echo $fav_id ?>&cantTipoPago=<?php echo $cantTipoPago ?>&ccc_id=<?php echo $ccc_id ?>" method="post" enctype="multipart/form-data" >
            <!--Bucle Generador de Tipos Pagos-->
           
        <?php for ($i = 1; $i <= $cantTipoPago; $i++) { ?>
@@ -251,7 +250,7 @@
           </table>
           
 <div class="retenciones">
-          <form action="alta-pago.php" method="post" enctype="multipart/form-data" enctype="multipart/form-data" >
+          <form action="alta-pago.php?fav_id=<?php echo $fav_id ?>&cantTipoPago=<?php echo $cantTipoPago ?>&ccc_id=<?php echo $ccc_id ?>" method="post" enctype="multipart/form-data" >
           <table class="listados">
           <tr>
             <td colspan="3" bgcolor="#0099CC"><div align="center" class="Estilo1">Retenciones</div></td>
