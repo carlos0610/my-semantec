@@ -12,38 +12,44 @@ include "funciones.php";
         $tipoPago   =  $_POST["comboTipoPago1"];
         $usu_id     =  $_SESSION["usu_id"];
         $fav_id     =  $_GET["fav_id"]; 
-        //$fav_id     = 20;           //modificar 
+        $cantTipoPago     =  $_GET["cantTipoPago"]; 
+      //  $fav_id     = 20;           //modificar 
         $sql        = "INSERT INTO cobros(tipo_pago_id,usu_id,fav_id,fecha,estado) VALUES ($tipoPago,$usu_id,$fav_id,NOW(),1)";
         
         echo "QUERY : ".$sql;
         $result     = mysql_query($sql);
 
         if (!$result)
-            $error = 1;
+            $error = 1; 
         else
             $cobro_id = mysql_insert_id ();
      
+        
+        
+        
+        for ($i = 1; $i <= $cantTipoPago; $i++) {
         /*** Obtenemos datos del pago ***/
-        $nro                = $_POST["txtNroOperacion1"];
-        $banco              = $_POST["comboBanco1"];
-        $sucursal           = $_POST["txtSucursal1"];
-        $fechaEmision       = gfecha($_POST["txtFechaEmision1"]);
-        $fechaVencimiento   = gfecha($_POST["txtFechaVto"]);
-        $firmante           = $_POST["txtFirmante1"];
-        $cuit               = $_POST["txtCuit1"];
-        $importe            = $_POST["txtImportePago1"];
-        $cuenta             = $_POST["comboCuenta1"];
-        $fechaTransferencia     = $_POST["txtFechaTransferencia1"];
+        $nro                = $_POST["txtNroOperacion"+$i];
+        $banco              = $_POST["comboBanco"+$i];
+        $sucursal           = $_POST["txtSucursal"];
+        $fechaEmision       = gfecha($_POST["txtFechaEmision"+$i]);
+        $fechaVencimiento   = gfecha($_POST["txtFechaVto"+$i]);
+        $firmante           = $_POST["txtFirmante"+$i];
+        $cuit               = $_POST["txtCuit"+$i];
+        $importe            = $_POST["txtImportePago"+$i]; echo 'ACA: ',$importe,' la i: ',$i;
+        $cuenta             = $_POST["comboCuenta"+$i];
+        $fechaTransferencia     = $_POST["txtFechaTransferencia"+$i];
          
         
         /*** ADJUNTAR ARCHIVO ***/
                     $idFile = -1;
-                    if($_FILES['userfile']['size']>0){      //SI ELIGIO UN ARCHIVO
+                    $userfile='userfile'+$i;
+                    if($_FILES[$userfile]['size']>0){      //SI ELIGIO UN ARCHIVO
         
-                                $fileName = $_FILES['userfile']['name'];
-                                $tmpName  = $_FILES['userfile']['tmp_name'];
-                                $fileSize = $_FILES['userfile']['size'];
-                                $fileType = $_FILES['userfile']['type'];
+                                $fileName = $_FILES[$userfile]['name'];
+                                $tmpName  = $_FILES[$userfile]['tmp_name'];
+                                $fileSize = $_FILES[$userfile]['size'];
+                                $fileType = $_FILES[$userfile]['type'];
                                 //$error    = $_FILES['userfile']['error'];
 
                                 $fp      = fopen($tmpName, 'r');
@@ -66,19 +72,19 @@ include "funciones.php";
         /*** Fin ADJUNTAR ARCHIVO ***/                                
         
         
-        
+       
         
       switch ($tipoPago){
           
           /* Efectivo */
-          case 1:       if ($idFile == -1)
+          case 2:       if ($idFile == -1)
                         $sql = "INSERT INTO cobros_detalle_pago (cobros_id,importe) VALUES ($cobro_id,$importe)"; 
                         else
                         $sql = "INSERT INTO cobros_detalle_pago (cobros_id,importe,files_id) VALUES ($cobro_id,$importe,$idFile)";    
                           break; 
                       
           /* Cheque pago diferido */
-          case 2:        if ($idFile == -1)
+          case 1:        if ($idFile == -1)
                             $sql =  "INSERT INTO cobros_detalle_pago (cobros_id,nro,ban_id,sucursal,importe,fecha_emision,fecha_vto,firmante,cuit_firmante) VALUES ($cobro_id,'$nro',$banco,'$sucursal',$importe,'$fechaEmision','$fechaVencimiento','$firmante','$cuit')";                     // Sin file
                          else
                              $sql =  "INSERT INTO cobros_detalle_pago (cobros_id,nro,ban_id,sucursal,importe,fecha_emision,fecha_vto,firmante,cuit_firmante,files_id) VALUES ($cobro_id,'$nro',$banco,'$sucursal',$importe,'$fechaEmision','$fechaVencimiento','$firmante','$cuit',$idFile)";   // Con file
@@ -96,7 +102,10 @@ include "funciones.php";
                         echo "<br>QUERY : ".$sql;
                        if (!$result)
                            $error = 1;
-                        
+             
+                       
+        }echo $error;                
+                       
                         
     /* RETENCIONES */
 

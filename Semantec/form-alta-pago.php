@@ -27,6 +27,9 @@
         /* CUENTABANCO */
         $sql = "SELECT id,nombre FROM cuentabanco";
         $cuentabanco = mysql_query($sql);
+        /* Cantidad de Tipo Pago */
+        $cantTipoPago=1;
+
         
         /* FACTURA */
         $sql = "SELECT f.fav_id,SUM(o.ord_venta) as ord_venta
@@ -44,6 +47,7 @@
         $fila_factura = mysql_fetch_array($factura);
         
 
+
 ?>
 <!doctype html>
 <html>  
@@ -56,18 +60,20 @@
   <script type="text/javascript" src="js/jquery.datepick.js"></script>
   <script type="text/javascript" src="js/jquery.datepick-es.js"></script>
   <script type="text/javascript">
-  $(function() {
+ function cargarCalendarios(cant) {
+      for ($i = 1; $i <= cant; $i++) {
       /* Pago */
-      $('#txtFechaTransferencia1').datepick();
-      $('#txtFechaEmision1').datepick();   
-      $('#txtFechaVto1').datepick();
+      $('#txtFechaTransferencia'+$i).datepick();
+      $('#txtFechaEmision'+$i).datepick();   
+      $('#txtFechaVto'+$i).datepick();
+      }
       /* Retenciones */
       $('#txtFecha1').datepick();   // Ganancias
       $('#txtFecha2').datepick();   // IVA
       $('#txtFecha3').datepick();   // IIBB
       $('#txtFecha4').datepick();   // SUSS
       
-  });
+  };
   </script>    
   <script type="text/javascript" src="js/validador.js"></script>
   <script type="text/javascript" src="js/select_dependientes_cliente_sucursal.js"></script>
@@ -79,14 +85,12 @@
 }
   </script>
   <style type="text/css">
-<!--
 .Estilo1 {
 	color: #FFFFFF
 }
--->
   </style>
 </head>
-  <body>
+  <body onLoad="cargarCalendarios(<?php echo $cantTipoPago; ?>)">
 	
   <!-- start main --><!-- start main --><!-- start main --><!-- start main --><!-- start main -->
   <div id="main">
@@ -112,26 +116,32 @@
 
       <h2>Panel de control</h2>
       
-      <form action="alta-pago.php?fav_id=<?php echo $fav_id ?>" method="post" enctype="multipart/form-data" enctype="multipart/form-data" >
+      <form action="alta-pago.php?fav_id=<?php echo $fav_id ?>&cantTipoPago=<?php echo $cantTipoPago ?>" method="post" enctype="multipart/form-data" enctype="multipart/form-data" >
       <table width="100%" cellpadding="5" class="listados">
           <tr class="titulo">
             <td colspan="5"> <?php echo($titulo)?> </td>
             <td width="66">
                 <a href="index-admin.php">
-                    <img src="images/home.png"  alt="inicio" title="Volver al panel" width="32" height="32" border="none" />                </a>            </td>
+                    <img src="images/home.png"  alt="inicio" title="Volver al panel" width="32" height="32" border="none" />                
+                </a>            
+            </td>
           </tr>
           <tr>
             <td>Factura nro:</td>
             <td><?php echo $fila_factura["fav_id"]?></td>
-            <td>Orden venta:</td>
+            <td>Total Factura:</td>
             <td><?php echo $fila_factura["ord_venta"]?></td>
             <td>&nbsp;</td>
             <td></td>
           </tr>
+           <!--Bucle Generador de Tipos Pagos-->
+          
+       <?php for ($i = 1; $i <= $cantTipoPago; $i++) { ?>
+
           <tr>
             <td width="120">Tipo de pago</td>
           <td width="146">
-      <select name="comboTipoPago1" class="campos2" id="comboTipoPago1" onClick="filtroTipoDePago(value,1)">
+      <select name="comboTipoPago<?php echo $i ?>" class="campos2" id="comboTipoPago<?php echo $i ?>" onClick="filtroTipoDePago(value,<?php echo $i ?>)">
           <option value="0">Seleccione </option>
                 <?php
                     while ($fila = mysql_fetch_array($tipo_pago)){
@@ -148,7 +158,7 @@
           <tr>
             <td>Nro Operación</td>
             <td><label>
-              <input name="txtNroOperacion1" type="text" class="campos2" id="txtNroOperacion1" required >
+              <input name="txtNroOperacion<?php echo $i ?>" type="text" class="campos2" id="txtNroOperacion<?php echo $i ?>" required >
             </label></td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
@@ -158,7 +168,7 @@
           <tr>
             <td>Banco</td>
             <td>
-                    <select name="comboBanco1" class="campos2" id="comboBanco1" disabled required>
+                    <select name="comboBanco<?php echo $i ?>" class="campos2" id="comboBanco<?php echo $i ?>" disabled required>
                     <?php
                     while ($fila_banco = mysql_fetch_array($bancos)){
                 
@@ -168,30 +178,30 @@
                                           </select>
             </label></td>
             <td>Sucursal</td>
-            <td><input name="txtSucursal" type="text" class="campos2" id="txtSucursal1" disabled required> </td>
+            <td><input name="txtSucursal<?php echo $i ?>" type="text" class="campos2" id="txtSucursal<?php echo $i ?>" disabled required> </td>
             <td>&nbsp;</td>
             <td></td>
           </tr>
           
           <tr>
             <td>Fecha emisión</td>
-            <td><input name="txtFechaEmision" type="text" class="campos2" id="txtFechaEmision1" disabled required></td>
+            <td><input name="txtFechaEmision<?php echo $i ?>" type="text" class="campos2" id="txtFechaEmision<?php echo $i ?>" disabled required></td>
             <td>Fecha vto:</td>
-            <td><input name="txtFechaVto1" type="text" class="campos2" id="txtFechaVto1" disabled required></td>
+            <td><input name="txtFechaVto<?php echo $i ?>" type="text" class="campos2" id="txtFechaVto<?php echo $i ?>" disabled required></td>
             <td>&nbsp;</td>
             <td></td>
           </tr>
           <tr>
             <td>Firmante</td>
-            <td><input name="txtFirmante1" type="text" class="campos2" id="txtFirmante1" disabled required></td>
+            <td><input name="txtFirmante<?php echo $i ?>" type="text" class="campos2" id="txtFirmante<?php echo $i ?>" disabled required></td>
             <td>CUIT firmante</td>
-            <td><input name="txtCuit1" type="text" class="campos2" id="txtCuit1" disabled required></td>
+            <td><input name="txtCuit<?php echo $i ?>" type="text" class="campos2" id="txtCuit<?php echo $i ?>" disabled required></td>
             <td>&nbsp;</td>
             <td></td>
           </tr>
           <tr>
             <td>Cuenta</td>
-            <td><select name="comboCuenta1" class="campos2" id="comboCuenta1" disabled required>
+            <td><select name="comboCuenta<?php echo $i ?>" class="campos2" id="comboCuenta<?php echo $i ?>" disabled required>
               <?php
                     while ($fila_cuenta = mysql_fetch_array($cuentabanco)){
                 ?>
@@ -199,18 +209,24 @@
               <?php } ?>
             </select></td>
             <td>Fecha transf</td>
-            <td><input name="txtFechaTransferencia1" type="text" class="campos2" id="txtFechaTransferencia1" disabled required></td>
+            <td><input name="txtFechaTransferencia<?php echo $i ?>" type="text" class="campos2" id="txtFechaTransferencia<?php echo $i ?>" disabled required></td>
             <td>&nbsp;</td>
             <td></td>
           </tr>
           <tr>
             <td>Importe</td>
-            <td><input name="txtImportePago1" type="text" disabled class="campos2" id="txtImportePago1" onChange="actualizarDetallePago('<?php echo $fila_factura["ord_venta"]?>')" value="0"></td>
+
+            <td><input name="txtImportePago<?php echo $i ?>" type="text" disabled required class="campos2" id="txtImportePago<?php echo $i ?>" onChange="actualizarDetallePago('<?php echo $fila_factura["ord_venta"]?>')" value="0"></td>
+
             <td>Adjuntar archivo</td>
-            <td><input type="file" name="userfile1" id="userfile1"></td>
+
+            <td><input type="file" name="userfile<?php echo $i ?>" id="userfile<?php echo $i ?>"></td>
+            <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td></td>
           </tr>
+          <?php } ?>
+                  
           </table>
           
 <div class="retenciones">
