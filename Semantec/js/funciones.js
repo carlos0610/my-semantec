@@ -707,7 +707,15 @@ function actualizarDetallePago(ord_venta,cantidadTipoPago){
     if (parseFloat(ord_venta) != total)
         document.getElementById("botonRegistrar").style.visibility = "hidden";
     else
-        document.getElementById("botonRegistrar").style.visibility = "visible";
-    
-    
+        document.getElementById("botonRegistrar").style.visibility = "visible";   
+}
+      function generarTipoPago(idForm,operacion)
+{    if(operacion=='suma')
+	document.getElementById("cantidadTip").value++;
+    else
+        {
+        if(document.getElementById("cantidadTip").value>1)           
+          document.getElementById("cantidadTip").value--;      
+        }
+        document.getElementById(idForm).submit();
 }

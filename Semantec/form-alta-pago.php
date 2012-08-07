@@ -79,12 +79,6 @@
       
   };
   </script>
-  
-    <script>  
-        function oculto(){
-            $(".filaTransferencia1").hide()
-        }
-      </script>  
       
   <script type="text/javascript" src="js/validador.js"></script>
   <script type="text/javascript" src="js/select_dependientes_cliente_sucursal.js"></script>
@@ -131,7 +125,7 @@
 <table width="100%" cellpadding="5" class="listados">
           <tr class="titulo">
             <td colspan="5"> <?php echo($titulo)?> </td>
-            <td width="34">
+            <td width="36">
                 <a href="index-admin.php">
                     <img src="images/home.png"  alt="inicio" title="Volver al panel" width="32" height="32" border="none" />                
                 </a>            
@@ -148,9 +142,13 @@
           
           <tr>
             <td>Agregar tipo Pago</td>
-            <form action="form-alta-pago.php?fav_id=<?php echo $fav_id ?>&cantTipoPago=<?php echo $cantTipoPago ?>&ccc_id=<?php echo $ccc_id ?>" method="post">
-            <td><input name="cantidadTip" type="number" class="campos2" id="cantidadTip" required style="text-align:right" size="12"  min="1" max="30" value="1" >
-              <input type="submit" value="Generar" class="botones"  id="generar" /></td>
+
+            <form action="form-alta-pago.php?fav_id=<?php echo $fav_id ?>&cantTipoPago=<?php echo $cantTipoPago ?>&ccc_id=<?php echo $ccc_id ?>" method="post" id="generadorPago">           
+            <td><input name="cantidadTip" type="number" class="campos2" id="cantidadTip" required style="text-align:right" size="12"  min="1" max="30" value="<?php echo $cantTipoPago ?>" readOnly >
+              
+              <input type="submit" value="+" class="botones"  id="generarBoton" onClick="generarTipoPago('generadorPago','suma')"/>
+              <input type="submit" value="- " class="botones"  id="generarBoton" onClick="generarTipoPago('generadorPago','resta')"/>
+            </td>
             <td>&nbsp;</td>
             </form>
             <td>(Atención: se debe confeccionar la cantidad correcta en primera instancia)               
@@ -164,8 +162,8 @@
        <?php for ($i = 1; $i <= $cantTipoPago; $i++) { ?>
 
           <tr>
-            <td width="133" bgcolor="#CDDCDA">Tipo de pago</td>
-          <td width="190" bgcolor="#CDDCDA">
+            <td width="139" bgcolor="#CDDCDA">Tipo de pago</td>
+          <td width="179" bgcolor="#CDDCDA">
       <select name="comboTipoPago<?php echo $i ?>" class="campos2" id="comboTipoPago<?php echo $i ?>" onClick="filtroTipoDePago(value,<?php echo $i ?>)" required>
           <option value="0">Seleccione </option>
                 <?php
@@ -177,14 +175,14 @@
                     <option value="<?php echo $fila["id"]?>"><?php echo $fila["nombre"]?> </option>
                     <?php } ?>
                 </select></td>
-            <td width="99" bgcolor="#CDDCDA"><label>Nro Operación </label></td>
-            <td width="351" bgcolor="#CDDCDA"><input name="txtNroOperacion<?php echo $i ?>" type="text" class="campos2" id="txtNroOperacion<?php echo $i ?>" required style="text-align:right" ></td>
-            <td width="1" bgcolor="#CDDCDA">&nbsp;</td>
+            <td width="108" bgcolor="#CDDCDA"><label>Nro Operación </label></td>
+            <td width="343" bgcolor="#CDDCDA"><input name="txtNroOperacion<?php echo $i ?>" type="text" class="campos2" id="txtNroOperacion<?php echo $i ?>" required style="text-align:right" ></td>
+            <td width="3" bgcolor="#CDDCDA">&nbsp;</td>
             <td bgcolor="#CDDCDA"></td>
           </tr>
           <tr class="filaCheque<?php echo $i ?>"   style="display:none;">
-            <td width="169">Banco</td>
-            <td width="146">
+            <td width="139">Banco</td>
+            <td width="179">
                     <select name="comboBanco<?php echo $i ?>" class="campos2" id="comboBanco<?php echo $i ?>" disabled required>
                     <?php        $sql = "SELECT ban_id,ban_nombre FROM banco WHERE estado = 1 ORDER BY ban_nombre";
                                 $bancos     = mysql_query($sql);
@@ -195,9 +193,9 @@
                   <?php } ?>
                                           </select></td>
             <td width="108">Sucursal</td>
-            <td width="352"><input name="txtSucursal<?php echo $i ?>" type="text" class="campos2" id="txtSucursal<?php echo $i ?>" disabled required> </td>
-            <td width="4">&nbsp;</td>
-            <td width="32"></td>
+            <td width="343"><input name="txtSucursal<?php echo $i ?>" type="text" class="campos2" id="txtSucursal<?php echo $i ?>" disabled required> </td>
+            <td width="3">&nbsp;</td>
+            <td width="36"></td>
           </tr>
           
           <tr class="filaCheque<?php echo $i ?>" style="display:none;">
@@ -217,8 +215,8 @@
             <td></td>
           </tr>
           <tr class="filaTransferencia<?php echo $i ?>" style="display:none;">
-            <td width="169">Cuenta</td>
-            <td width="146"><select name="comboCuenta<?php echo $i ?>" class="campos2" id="comboCuenta<?php echo $i ?>" disabled required>
+            <td width="139">Cuenta</td>
+            <td width="179"><select name="comboCuenta<?php echo $i ?>" class="campos2" id="comboCuenta<?php echo $i ?>" disabled required>
               <?php
                      $sql = "SELECT id,nombre FROM cuentabanco";
                      $cuentabanco = mysql_query($sql);
@@ -228,9 +226,9 @@
               <?php } ?>
             </select></td>
             <td width="108">Fecha transf</td>
-            <td width="352"><input name="txtFechaTransferencia<?php echo $i ?>" type="text" class="campos2" id="txtFechaTransferencia<?php echo $i ?>" disabled required style="text-align:center"></td>
-            <td width="4">&nbsp;</td>
-            <td width="32"></td>
+            <td width="343"><input name="txtFechaTransferencia<?php echo $i ?>" type="text" class="campos2" id="txtFechaTransferencia<?php echo $i ?>" disabled required style="text-align:center"></td>
+            <td width="3">&nbsp;</td>
+            <td width="36"></td>
           </tr>
           <tr>
             <td>Importe</td>
