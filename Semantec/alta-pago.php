@@ -118,9 +118,9 @@ include "funciones.php";
                       
           /* Cheque pago diferido */
           case 1:        if ($idFile == -1)
-                            $sql =  "INSERT INTO cobros_detalle_pago (cobros_id,nro,ban_id,sucursal,importe,fecha_emision,fecha_vto,firmante,cuit_firmante) VALUES ($cobro_id,'$nro',$banco,'$sucursal',$importe,'$fechaEmision','$fechaVencimiento','$firmante','$cuit')";                     // Sin file
+                            $sql =  "INSERT INTO cobros_detalle_pago (tipo_pago_id,cobros_id,nro,ban_id,sucursal,importe,fecha_emision,fecha_vto,firmante,cuit_firmante) VALUES ($tipoPago,$cobro_id,'$nro',$banco,'$sucursal',$importe,'$fechaEmision','$fechaVencimiento','$firmante','$cuit')";                     // Sin file
                          else
-                             $sql =  "INSERT INTO cobros_detalle_pago (cobros_id,nro,ban_id,sucursal,importe,fecha_emision,fecha_vto,firmante,cuit_firmante,files_id) VALUES ($cobro_id,'$nro',$banco,'$sucursal',$importe,'$fechaEmision','$fechaVencimiento','$firmante','$cuit',$idFile)";   // Con file
+                             $sql =  "INSERT INTO cobros_detalle_pago (tipo_pago_id,cobros_id,nro,ban_id,sucursal,importe,fecha_emision,fecha_vto,firmante,cuit_firmante,files_id) VALUES ($tipoPago,$cobro_id,'$nro',$banco,'$sucursal',$importe,'$fechaEmision','$fechaVencimiento','$firmante','$cuit',$idFile)";   // Con file
                          break;
           
           /* Transferencia bancaria*/
