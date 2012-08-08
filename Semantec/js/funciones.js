@@ -699,7 +699,7 @@ function actualizarDetallePago(ord_venta,cantidadTipoPago){
     document.getElementById("txtSUSS").value        = (parseFloat(suss)).toFixed(2);
     
     depositoActual=document.getElementById("txtDeposito").value;
-    document.getElementById("txtTotal").value = (parseFloat(ganancias) +parseFloat(iva) + parseFloat(suss)+parseFloat(depositoActual)).toFixed(2);
+    document.getElementById("txtTotal").value = (parseFloat(ganancias) +parseFloat(iva) + parseFloat(iibb) +parseFloat(suss)+parseFloat(depositoActual)).toFixed(2);
     total = parseFloat(document.getElementById("txtTotal").value);
     
     

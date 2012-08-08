@@ -349,7 +349,11 @@ Nro :
                 ?>
                 <option value="<?php echo $fila_provincia["id"]?>"><?php echo $fila_provincia["nombre"]?> </option>
                 <?php } ?>
-              </select></td>
+              </select>
+              Jurisdicción: 
+              <label>
+              <input name="txtJurisdiccion" type="text" class="campos2" id="txtJurisdiccion" size="9">
+              </label></td>
             </tr>
           <tr>
             <td colspan="3" bgcolor="#0099CC"><label></label>
