@@ -11,4 +11,13 @@
                  $fila=getBancoWithId($id);
                  return $fila['ban_nombre'] ;
 	}
+        
+        function getListarTodoBancos(){
+            $sql = "SELECT ban_id,ban_nombre FROM banco WHERE estado = 1 ORDER BY ban_nombre";
+            return $bancos     = mysql_query($sql);
+            
+        }
+        
+        
+        
 ?>

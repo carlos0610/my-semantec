@@ -4,6 +4,8 @@
     $titulo = "Formulario de registro de pago y retenciones";
         include("validar.php");
         include("conexion.php");
+        include("Modelo/modeloFacturaVenta.php");
+        include("Modelo/modeloBanco.php");
         $fav_id     =  $_GET["fav_id"]; 
         $ccc_id     =  $_GET["ccc_id"];
         /*TIPOS DE PAGO*/
@@ -12,8 +14,7 @@
         $tipo_pago = mysql_query($sql);
         
         /* BANCOS */
-        $sql = "SELECT ban_id,ban_nombre FROM banco WHERE estado = 1 ORDER BY ban_nombre";
-        $bancos     = mysql_query($sql);
+        $bancos     = getListarTodoBancos();
         
         /* PROVINCIAS */
         $sql = "SELECT id,nombre FROM provincias ORDER BY nombre";
@@ -35,19 +36,8 @@
                   $cantTipoPago=$cantTipoPagogene;            
             }
         
-        /* FACTURA */
-        $sql = "SELECT f.fav_id,SUM(o.ord_venta) as ord_venta
-                FROM ordenes o,cuentacorriente_cliente cc ,factura_venta f,grupo_ordenes g_o
-                WHERE cc.cli_id = o.cli_id 
-                AND f.fav_id = $fav_id
-                AND o.estado = 1 
-                AND cc.estado = 1 
-                AND o.est_id >= 11
-                AND f.estado = 1
-                AND g_o.gru_id = f.gru_id
-                AND g_o.gru_id = o.gru_id";
-        
-        $factura    = mysql_query($sql);
+        /* FACTURA */        
+        $factura      = getListadoFacturasPagadasYno($fav_id);
         $fila_factura = mysql_fetch_array($factura);
         
 
