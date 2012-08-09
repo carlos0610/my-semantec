@@ -6,6 +6,7 @@
         include("conexion.php");
         include("Modelo/modeloFacturaVenta.php");
         include("Modelo/modeloCobrosDetalleRetencion.php");
+        include("Modelo/modeloCobrosDetallePago.php");
         
         $fav_id     =  $_GET["fav_id"]; 
         $ccc_id     =  $_GET["ccc_id"];
@@ -39,9 +40,11 @@
         $fila_factura = mysql_fetch_array($factura);
         
         
+        /* DETALLE PAGO */
+        $detallePagos       = getDetallePagoByFavId($fav_id);
         /* DETALLE RETENCIONES */
         $detalleRetenciones = getDetalleRetencionByFavId($fav_id);
-         
+           
         
 
 
@@ -88,7 +91,7 @@
 }
   </style>
 </head>
-  <body onLoad="cargarCalendarios(<?php echo $cantTipoPago; ?>)">
+  <body>
 	
   <!-- start main --><!-- start main --><!-- start main --><!-- start main --><!-- start main -->
   <div id="main">
@@ -130,79 +133,116 @@
             <td>&nbsp;</td>
             <td></td>
           </tr>
-          <form action="alta-pago.php?fav_id=<?php echo $fav_id ?>&cantTipoPago=<?php echo $cantTipoPago ?>&ccc_id=<?php echo $ccc_id ?>" method="post" enctype="multipart/form-data" >
+          <form action="lista-facturas.php" method="post" enctype="multipart/form-data" >
            <!--Bucle Generador de Tipos Pagos-->
           
-       <?php for ($i = 1; $i <= $cantTipoPago; $i++) { ?>
+       
 
+          
+          <?php while($fila_pago = mysql_fetch_array($detallePagos)){ ?>
           <tr>
             <td width="139" bgcolor="#CDDCDA">Tipo de pago</td>
-          <td width="179" bgcolor="#CDDCDA">&nbsp;</td>
+          <td width="179" bgcolor="#CDDCDA"><?php echo $fila_pago["pago"]?></td>
             <td width="108" bgcolor="#CDDCDA"><label>Nro Operación </label></td>
-            <td width="343" bgcolor="#CDDCDA">&nbsp;</td>
+            <td width="343" bgcolor="#CDDCDA"><?php echo $fila_pago["nro"]?></td>
             <td width="3" bgcolor="#CDDCDA">&nbsp;</td>
             <td bgcolor="#CDDCDA"></td>
           </tr>
-          <tr class="filaCheque<?php echo $i ?>"   style="display:none;">
-            <td width="139">Banco</td>
-            <td width="179">&nbsp;</td>
-            <td width="108">Sucursal</td>
-            <td width="343">&nbsp;</td>
-            <td width="3">&nbsp;</td>
-            <td width="36"></td>
-          </tr>
           
-          <tr class="filaCheque<?php echo $i ?>" style="display:none;">
-            <td>Fecha emisión</td>
-            <td>&nbsp;</td>
-            <td>Fecha vto:</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td></td>
-          </tr>
-          <tr class="filaCheque<?php echo $i ?>" style="display:none;">
-            <td>Firmante</td>
-            <td>&nbsp;</td>
-            <td>CUIT firmante</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td></td>
-          </tr>
-          <tr class="filaTransferencia<?php echo $i ?>" style="display:none;">
-            <td width="139">Cuenta</td>
-            <td width="179">&nbsp;</td>
-            <td width="108">Fecha transf</td>
-            <td width="343">&nbsp;</td>
+          <?php if ($fila_pago["tipo_pago_id"] == 1){ ?>
+          <tr>
+            <td width="139">Banco</td>
+            <td width="179"><?php echo $fila_pago["ban_nombre"]?></td>
+            <td width="108"><label>Sucursal</label></td>
+            <td width="343"><?php echo $fila_pago["sucursal"]?></td>
             <td width="3">&nbsp;</td>
-            <td width="36"></td>
+            <td></td>
           </tr>
           <tr>
-            <td>Importe</td>
-
-            <td>&nbsp;</td>
-
-            <td>Archivo</td>
-
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
+            <td width="139">Fecha emision</td>
+            <td width="179"><?php echo $fila_pago["fecha_emision"]?></td>
+            <td width="108"><label>Fecha vencimiento</label></td>
+            <td width="343"><?php echo $fila_pago["fecha_vto"]?></td>
+            <td width="3">&nbsp;</td>
+            <td></td>
           </tr>
+          
+          <tr>
+            <td width="139">Firmante</td>
+            <td width="179"><?php echo $fila_pago["firmante"]?></td>
+            <td width="108"><label>CUIT Firmante</label></td>
+            <td width="343"><?php echo $fila_pago["cuit_firmante"]?></td>
+            <td width="3">&nbsp;</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td width="139">Importe</td>
+            <td width="179"><?php echo $fila_pago["importe"]?></td>
+            <td width="108"><label></label></td>
+            <td width="343"></td>
+            <td width="3">&nbsp;</td>
+            <td></td>
+          </tr>
+          
           <?php } ?>
+          
+  
+          <?php if ($fila_pago["tipo_pago_id"] == 2){ ?>
+          <tr>
+            <td width="139">Importe</td>
+            <td width="179"><?php echo $fila_pago["importe"]?></td>
+            <td width="108"><label> </label></td>
+            <td width="343"></td>
+            <td width="3">&nbsp;</td>
+            <td></td>
+          </tr>
+          
+          <?php } ?>
+          
+          <?php if ($fila_pago["tipo_pago_id"] == 3){ ?>
+          <tr>
+            <td width="139">Cuenta</td>
+            <td width="179"><?php echo $fila_pago["nombre"]?></td>
+            <td width="108"><label>Fecha transferencia</label></td>
+            <td width="343"><?php echo $fila_pago["fecha_transferencia"]?></td>
+            <td width="3">&nbsp;</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td width="139">Importe</td>
+            <td width="179"><?php echo $fila_pago["importe"]?></td>
+            <td width="108"><label></label></td>
+            <td width="343"></td>
+            <td width="3">&nbsp;</td>
+            <td></td>
+          </tr>
+          
+          <?php } ?>
+          
+          
+          
+          
+          <?php } ?>
+          
+          
           </table>
           
 <div class="retenciones">
-          <form action="alta-pago.php?fav_id=<?php echo $fav_id ?>&cantTipoPago=<?php echo $cantTipoPago ?>&ccc_id=<?php echo $ccc_id ?>" method="post" enctype="multipart/form-data" >
-          <?php while($fila_retencion = mysql_fetch_array($detalleRetenciones)){ ?>
+          <form action="lista-facturas.php" method="post" enctype="multipart/form-data" >
+          
               <table class="listados">
           <tr>
             <td colspan="3" bgcolor="#0099CC"><div align="center" class="Estilo1">Retenciones</div></td>
         </tr>
-          <tr>
+        <!-- Tabla dinamica -->
+        <?php while($fila_retencion = mysql_fetch_array($detalleRetenciones)){?>
+        
+            <tr>
             <td width="7%"></td>
             <td width="18%"></td>
           <tr>
             <td bgcolor="#CDDCDA">&nbsp;</td>
-            <td bgcolor="#CDDCDA">            Ganancias            </td>
+            <td bgcolor="#CDDCDA">      <?php echo $fila_retencion["nombre"]?>            </td>
             <td width="75%" bgcolor="#CDDCDA">&nbsp;</td>
             </tr>          
           <tr>
@@ -210,128 +250,35 @@
             <td><?php echo $fila_retencion["ret_fecha"]?></td>
             <td>Prefijo :<?php echo $fila_retencion["ret_prefijo"]?>
               
-              <label>Nro :  <?php echo $fila_retencion["ret_codigo"]?>          </label></td>
+              <label>/ Nro :  <?php echo $fila_retencion["ret_codigo"]?>          </label></td>
             </tr>
           <tr>
             <td>Importe:</td>
-            <td><label></label></td>
+            <td><label><?php echo $fila_retencion["ret_importe"]?></label></td>
+            <td><?php if($fila_retencion["ret_id"] == 2){
+                        echo "IVA: ".$fila_retencion["valor"];
+                    }
+                      if($fila_retencion["ret_id"] == 4){
+                        echo "Provincia: ".$fila_retencion["provincia"]." / "."Jurisdicción: ".$fila_retencion["jurisdiccion"];  
+                      }  
+                        
+                ?></td>
+            </tr>
+  
+        
+        <?php } ?>
+          <tr>
             <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;&nbsp;</td>
             </tr>
           <tr>
-            <td bgcolor="#CDDCDA">&nbsp;</td>
-            <td bgcolor="#CDDCDA">            IVA            </td>
-            <td bgcolor="#CDDCDA">&nbsp;</td>
-            </tr>
-          <tr>
-            <td>Fecha:</td>
-            <td>&nbsp;</td>
-            <td>Prefijo :
-              
-              
-              Nro :<?php echo $fila_retencion["ret_codigo"]?></td>
-            </tr>
-          <tr>
-            <td>Importe:</td>
-            <td><?php echo $fila_retencion["ret_importe"]?></td>
-            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; %  :            </td>
-            </tr>
-          <tr>
-            <td bgcolor="#CDDCDA">&nbsp;</td>
-            <td bgcolor="#CDDCDA">            IIBB            </td>
-            <td bgcolor="#CDDCDA">&nbsp;</td>
-            </tr>
-          <tr>
-            <td>Fecha:</td>
-            <td>&nbsp;</td>
-            <td>Prefijo :
-              
-Nro :</td>
-            </tr>
-          <tr>
-            <td>Importe:</td>
-            <td><?php echo $fila_retencion["ret_importe"]?></td>
-            <td>&nbsp;</td>
-            </tr>
-          <tr>
-            <td bgcolor="#CDDCDA">&nbsp;</td>
-            <td bgcolor="#CDDCDA">            SUSS            </td>
-            <td bgcolor="#CDDCDA">&nbsp;</td>
-            </tr>
-          <tr>
-            <td>Fecha:</td>
-            <td>&nbsp;</td>
-            <td>Prefijo :
-              
-Nro :</td>
-            </tr>
-          <tr>
-            <td>Importe:</td>
-            <td>&nbsp;</td>
-            <td>Provincia:            </td>
-            </tr>
-          <tr>
-            <td colspan="3" bgcolor="#0099CC"><label></label>
-            <div align="center"><span class="Estilo1">Detalle del pago</span></div></td>
-          </tr>
-          <tr>
-            <td>Depósito</td>
-            <td><label>
-              <input name="txtDeposito" type="text" class="campos2" id="txtDeposito" value="0" disabled style="text-align:right"  size="12">
-            </label></td>
-            <td>&nbsp;</td>
-          </tr>
-          <tr>
-            <td>Ganancias</td>
-            <td><label>
-              <input name="txtGanancias" type="text" class="campos2" id="txtGanancias"  value="0"disabled style="text-align:right"  size="12">
-            </label></td>
-            <td>&nbsp;</td>
-          </tr>
-          <tr>
-            <td>IVA</td>
-            <td><label>
-              <input name="txtIva" type="text" class="campos2" id="txtIva"  value="0"disabled style="text-align:right"  size="12">
-            </label></td>
-            <td>&nbsp;</td>
-          </tr>
-          <tr>
-            <td>IIBB</td>
-            <td><label>
-              <input name="txtIIBB" type="text" class="campos2" id="txtIIBB" value="0" disabled style="text-align:right"  size="12">
-            </label></td>
-            <td>&nbsp;</td>
-          </tr>
-          <tr>
-            <td>SUSS</td>
-            <td><label>
-              <input name="txtSUSS" type="text" class="campos2" id="txtSUSS"  value="0"disabled style="text-align:right"  size="12">
-            </label></td>
-            <td>&nbsp;</td>
-          </tr>
-          <tr>
-            <td>Total</td>
-            <td><label>
-              <input name="txtTotal" type="text" class="campos2" id="txtTotal" value="0" disabled style="text-align:right"  size="12">
-            </label></td>
-            <td>&nbsp;</td>
-          </tr>
-          <tr>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-          </tr>
-          <tr>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp; <input type="submit" value="Registrar pago" class="botones" style="visibility:visible" id="botonRegistrar" />
-              &nbsp;
-            <input type="reset" value="Restablecer" class="botones" /></td>
-            </tr>
-          <tr>
-            <td colspan="3" class="pie_lista">&nbsp;</td>
+            <td colspan="3" class="pie_lista"><div align="center">
+              <input name="Enviar" type="submit" class="botones" value="Volver" />
+            </div></td>
           </tr>
       </table>
-              <?php } ?>
+              
       </form> 
 </div>
  

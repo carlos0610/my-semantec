@@ -240,6 +240,11 @@
             <img src="images/pagar_factura.png" title="Registrar pago de factura">
             </a>
             
+            <?php }else {?>
+            <a href="ver-alta-pago.php?fav_id=<?php echo($fila["fav_id"]);?>">
+            <img src="images/cash_register.png" title="Ver detalle del pago">
+            </a>
+                
             <?php }?>
             </div>
             </td>
