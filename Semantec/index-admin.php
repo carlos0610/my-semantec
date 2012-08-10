@@ -129,6 +129,7 @@
      <h3>Clientes</h3>
       <p><a href="lista-clientes.php" class="current">Ir al listado</a></p>
       <p><a href="form-alta-clientes.php" class="current">Nuevo cliente</a></p>
+      <p><a href="form-alta-abonos.php" class="current">Registro abonos</a></p>
      </section>
       
            

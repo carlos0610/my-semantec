@@ -77,6 +77,7 @@
                 </a>
             </td>
           </tr>
+           <?php if($fase!=2) { ?>
            <tr>
               <td>Nombre Abono</td>
               <td><input type="text" name="nombre_abono" id="nombre_abono" value="<?php echo $nombreAbono ?>" class="campos" required></td>
@@ -126,13 +127,22 @@
                 <input type="buttom" value="Aceptar Sucursales" class="botones" style="visibility:visible" id="botonAgregarSucursales" onClick="verificarCheckboxsAbono(<?php echo $cantSucursales ?>,<?php echo $idMatriz ?>)" />
             </td>
             <td></td>
-          </tr>           
+          </tr>   
+          <?php } ?>
+          
       </table>
       </form>  
 
         
           <?php   if ($fase==2) {     ?>
-         <table class="listados">
+      <form action="alta-abonos.php" method="post" name="formAbonoSucursal" >
+         <table class="listados" cellpadding="5">
+          <tr>
+              <td>Nombre Abono</td>
+              <td><input type="text" name="nombre_abono" id="nombre_abono" value="<?php echo $nombreAbono ?>" class="campos" required></td>
+          </tr>
+             
+             
           <tr>
             <td colspan="6" bgcolor="#0099CC"><div align="center" class="Estilo1">Complete Valores de Abonos</div></td>
         </tr>
@@ -167,7 +177,7 @@
             <td colspan="6">   <input type="submit" value="Registrar Abonos" class="botones" style="visibility:visible" id="botonAgregarSucursales" onClick="verificarCheckboxsAbono(<?php echo $cantSucursales ?>,<?php echo $idMatriz ?>)" />          </td>
             </tr>  
             </table>
-     
+        </form>
       <?php    }?>
      <div class="clear"></div>
 
