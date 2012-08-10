@@ -427,6 +427,12 @@ function mostrarCuenta(id,nombre){
     }
 }
 
+function actualizarListadoAbono(id){
+        nombreAbono=document.getElementById("nombre_abono").value;
+        window.location="form-alta-abonos.php?idMatriz="+id+"&nombreabono="+nombreAbono;       
+
+}
+
 function validarFacturacion(costo,venta){
 
 //Constantes de estado
@@ -538,43 +544,60 @@ function verificarCheckboxs(cantTotalCheckboxs,id){
             alert("debe seleccionar una orden");
         }
 }
+// verificarCheckBoxs
 
-function verificarCheckboxsFacturaCompra(cantTotalCheckboxs,id){
+
+function verificarCheckboxsAbono(cantTotalCheckboxs,id){
     i=0;
     continua=false;
-    url="form-alta-compra.php?comboProveedor="+id;
+    nombre_abono=document.getElementById("nombre_abono").value;
+    url="form-alta-abonos.php?idMatriz="+id+"&nombreabono="+nombre_abono;
     elementoOrden=0;
-        while (i<cantTotalCheckboxs)
+    
+
+        while (i<cantTotalCheckboxs)// verifica q almenos un check estre tildado
         {
             i++;
-            if(eval("document.frmGenerarFactura.checkbox_ord_id"+i+".checked"))
+            if(eval("document.formSelectSucursales.checkbox_sucursal_id"+i+".checked"))
                 {
                    continua=true;
                 } 
         }
-    if(continua){ 
+    if(continua){
     i=0;
     while (i<cantTotalCheckboxs)
         {
             i++;       
-            if(eval("document.frmGenerarFactura.checkbox_ord_id"+i+".checked"))
+            if(eval("document.formSelectSucursales.checkbox_sucursal_id"+i+".checked"))
                 {
                    elementoOrden++; 
-                   url+="&ord_check"+elementoOrden+"="+eval("document.frmGenerarFactura.checkbox_ord_id"+i+".value"); 
+                   url+="&suc_check"+elementoOrden+"="+eval("document.formSelectSucursales.checkbox_sucursal_id"+i+".value"); 
                 } 
                 else
                     {
-                        eval("document.frmGenerarFactura.checkbox_ord_id"+i+".style.visibility = 'hidden'")
+                        eval("document.formSelectSucursales.checkbox_sucursal_id"+i+".style.visibility = 'hidden'")
                     }
         }
-        url+="&cant="+elementoOrden+"&ocultar=no";      
+        url+="&cant="+elementoOrden+"&fase=2";      
    window.location=url;  
     }
     else
         {
-            alert("debe seleccionar una orden");
+            alert("Debe seleccionar una Sucursal");
         }
 }
+function CheckboxsSeleccionarTodos(cantTotalCheckboxs){
+    elementoOrden=0;
+    resultado=eval("document.formSelectSucursales.checkbox_SelectAll.checked");
+    i=0;
+    while (i<cantTotalCheckboxs)
+        {
+            i++;       
+           eval("document.formSelectSucursales.checkbox_sucursal_id"+i+".checked="+resultado);
+        }
+    }
+
+
 
 /* ALERTA DE PLAZOS*/
 
