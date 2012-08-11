@@ -135,7 +135,7 @@
 
         
           <?php   if ($fase==2) {     ?>
-      <form action="alta-abonos.php" method="post" name="formAbonoSucursal" >
+      <form action="alta-abonos.php?cantidadAbonos=<?php echo $cant ?>" method="post" name="formAbonoSucursal" >
          <table class="listados" cellpadding="5">
           <tr>
               <td>Nombre Abono</td>
@@ -166,7 +166,7 @@
             <td width="9%">Valor Venta : </td>
             <td width="30%"><input type="text" style="text-align:right" class="campos2" id="abono_venta<?php echo $i; ?>" name="abono_venta<?php echo $i; ?>" value="0"  min="0" required   /></td>
             </tr>
-      
+            <input type="hidden" name="abono_cli<?php echo $i; ?>" id="abono_cli<?php echo $i; ?>" value="<?php echo $cod ?>" class="campos" >
         
       <?php } ?>
             <tr>
