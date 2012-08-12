@@ -44,7 +44,7 @@ include "funciones.php";
          echo "<br> Error en transacción";
          } else {
      mysql_query("COMMIT");
-     header("location:ver-abono.php");
+     header("location:ver-abono.php?idAbono=$abono_id");
                 }
                 
                 

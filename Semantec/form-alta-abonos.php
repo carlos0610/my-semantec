@@ -30,13 +30,6 @@
 ?>
   <link rel="stylesheet" type="text/css" href="css/jquery.datepick.css" />
   <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
-  <script type="text/javascript" src="js/jquery.datepick.js"></script>
-  <script type="text/javascript" src="js/jquery.datepick-es.js"></script>
-  <script type="text/javascript">
-  $(function() {
-      $('#ord_alta').datepick();
-  });
-  </script>    
   <script type="text/javascript" src="js/validador.js"></script>
   <script type="text/javascript" src="js/select_dependientes_cliente_sucursal.js"></script>
 
