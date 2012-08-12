@@ -77,7 +77,7 @@
           </tr>        
       </table>
 
-      <form action="alta-abonos.php?cantidadAbonos=<?php echo $cant ?>" method="post" name="formAbonoSucursal" >
+      <form action="edit-abonos.php?cantidadAbonos=<?php echo $cant ?>" method="post" name="formAbonoSucursal" >
          <table class="listados" cellpadding="5">
           <tr>
               <td>Nombre Abono :</td>
@@ -139,7 +139,13 @@
             </tr> 
             <tr>
                 <td ></td> <td ></td> <td ></td>
-            <td colspan="6">   <input type="submit" value="Modificar Abonos" class="botones" style="visibility:visible" id="botonAgregarSucursales" onClick="verificarCheckboxsAbono(<?php echo $cantSucursales ?>,<?php echo $idMatriz ?>)" />          </td>
+            <td colspan="6">   
+                <?php if($modificar==1){ ?>
+                <input type="submit" value="Guardar Modificaciones"class="botones" style="visibility:visible" id="botonAgregarSucursales"  /> 
+                  <?php }else{ ?>
+                <input type="buttom" value="Modificar Abonos" class="botones" style="visibility:visible" id="botonAgregarSucursales" onClick="irPagina('ver-abono.php?idAbono=<?php echo $idAbono ;?>&modificar=1')" /> 
+                 <?php }       ?>
+            </td>
             </tr>  
             </table>
         </form>
