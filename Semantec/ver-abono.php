@@ -8,9 +8,9 @@
          $titulo = "Ver Abonos";
         include("validar.php");
         include("conexion.php");
-        include("modelo/modeloClientes.php");
-        include("modelo/modeloAbono.php");
-        include("modelo/modeloAbonosDetalle.php");
+        include("Modelo/modeloClientes.php");
+        include("Modelo/modeloAbono.php");
+        include("Modelo/modeloAbonosDetalle.php");
         $sql = "SELECT sucursal_id,sucursal,cli_id,cli_nombre,p.nombre as provincia 
            FROM clientes,ubicacion u,provincias p, partidos pa,localidades l
            WHERE 

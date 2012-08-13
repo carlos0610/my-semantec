@@ -3,8 +3,8 @@
         include("validar.php");
         include("funciones.php");
         include("conexion.php");
-        include("modelo/modeloCuentaTipo.php");
-        include("modelo/modeloBanco.php");
+        include("Modelo/modeloCuentaTipo.php");
+        include("Modelo/modeloBanco.php");
 /* CALCULO PAGINADO */  ###############################################################################
     $sql0="SELECT `id`, `cut_id`, `ban_id`, `nro`, `nombre`, `cbu`, `estado` 
            FROM `cuentabanco` 

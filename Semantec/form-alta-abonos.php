@@ -4,7 +4,7 @@
     $titulo = "Formulario de alta de una Orden de Servicio.";
         include("validar.php");
         include("conexion.php");
-        include("modelo/modeloClientes.php");
+        include("Modelo/modeloClientes.php");
         $sql = "SELECT sucursal_id,sucursal,cli_id,cli_nombre,p.nombre as provincia 
            FROM clientes,ubicacion u,provincias p, partidos pa,localidades l
            WHERE 
