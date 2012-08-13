@@ -144,6 +144,7 @@
       <p><a href="lista-facturas.php" class="current">Ir al listado</a></p>
       <p><a href="ver-generar-factura-nueva.php?cli_id=1&ocultar=si" class="current">Nueva factura</a></p>
       <p><a href="reporte-iva.php" class="current">Reporte IVA</a></p>
+      <p><a href="reporte-retenciones.php" class="current">Reporte Retenciones</a></p>
      </section>
       
       <section class="cajas">
@@ -158,6 +159,12 @@
      <div class="clear">
      <table width="100%" border="0">
          
+         <tr>
+           <td colspan="5" ><div align="center"></div></td>
+         </tr>
+         <tr>
+           <td colspan="5" >&nbsp;</td>
+         </tr>
          <tr>
            <td colspan="5" class="botones"><div align="center">ALERTAS</div></td>
          </tr>

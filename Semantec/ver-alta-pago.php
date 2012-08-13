@@ -1,7 +1,7 @@
 <?php
 
     header('Content-Type: text/html; charset=utf-8');
-    $titulo = "Formulario de registro de pago y retenciones";
+    $titulo = "Detalle del pago y retenciones";
         include("validar.php");
         include("conexion.php");
         include("Modelo/modeloFacturaVenta.php");
