@@ -146,7 +146,7 @@
 	 <table width="100%" border="0" id="dataTable">
 <tr>
             <td width="13%" height="20"  class="titulo"><span id="ocultarParaImpresion">Señores:</span></td>
-            <td colspan="3" style="background-color:#cbeef5" align="left"><?php echo utf8_encode($fila_datos_cliente["cli_nombre"]);?></td>
+            <td colspan="3" style="background-color:#cbeef5" align="left"><?php echo utf8_encode($fila_datos_cliente["cli_nombre"]);?>  </td>
        </tr>
           <tr>
             <td class="titulo" height="20" ><span id="ocultarParaImpresion">Domiclio:</span></td>

@@ -455,20 +455,24 @@ if((document.getElementById("est_id").value == 11)&(costo==0)&(venta==0))
        
        
             document.getElementById("fecha").style.visibility = "visible";
+            document.getElementById("fecha").disabled = false;
             document.getElementById("texto_respuesta").style.visibility = "visible";
             document.getElementById("texto_respuesta").textContent = "Fecha respuesta proveedor";
         }else if((document.getElementById("est_id").value != 9)) {
             document.getElementById("fecha").style.visibility = "hidden";
+            document.getElementById("fecha").disabled = true;
             document.getElementById("texto_respuesta").style.visibility = "hidden";           
         }  
                
         /* SI EL ESTADO SELECCIONADO ES 'APROBADO' */
    if((document.getElementById("est_id").value == estadoConfirmarProveedor)){
             document.getElementById("fecha").style.visibility = "visible";
+            document.getElementById("fecha").disabled = false;
             document.getElementById("texto_respuesta").style.visibility = "visible";
             document.getElementById("texto_respuesta").textContent = "Plazo de finalizacion";
         }else if((document.getElementById("est_id").value != 2)){
             document.getElementById("fecha").style.visibility = "hidden";
+            document.getElementById("fecha").disabled = true;
             document.getElementById("texto_respuesta").style.visibility = "hidden"; 
         }              
 }

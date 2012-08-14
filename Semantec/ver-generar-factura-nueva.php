@@ -67,6 +67,7 @@
   <script type="text/javascript">
   $(function() {
       $('#vencimiento').datepick();
+      $('#fechaalta').datepick();
   });
   </script></head>
   <body>
@@ -97,7 +98,7 @@
     <td width="1%">&nbsp;</td>
   </tr>
   <tr>
-    <td class="titulo"><span id="ocultarParaImpresion">Buenos Aires,</span> <?php echo date("d/m/Y") ?></td>
+    <td class="titulo"><span id="ocultarParaImpresion">Buenos Aires,</span> <?php /*echo date("d/m/Y")*/  ?></td>
     <td>&nbsp;</td>
   </tr>
   <tr>
@@ -147,6 +148,7 @@
                 ?>
                </select>
                 <label id="nombre" style="visibility:hidden"> </label>
+                Fecha:<input name="fechaalta" type="text" id="fechaalta" required> (INGRESAR LUEGO DE SELECCIONAR LAS ORDENES)
             </td>
        </tr>
           <tr>
