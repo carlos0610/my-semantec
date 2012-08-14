@@ -2,6 +2,7 @@
 
     header('Content-Type: text/html; charset=utf-8');
     $modificar=$_GET['modificar']; 
+    $origen=$_GET['origen']; 
     if($modificar==1)
          $titulo = "Formulario Modificación Abonos";
     else
@@ -140,8 +141,15 @@
             <tr>
                 <td ></td> <td ></td> <td ></td>
             <td colspan="6">   
+                <?php if($origen=='listado') { ?>
+                <a href="lista-abonos.php">
+                <?php }else{ ?>
+                  <a href="form-alta-abonos.php">  
+                <?php } ?>
+                    <input type="buttom" value="Volver"class="botones" style="visibility:visible" id="volver"  />
+                </a>
                 <?php if($modificar==1){ ?>
-                <input type="submit" value="Guardar Modificaciones"class="botones" style="visibility:visible" id="botonAgregarSucursales"  /> 
+                    <input type="submit" value="Guardar Modificaciones"class="botones" style="visibility:visible" id="botonAgregarSucursales" disabled="true" /> 
                   <?php }else{ ?>
                 <input type="buttom" value="Modificar Abonos" class="botones" style="visibility:visible" id="botonAgregarSucursales" onClick="irPagina('ver-abono.php?idAbono=<?php echo $idAbono ;?>&modificar=1')" /> 
                  <?php }       ?>
