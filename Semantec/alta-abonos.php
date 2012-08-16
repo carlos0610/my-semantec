@@ -35,7 +35,7 @@ include("Modelo/modeloClientes.php");
                 $error = 1;
         //fin
        $sql = "INSERT INTO `abonos_detalle`( `abonos_id`, `cli_id`, `valor_costo`, `valor_venta`, `valor_visita`) 
-                                    VALUES ($abono_id,$abono_cli,$abono_costo,$abono_venta,$abono_valor_visita)";
+                                    VALUES ($abono_id,$abono_cli,$abono_costo,$abono_venta,1)";
         $result = mysql_query($sql);               
                echo "<br>QUERY : ".$sql;
           if (!$result)

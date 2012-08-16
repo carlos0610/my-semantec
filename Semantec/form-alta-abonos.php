@@ -151,9 +151,9 @@
           <tr>
             <td colspan="6" bgcolor="#CDDCDA">   <?php  $cod=$_GET["suc_check$i"];  echo (utf8_encode((getClienteNombreCompletoWithId($cod))));?>            </td>
             </tr>          
-          <tr>
+          <tr>  <!--start contenedor
             <td width="9%">Valor Visita:</td>
-            <td width="21%"><input type="text" style="text-align:right" class="campos2" id="abono_valor_visita<?php echo $i; ?>" name="abono_valor_visita<?php echo $i; ?>" value="0"  min="0" required  /></td>
+            <td width="21%"><input type="text" style="text-align:right" class="campos2" id="abono_valor_visita<?php echo $i; ?>" name="abono_valor_visita<?php echo $i; ?>" value="0"  min="0" required  /></td>-->
             <td width="10%">Valor Costo :</td>
             <td width="21%"><input type="text" style="text-align:right" class="campos2" id="abono_costo<?php echo $i; ?>" name="abono_costo<?php echo $i; ?>" value="0"  min="0" required  /></td>
             <td width="9%">Valor Venta : </td>
