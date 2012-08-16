@@ -78,7 +78,7 @@
           </tr>        
       </table>
 
-      <form action="edit-abonos.php?cantidadAbonos=<?php echo $cant ?>" method="post" name="formAbonoSucursal" >
+      <form action="edit-abonos.php?idAbono=<?php echo $idAbono ?>&cantidadAbonos=<?php echo $cant ?>" method="post" name="formAbonoSucursal" >
          <table class="listados" cellpadding="5">
           <tr>
               <td>Nombre Abono :</td>
@@ -133,7 +133,7 @@
             </td>
             </tr>
             <input type="hidden" name="abono_cli<?php echo $i; ?>" id="abono_cli<?php echo $i; ?>" value="<?php echo $cod ?>" class="campos" >
-        
+            <input type="hidden" name="abono_idDetalle<?php echo $i; ?>" id="abono_idDetalle<?php echo $i; ?>" value="<?php echo $fila['id']; ?>" class="campos" >
       <?php } ?>
             <tr>
             <td colspan="6" bgcolor="#CDDCDA">       &nbsp;        </td>
@@ -149,7 +149,7 @@
                     <input type="buttom" value="Volver"class="botones" style="visibility:visible" id="volver"  />
                 </a>
                 <?php if($modificar==1){ ?>
-                    <input type="submit" value="Guardar Modificaciones"class="botones" style="visibility:visible" id="botonAgregarSucursales" disabled="true" /> 
+                    <input type="submit" value="Guardar Modificaciones"class="botones" style="visibility:visible" id="botonAgregarSucursales" /> 
                   <?php }else{ ?>
                 <input type="buttom" value="Modificar Abonos" class="botones" style="visibility:visible" id="botonAgregarSucursales" onClick="irPagina('ver-abono.php?idAbono=<?php echo $idAbono ;?>&modificar=1')" /> 
                  <?php }       ?>

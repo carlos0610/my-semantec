@@ -24,7 +24,15 @@ function eliminarCliente(id,nombre){
        
     }
 }
+//BAJA de Abono
 
+function eliminarAbono(id,nombre){
+    
+    if(confirm('¿Confirma eliminar Abono: '+nombre+' ?')==true)
+    {
+        window.location="delete-abono.php?idAbono="+id;             
+    }
+}
 
 function eliminarUsuario(id,nombre){
     if(confirm('¿Confirma eliminar usuario: '+nombre+' ?')==true)
