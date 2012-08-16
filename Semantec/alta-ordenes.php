@@ -3,7 +3,6 @@
         include("funciones.php");
 
         $ord_codigo = $_POST["ord_codigo"];
-        echo $ord_codigo;
         $ord_descripcion = utf8_decode($_POST["ord_descripcion"]);
         $cli_id = $_POST["suc_id"];
         $prv_id = $_POST["prv_id"];
@@ -17,6 +16,8 @@
         $usu_nombre = $_SESSION["usu_nombre"];        
         $est_nombre = $_POST["est_nombre"];
         $usu_id     = $_SESSION["usu_id"];
+        $ord_checkAbono = $_POST["ord_checkAbono"];
+        if($ord_checkAbono=='')$ord_checkAbono=0;
   //      echo $ord_plazo;
         
         include("conexion.php");
@@ -56,7 +57,7 @@
                                                         
         /*INSERTAMOS ORDEN*/
         echo $ord_codigo;
-        $sql = "INSERT INTO ordenes (usu_id,ord_codigo,ord_descripcion,cli_id,prv_id,est_id,ord_alta,ord_costo,ord_venta,estado) VALUES (
+        $sql = "INSERT INTO ordenes (usu_id,ord_codigo,ord_descripcion,cli_id,prv_id,est_id,ord_alta,ord_costo,ord_venta,estado,es_abono) VALUES (
         							
                                                                  $usu_id,
 								 '$ord_codigo',
@@ -67,11 +68,12 @@
         							 '$ord_alta',
         							 $ord_costo,
                                                                  $ord_venta,
-                                                                 1
+                                                                 1,
+                                                                 $ord_checkAbono
         				    )";
 	$result=mysql_query($sql);//alta de la orden
-                     if(!$result)
-                     $error=1;
+                     if(!$result){
+                     $error=1; }
         $mensaje = $sql;
         
         //echo "QUERY".$sql;
@@ -141,7 +143,7 @@
                         mysql_query("COMMIT");
                          mysql_close();
                         echo "Transacción exitosa";
-                              header("location:ver-alta-ordenes.php?action=1");
+                              header("location:ver-alta-ordenes.php?action=1&origenOtroForm=altaOrden");
                         }
 
 

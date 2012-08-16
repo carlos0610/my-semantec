@@ -9,6 +9,7 @@
            AND u.localidades_id = l.id
            AND clientes.estado = 1
            AND sucursal_id = $id
+           AND id_abono is null
            ORDER BY cli_nombre,provincia";
              return       $Clientes = mysql_query($sql);
              
@@ -36,6 +37,12 @@
             
             return $nombrecompleto;
             }
-
+            function setClienteEsAbono($idCliente,$idAbono){
+                 $sql =" UPDATE `clientes` 
+                         SET `id_abono`=$idAbono
+                         WHERE cli_id=$idCliente
+                     ";
+                 return $Clientes = mysql_query($sql);
+            }
         
 ?>

@@ -154,6 +154,9 @@
               <td><input type="text" name="ord_alta" id="ord_alta" class="campos"></td>
           </tr>
           <td></td>
+          <tr><td>¿Es Abono?</td>
+              <td><input type="checkbox" name="ord_checkAbono" id="ord_checkAbono" value="1"></td>
+          </tr>
           <tr>
             <td>Valor Costo de la Orden</td>
             <td><input type="text" style="text-align:right" class="campos" id="ord_costo" name="ord_costo" value="0"  min="0" required  /></td>

@@ -3,6 +3,10 @@
         $pagina = $_GET["pagina"];
         $origen = $_GET["origen"];
         $origenOtroForm = $_GET["origenOtroForm"];
+        if($origenOtroForm=='')
+        {
+         $origenOtroForm='interno';
+        }
         $action = $_GET["action"]; 
         if($origen=='listadoOrdenes'){ // si viene de modificar un dato
             // datos de filtro de listado
@@ -71,7 +75,7 @@
         include("conexion.php");
         
         
-        $sql0 = "SELECT ord_codigo, ord_descripcion, cli_id, prv_id, est_id, ord_alta, ord_plazo, ord_costo, ord_venta
+        $sql0 = "SELECT ord_codigo, ord_descripcion, cli_id, prv_id, est_id, ord_alta, ord_plazo, ord_costo, ord_venta,es_abono 
                   FROM ordenes WHERE ord_id = $ord_id";
         $resultado0 = mysql_query($sql0);
         $fila0 = mysql_fetch_array($resultado0);  // datos de la orden
@@ -193,6 +197,10 @@
           </tr>
           <?php }?> 
           <tr>
+            <td>Abono</td>
+            <td><?php  if($fila0["es_abono"]==1){ echo 'Sí';} else{ echo 'No';}?></td>
+            </tr>  
+          <tr>
             <td>Valor Costo de la Orden</td>
             <td><?php echo($fila0["ord_costo"]);?></td>
             </tr>          
@@ -208,7 +216,7 @@
           <tr>
             <td>            </td>
           <td>
-          <?php   if ($origenOtroForm!='externo')  {?>
+          <?php   if ($origenOtroForm=='interno')  {?>
               
               <?php if(($origen=='listadoOrdenes')or($origen=='listadoOrdenesDirecto')){ ?>
                  <a href="#" onClick="transferirFiltrosAOtroForm('filtro','lista-ordenes.php?pagina=<?php echo $pagina ?>')">
@@ -225,9 +233,17 @@
                        <input type="button" value="Modificar datos" class="botones" />                           
                    </a>
                 </span>
-          <?php }else { ?>
+          <?php }else {if($origenOtroForm=='altaOrden'){ ?>
+                     <a href="lista-ordenes.php">
+                        <input type="button" class="botones" value="Ir al Listado" />
+                     </a>
+                     <a href="form-alta-ordenes.php">
+                      <input type="button" value="Agregar otra orden" class="botones" />
+                     </a>
+                     <?php }else{ ?>
                   <input type="button" class="botones" value="Volver" onclick="goBack()" />
-          <?php } ?>            
+          <?php }
+          }?>            
          </td>
             <td></td>
           </tr>          

@@ -163,9 +163,9 @@
           <tr>
             <td class="titulo" height="20" ><span id="ocultarParaImpresion">Condiciones de venta:</span></td>
             <td style="background-color:#cbeef5"  align="left"><?php echo $fila_fecha_factura["fav_condicion_vta"];?>&nbsp;&nbsp;</td>
-            <td style="background-color:#cbeef5"></td>
+            <td class="titulo">REMITO N°:</td>
             <td  align="rigth" style="background-color:#cbeef5" >
-              REMITO N°:<?php echo $fila_fecha_factura["fav_remito"];?>
+              <?php echo $fila_fecha_factura["fav_remito"];?>
             </td>
           </tr>
           <tr>
