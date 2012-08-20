@@ -81,7 +81,7 @@
 
    <!--start contenedor-->
    <div id="contenedor" style="height:auto;">
-      <h2>Panel de control - Listado de clientes</h2>
+      <h2>Panel de control - Listado de Abonos</h2>
 
       
       
