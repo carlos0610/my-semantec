@@ -73,7 +73,7 @@
 
         
         include("conexion.php");
-        
+        include("Modelo/modeloAbonosDetalle.php");
         
         $sql0 = "SELECT ord_codigo, ord_descripcion, cli_id, prv_id, est_id, ord_alta, ord_plazo, ord_costo, ord_venta,es_abono 
                   FROM ordenes WHERE ord_id = $ord_id";
@@ -166,8 +166,8 @@
                     <img src="images/home.png"  alt="inicio" title="Volver al panel" width="32" height="32" border="none" />                </a>            </td>
           </tr>
           <tr>
-            <td width="137">C&oacute;digo de Orden</td>
-            <td width="422"><?php echo($fila0["ord_codigo"]);?></td>
+            <td width="137"><b>C&oacute;digo de Orden</b></td>
+            <td width="422"><big><b><?php echo($fila0["ord_codigo"]);?></b></big></td>
             <td rowspan="8" align="center"><br>
             </br></td>
           </tr>
@@ -195,19 +195,64 @@
             <td>Plazo de Finalización</td>
             <td><?php echo(tfecha($fila0["ord_plazo"]));?>            </td>
           </tr>
-          <?php }?> 
+          <?php } ?> 
           <tr>
             <td>Abono</td>
-            <td><?php  if($fila0["es_abono"]==1){ echo 'Sí';} else{ echo 'No';}?></td>
+            <td><?php   
+                        $estadoAbono=$fila0["es_abono"]; 
+                        if($estadoAbono==1){ echo 'Sí';} 
+                        if($estadoAbono==0){ echo 'No';}
+                        if($estadoAbono==2){ echo '<b><font color="#FF0000">Sucursal No registrada con Abono</font></b>';}
+                        if($estadoAbono==3){ echo '<b><font color="#FF0000">Abono del mes ya utilizado, Modificar Fecha de inicio de abono</font></b>';}
+            ?></td>
             </tr>  
+            <?php if($estadoAbono!=1) {?>
           <tr>
             <td>Valor Costo de la Orden</td>
-            <td><?php echo($fila0["ord_costo"]);?></td>
+            <td><?php $valor_costo_orden=$fila0["ord_costo"]; echo($valor_costo_orden);?></td>
             </tr>          
           <tr>
             <td>Valor Venta de la Orden   </td>
-            <td><?php echo($fila0["ord_venta"]);?></td>
+            <td><?php $valor_venta_orden=$fila0["ord_venta"]; echo($valor_venta_orden);?></td>
           </tr>
+          <?php } ?> 
+          <?php if($estadoAbono==1){ 
+              $consult=getAbonosDetalleWithCliId($fila0["cli_id"]);
+              $filaAbono = mysql_fetch_array($consult);
+              $valor_costo_Abono=$filaAbono["valor_costo"];
+              $valor_venta_Abono=$filaAbono["valor_venta"];
+              ?> 
+            <tr>
+            <td>Valor Costo de la Orden</td>
+            <td><?php $valor_costo_orden=$fila0["ord_costo"]; echo($valor_costo_orden);?></td>
+            </tr> 
+            <tr>
+            <td>Valor Costo Abono </td>
+            <td><?php echo($valor_costo_Abono) ;?>
+             </td>
+            </tr>   
+            
+            <tr>
+                <td><b>Valor Costo Total</b> </td>
+            <td><?php echo($valor_costo_Abono+$valor_costo_orden);?> </td>
+            </tr> 
+            
+            <tr>
+            <td>Valor Venta de la Orden   </td>
+            <td><?php $valor_venta_orden=$fila0["ord_venta"]; echo($valor_venta_orden);?></td>
+          </tr>
+            
+          <tr>
+            <td>Valor Venta Abono  </td>
+            <td><?php echo($valor_venta_Abono);?>
+            </td>
+          </tr>
+          
+                    <tr>
+            <td><b>Valor Venta Total</b> </td>
+            <td><?php echo($valor_venta_Abono+$valor_venta_orden);?></td>
+          </tr>
+             <?php } ?> 
           <tr>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
@@ -240,6 +285,10 @@
                      <a href="form-alta-ordenes.php">
                       <input type="button" value="Agregar otra orden" class="botones" />
                      </a>
+                     
+                   <a href="form-edit-ordenes.php?ord_id=<?php echo($ord_id)?>&action=2&est_id=<?php  echo $estado_id; ?>&prv_id=<?php echo $proveedorFiltro ?>&origen=altaOrden">
+                       <input type="button" value="Modificar datos" class="botones" />                           
+                   </a>
                      <?php }else{ ?>
                   <input type="button" class="botones" value="Volver" onclick="goBack()" />
           <?php }

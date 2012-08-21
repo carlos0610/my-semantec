@@ -39,6 +39,8 @@
   <script type="text/javascript">
   $(function() {
       $('#ord_alta').datepick();
+      $('#ord_abono_fecha').datepick();
+      
   });
   </script>    
   <script type="text/javascript" src="js/validador.js"></script>
@@ -155,7 +157,10 @@
           </tr>
           <td></td>
           <tr><td>¿Es Abono?</td>
-              <td><input type="checkbox" name="ord_checkAbono" id="ord_checkAbono" value="1"></td>
+              <td>
+                  <input type="checkbox" name="ord_checkAbono" id="ord_checkAbono" value="1"><br>
+                  <input type="text" name="ord_abono_fecha" id="ord_abono_fecha" class="campos">
+              </td>
           </tr>
           <tr>
             <td>Valor Costo de la Orden</td>

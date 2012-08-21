@@ -8,6 +8,7 @@
         $ord_id = $_GET["ord_id"];
         $action = $_GET["action"];
         $pagina = $_GET["pagina"];
+        $origen=$_GET["origen"]; 
         if($pagina=='')
         {$pagina=$_SESSION["pagina"];}
         // 1=listaordenes 2=lista-req-orden
@@ -43,7 +44,7 @@
                   $action=$_SESSION['action'];// vuelve al action original para saber de que lista vino 0=listaordenes 1=lista-req-orden
         }
         
-        $sql0 = "SELECT ord_codigo, ord_descripcion, o.cli_id,c.cli_nombre,c.sucursal, prv_id, est_id, ord_alta, ord_plazo,ord_plazo_proveedor, ord_costo, ord_venta 
+        $sql0 = "SELECT ord_codigo, ord_descripcion, o.cli_id,c.cli_nombre,c.sucursal, prv_id, est_id, ord_alta, ord_plazo,ord_plazo_proveedor, ord_costo, ord_venta ,es_abono 
                     FROM ordenes o,clientes c 
                     WHERE ord_id = $ord_id
                     AND o.cli_id = c.cli_id";
@@ -85,7 +86,8 @@
   <script type="text/javascript" src="js/funciones.js"></script>
   <script type="text/javascript">
   $(function() {
-      $('#fecha').datepick();
+      $('#fecha').datepick(); 
+      $('#ord_abono_fecha').datepick();
   });
   </script>    
   
@@ -164,7 +166,8 @@
           <input type="hidden" value="<?php echo($cli_idMaestro); ?>" name="cli_id" id="cli_id" /> 
           <input type="hidden" value="<?php echo($unOrden); ?>" name="orden" id="orden" /> 
           <input type="hidden" value="<?php echo($contador); ?>" name="contador" id="contador" /> 
-                
+          <input type="hidden" value="<?php echo($fila0["cli_id"]); ?>" name="id_cliSucursal" id="contador" />  
+          <input type="hidden" value="<?php echo($fila0["es_abono"]); ?>" name="es_abono" id="contador" />  
                 
                 
                 
@@ -211,7 +214,14 @@
             <td></td>
           </tr>
           <?php } ?>
-          
+           <tr><td>¿Es Abono?</td>
+              <td>
+                  <input type="checkbox" name="ord_checkAbono" id="ord_checkAbono" <?php if($fila0["es_abono"]==1) echo 'checked Disabled'  ?>  value="1">
+                  <?php if($fila0["es_abono"]>1) echo '<b><font color="#FF0000">*</font></b>' ?> 
+                  <br>
+                  <input type="text" name="ord_abono_fecha" id="ord_abono_fecha" class="campos">
+              </td>
+          </tr>
            <tr>
             <td>Valor Costo de la Orden</td>
             <td><input type="text" style="text-align:right" value="<?php echo($fila0["ord_costo"]); ?>" class="campos" id="ord_costo" name="ord_costo" required OnKeyUp="return validarReal('ord_costo');"/></td>
@@ -224,11 +234,21 @@
           <tr>
             <td>&nbsp;</td>
             <td>
-                <?php if (($action == 0)){?>
+                <?php if (($action == 0)){   ?>
+                
+                 <?php if($origen=='altaOrden') { ?>
+                    <a href="lista-ordenes.php" >
+                    <?php } else {?>
                 <a href="#" onClick="transferirFiltrosAOtroForm('filtro','lista-ordenes.php?pagina=<?php echo $pagina ?>')">
+                 <?php } ?>   
+                    
+                    
+                    
                     <input type="button" value="Ir al Listado" class="botones" /></a> &nbsp; &nbsp; 
-                    <?php } else {// si es action 1 vuelve al listado req ordenes?>
+                    <?php } else {  // si es action 1 vuelve al listado req ordenes?>
+
                 <a href="#" onClick="transferirFiltrosAOtroForm('filtro','lista-req-ordenes.php?pagina=<?php echo $pagina ?>')">
+
                     <input type="button" value="Ir al Listado" class="botones" /></a> &nbsp; &nbsp;
                 <?php } ?>
                 <input type="reset" value="Restablecer" class="botones" /> &nbsp; &nbsp; 

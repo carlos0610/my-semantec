@@ -10,7 +10,7 @@
                 LEFT JOIN cuentabanco cu
                 ON c.cuentabanco_id = cu.id
                 WHERE cobros_id = (SELECT id FROM cobros WHERE fav_id = $fav_id)";
-        
+                
                 return $detallesPago = mysql_query($sql);
         
     }

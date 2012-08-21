@@ -5,8 +5,15 @@
 		}
 
 		function gfecha($fecha){
-			//04/04/2012
+			//04/04/2012-> 2012-04-04
 			$salida = substr($fecha, -4)."-".substr($fecha, 3, 2)."-".substr($fecha, 0,2);
+			return $salida;
+		}
+                
+                function fechaConDia1($fecha){
+			//04/04/2012-> 2012-04-01
+			$salida = substr($fecha, -4)."-".substr($fecha, 3, 2)."-";
+                        $salida.="01";
 			return $salida;
 		}
 

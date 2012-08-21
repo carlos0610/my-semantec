@@ -1,10 +1,13 @@
 <?php
         include("validar.php");
         include("funciones.php");
-
+        include("conexion.php");
+        include("Modelo/modeloAbonosDetalle.php");
+        include("Modelo/modeloHistorialAbonos.php");
+        include("Modelo/modeloOrdenes.php");
         $ord_codigo = $_POST["ord_codigo"];
         $ord_descripcion = utf8_decode($_POST["ord_descripcion"]);
-        $cli_id = $_POST["suc_id"];
+        $cli_id = $_POST["suc_id"]; 
         $prv_id = $_POST["prv_id"];
         $est_id = $_POST["est_id"];
         //$ord_alta = date("Y-m-d");
@@ -17,10 +20,12 @@
         $est_nombre = $_POST["est_nombre"];
         $usu_id     = $_SESSION["usu_id"];
         $ord_checkAbono = $_POST["ord_checkAbono"];
-        if($ord_checkAbono=='')$ord_checkAbono=0;
+        $ord_abono_fecha = $_POST["ord_abono_fecha"];
+        
+
   //      echo $ord_plazo;
         
-        include("conexion.php");
+        
         $idFile = -1;
                 $error = 0; //variable para detectar error
                 mysql_query("BEGIN"); // Inicio de Transacción
@@ -56,8 +61,7 @@
                                                         } /*FIN DE ADJUNTAR ARCHIVO PARA DETALLE*/
                                                         
         /*INSERTAMOS ORDEN*/
-        echo $ord_codigo;
-        $sql = "INSERT INTO ordenes (usu_id,ord_codigo,ord_descripcion,cli_id,prv_id,est_id,ord_alta,ord_costo,ord_venta,estado,es_abono) VALUES (
+        $sql = "INSERT INTO ordenes (usu_id,ord_codigo,ord_descripcion,cli_id,prv_id,est_id,ord_alta,ord_costo,ord_venta,estado) VALUES (
         							
                                                                  $usu_id,
 								 '$ord_codigo',
@@ -68,19 +72,51 @@
         							 '$ord_alta',
         							 $ord_costo,
                                                                  $ord_venta,
-                                                                 1,
-                                                                 $ord_checkAbono
+                                                                 1
+                                                                 
         				    )";
 	$result=mysql_query($sql);//alta de la orden
                      if(!$result){
-                     $error=1; }
+                     $error=1; echo 'PAPA';}
         $mensaje = $sql;
         
         //echo "QUERY".$sql;
         
         $ord_id = mysql_insert_id();
-        
-
+        // GUARDA HISTORIAL DE ABONO SI CUMPLE 
+        if($ord_checkAbono=='')
+            {$ord_checkAbono=0;}
+        else{ //si esta checking
+            if(cantAbonoDetalle_AbonoIdWithCliId($cli_id)>0) //si hay abonos registrados para esa sucursal
+                {
+                      $abonoDetalleId=getAbonoDetalle_AbonoIdWithCliId($cli_id); // obtengo id del abono
+                      $ord_abono_fecha=fechaConDia1($ord_abono_fecha); 
+                      if(cantHistorialAbonosWithAbonoIdAndFecha($abonoDetalleId,$ord_abono_fecha)==0)// si no hay abonos registrados para la fecha ingresada se guarda
+                      {
+                          $result=saveHistorialAbonos($abonoDetalleId,$ord_id,$ord_abono_fecha);
+                          if(!$result)
+                             $error=1;
+                      }
+                      else
+                      {
+                          $ord_checkAbono=3;
+                      }
+                      
+                      
+                 }
+             else
+             {
+                 $ord_checkAbono=2;
+             }
+                  
+          }
+          //Abono $ord_checkAbono 0 si
+          //                      1 no
+          //                      2 sucursal no registrada con Abono
+          //                      3 Abono del mes ya utilizado
+          $result=updateOrdenesEsAbono($ord_id,$ord_checkAbono);
+           if(!$result)
+               $error=1;
         /* INSERTAMOS DETALLE DE ORDEN CON FOTO O SIN FOTO*/
         
         if ($idFile == -1)  {
