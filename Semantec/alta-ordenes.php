@@ -21,10 +21,9 @@
         $usu_id     = $_SESSION["usu_id"];
         $ord_checkAbono = $_POST["ord_checkAbono"];
         $ord_abono_fecha = $_POST["ord_abono_fecha"];
-        
-
-  //      echo $ord_plazo;
-        
+        $checkPortada= $_POST["checkPortada"];
+        if($checkPortada=='')
+            {$checkPortada=0;}      
         
         $idFile = -1;
                 $error = 0; //variable para detectar error
@@ -47,9 +46,9 @@
                         {
                         $fileName = addslashes($fileName);
                         }
-        $sql_file = "INSERT INTO files (file_name, file_size, file_type, file_content,tabla ) ".
-        "VALUES ('$fileName', '$fileSize', '$fileType', '$content','ordenes')";
-
+        $sql_file = "INSERT INTO files (file_name, file_size, file_type, file_content,tabla, publico ) ".
+        "VALUES ('$fileName', '$fileSize', '$fileType', '$content','ordenes',$checkPortada)";
+        echo $sql_file;
         $result=mysql_query($sql_file);
                         if(!$result)
                      $error=1;
@@ -77,7 +76,7 @@
         				    )";
 	$result=mysql_query($sql);//alta de la orden
                      if(!$result){
-                     $error=1; echo 'PAPA';}
+                     $error=1; }
         $mensaje = $sql;
         
         //echo "QUERY".$sql;

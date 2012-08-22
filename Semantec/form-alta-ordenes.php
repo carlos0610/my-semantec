@@ -79,7 +79,7 @@
 
       <h2>Panel de control</h2>
       
-      <form action="alta-ordenes.php" method="post" enctype="multipart/form-data" enctype="multipart/form-data" >
+      <form action="alta-ordenes.php" method="post" enctype="multipart/form-data" enctype="multipart/form-data" name="formArltaOrden">
       <table class="forms" cellpadding="5">
           <tr class="titulo">
             <td colspan="2"> <?php echo($titulo)?> </td>
@@ -158,8 +158,8 @@
           <td></td>
           <tr><td>¿Es Abono?</td>
               <td>
-                  <input type="checkbox" name="ord_checkAbono" id="ord_checkAbono" value="1"><br>
-                  <input type="text" name="ord_abono_fecha" id="ord_abono_fecha" class="campos">
+                  <input type="checkbox" name="ord_checkAbono" id="ord_checkAbono" value="1" onChange="habilitarFecha('formArltaOrden')">
+                  <input type="text" name="ord_abono_fecha" id="ord_abono_fecha" class="campos2" size="10" disabled>
               </td>
           </tr>
           <tr>
@@ -174,7 +174,8 @@
           </tr>
           <tr>
               <td>Adjuntar archivo</td><td>
-                  <input type="file" class="" id="userfile" name="userfile" />
+                  <input type="file" class="" id="userfile" name="userfile" /><br>
+                  <input type="checkbox" name="checkPortada" id="checkPortada" value="1" >Publicar en portada 
               </td>
           </tr>
           <tr>

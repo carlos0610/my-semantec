@@ -146,7 +146,7 @@
           <tr>
             <td>Estado</td>  
             <td><!--Guardo proveedor oculto y cambio de estado--> 
-                <form action="form-alta-ordenes-detalle.php?ord_id=<?php echo($ord_id); ?>&ord_costo=<?php echo($fila0["ord_costo"]); ?>&ord_venta=<?php echo($fila0["ord_venta"]); ?>&action=<?php echo $action ?>&estado_id_filtro=<?php echo $estado_id ?>&prov_filtro=<?php echo $proveedorFiltro ?>" method="post" id="frm" >
+                <form action="form-alta-ordenes-detalle.php?ord_id=<?php echo($ord_id); ?>&ord_costo=<?php echo($fila0["ord_costo"]); ?>&ord_venta=<?php echo($fila0["ord_venta"]); ?>&action=<?php echo $action ?>&estado_id_filtro=<?php echo $estado_id ?>&prov_filtro=<?php echo $proveedorFiltro ?>" method="post" id="frm1" >
                  <?php echo(utf8_encode($fila4["est_nombre"])); ?> 
                 <input type="hidden" value="<?php echo($fila0["prv_id"]); ?>" name="provedor_id" id="provedor_id" />
                 <input type="submit" value="Cambiar" class="botones" id="botonAgregar" style="visibility:<?php if($fila0["prv_id"]==1){echo "hidden";}else{ echo "visible";} ?>"  />
@@ -157,7 +157,7 @@
           
         
           <tr> 
-           <form action="edit-ordenes.php?pagina=<?php echo $pagina ?>&action=<?php echo $action?>" method="post" id="frm" >
+           <form action="edit-ordenes.php?pagina=<?php echo $pagina ?>&action=<?php echo $action?>" method="post" id="frm" name="frm" >
             <!--Dato de filtros transferidos al ver cuando hace modificar--> 
           <input type="hidden" value="<?php echo($elementoBusqueda); ?>" name="filtrartxt" id="filtrartxt" />  
           <input type="hidden" value="<?php echo($proveedorFiltro); ?>" name="prv_id" id="prv_id" />  
@@ -216,10 +216,10 @@
           <?php } ?>
            <tr><td>¿Es Abono?</td>
               <td>
-                  <input type="checkbox" name="ord_checkAbono" id="ord_checkAbono" <?php if($fila0["es_abono"]==1) echo 'checked Disabled'  ?>  value="1">
+                  <input type="checkbox" name="ord_checkAbono" id="ord_checkAbono" <?php if($fila0["es_abono"]==1) echo 'checked Disabled'  ?>  value="1" onChange="habilitarFecha('frm')">
                   <?php if($fila0["es_abono"]>1) echo '<b><font color="#FF0000">*</font></b>' ?> 
-                  <br>
-                  <input type="text" name="ord_abono_fecha" id="ord_abono_fecha" class="campos">
+                  
+                  <input type="text" name="ord_abono_fecha" id="ord_abono_fecha" class="campos2" size="10">
               </td>
           </tr>
            <tr>

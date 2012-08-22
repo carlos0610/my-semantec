@@ -174,6 +174,24 @@ function habilitarComboCliente(formulario){
             }
     document.forms[nombre].comboClientes.disabled = valor;   
 }
+
+
+function habilitarFecha(formulario){
+    
+    var nombre = formulario;
+    var valor = true;    
+    if(document.forms[nombre].ord_checkAbono.checked){ 
+        valor = false;
+         document.getElementById("ord_abono_fecha").setAttribute('readOnly','readonly');
+         document.getElementById("ord_abono_fecha").focus();
+        }
+        else
+            {
+               document.getElementById("ord_abono_fecha").removeAttribute('readOnly');
+            }
+    document.forms[nombre].ord_abono_fecha.disabled = valor;   
+}
+
 function habilitarRetenciones(formulario,numero){
     
     var nombre = formulario;

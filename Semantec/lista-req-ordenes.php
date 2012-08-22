@@ -3,7 +3,7 @@
         include("validar.php");
         include("funciones.php");
         include("conexion.php");
-        
+        include("Modelo/modeloFiles.php");
         
         //Clientes
          $sql = "SELECT sucursal_id,sucursal,cli_id,cli_nombre,p.nombre as provincia 
@@ -304,6 +304,7 @@
                       <td width="100">Adelanto</td>
                       <td width="100">Usuario </td>
                       <td width="100">Archivo</td>
+                      <td width="100">Portal</td>
                       <td width="100">Cancelar</td>
                       
                     </tr>
@@ -328,8 +329,9 @@
                       <?php //echo(utf8_encode($fila_req["files_id"]));
                          $id = $fila_req["files_id"]; 
                          $ord_id = $fila["ord_id"];
-                         $ord_det_id = $fila_req["ord_det_id"];?>
+                         $ord_det_id = $fila_req["ord_det_id"];?>                      
                       <td width="100" style="text-align: center;"><?php if ($id!=null) echo "<a href=descargar.php?id=$id><img src=images/download.png /></a>";?></td>
+                      <td width="100"><?php echo(getFilePortalWithId($id)) ?></td>
                       <td width="100" style="text-align: center;"><?php if($fila_req["ord_det_monto"]>0){?><a href="#"><img src="images/adelanto_cancel.png" alt="Cancelar adelanto" onclick="cancelarAdelanto('<?echo $ord_id?>', '<?echo $ord_det_id?>')" /></a><?}?></td>
                     </tr>
 

@@ -13,6 +13,9 @@
         $fecha =  gfecha($_POST["fecha"]);
         $usu_nombre = $_SESSION["usu_nombre"];
         $idFile = -1;
+        $checkPortada= $_POST["checkPortada"];
+        if($checkPortada=='')
+            {$checkPortada=0;}   
         include("conexion.php");
                 $error = 0; //variable para detectar error
                 mysql_query("BEGIN"); // Inicio de Transacción
@@ -35,8 +38,8 @@
                         {
                         $fileName = addslashes($fileName);
                         }
-        $sql_file = "INSERT INTO files (file_name, file_size, file_type, file_content,tabla ) ".
-        "VALUES ('$fileName', '$fileSize', '$fileType', '$content','detalles_ordenes')";
+        $sql_file = "INSERT INTO files (file_name, file_size, file_type, file_content,tabla , publico ) ".
+        "VALUES ('$fileName', '$fileSize', '$fileType', '$content','detalles_ordenes',$checkPortada)";
 
         $result=mysql_query($sql_file);
                 if(!$result)
