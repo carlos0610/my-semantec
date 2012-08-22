@@ -175,7 +175,7 @@
           <tr>
               <td>Adjuntar archivo</td><td>
                   <input type="file" class="" id="userfile" name="userfile" /><br>
-                  <input type="checkbox" name="checkPortada" id="checkPortada" value="1" >Publicar en portada 
+                  <input type="checkbox" name="checkPortada" id="checkPortada" value="1" >Publicar en portal 
               </td>
           </tr>
           <tr>
