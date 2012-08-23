@@ -128,7 +128,7 @@
 
         
           <?php   if ($fase==2) {     ?>
-      <form action="alta-abonos.php?cantidadAbonos=<?php echo $cant ?>" method="post" name="formAbonoSucursal" >
+      <form action="alta-abonos.php?cantidadAbonos=<?php echo $cant ?>&idMatriz=<?php echo $idMatriz ?>" method="post" name="formAbonoSucursal" >
          <table class="listados" cellpadding="5">
           <tr>
               <td>Nombre Abono</td>

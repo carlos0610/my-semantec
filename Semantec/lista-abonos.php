@@ -5,6 +5,7 @@
         include("funciones.php");
         include("conexion.php");
         include("Modelo/modeloUsuarios.php");
+        include("Modelo/modeloClientes.php");
         //ordenes de los headers de las tablas
         $unOrden=$_POST['orden'];
         $contador=$_POST['contador'];
@@ -16,6 +17,10 @@
         $elementoBusqueda=$_POST['filtrartxt'];
         if($elementoBusqueda!="")
         {$sqlaux.=" AND nombre like '$elementoBusqueda%' ";}
+        //filtro Cleinte matriz
+        $cli_id=$_POST['cli_id'];
+        if($cli_id!="")
+        {$sqlaux.=" AND id_cliente_matriz  = $cli_id ";}
         
                 //ordenamiento parte 2
         if($unOrden=="")
@@ -28,7 +33,7 @@
     
     $tamPag=20;
           
-        $sql = "SELECT `id`, `nombre`, `fecha_alta`, `usu_id`, `estado` 
+        $sql = "SELECT `id`, `nombre`, `fecha_alta`, `usu_id`, `estado` , id_cliente_matriz
                 FROM `abonos` 
                 WHERE   estado = 1  ";
                 $sql.=$sqlaux;
@@ -88,6 +93,23 @@
            <div id="buscador" >     
 <form id="filtro" name="filtro" action="lista-abonos.php" method="POST">
      <table width="100%" border="0">
+         <tr>
+            <td><div align="right">Cliente</div></td>
+            <td>
+                <select name="cli_id" id="cli_id" class="campos">
+                    <option value='0'>Seleccione</option>;
+                     <?php  $resultado1=getClienteMatriz();
+                      while($fila = mysql_fetch_array($resultado1)){
+                           ?>
+                           <option value="<?php echo($fila["cli_id"]); ?>"<?php if($fila["cli_id"]==$cli_id){echo "selected";}?>><?php echo(utf8_encode($fila["cli_nombre"])); ?> (<?php echo(utf8_encode($fila["provincia"])); ?>/<?php echo(utf8_encode($fila["sucursal"])); ?>)</option>
+                              <?php
+                         }
+                             ?>
+                </select>
+            </td>
+            <td></td>         
+         </tr>
+       
        <tr>
          <td><div align="right">Nombre: </div></td>
          <td><input type="text" name="filtrartxt" class="campos" value="<?php echo $elementoBusqueda; ?>"  style="text-align:left" >
@@ -116,6 +138,7 @@
       <table class="listados" cellpadding="5">
           <tr class="titulo">
             <td><a href="#" onClick="agregarOrderBy('nombre')">Nombre</a></td>
+            <td width="290"><a href="#" onClick="agregarOrderBy('id_cliente_matriz')">Cliente</a></td>
             <td width="90"><a href="#" onClick="agregarOrderBy('fecha_alta')">Fecha Alta</a></td>
             <td width="120"><a href="#" onClick="agregarOrderBy('usu_id')">Creado por</a></td>
             <td width="32">&nbsp;</td>
@@ -131,6 +154,7 @@
   ?>
           <tr class="lista" bgcolor="<?php echo($colores[$i]);?>">
               <td><?php echo(utf8_encode($fila["nombre"])); ?> </td>
+              <td><?php echo(utf8_encode(getClienteNombreCompletoWithId($fila["id_cliente_matriz"]))); ?> </td>
             <td><?php echo(tfecha($fila["fecha_alta"]));?></td>
             <td><?php  echo getUsuarioNombreWithId($fila["usu_id"]);?></td>
             <td>

@@ -11,10 +11,11 @@ include("Modelo/modeloClientes.php");
         $error      = 0;
         
         $cantidadAbonos     =  $_GET["cantidadAbonos"];
+        $idMatriz   =  $_GET["idMatriz"];
         $nombreAbono=$_POST['nombre_abono'];
         $usu_id     =  $_SESSION["usu_id"];
 
-        $sql        = "INSERT INTO `abonos`( `nombre`, `fecha_alta`, `usu_id`) VALUES ('$nombreAbono',NOW(),$usu_id)";
+        $sql        = "INSERT INTO `abonos`( `nombre`, `fecha_alta`, `usu_id`,id_cliente_matriz) VALUES ('$nombreAbono',NOW(),$usu_id,$idMatriz)";
         echo "QUERY : ".$sql;
         $result     = mysql_query($sql);
 
