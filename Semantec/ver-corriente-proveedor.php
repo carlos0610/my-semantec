@@ -3,7 +3,7 @@
         include("validar.php");
         include("funciones.php");
         include("conexion.php");
-        
+        include("Modelo/modeloAbonosDetalle.php");
         $action = $_GET["action"];
         
         if ($action == 1){
@@ -82,7 +82,7 @@
                 AND o.est_id <> 8           
                 GROUP BY o.ord_id;"; 
      
-        mysql_query($sql);
+        mysql_query($sql); 
         
             /* CREAMOS LA TABLA TEMPORAL 2 . QUE VA A ALMACENAR EL OTRO REPORTE */
        $sql =  "CREATE TEMPORARY TABLE tabla_temp2 (
@@ -150,7 +150,7 @@
    $sql .= " LIMIT ".$limitInf.",".$tamPag;
          
         
-        $resultado = mysql_query($sql);
+        $resultado = mysql_query($sql); 
         
         /*Hacemos un SUM para calcular el total de la deuda*/
         $total = mysql_query("SELECT sum(saldo_c) as total_compra,sum(saldo_a) as total_adelanto,sum(costo) as total from tabla_temp;");
@@ -379,8 +379,8 @@
                 <td><?php echo $fila["adelantos"];?></td>
                 <td><?php echo $fila["saldo_a"];?></td>
                 <td><?php echo $fila["compras"];?></td>
-                <td><?php echo $fila["saldo_c"];?></td>
-    
+                <td><?php echo $fila["saldo_c"];  ?></td>
+                
         </tr>
   <?php
             $i++;

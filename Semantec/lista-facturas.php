@@ -70,7 +70,7 @@
     $tamPag=20;
     
     
-        $sql = "SELECT distinct f.fav_id,f.fav_fecha,c.cli_nombre,c.cli_id,c.sucursal,cc.ccc_id,f.files_id,f.fav_fecha_pago 
+        $sql = "SELECT distinct f.fav_id,f.fav_fecha,c.cli_nombre,c.cli_id,c.sucursal,cc.ccc_id,f.files_id,f.fav_fecha_pago ,f.cod_factura_venta
                 FROM factura_venta f,ordenes o,clientes c,grupo_ordenes g_o,cuentacorriente_cliente cc
                 WHERE f.gru_id = g_o.gru_id
                 AND g_o.gru_id = o.gru_id
@@ -220,7 +220,7 @@
               //echo($fila["ord_alta"]);
   ?>
           <tr class="lista" bgcolor="<?php echo($colores[$i]);?>">
-            <td><?php echo($fila["fav_id"]);?></td>
+            <td><?php echo($fila["cod_factura_venta"]);?></td>
             <td><?php echo(tfecha($fila["fav_fecha"]));?></td>
             <td><a href="ver-alta-clientes.php?cli_id=<?php echo($fila["cli_id"]);?>&action=0"><?php echo(utf8_encode($fila["cli_nombre"]));?>(<?php echo(utf8_encode($fila["sucursal"]));?>)</a></td>
             <td><?php if($fila["fav_fecha_pago"]==NULL){

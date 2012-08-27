@@ -93,7 +93,10 @@
           </tr>
           <tr>
             <td>Descripci&oacute;n de actualización</td>
-            <td><textarea class="campos" id="ord_descripcion" name="ord_descripcion" rows="9"></textarea></td>
+            <td>
+                <textarea class="campos" id="ord_descripcion" name="ord_descripcion" rows="9"></textarea><br>
+                <input type="checkbox" name="checkPortadaDescripcion" id="checkPortadaDescripcion" value="1" >Publicar descripcion en portal 
+            </td>
             <td></td>
           </tr>
           <tr>

@@ -23,8 +23,10 @@
         $ord_abono_fecha = $_POST["ord_abono_fecha"];
         $checkPortada= $_POST["checkPortada"];
         if($checkPortada=='')
-            {$checkPortada=0;}      
-        
+            {$checkPortada=0;}    
+        $checkPortadaDescripcion= $_POST["checkPortadaDescripcion"];
+        if($checkPortadaDescripcion=='')
+            {$checkPortadaDescripcion=0;}  
         $idFile = -1;
                 $error = 0; //variable para detectar error
                 mysql_query("BEGIN"); // Inicio de Transacción
@@ -119,14 +121,16 @@
         /* INSERTAMOS DETALLE DE ORDEN CON FOTO O SIN FOTO*/
         
         if ($idFile == -1)  {
-        $sql2 =  "INSERT INTO ordenes_detalle (ord_det_descripcion,ord_det_monto,ord_id,ord_det_fecha,usu_nombre,estado,nombre_estado) VALUES 
+        $sql2 =  "INSERT INTO ordenes_detalle (ord_det_descripcion,ord_det_monto,ord_id,ord_det_fecha,usu_nombre,estado,nombre_estado,publico) VALUES 
                                                         ('$ord_descripcion',
                                                         0,
                                                         $ord_id,
                                                         NOW(),
                                                         '$usu_nombre',
                                                         1,
-                                                        '$est_nombre')";
+                                                        '$est_nombre',
+                                                        $checkPortadaDescripcion
+                    )";
         }
         //SI ADJUNTO UN ARCHIVO
         else  
@@ -140,7 +144,8 @@
                                                         NOW(),
                                                         '$usu_nombre',
                                                         1,
-                                                        '$est_nombre'
+                                                        '$est_nombre',
+                                                        $checkPortadaDescripcion
                                                 )";      
                                                 }
  

@@ -223,7 +223,7 @@
               $valor_venta_Abono=$filaAbono["valor_venta"];
               ?> 
             <tr>
-            <td>Valor Costo de la Orden</td>
+            <td>Valor Costo Materiales</td>
             <td><?php $valor_costo_orden=$fila0["ord_costo"]; echo($valor_costo_orden);?></td>
             </tr> 
             <tr>
@@ -238,7 +238,7 @@
             </tr> 
             
             <tr>
-            <td>Valor Venta de la Orden   </td>
+            <td>Valor Venta Materiales</td>
             <td><?php $valor_venta_orden=$fila0["ord_venta"]; echo($valor_venta_orden);?></td>
           </tr>
             

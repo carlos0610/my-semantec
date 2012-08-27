@@ -31,7 +31,7 @@
             $unOrdenCompleta.=" $unOrden ASC ";
         //fin
     
-    $tamPag=20;
+    $tamPag=15;
           
         $sql = "SELECT `id`, `nombre`, `fecha_alta`, `usu_id`, `estado` , id_cliente_matriz
                 FROM `abonos` 
@@ -97,7 +97,7 @@
             <td><div align="right">Cliente</div></td>
             <td>
                 <select name="cli_id" id="cli_id" class="campos">
-                    <option value='0'>Seleccione</option>;
+                    <option value=''>Seleccione</option>;
                      <?php  $resultado1=getClienteMatriz();
                       while($fila = mysql_fetch_array($resultado1)){
                            ?>

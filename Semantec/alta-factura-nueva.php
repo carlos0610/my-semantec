@@ -10,11 +10,10 @@
     $Remito= $_POST["txtRemito"]; 
     $vencimiento = gfecha($_POST["vencimiento"]);
     $condicion_venta= $_POST["condicion_venta"];
+    $codFactura="0001-";
+    $codFactura.= $_POST["codFactura"]; echo $codFactura;
     
-    $fav_fecha = gfecha($_POST["fechaalta"]);// MOMENTANEO
-    echo $fav_fecha;
-    
-    
+    $fav_fecha = gfecha($_POST["fechaalta"]);// MOMENTANEO 
     
         $error = 0; //variable para detectar error
         mysql_query("BEGIN"); // Inicio de Transacción
@@ -69,10 +68,10 @@
                                                    
     if ($idFile != -1)
         {
-        $query = "INSERT INTO factura_venta (gru_id, files_id,fav_fecha,fav_nota,fav_remito, fav_condicion_vta ,fav_vencimiento,   estado) VALUES ($id_grupo_ordenes, $idFile,'$fav_fecha','$nota',$Remito,'$condicion_venta','$vencimiento',$estado)";       
+        $query = "INSERT INTO factura_venta (gru_id, files_id,fav_fecha,fav_nota,fav_remito, fav_condicion_vta ,fav_vencimiento,   estado,cod_factura_venta) VALUES ($id_grupo_ordenes, $idFile,'$fav_fecha','$nota',$Remito,'$condicion_venta','$vencimiento',$estado,'$codFactura')";       
      }else
         {
-        $query = "INSERT INTO factura_venta (gru_id,fav_fecha,fav_nota,  fav_remito, fav_condicion_vta ,fav_vencimiento, estado) VALUES ($id_grupo_ordenes,'$fav_fecha','$nota',$Remito,'$condicion_venta','$vencimiento',1)";  
+        $query = "INSERT INTO factura_venta (gru_id,fav_fecha,fav_nota,  fav_remito, fav_condicion_vta ,fav_vencimiento, estado,cod_factura_venta) VALUES ($id_grupo_ordenes,'$fav_fecha','$nota',$Remito,'$condicion_venta','$vencimiento',1,'$codFactura')";  
         }
         echo $query;
        $inserto = mysql_query($query); 

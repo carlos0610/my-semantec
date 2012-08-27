@@ -51,7 +51,7 @@
         $remito=$_GET["remito"]; 
         $condicionventa=$_GET["condicionventa"];
         $ocultar=$_GET["ocultar"];
-     //  mysql_close();
+        $cod_factura=$_GET["cod_factura"]; 
        
 ?>
 <!doctype html>
@@ -94,7 +94,7 @@
      
   <tr>
     <td rowspan="3"><a href="#" id="logo2"><img src="images/semantec.png" width="401" height="71" alt="logo" /></a></td>
-    <td width="51%" class="titulo"><span id="ocultarParaImpresion">FACTURA N° 0001- </span> xxxx-xxxx</td>
+    <td width="51%" class="titulo"><span id="ocultarParaImpresion">FACTURA N° 0001- </span> <input name="cod_factura" type="number" id="cod_factura" size="12" class="campos2" required value="<?php echo $cod_factura ?>"></td>
     <td width="1%">&nbsp;</td>
   </tr>
   <tr>
@@ -148,7 +148,7 @@
                 ?>
                </select>
                 <label id="nombre" style="visibility:hidden"> </label>
-                Fecha:<input name="fechaalta" type="text" id="fechaalta" required> (INGRESAR LUEGO DE SELECCIONAR LAS ORDENES)
+                Fecha:<input name="fechaalta" type="text" id="fechaalta" value="<?php echo ($_GET["fechaalta"])?>" required>
             </td>
        </tr>
           <tr>
@@ -373,8 +373,8 @@
       <td> </td>
       <td>&nbsp;</td>
       <td>
-         
-          <input type="submit" name="btnConfirma" id="btnConfirma" style="visibility:hidden" class="botones"  value="Confirmar" onClick="return PedirConfirmacion('generar Factura','frmGenerarFactura')" >
+         <input type="hidden"  name="codFactura" id="codFactura" value="<?php echo $cod_factura; ?>">
+          <input type="submit" name="btnConfirma" id="btnConfirma" style="visibility:hidden" class="botones"  value="Confirmar" onClick="return PedirConfirmacionFacturaVenta('generar Factura','frmGenerarFactura')" >
           
       </td>
       <td>&nbsp;</td>

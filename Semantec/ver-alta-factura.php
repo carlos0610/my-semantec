@@ -45,7 +45,7 @@
        
        
       //DIOGETE $sql = "select fav_fecha,fav_nota from factura_venta where ord_id = $ord_id";
-       $sql = "select fav_fecha,fav_nota, fav_remito, fav_condicion_vta, fav_vencimiento, gru_id 
+       $sql = "select fav_fecha,fav_nota, fav_remito, fav_condicion_vta, fav_vencimiento, gru_id ,cod_factura_venta
                from factura_venta 
                where fav_id = $fav_id";
        $fecha_factura = mysql_query($sql);
@@ -112,7 +112,7 @@
    <table width="100%" border="0">
   <tr>
     <td rowspan="3" width="60%"><a href="#" id="logo2"><img src="images/semantec-logo.jpg" width="401" height="71" alt="logo" /></a></td>
-    <td width="51%" class="titulo"><span id="ocultarParaImpresion">FACTURA N° 0001- </span><?php echo (formatoNumeroFactura($fav_id)); ?></td>
+    <td width="51%" class="titulo"><span id="ocultarParaImpresion">FACTURA N° </span><?php echo ($fila_fecha_factura["cod_factura_venta"]); ?></td>
     <td width="1%">&nbsp;</td>
   </tr>
     <tr>

@@ -526,9 +526,11 @@ if((document.getElementById("ord_det_monto").value > costo))
 }
 
 // PASAR Cli_Id
-function refrescarDatosDeCliente(id){
+function refrescarDatosDeCliente(id){ 
+    codigoFactura=document.getElementById('cod_factura').value;
+    fechaalta=document.getElementById('fechaalta').value;
     if(document.getElementById('cli_id').selectedIndex != 0){
-                        window.location="ver-generar-factura-nueva.php?cli_id="+id+"&ocultar=si";  
+                        window.location="ver-generar-factura-nueva.php?cli_id="+id+"&ocultar=si&cod_factura="+codigoFactura+"&fechaalta="+fechaalta;  
                             } else {
                         window.location="ver-generar-factura-nueva.php?cli_id=0&ocultar=si";  
                                 
@@ -538,8 +540,12 @@ function refrescarDatosDeCliente(id){
 // verificarCheckBoxs
 function verificarCheckboxs(cantTotalCheckboxs,id){
     i=0;
+    //borrar si se saca fecha y codigo de factura
+    cod_factura=document.getElementById("cod_factura").value;
+    fechaalta=document.getElementById("fechaalta").value;
+    //
     continua=false;
-    url="ver-generar-factura-nueva.php?cli_id="+id;
+    url="ver-generar-factura-nueva.php?cli_id="+id+"&cod_factura="+cod_factura+"&fechaalta="+fechaalta;
     elementoOrden=0;
     condicionveanta=document.getElementById("condicion_venta").value;
     remito=document.getElementById("txtRemito").value;
@@ -695,6 +701,22 @@ function pasaSiguiente(actual, siguiente, longitud)
      return true;     
       
   }
+  // Confirmacion de factura nueva
+function PedirConfirmacionFacturaVenta(nombre,frm){
+    // BORRRAR CUANDO SE QUITE LO DE FECHAS SINO LAS PERAS
+    document.getElementById('codFactura').value=document.getElementById('cod_factura').value;
+    
+    if((confirm('¿Confirma '+nombre+' ?'))==true)
+    {
+        //document.getElementById(frm).submit();
+        return true;
+    }else{
+        return false;
+        
+    }
+}
+  
+  
 // Confirmacion de factura nueva
 function PedirConfirmacion(nombre,frm){
     

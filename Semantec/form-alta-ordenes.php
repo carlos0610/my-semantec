@@ -98,7 +98,10 @@
           </tr>
           <tr>
             <td>Descripci&oacute;n de Orden</td>
-            <td><textarea class="campos" id="ord_descripcion" name="ord_descripcion" rows="9" required ></textarea></td>
+            <td>
+                <textarea class="campos" id="ord_descripcion" name="ord_descripcion" rows="9" required ></textarea><br>
+                <input type="checkbox" name="checkPortadaDescripcion" id="checkPortadaDescripcion" value="1" >Publicar descripci&oacute;n en portal 
+            </td>
             <td></td>
           </tr>
           <tr>
@@ -175,7 +178,7 @@
           <tr>
               <td>Adjuntar archivo</td><td>
                   <input type="file" class="" id="userfile" name="userfile" /><br>
-                  <input type="checkbox" name="checkPortada" id="checkPortada" value="1" >Publicar en portal 
+                  <input type="checkbox" name="checkPortada" id="checkPortada" value="1" >Publicar archivo en portal 
               </td>
           </tr>
           <tr>
