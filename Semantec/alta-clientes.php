@@ -2,9 +2,9 @@
         include("validar.php");
        
         $cli_nombre = utf8_decode($_POST["cli_nombre"]);
-        $cli_cuitA = $_POST["cli_cuit_parteA"];
-        $cli_cuitB = $_POST["cli_cuit_parteB"];
-        $cli_cuitC = $_POST["cli_cuit_parteC"];
+        $cli_cuitA = trim($_POST["cli_cuit_parteA"]);
+        $cli_cuitB = trim($_POST["cli_cuit_parteB"]);
+        $cli_cuitC = trim($_POST["cli_cuit_parteC"]);
         $cli_cuit = "$cli_cuitA$cli_cuitB$cli_cuitC";
         
         

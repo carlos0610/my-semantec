@@ -5,7 +5,7 @@
         include("Modelo/modeloAbonosDetalle.php");
         include("Modelo/modeloHistorialAbonos.php");
         include("Modelo/modeloOrdenes.php");
-        $ord_codigo = $_POST["ord_codigo"];
+        $ord_codigo = trim($_POST["ord_codigo"]);
         $ord_descripcion = utf8_decode($_POST["ord_descripcion"]);
         $cli_id = $_POST["suc_id"]; 
         $prv_id = $_POST["prv_id"];
@@ -50,7 +50,7 @@
                         }
         $sql_file = "INSERT INTO files (file_name, file_size, file_type, file_content,tabla, publico ) ".
         "VALUES ('$fileName', '$fileSize', '$fileType', '$content','ordenes',$checkPortada)";
-        echo $sql_file;
+        
         $result=mysql_query($sql_file);
                         if(!$result)
                      $error=1;
@@ -153,7 +153,7 @@
                      if(!$result)
                      $error=1;
         
-        
+        echo $sql2;
         /* INSERTAMOS ORDEN EN DETALLE DE CUENTA CORRIENTE */
         
         

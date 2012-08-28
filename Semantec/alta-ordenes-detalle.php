@@ -46,7 +46,7 @@
 
         $result=mysql_query($sql_file);
                 if(!$result)
-                     $error=1;
+                  {$error=1; echo $sql_file;}
         
 
         echo "<br>File $fileName uploaded<br>";

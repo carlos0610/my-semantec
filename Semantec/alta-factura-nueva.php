@@ -11,7 +11,7 @@
     $vencimiento = gfecha($_POST["vencimiento"]);
     $condicion_venta= $_POST["condicion_venta"];
     $codFactura="0001-";
-    $codFactura.= $_POST["codFactura"]; echo $codFactura;
+    $codFactura.= trim($_POST["codFactura"]); 
     
     $fav_fecha = gfecha($_POST["fechaalta"]);// MOMENTANEO 
     
