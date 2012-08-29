@@ -459,7 +459,7 @@ function actualizarListadoAbono(id){
 
 }
 
-function validarFacturacion(costo,venta){
+function validarFacturacion(costo,venta,esAbono){
 
 //Constantes de estado
 var estadoEnviadoProveedor = 2;     
@@ -467,8 +467,11 @@ var estadoConfirmarProveedor = 10;
 
 if((document.getElementById("est_id").value == 11)&(costo==0)&(venta==0))
     {
+        
+        if(esAbono!=1){ // si Abono no va a ocultar el boton guardar 
         document.getElementById("error").style.visibility = "visible"; 
         document.getElementById("guardarDetalle").style.visibility = "hidden";
+        }
     }
     else
         {

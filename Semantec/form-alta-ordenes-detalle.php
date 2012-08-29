@@ -24,7 +24,7 @@
         echo $estado_id_filtro,$prov_filtro;
         
         //----------------------------------
-        $sql0 = "SELECT ord_codigo, ord_descripcion, cli_id, prv_id, est_id, ord_alta, ord_plazo, ord_costo, ord_venta 
+        $sql0 = "SELECT ord_codigo, ord_descripcion, cli_id, prv_id, est_id, ord_alta, ord_plazo, ord_costo, ord_venta ,es_abono
                     FROM ordenes 
                     WHERE ord_id = $orden_id";       
         $resultado0 = mysql_query($sql0);       
@@ -108,13 +108,13 @@
           <tr>
             <td>Proveedor</td>
             <td>
-					<?php echo ($proveedor["prv_nombre"]); ?>            </td>
+					<?php echo ($proveedor["prv_nombre"]);  ?>            </td>
             <td></td>
           </tr>
           <tr>
             <td>Estado</td>
             <td>
-                <select name="est_id" id="est_id" class="campos" onChange="return validarFacturacion(<?php echo $ord_costo ?>,<?php echo $orden_venta ?>)">
+                <select name="est_id" id="est_id" class="campos" onChange="return validarFacturacion(<?php echo $ord_costo ?>,<?php echo $orden_venta ?>,<?php echo $fila0["es_abono"] ?>)">
     <?php
           while($fila3 = mysql_fetch_array($resultado3)){
     ?>                 
