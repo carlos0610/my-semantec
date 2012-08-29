@@ -4,7 +4,7 @@
         include("validar.php");
         include("funciones.php");
         include("conexion.php");
-        
+        include("Modelo/modeloHistorialAbonos.php");
         $ord_id = $_GET["ord_id"];
         $action = $_GET["action"];
         $pagina = $_GET["pagina"];
@@ -219,7 +219,7 @@
                   <input type="checkbox" name="ord_checkAbono" id="ord_checkAbono" <?php if($fila0["es_abono"]==1) echo 'checked Disabled'  ?>  value="1" onChange="habilitarFecha('frm')">
                   <?php if($fila0["es_abono"]>1) echo '<b><font color="#FF0000">*</font></b>' ?> 
                   
-                  <input type="text" name="ord_abono_fecha" id="ord_abono_fecha" class="campos2" size="10">
+                  <input type="text" name="ord_abono_fecha" id="ord_abono_fecha" class="campos2" Disabled size="10" <?php if($fila0["es_abono"]==1){ echo " value=",mfecha((getHistorialAbonos_FechaRegistroWithOrdenId($ord_id)));} ?>>
               </td>
           </tr>
            <tr>

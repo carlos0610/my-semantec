@@ -74,6 +74,7 @@
         
         include("conexion.php");
         include("Modelo/modeloAbonosDetalle.php");
+        include("Modelo/modeloHistorialAbonos.php");
         
         $sql0 = "SELECT ord_codigo, ord_descripcion, cli_id, prv_id, est_id, ord_alta, ord_plazo, ord_costo, ord_venta,es_abono 
                   FROM ordenes WHERE ord_id = $ord_id";
@@ -200,7 +201,7 @@
             <td>Abono</td>
             <td><?php   
                         $estadoAbono=$fila0["es_abono"]; 
-                        if($estadoAbono==1){ echo 'Sí';} 
+                        if($estadoAbono==1){ echo 'Sí  - Fecha : ',mfecha((getHistorialAbonos_FechaRegistroWithOrdenId($ord_id)));;} 
                         if($estadoAbono==0){ echo 'No';}
                         if($estadoAbono==2){ echo '<b><font color="#FF0000">Sucursal No registrada con Abono</font></b>';}
                         if($estadoAbono==3){ echo '<b><font color="#FF0000">Abono del mes ya utilizado, Modificar Fecha de inicio de abono</font></b>';}
