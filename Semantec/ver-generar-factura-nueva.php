@@ -3,6 +3,7 @@
         $ord_id = $_GET["ord_id"];
         include("funciones.php");
         include("conexion.php");
+        include("Modelo/modeloAbonosDetalle.php");
         $sql = "SELECT  cli_id, cli_nombre FROM clientes WHERE estado=1 and sucursal_id is null ORDER BY cli_nombre";
         $resultado1 = mysql_query($sql);
        
@@ -236,7 +237,7 @@
         while ($i <$cantOrdenesChecadas)
         { $i++;    $usu_nombre = $_SESSION["usu_nombre"]; 
                 $unord_ID=$_GET["ord_check$i"];
-                $sql5="SELECT `gru_id`,`ord_codigo`,`ord_descripcion`,`prv_id`,`est_id` ,ord_id ,ord_venta
+                $sql5="SELECT `gru_id`,`ord_codigo`,`ord_descripcion`,`prv_id`,`est_id` ,ord_id ,ord_venta,es_abono,cli_id
               FROM `ordenes` 
               WHERE `ord_id` =$unord_ID
               AND    est_id  = 11 
@@ -254,8 +255,21 @@
             
                 &nbsp;&nbsp; &nbsp; 
             </td>
-            <td>
-                    <a href="#" onClick="popup('form-edit-ordenes.php?ord_id=<?php echo($filaDeLasOrdenesCheckeadas["ord_id"]);?>', 'Alerta')"># <?php echo $filaDeLasOrdenesCheckeadas["ord_codigo"]; ?></a>
+            <td>                                
+                    <a href="#" onClick="popup('ver-alta-ordenes.php?origenOtroForm=externo&ord_id=<?php echo($filaDeLasOrdenesCheckeadas["ord_id"]);?>', 'Alerta')">
+                        # <?php echo $filaDeLasOrdenesCheckeadas["ord_codigo"],'<br> - - -  Valor venta: ',$filaDeLasOrdenesCheckeadas["ord_venta"],'<br>';  ?>
+                    
+                    <?php         // le sumo los abonos si es abono
+                           if($filaDeLasOrdenesCheckeadas["es_abono"]==1) 
+                           {
+                                   $filaAbono = mysql_fetch_array(getAbonosDetalleWithCliId($filaDeLasOrdenesCheckeadas["cli_id"]));
+                                    echo ' - - - Valor costo Abono : ',$filaAbono['valor_costo'];
+                                    $totalOrdenVenta+=$filaAbono['valor_costo'];
+                             }else{// truco para q quede alineado
+                                 echo '&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;
+                                         &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;  '; }
+                    ?>
+                    </a>
             </td>
         </tr>            
         <?php      
