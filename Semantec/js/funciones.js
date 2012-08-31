@@ -465,7 +465,7 @@ function validarFacturacion(costo,venta,esAbono){
 var estado= document.getElementById("est_id").value;
 
 var estadoEnviadoProveedor = '2';     
-var estadoConfirmarProveedor = '10';
+var estadoConfirmarProveedor = '9'; // verificar
 var estadoAprobadoBajoCosto = '3';
 var estadoFinalizadoPendienteFacturacion = '11';
 

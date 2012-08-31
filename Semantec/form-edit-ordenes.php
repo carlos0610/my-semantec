@@ -215,6 +215,26 @@
             <td></td>
           </tr>
           <?php } ?>
+          
+          
+        <?php if ($fila0["est_id"] ==  3){ ?>  
+          <tr>
+              <td><label id="texto_respuesta"><?php echo "Fecha aprobado : " ?></label></td>
+              <td><input type="text" class="campos" id="fecha" name="fecha" value="<?php echo tfecha($fila0["fecha_aprobado_bajocosto"])?>"/></td>
+            <td></td>
+          </tr>
+          
+          <?php  } ?>
+          
+         <?php if ($fila0["est_id"] ==  11){ ?>  
+          <tr>
+              <td><label id="texto_respuesta"><?php echo "Fecha Finalizado : " ?></label></td>
+              <td><input type="text" class="campos" id="fecha" name="fecha" value="<?php echo tfecha($fila0["fecha_pendiente_facturacion"])?>"/></td>
+            <td></td>
+          </tr>
+          
+          <?php  } ?>
+          
            <tr><td>¿Es Abono?</td>
               <td>
                   <input type="checkbox" name="ord_checkAbono" id="ord_checkAbono" <?php if($fila0["es_abono"]==1) echo 'checked Disabled'  ?>  value="1" onChange="habilitarFecha('frm')">

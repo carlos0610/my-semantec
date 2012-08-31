@@ -124,7 +124,7 @@
         switch ($est_id) {
     case 2://estadoEnviadoProveedor
     {$sql = "UPDATE ordenes SET ord_plazo_proveedor = '$fecha' where ord_id = $ord_id";$result=mysql_query($sql);echo $sql; break;}
-    case 10://estadoConfirmarProveedor
+    case 9://estadoConfirmarProveedor
     { $sql = "UPDATE ordenes SET ord_plazo = '$fecha' where ord_id = $ord_id"; $result=mysql_query($sql);echo $sql; break;}
     case 11://estadoFinalizadoPendienteFacturacion
     {$sql = "UPDATE ordenes SET fecha_pendiente_facturacion = '$fecha' where ord_id = $ord_id"; $result=mysql_query($sql); echo $sql;break;}

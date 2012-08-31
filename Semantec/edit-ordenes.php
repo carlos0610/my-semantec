@@ -46,15 +46,20 @@
                                         
                                         if ($est_id == 2){ 
                                         //$fecha = gfecha($fecha);    
-                                        $sql .="ord_plazo_proveedor = '$fecha', ";
+                                        $sql .=" ord_plazo_proveedor = '$fecha', ";
         				
                                         }
                                         if ($est_id == 9){
                                         //$fecha = gfecha($fecha);
-                                        $sql .="ord_plazo = '$fecha', ";
+                                        $sql .=" ord_plazo = '$fecha', ";
+                                        }                                       
+                                        if ($est_id == 3){//estadoAprobadoBajoCosto
+                                        $sql .=" fecha_aprobado_bajocosto = '$fecha', ";
                                         }
-                                        
-                                        $sql .= "ord_costo = $ord_costo,
+                                        if ($est_id == 11){ //estadoFinalizadoPendienteFacturacion
+                                        $sql .=" fecha_pendiente_facturacion = '$fecha', ";
+                                        }
+                                        $sql .= " ord_costo = $ord_costo,
                                         ord_venta = $ord_venta
                                         WHERE ord_id = $ord_id;";
         
