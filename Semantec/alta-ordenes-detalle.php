@@ -10,7 +10,7 @@
         $est_id = $_POST["est_id"];
         $estado_id_filtro = $_GET["estado_id_filtro"];
         $prov_filtro = $_GET["prov_filtro"];
-        $fecha =  gfecha($_POST["fecha"]);
+        $fecha =  gfecha($_POST["fecha"]);echo $fecha;
         $usu_nombre = $_SESSION["usu_nombre"];
         $idFile = -1;
         $checkPortada= $_POST["checkPortada"];
@@ -69,8 +69,7 @@
        
         $sql =  "UPDATE ordenes SET 
         						est_id = $est_id
-                                                        WHERE ord_id = $ord_id";
-        echo $sql; 				  
+                                                        WHERE ord_id = $ord_id";				  
 	mysql_query($sql);//alta de la orden
        // $ord_id = mysql_insert_id();
         
@@ -115,13 +114,26 @@
 	$_SESSION["ord_id"] = $ord_id;
         
         /* UPDATEAR PLAZO DE PROVEEDOR */
-        
+        /*
         if ($est_id == 2){
-        $sql = "UPDATE ordenes SET ord_plazo_proveedor = '$fecha' where ord_id = $ord_id";
-        }else{
-        $sql = "UPDATE ordenes SET ord_plazo = '$fecha' where ord_id = $ord_id";   
-        }
-        $result=mysql_query($sql);
+        $sql = "UPDATE ordenes SET ord_plazo_proveedor = '$fecha' where ord_id = $ord_id";}
+        if ($est_id == 10){
+        $sql = "UPDATE ordenes SET ord_plazo = '$fecha' where ord_id = $ord_id"; 
+             } */
+        echo 'aca:',$est_id;
+        switch ($est_id) {
+    case 2://estadoEnviadoProveedor
+    {$sql = "UPDATE ordenes SET ord_plazo_proveedor = '$fecha' where ord_id = $ord_id";$result=mysql_query($sql);echo $sql; break;}
+    case 10://estadoConfirmarProveedor
+    { $sql = "UPDATE ordenes SET ord_plazo = '$fecha' where ord_id = $ord_id"; $result=mysql_query($sql);echo $sql; break;}
+    case 11://estadoFinalizadoPendienteFacturacion
+    {$sql = "UPDATE ordenes SET fecha_pendiente_facturacion = '$fecha' where ord_id = $ord_id"; $result=mysql_query($sql); echo $sql;break;}
+    case 3://estadoAprobadoBajoCosto
+    { $sql = "UPDATE ordenes SET fecha_aprobado_bajocosto = '$fecha' where ord_id = $ord_id"; $result=mysql_query($sql);echo $sql;break;}
+}
+        
+        
+
          if(!$result)
                      $error=1;
         

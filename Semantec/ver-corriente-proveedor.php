@@ -50,6 +50,10 @@
                                                 cli_id     int        not null,
 					    	cli_nombre varchar(100) not null,
                                                 sucursal   varchar(100) ,
+
+                                                ord_plazo datetime   null,
+                                                fecha_pendiente_facturacion datetime   null,
+
 					    	provincia  varchar(100) not null,
 					    	localidad  varchar(100) not null,
 					    	ord_descripcion varchar(250) not null,
@@ -68,7 +72,9 @@
         /* INSERTAMOS EN LA TABLA TEMPORAL EL RESULTADO DE LA CONSULTA QUE AVERIGUA LOS ADELANTOS VS ORD_COSTO */
         
         $sql = "INSERT INTO tabla_temp	      
-		SELECT o.ord_id,ord_codigo,ord_det_fecha,c.cli_id,c.cli_nombre,c.sucursal,p.nombre as provincia,l.nombre as localidad,o.ord_descripcion,o.est_id,sum(od.ord_det_monto) as adelantos,round (o.ord_costo,2) as presupuesto ,o.ord_costo - sum(od.ord_det_monto) as Saldo,0,round (o.ord_costo,2) as presupuesto 
+		SELECT o.ord_id,ord_codigo,ord_det_fecha,c.cli_id,c.cli_nombre,c.sucursal, o.ord_plazo, o.fecha_pendiente_facturacion,
+                       p.nombre as provincia,l.nombre as localidad,o.ord_descripcion,o.est_id,sum(od.ord_det_monto) as adelantos,
+                       round (o.ord_costo,2) as presupuesto ,o.ord_costo - sum(od.ord_det_monto) as Saldo,0,round (o.ord_costo,2) as presupuesto 
                 FROM ordenes o, ordenes_detalle od,clientes c,ubicacion u,provincias p,localidades l
                 WHERE 
                 o.ord_id IN (select ord_id from ordenes where prv_id = $prv_id AND estado = 1)
@@ -355,13 +361,14 @@
 
 <table class="listados" cellpadding="5">
           <tr class="titulo">
-            <td width="80">Código de orden</td>
+            <td width="99">Código de orden</td>
             <td width="120">Cliente</td>
             <td width="449">Descripción</td>
-            <td width="88">Ord costo</td>
-            <td width="83">Adelantos</td>
-            <td width="83">Saldo</td>
-            <td width="83">Facturado</td>          
+            <td width="88">Fecha</td>
+            <td width="73">Ord costo</td>
+            <td width="73">Adelantos</td>
+            <td width="73">Saldo</td>
+            <td width="73">Facturado</td>          
             <td width="73">Resta facturar</td>
             
 <td width="35">
@@ -375,6 +382,7 @@
                 <td><a href="lista-req-ordenes.php?orden=<?php echo($fila["ord_codigo"]);?>&action=1" target="_blank"><?php echo($fila["ord_codigo"]);?></a></td>
                 <td><a href="ver-alta-clientes.php?cli_id=<?php echo($fila["cli_id"]);?>&action=0"><?php echo(utf8_encode($fila["cli_nombre"]));?> (<?php echo(utf8_encode($fila["provincia"]));?>/<?php echo(utf8_encode($fila["sucursal"]));?>)</a></td>
                 <td><?php echo(utf8_encode($fila["ord_descripcion"]));?></td>
+                <td><?php if($fila["fecha_pendiente_facturacion"]!=''){echo tfecha($fila["fecha_pendiente_facturacion"]);}else{echo '-';} ?></td>
                 <td><?php echo $fila["costo"];?></td>
                 <td><?php echo $fila["adelantos"];?></td>
                 <td><?php echo $fila["saldo_a"];?></td>

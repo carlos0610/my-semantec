@@ -191,7 +191,7 @@
             <td>
                 <?php echo(utf8_encode($fila3["est_nombre"])); ?></td>
           </tr>
-          <?php if($fila0["ord_plazo"] != ""){?>
+          <?php echo $fila0["ord_plazo"] ; if(($fila0["ord_plazo"] != "") and($fila0["ord_plazo"] != "0000-00-00 00:00:00")){?>
           <tr>
             <td>Plazo de Finalización</td>
             <td><?php echo(tfecha($fila0["ord_plazo"]));?>            </td>

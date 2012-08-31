@@ -462,8 +462,12 @@ function actualizarListadoAbono(id){
 function validarFacturacion(costo,venta,esAbono){
 
 //Constantes de estado
-var estadoEnviadoProveedor = 2;     
-var estadoConfirmarProveedor = 10;
+var estado= document.getElementById("est_id").value;
+
+var estadoEnviadoProveedor = '2';     
+var estadoConfirmarProveedor = '10';
+var estadoAprobadoBajoCosto = '3';
+var estadoFinalizadoPendienteFacturacion = '11';
 
 if((document.getElementById("est_id").value == 11)&(costo==0)&(venta==0))
     {
@@ -478,32 +482,44 @@ if((document.getElementById("est_id").value == 11)&(costo==0)&(venta==0))
            document.getElementById("error").style.visibility = "hidden"; 
            document.getElementById("guardarDetalle").style.visibility = "visible";
         }
-         
-   /* SI EL ESTADO SELECCIONADO ES 'ENVIADO A PROVEEDOR' */
-   if((document.getElementById("est_id").value == estadoEnviadoProveedor)){
-       
-       
-            document.getElementById("fecha").style.visibility = "visible";
+            
+ switch (estado)
+{
+  case estadoEnviadoProveedor:  {   document.getElementById("fecha").style.visibility = "visible";
             document.getElementById("fecha").disabled = false;
             document.getElementById("texto_respuesta").style.visibility = "visible";
-            document.getElementById("texto_respuesta").textContent = "Fecha respuesta proveedor";
-        }else if((document.getElementById("est_id").value != 9)) {
-            document.getElementById("fecha").style.visibility = "hidden";
-            document.getElementById("fecha").disabled = true;
-            document.getElementById("texto_respuesta").style.visibility = "hidden";           
-        }  
-               
-        /* SI EL ESTADO SELECCIONADO ES 'APROBADO' */
-   if((document.getElementById("est_id").value == estadoConfirmarProveedor)){
+            document.getElementById("texto_respuesta").textContent = "Fecha respuesta proveedor";}
+            break;
+  case estadoConfirmarProveedor: {
             document.getElementById("fecha").style.visibility = "visible";
             document.getElementById("fecha").disabled = false;
             document.getElementById("texto_respuesta").style.visibility = "visible";
             document.getElementById("texto_respuesta").textContent = "Plazo de finalizacion";
-        }else if((document.getElementById("est_id").value != 2)){
+
+        }   
+            break;
+  case estadoAprobadoBajoCosto: {  
+            document.getElementById("fecha").style.visibility = "visible";
+            document.getElementById("fecha").disabled = false;
+            document.getElementById("texto_respuesta").style.visibility = "visible";
+            document.getElementById("texto_respuesta").textContent = "Fecha aprobado : "; 
+        }  
+            break;
+  case estadoFinalizadoPendienteFacturacion:{
+            document.getElementById("fecha").style.visibility = "visible";
+            document.getElementById("fecha").disabled = false;
+            document.getElementById("texto_respuesta").style.visibility = "visible";
+            document.getElementById("texto_respuesta").textContent = "Fecha Finalizado : ";
+        }
+            break;
+  default:  {
             document.getElementById("fecha").style.visibility = "hidden";
             document.getElementById("fecha").disabled = true;
             document.getElementById("texto_respuesta").style.visibility = "hidden"; 
-        }              
+        } 
+}
+
+        
 }
 
 

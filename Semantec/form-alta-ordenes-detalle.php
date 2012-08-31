@@ -57,7 +57,7 @@
   
 
   </head>
-  <body onload="validarFacturacion(<?php echo $ord_costo ?>,<?php echo $orden_venta ?>)">
+  <body onload="validarFacturacion(<?php echo $ord_costo ?>,<?php echo $orden_venta ?>,<?php echo $fila0["es_abono"] ?>)">
 	
   <!-- start main --><!-- start main --><!-- start main --><!-- start main --><!-- start main -->
   <div id="main">
