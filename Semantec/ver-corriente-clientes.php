@@ -38,7 +38,7 @@
     $tamPag=100;
     
     include("paginado.php");        
-        $sql = "SELECT o.ord_id,o.ord_codigo,f.fav_id,o.ord_descripcion,o.ord_venta,o.est_id 
+        $sql = "SELECT o.ord_id,o.ord_codigo,f.fav_id,o.ord_descripcion,o.ord_venta,o.est_id ,f.cod_factura_venta
                     FROM ordenes o,cuentacorriente_cliente cc ,factura_venta f,grupo_ordenes g_o
                     WHERE cc.cli_id = o.cli_id 
                     AND cc.cli_id in (SELECT cli_id from clientes where sucursal_id = $cli_id) 
@@ -153,7 +153,7 @@
           while($fila = mysql_fetch_array($resultado)){
   ?>
           <tr class="lista" bgcolor="<?php echo($colores[$i]);?>">
-              <td><?php echo($fila["fav_id"]);?></td>
+              <td><?php echo($fila["cod_factura_venta"]);?></td>
               <td><a href="ver-alta-ordenes.php?ord_id=<?php echo($fila["ord_id"]);?>&action=0" target="_blank"><?php echo($fila["ord_codigo"]);?></a></td>             
               <td><?php echo(utf8_encode($fila["ord_descripcion"]));;?></td>
             <td><?php echo $fila["ord_venta"];?></td>

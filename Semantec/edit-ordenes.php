@@ -19,7 +19,7 @@
                   $elementoBusqueda=$_POST['filtrartxt']; 
                   $proveedorFiltro=$_POST['prv_id']; 
                   $estado_id=$_POST['est_id'];
-                  $cli_id = $_POST['id_cliSucursal'];
+                  $cli_id = $_POST['cli_idSucur']; echo ' Cliente sucursal: ',$cli_id;
                   $cli_idMaestro = $_POST['cli_id'];  
                   $unOrden=$_POST['orden'];
                   $contador=$_POST['contador'];
@@ -39,10 +39,11 @@
         $sql = "UPDATE ordenes SET 
 					ord_codigo = '$ord_codigo',
         				ord_descripcion = '$ord_descripcion',
-        				
+                                        cli_id=$cli_id,
         				prv_id = $prv_id,
         				est_id = $est_id,
-                                        ord_alta= '$ord_alta',";
+                                      
+                                        ";
                                         
                                         if ($est_id == 2){ 
                                         //$fecha = gfecha($fecha);    

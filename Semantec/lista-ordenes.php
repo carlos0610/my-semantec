@@ -3,7 +3,7 @@
         include("validar.php");
         include("funciones.php");
         include("conexion.php");
-         $tamPag=10;
+         $tamPag=15;
          $action = $_GET["action"];
          $pagina = $_GET["pagina"];
          //Clientes

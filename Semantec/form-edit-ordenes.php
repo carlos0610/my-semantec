@@ -5,6 +5,7 @@
         include("funciones.php");
         include("conexion.php");
         include("Modelo/modeloHistorialAbonos.php");
+        include("Modelo/modeloClientes.php");
         $ord_id = $_GET["ord_id"];
         $action = $_GET["action"];
         $pagina = $_GET["pagina"];
@@ -72,6 +73,9 @@
 	$sql = "SELECT  est_id, est_nombre, est_color FROM estados WHERE est_id = $est_id"; //datos del estado
         $resultado4 = mysql_query($sql);
         $fila4 = mysql_fetch_array($resultado4);
+        
+        $resultado1 =getClientesSucursalesHermanasDe($fila0["cli_id"]);
+        
 
 ?>
 <!doctype html>
@@ -186,6 +190,30 @@
             </td>
             <td></td>
           </tr>
+          
+          
+          
+      <?php if(($fila0["es_abono"]==0)&&($est_id<3)){ ?>    
+           <tr>
+            <td>Cambiar cliente</td>
+            <td>
+                <select name="cli_idSucur" id="cli_idSucur" class="campos"  >
+                    <option value='0'>Seleccione</option>;
+    <?php
+          while($fila = mysql_fetch_array($resultado1)){
+    ?>
+                    <option value="<?php echo($fila["cli_id"]); ?>"<?php if($fila0["cli_id"]==$fila["cli_id"]){echo(" selected=\"selected\"");} ?>>
+                        <?php echo(utf8_encode($fila["cli_nombre"])); ?> (<?php echo(utf8_encode($fila["provincia"])); ?>/<?php echo(utf8_encode($fila["sucursal"])); ?>)</option>
+    <?php
+          }
+    ?>
+                </select>
+            </td>
+            <td></td>
+          </tr>
+        <?php }?>      
+          
+          
           <tr>
             <td>Proveedor</td>
             <td>

@@ -83,7 +83,7 @@
                        round (o.ord_costo,2) as presupuesto,0 
                 FROM ordenes o, ordenes_detalle od,clientes c,ubicacion u,provincias p,localidades l
                 WHERE 
-                o.ord_id IN (select ord_id from ordenes where prv_id = 50 AND estado = 1)
+                o.ord_id IN (select ord_id from ordenes where prv_id = $prv_id AND estado = 1)
                 AND o.estado = 1
                 AND o.ord_id = od.ord_id
                 AND o.cli_id = c.cli_id
