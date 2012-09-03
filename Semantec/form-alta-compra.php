@@ -284,11 +284,14 @@
   <tr>
       
       
-     <td><label>   
+     <td width=165">
+         <label>   
         <div align="center">
-          <input name="txtOrdenItem<?php echo($numeroDescripcion);?>" style="text-align:right"  type="text" id="txtOrdenItem<?php echo($numeroDescripcion);?>" value="<?php echo $arrayOrdenes[$numeroDescripcion-1];?>" readOnly  required>
+          <input name="txtOrdenItem<?php echo($numeroDescripcion);?>" style="text-align:right"  type="hidden" id="txtOrdenItem<?php echo($numeroDescripcion);?>" value="<?php echo $arrayOrdenes[$numeroDescripcion-1];?>" readOnly  required>
+          <big><?php echo $arrayOrdenes[$numeroDescripcion-1];?></big>
         </div>
-    </label></td>     
+         </label>
+     </td>     
       
     <td><label>   
         <div align="left">
@@ -297,7 +300,7 @@
     </label></td>
     <td><label>
       <div align="center">
-        <input type="text" align="left" required name="txtTotalItem<?php echo($numeroDescripcion);?>" style="text-align:right"  id="txtTotalItem<?php echo($numeroDescripcion);?>" value="0.00" onChange="return ActualizarTotal(<?php echo($totalDescripcion);?>,2);" >
+        <input type="text" align="left" required name="txtTotalItem<?php echo($numeroDescripcion);?>" style="text-align:right"  id="txtTotalItem<?php echo($numeroDescripcion);?>" value="0.00" onChange="return ActualizarTotalFacturaCompra(<?php echo($totalDescripcion);?>,2);" >
         </div>
     </label></td>
   </tr>
@@ -319,8 +322,8 @@
           </div>
       </label></td>
     </tr>
-    <tr>
-      <td rowspan="3">Nota</td>
+    <tr >
+      <td rowspan="3" ><big>Nota </big></td>
       <td rowspan="3"><label>
         <textarea name="txtNota" id="txtNota" cols="45" rows="5"></textarea>
       </label></td>

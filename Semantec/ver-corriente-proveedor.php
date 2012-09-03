@@ -53,6 +53,7 @@
 
                                                 ord_plazo datetime   null,
                                                 fecha_pendiente_facturacion datetime   null,
+                                                es_abono     int        not null,
 
 					    	provincia  varchar(100) not null,
 					    	localidad  varchar(100) not null,
@@ -72,9 +73,13 @@
         /* INSERTAMOS EN LA TABLA TEMPORAL EL RESULTADO DE LA CONSULTA QUE AVERIGUA LOS ADELANTOS VS ORD_COSTO */
         
         $sql = "INSERT INTO tabla_temp	      
-		SELECT o.ord_id,ord_codigo,ord_det_fecha,c.cli_id,c.cli_nombre,c.sucursal, o.ord_plazo, o.fecha_pendiente_facturacion,
-                       p.nombre as provincia,l.nombre as localidad,o.ord_descripcion,o.est_id,sum(od.ord_det_monto) as adelantos,
-                       round (o.ord_costo,2) as presupuesto ,o.ord_costo - sum(od.ord_det_monto) as Saldo,0,round (o.ord_costo,2) as presupuesto 
+		SELECT o.ord_id,ord_codigo,ord_det_fecha,c.cli_id,c.cli_nombre,c.sucursal, o.ord_plazo, o.fecha_pendiente_facturacion, o.es_abono,
+                       p.nombre as provincia,l.nombre as localidad,o.ord_descripcion,o.est_id,
+                       sum(od.ord_det_monto) as adelantos,
+                       round (o.ord_costo,2) as presupuesto ,
+                       o.ord_costo - sum(od.ord_det_monto) as Saldo,
+                       0,
+                       round (o.ord_costo,2) as presupuesto 
                 FROM ordenes o, ordenes_detalle od,clientes c,ubicacion u,provincias p,localidades l
                 WHERE 
                 o.ord_id IN (select ord_id from ordenes where prv_id = $prv_id AND estado = 1)
@@ -84,7 +89,7 @@
                 AND u.id = c.ubicacion_id
                 AND u.provincias_id = p.id
                 AND u.localidades_id = l.id
-                AND o.ord_costo <> 0
+
                 AND o.est_id <> 8           
                 GROUP BY o.ord_id;"; 
      
@@ -102,6 +107,7 @@
        mysql_query($sql);
        
             /* INSERTAMOS EN LA TABLA TEMPORAL 2 , LA CONSULTA QUE COMPARA EL ORD COSTO VS LOS DETALLES DE FACTURA DE COMPRA */
+       //SELECT dfc.det_fco_orden_id,sum(dfc.det_fco_preciounitario) as compras,o.ord_costo - SUM(dfc.det_fco_preciounitario) as saldoc 
        $sql = "INSERT INTO tabla_temp2
                SELECT dfc.det_fco_orden_id,sum(dfc.det_fco_preciounitario) as compras,o.ord_costo - SUM(dfc.det_fco_preciounitario) as saldoc 
                FROM detalle_factura_compra dfc, ordenes o,clientes c
@@ -132,7 +138,7 @@
        switch($filtro){
          case 1:    $sql.=" ";break;
          case 2:    $sql.=" WHERE saldo_a <> 0";break;
-         case 3:    $sql.=" WHERE saldo_a = 0";break; 
+         case 3:    $sql.=" WHERE saldo_a = 0  AND es_abono=0";break;  // quitar elANS es _abono porq antes revisar q haga la suma  correcta costo de orde mas abono 
              
         }
         
@@ -366,28 +372,73 @@
             <td width="449">Descripción</td>
             <td width="88">Fecha</td>
             <td width="73">Ord costo</td>
-            <td width="73">Adelantos</td>
+            <td width="73">Abono</td>
+            <td width="73">Adelantos</td>           
             <td width="73">Saldo</td>
             <td width="73">Facturado</td>          
             <td width="73">Resta facturar</td>
-            
-<td width="35">
-                <a href="index-admin.php">
-                    <img src="images/home.png"  alt="inicio" title="Volver al panel" width="32" height="32" border="none" />                </a>            </td>
         </tr>
   <?php
+          $totalSaldoValor=0;
+          $totalFacturado=0;
+          $totalOrdenes=0;
+          $totalRestaFacturar=0;
           while($fila = mysql_fetch_array($resultado)){
   ?>
           <tr class="lista" bgcolor="<?php echo($colores[$i]);?>">
                 <td><a href="lista-req-ordenes.php?orden=<?php echo($fila["ord_codigo"]);?>&action=1" target="_blank"><?php echo($fila["ord_codigo"]);?></a></td>
                 <td><a href="ver-alta-clientes.php?cli_id=<?php echo($fila["cli_id"]);?>&action=0"><?php echo(utf8_encode($fila["cli_nombre"]));?> (<?php echo(utf8_encode($fila["provincia"]));?>/<?php echo(utf8_encode($fila["sucursal"]));?>)</a></td>
-                <td><?php echo(utf8_encode($fila["ord_descripcion"]));?></td>
-                <td><?php if($fila["fecha_pendiente_facturacion"]!=''){echo tfecha($fila["fecha_pendiente_facturacion"]);}else{echo '-';} ?></td>
-                <td><?php echo $fila["costo"];?></td>
-                <td><?php echo $fila["adelantos"];?></td>
-                <td><?php echo $fila["saldo_a"];?></td>
-                <td><?php echo $fila["compras"];?></td>
-                <td><?php echo $fila["saldo_c"];  ?></td>
+                <td>
+                    <?php echo(utf8_encode($fila["ord_descripcion"]));?>
+                </td>
+                <td>
+                    <?php 
+                        if($fila["fecha_pendiente_facturacion"]!='')
+                            {echo tfecha($fila["fecha_pendiente_facturacion"]);}
+                        else
+                            {echo '-';} 
+                     ?>
+                </td>
+                <td>
+                    <?php // COSTO ORDEN
+                        $ordenCosto=$fila["costo"];
+                        $totalOrdenes+=$ordenCosto;
+                        echo $ordenCosto;
+                     ?>
+                </td>
+                <td>
+                    <?php // ABONO
+                     $abonoValor=0.00;
+                     if($fila["es_abono"]==1){
+                           echo $abonoValor=getAbonoDetalle_ValorCostoWithCliId($fila["cli_id"]);}
+                     else
+                         {echo '0.00';}
+                     $totalOrdenes+=$abonoValor;
+                    ?>
+                </td>
+                <td>
+                    <?php echo $fila["adelantos"];?>
+                </td>               
+                <td>
+                    <?php // SALDO
+                          $saldoValor=$fila["saldo_a"]+$abonoValor; 
+                          $totalSaldoValor+=$saldoValor;
+                          echo number_format($saldoValor, 2, '.', ' '); ?>
+                </td>
+                <td>
+                    <?php  // FACTURADO
+                        $Facturado=$fila["compras"];
+                        $totalFacturado+=$Facturado;
+                        echo $Facturado;
+                     ?>
+                </td>
+                <td>  
+                    <?php //Resta FACTURAR echo $fila["saldo_c"];  
+                        $RestaFacturar=$saldoValor-$Facturado;
+                        $totalRestaFacturar+=$RestaFacturar;
+                        echo number_format($RestaFacturar,2,'.',' ');
+                    ?>
+                </td>
                 
         </tr>
   <?php
@@ -399,8 +450,10 @@
             
           } // FIN_WHILE
           
-          echo "<tr><td colspan=8 align=right>Total deuda con proveedor: <b style=color:red>".$totalDeuda['total_adelanto']."</b> pesos -- Total deuda del proveedor: <b style=color:blue>".$totalDeuda['total_compra']."</b> pesos</td></tr>";
-          echo "<tr><td colspan=8 align=right>Monto total de órdenes : <b>".$totalDeuda['total']."</b> pesos";
+       //   echo "<tr><td colspan=8 align=right>Total deuda con proveedor: <b style=color:red>".$totalDeuda['total_adelanto']."</b> pesos -- Total deuda del proveedor: <b style=color:blue>".$totalDeuda['total_compra']."</b> pesos</td></tr>";
+          echo "<tr><td colspan=8 align=right>Total deuda con proveedor: <b style=color:red>".number_format($totalSaldoValor,2,'.',' ')."</b> pesos -- Total deuda del proveedor: <b style=color:blue>".number_format($totalRestaFacturar,2,'.',' ')."</b> pesos</td></tr>";
+       //   echo "<tr><td colspan=8 align=right>Monto total de órdenes : <b>".$totalDeuda['total']."</b> pesos";
+           echo "<tr><td colspan=8 align=right>Monto total de órdenes : <b>".number_format($totalOrdenes,2,'.',' ')."</b> pesos";
   ?>
           <tr>
             <td colspan="8" class="pie_lista"><?php 

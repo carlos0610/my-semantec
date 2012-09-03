@@ -406,6 +406,58 @@ function ActualizarTotal(cantidadDescripciones,factura){
     document.getElementById("txtTotalFactura").value =  subtotal + percepciones;      
     }
 }
+// otro actualizar solo de factura compra
+
+function ActualizarTotalFacturaCompra(cantidadDescripciones,factura){
+    
+    
+    iva = document.getElementById("comboIva").value;
+    document.getElementById("btnConfirma").style.visibility = "visible"; 
+    
+
+    if (iva == 1){
+         iva = 0.21;
+    }else{
+         iva = 0.105;   
+         } 
+     
+    subtotal = 0;
+    numeroDescripcion=0;
+    
+    while(numeroDescripcion < cantidadDescripciones)
+    {
+        
+        numeroDescripcion++;
+        if (validarSiNumeroYComa(document.getElementById("txtTotalItem"+numeroDescripcion).value))
+        {
+             subtotal += parseFloat(document.getElementById("txtTotalItem"+numeroDescripcion).value); 
+        }else
+        {document.getElementById("txtTotalItem"+numeroDescripcion).value="0.00";}
+    }
+    document.getElementById("txtSubtotal").value = subtotal.toFixed(2);
+    
+    total_iva = subtotal * iva;    
+    document.getElementById("txtIva_Ins").value = total_iva.toFixed(2);
+ 
+    //1 = FACTURA VENTA
+    //2 = FACTURA COMPRA
+    
+    if(factura == 1){ 
+    document.getElementById("txtTotalFactura").value = (total_iva + subtotal).toFixed(2);
+    totalOrdenesVenta=document.getElementById("totalOrdenVenta").value;  
+    totalIva=totalOrdenesVenta*iva;
+    totalOrdenesVenta2 = parseFloat(totalOrdenesVenta) + parseFloat(totalIva);
+    document.getElementById('totalLabel').innerHTML ="Total Órdenes venta: $ "+(totalOrdenesVenta2).toFixed(2);
+    if(document.getElementById("txtTotalFactura").value==totalOrdenesVenta2)
+        {document.getElementById("btnConfirma").style.visibility = "visible"; }
+        else{alert("La factura no iguala el total aceptado");
+          document.getElementById("btnConfirma").style.visibility = "hidden"; }
+    } else {
+    percepciones = parseFloat(document.getElementById("txtPercepciones").value);
+    document.getElementById("txtTotalFactura").value =  subtotal + percepciones;      
+    }
+}
+
 
 function actualizarIva(factura){
     
@@ -652,7 +704,42 @@ function CheckboxsSeleccionarTodos(cantTotalCheckboxs){
         }
     }
 
-
+function verificarCheckboxsFacturaCompra(cantTotalCheckboxs,id){
+    i=0;
+    continua=false;
+    url="form-alta-compra.php?comboProveedor="+id;
+    elementoOrden=0;
+        while (i<cantTotalCheckboxs)
+        {
+            i++;
+            if(eval("document.frmGenerarFactura.checkbox_ord_id"+i+".checked"))
+                {
+                   continua=true;
+                } 
+        }
+    if(continua){ 
+    i=0;
+    while (i<cantTotalCheckboxs)
+        {
+            i++;       
+            if(eval("document.frmGenerarFactura.checkbox_ord_id"+i+".checked"))
+                {
+                   elementoOrden++; 
+                   url+="&ord_check"+elementoOrden+"="+eval("document.frmGenerarFactura.checkbox_ord_id"+i+".value"); 
+                } 
+                else
+                    {
+                        eval("document.frmGenerarFactura.checkbox_ord_id"+i+".style.visibility = 'hidden'")
+                    }
+        }
+        url+="&cant="+elementoOrden+"&ocultar=no";      
+   window.location=url;  
+    }
+    else
+        {
+            alert("debe seleccionar una orden");
+        }
+}
 
 /* ALERTA DE PLAZOS*/
 
