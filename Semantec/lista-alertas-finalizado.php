@@ -60,7 +60,7 @@ $titulo = "Alerta de ordenes con vencimiento.";
                                
                  $sql0.= $sqlaux;       
        
-        $sql0 .=" ORDER BY o.ord_alta DESC";
+        $sql0 .=" ORDER BY o.ord_plazo DESC";
         
         
         
@@ -86,7 +86,7 @@ $titulo = "Alerta de ordenes con vencimiento.";
                             {$sql.=" AND o.prv_id = $proveedorFiltro ";} 
         
          /*Fin_Filtros*/          
-        $sql .=" ORDER BY o.ord_alta DESC";
+        $sql .=" ORDER BY o.ord_plazo DESC";
         $sql .= " LIMIT ".$limitInf.",".$tamPag;
         $resultado = mysql_query($sql);
         $alerta_plazo_proveedor = mysql_query($sql);

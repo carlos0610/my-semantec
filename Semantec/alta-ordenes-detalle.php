@@ -115,7 +115,7 @@
         
         /* UPDATEAR PLAZO DE PROVEEDOR */
         /*
-        if ($est_id == 2){
+        if ($est_id == $estado_enviado_proveedor){
         $sql = "UPDATE ordenes SET ord_plazo_proveedor = '$fecha' where ord_id = $ord_id";}
         if ($est_id == 10){
         $sql = "UPDATE ordenes SET ord_plazo = '$fecha' where ord_id = $ord_id"; 

@@ -151,7 +151,7 @@
          <td width="52%"><input name="chckCliente" type="checkbox" id="chckCliente" onClick="habilitarFiltrosClienteSucursal('chckCliente','cli_id','suc_id')" <?php if($cli_id!=""){echo ("checked");}?>></td>
        </tr>
        <tr>
-         <td><div align="right">Sucursal</div></td>
+         <td><div align="right">Cliente</div></td>
          <td><select name="suc_id" id="suc_id" class="campos" required <?php if($cli_id==""){echo ("disabled");}?>>
            <option value='todasLasSucursales'>Todas las Sucursales</option>
            
@@ -222,7 +222,7 @@
           <tr class="lista" bgcolor="<?php echo($colores[$i]);?>">
             <td><?php echo($fila["cod_factura_venta"]);?></td>
             <td><?php echo(tfecha($fila["fav_fecha"]));?></td>
-            <td><a href="ver-alta-clientes.php?cli_id=<?php echo($fila["cli_id"]);?>&action=0"><?php echo(utf8_encode($fila["cli_nombre"]));?>(<?php echo(utf8_encode($fila["sucursal"]));?>)</a></td>
+            <td><a href="ver-alta-clientes.php?cli_id=<?php echo($fila["cli_id"]);?>&action=0"><?php echo(utf8_encode($fila["cli_nombre"]));?></a></td>
             <td><?php if($fila["fav_fecha_pago"]==NULL){
                         echo "No";
                             }else {

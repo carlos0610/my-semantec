@@ -43,7 +43,7 @@
        
      /* CREAMOS TABLA TEMPORAL QUE VA ALMACENAR EL REPORTE CON LOS ADELANTOS */  
         $sql = "CREATE TEMPORARY TABLE tabla_temp
-					(
+							(
                                                 ord_id int NOT NULL,
                                                 ord_codigo varchar(30)  not null,
                                                 ord_det_fecha datetime  not null,
@@ -64,9 +64,10 @@
 					    	saldo_a decimal(10,2) not null,
 					    	compras decimal(10,2),
 					    	saldo_c decimal(10,2),
+					    	costo_abono decimal(10,2),
 					    	PRIMARY KEY  (`ord_id`)
 					    
-					      );";  
+					      )";  
        
         mysql_query($sql);
         
@@ -79,10 +80,10 @@
                        round (o.ord_costo,2) as presupuesto ,
                        o.ord_costo - sum(od.ord_det_monto) as Saldo,
                        0,
-                       round (o.ord_costo,2) as presupuesto 
+                       round (o.ord_costo,2) as presupuesto,0 
                 FROM ordenes o, ordenes_detalle od,clientes c,ubicacion u,provincias p,localidades l
                 WHERE 
-                o.ord_id IN (select ord_id from ordenes where prv_id = $prv_id AND estado = 1)
+                o.ord_id IN (select ord_id from ordenes where prv_id = 50 AND estado = 1)
                 AND o.estado = 1
                 AND o.ord_id = od.ord_id
                 AND o.cli_id = c.cli_id
@@ -127,9 +128,31 @@
                 WHERE t1.ord_id = t2.ord_id;";
        
        mysql_query($sql);
+      
+       /*** CREAMOS LA TABLA TEMPORAL 3 PARA GUARDAR EL VALOR DE COSTO DE LOS ABONOS ***/
+       $sql = "CREATE TEMPORARY TABLE tabla_temp3 (
+            		cli_id int not null,
+            		valor_costo decimal(10,2) not null
+            		); ";
        
+       mysql_query($sql);
        
+       /*** OBTENEMOS EL VALOR DE COSTO DEL ABONO DE LAS ORDENES QUE ESTAN MARCADAS CON ABONO ***/
+       $sql = "INSERT INTO tabla_temp3
+					 SELECT cli_id,valor_costo 
+                        FROM `abonos_detalle` 
+                        WHERE `cli_id`IN (select cli_id from tabla_temp where es_abono = 1)
+                        AND estado=1
+                        ORDER BY abonos_id;";
        
+       mysql_query($sql);
+       /*UPDATEAMOS LA TABLA TEMP 1 CON LA DATA QUE METIMOS EN LA T3*/
+       $sql = "UPDATE tabla_temp t1,tabla_temp3 t3
+					 SET t1.costo_abono = t3.valor_costo
+					 WHERE t1.cli_id = t3.cli_id 
+					 AND t1.es_abono = 1;";
+       
+       mysql_query($sql);
        
        $sql = "SELECT * FROM tabla_temp";
        
@@ -138,7 +161,7 @@
        switch($filtro){
          case 1:    $sql.=" ";break;
          case 2:    $sql.=" WHERE saldo_a <> 0";break;
-         case 3:    $sql.=" WHERE saldo_a = 0  AND es_abono=0";break;  // quitar elANS es _abono porq antes revisar q haga la suma  correcta costo de orde mas abono 
+         case 3:    $sql.=" WHERE saldo_a = 0";break;  // quitar elANS es _abono porq antes revisar q haga la suma  correcta costo de orde mas abono 
              
         }
         
@@ -183,6 +206,9 @@
        mysql_query($sql);
        
        $sql = "DROP TABLE tabla_temp2;";
+       mysql_query($sql);
+       
+       $sql = "DROP TABLE tabla_temp3;";
        mysql_query($sql);
        
        mysql_close();
@@ -408,11 +434,12 @@
                 </td>
                 <td>
                     <?php // ABONO
-                     $abonoValor=0.00;
-                     if($fila["es_abono"]==1){
-                           echo $abonoValor=getAbonoDetalle_ValorCostoWithCliId($fila["cli_id"]);}
-                     else
-                         {echo '0.00';}
+                     $abonoValor=$fila["costo_abono"];
+                    echo $abonoValor;
+//                       if($fila["es_abono"]==1){
+//                           echo $abonoValor=getAbonoDetalle_ValorCostoWithCliId($fila["cli_id"]);}
+//                     else
+//                         {echo '0.00';}
                      $totalOrdenes+=$abonoValor;
                     ?>
                 </td>
