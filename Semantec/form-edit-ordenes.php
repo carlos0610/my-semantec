@@ -123,19 +123,18 @@
       <h2>Panel de control</h2> 
       <!--datos de los filtro de listado de ordenes-->
       <form id="filtro" name="filtro" action=''  method="POST">
-                          <input type="hidden" value="<?php echo($elementoBusqueda); ?>" name="filtrartxt" id="filtrartxt" />  
+          <input type="hidden" value="<?php echo($elementoBusqueda); ?>" name="filtrartxt" id="filtrartxt" />  
           <input type="hidden" value="<?php echo($proveedorFiltro); ?>" name="prv_id" id="prv_id" />  
           <input type="hidden" value="<?php echo($estado_id); ?>" name="est_id" id="est_id" />  
           <input type="hidden" value="<?php echo($cli_id); ?>" name="suc_id" id="suc_id" />  
           <input type="hidden" value="<?php echo($cli_idMaestro); ?>" name="cli_id" id="cli_id" /> 
           <input type="hidden" value="<?php echo($unOrden); ?>" name="orden" id="orden" /> 
           <input type="hidden" value="<?php echo($contador); ?>" name="contador" id="contador" /> 
-      </form>
-          
-                                                                                   
+      </form>       
+
       <table class="forms" cellpadding="5">
           <tr class="titulo">
-            <td colspan="2"> <?php echo($titulo)?> </td>
+            <td colspan="2"> <?php echo($titulo);?></td>
             <td width="32">
                 <a href="index-admin.php">
                     <img src="images/home.png"  alt="inicio" title="Volver al panel" width="32" height="32" border="none" />                </a>            </td>
@@ -143,7 +142,8 @@
           <tr>
             <td>C&oacute;digo de Orden</td>
             <td>
-                <?php echo($fila0["ord_codigo"]); ?>             </td>   
+                <?php echo($fila0["ord_codigo"]); ?>            
+            </td>   
             <td>            </td>
           </tr>
   
@@ -176,7 +176,7 @@
                 
                 
                 
-                <input type="hidden" value="<?php echo($fila0["ord_codigo"]); ?>" class="campos" style="text-align:right" id="ord_codigo" name="ord_codigo" min="0" required/>  
+             <input type="hidden" value="<?php echo($fila0["ord_codigo"]); ?>" class="campos" style="text-align:right" id="ord_codigo" name="ord_codigo" min="0" required/>  
              <input type="hidden" value="<?php echo($est_id); ?>" name="est_idEdit" id="est_idEdit" />
              <input type="hidden" value="<?php echo($fila0["ord_id"]); ?>" name="ord_id2" >
             <td>Descripci&oacute;n de Orden</td>
@@ -211,9 +211,9 @@
             </td>
             <td></td>
           </tr>
-        <?php }?>      
+        <?php }else{?><input type="hidden"  id="cli_idSucur" name="cli_idSucur" value="<?php echo $fila0["cli_id"]?>"/>     
           
-          
+          <?php } ?>
           <tr>
             <td>Proveedor</td>
             <td>
@@ -235,7 +235,7 @@
             <td></td>
           </tr>
           
-          <?php  } else if ($fila0["est_id"] ==  9) { ?>
+          <?php  } if ($fila0["est_id"] ==  9) { ?>
           
           <tr>
               <td><label id="texto_respuesta"><?php echo "Plazo de finalización" ?></label></td>

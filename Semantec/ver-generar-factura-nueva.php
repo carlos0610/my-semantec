@@ -257,14 +257,14 @@
             </td>
             <td>                                
                     <a href="#" onClick="popup('ver-alta-ordenes.php?origenOtroForm=externo&ord_id=<?php echo($filaDeLasOrdenesCheckeadas["ord_id"]);?>', 'Alerta')">
-                        # <?php echo $filaDeLasOrdenesCheckeadas["ord_codigo"],'<br> - - -  Valor venta: ',$filaDeLasOrdenesCheckeadas["ord_venta"],'<br>';  ?>
+                        # <?php echo $filaDeLasOrdenesCheckeadas["ord_codigo"],'<br> - - -  Valor venta materiales: ',$filaDeLasOrdenesCheckeadas["ord_venta"],'<br>';  ?>
                     
                     <?php         // le sumo los abonos si es abono
                            if($filaDeLasOrdenesCheckeadas["es_abono"]==1) 
                            {
                                    $filaAbono = mysql_fetch_array(getAbonosDetalleWithCliId($filaDeLasOrdenesCheckeadas["cli_id"]));
-                                    echo ' - - - Valor costo Abono : ',$filaAbono['valor_costo'];
-                                    $totalOrdenVenta+=$filaAbono['valor_costo'];
+                                    echo ' - - - Valor venta Abono : ',$filaAbono['valor_venta'];
+                                    $totalOrdenVenta+=$filaAbono['valor_venta'];
                              }else{// truco para q quede alineado
                                  echo '&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;
                                          &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;  '; }

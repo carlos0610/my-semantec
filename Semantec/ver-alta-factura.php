@@ -258,12 +258,12 @@
       <td rowspan="3"><label>
         <?php echo $fila_fecha_factura["fav_nota"]; ?>
       </label></td>
-      <td height="31"><div align="right"><span id="ocultarParaImpresion">I.V.A INSCRIP&nbsp;&nbsp;&nbsp;&nbsp;</span><?php echo $fila_iva["valor"]; ?><span id="ocultarParaImpresion"> %</span></div></td>
+      <td height="31"><div align="right"><span id="ocultarParaImpresion">I.V.A INSCRIP&nbsp;&nbsp;&nbsp;&nbsp;</span><?php echo number_format($fila_iva["valor"], 2, '.', ''); ?><span id="ocultarParaImpresion"> %</span></div></td>
       <td><label>
         <div align="right">
           $<?php 
           $iva_total = $subtotal*0.21;
-          echo $iva_total;
+          echo number_format($iva_total, 2, '.', '');
           ?>
           </div>
       </label></td>
@@ -280,7 +280,7 @@
       <td><div  id="ocultarParaImpresion" align="right">TOTAL</div></td>
       <td><label>
         <div align="right">
-          $<?php echo ($iva_total + $subtotal)?>
+          $<?php echo number_format(($iva_total + $subtotal), 2, '.', '')?>
           </div>
       </label></td>
     </tr>

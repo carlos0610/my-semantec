@@ -151,14 +151,14 @@ $pdf->Cell(26,13,$fila_iva["valor"],0,0,R);
 $iva_total = $subtotal*0.21;
 $pdf->Cell(20);
 $pdf->Cell(2,12,'$',0,0,R);
-$pdf->Cell(15,12,$iva_total,0,1,R);
+$pdf->Cell(15,12,number_format($iva_total, 2, '.', ''),0,1,R);
 //IVA NO INSC
 $pdf->Cell(180);
 $pdf->Cell(17,11,'-',0,1,R);
 // TOTAL
 $pdf->Cell(182);
 $pdf->Cell(2,10,'$',0,0,R);
-$pdf->Cell(15,10,$iva_total + $subtotal,0,0,R);
+$pdf->Cell(15,10,number_format($iva_total + $subtotal, 2, '.', ''),0,0,R);
   
 $pdf->Output();
 ?>

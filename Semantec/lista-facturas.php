@@ -46,7 +46,7 @@
         
         $sqlaux="";
         if($elementoBusqueda!="")
-        {$sqlaux.=" AND fav_id like '$elementoBusqueda%' ";}
+        {$sqlaux.=" AND cod_factura_venta like '$elementoBusqueda%' ";}
         if($pagado!="")
         {$sqlaux.=" AND $pagado (f.fav_fecha_pago) ";}
 
