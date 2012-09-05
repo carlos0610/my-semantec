@@ -100,7 +100,7 @@
             <td>Descripci&oacute;n de Orden</td>
             <td>
                 <textarea class="campos" id="ord_descripcion" name="ord_descripcion" rows="9" required ></textarea><br>
-                <input type="checkbox" name="checkPortadaDescripcion" id="checkPortadaDescripcion" value="1" >Publicar descripci&oacute;n en portal 
+                <input type="hidden" name="checkPortadaDescripcion" id="checkPortadaDescripcion" value="1" >
             </td>
             <td></td>
           </tr>
