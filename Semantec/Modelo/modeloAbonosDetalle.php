@@ -51,4 +51,22 @@
              
 	}
         
+        function getAbonoDetalle_ValorVentaWithCliId($id){
+           include("./conexion.php");
+           		 $sql = "SELECT `id`, `abonos_id`, `cli_id`, `valor_costo`, `valor_venta`, `valor_visita`, `usu_id_baja`, `estado` 
+                        FROM `abonos_detalle` 
+                        WHERE `cli_id`= $id
+                        AND estado=1
+                        ORDER BY abonos_id";
+                 $abono2 = mysql_query($sql);
+                 $valorCosto='0.00'; 
+                 if ($abono2) {
+                       $fila = mysql_fetch_array($abono2);
+                        $valorCosto=$fila['valor_venta'];  
+                        if ($valorCosto==''){$valorCosto='0.00';}
+                 }
+                 return     $valorCosto;
+             
+	}
+        
 ?>

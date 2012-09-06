@@ -235,7 +235,7 @@
             
             <tr>
                 <td><b>Valor Costo Total</b> </td>
-            <td><?php echo($valor_costo_Abono+$valor_costo_orden);?> </td>
+            <td><?php echo number_format(($valor_costo_Abono+$valor_costo_orden), 2, '.', '');?> </td>
             </tr> 
             
             <tr>
@@ -251,7 +251,7 @@
           
                     <tr>
             <td><b>Valor Venta Total</b> </td>
-            <td><?php echo($valor_venta_Abono+$valor_venta_orden);?></td>
+            <td><?php echo number_format(($valor_venta_Abono+$valor_venta_orden), 2, '.', '');?></td>
           </tr>
              <?php } ?> 
           <tr>

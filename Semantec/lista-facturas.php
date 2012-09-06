@@ -70,7 +70,7 @@
     $tamPag=20;
     
     
-        $sql = "SELECT distinct f.fav_id,f.fav_fecha,c.cli_nombre,c.cli_id,c.sucursal,cc.ccc_id,f.files_id,f.fav_fecha_pago ,f.cod_factura_venta
+        $sql = "SELECT distinct f.fav_id,f.fav_fecha,c.cli_nombre,c.cli_id,c.sucursal,cc.ccc_id,f.files_id,f.fav_fecha_pago ,f.cod_factura_venta, f.gru_id 
                 FROM factura_venta f,ordenes o,clientes c,grupo_ordenes g_o,cuentacorriente_cliente cc
                 WHERE f.gru_id = g_o.gru_id
                 AND g_o.gru_id = o.gru_id
@@ -236,7 +236,7 @@
             <td width="32" align="center">
             <div  <?php if($chkCanceladas=="0"){echo ("  style='visibility:hidden'");}?>>
             <?php if($fila["fav_fecha_pago"]==NULL){?>
-            <a href="#" onClick="pagarFactura(<?php echo($fila["fav_id"]);?> ,<?php echo($fila["ccc_id"]);?>)">
+            <a href="#" onClick="pagarFactura(<?php echo($fila["fav_id"]);?> ,<?php echo($fila["ccc_id"]);?>,'<?php echo($fila["cod_factura_venta"]);?>')">
             <img src="images/pagar_factura.png" title="Registrar pago de factura">
             </a>
             
@@ -249,8 +249,8 @@
             </div>
             </td>
             <td width="32" align="center"><a href="ver-alta-factura.php?fav_id=<?php echo($fila["fav_id"]); ?>"><img src="images/detalles.png" alt="editar" title="Ver detalle" width="32" height="32" border="none" /></a></td>            
-            <td> <div  <?php if($chkCanceladas=="0"){echo ("  style='visibility:hidden'");}?>>
-                <a href="#" onClick="eliminarFactura(<?php echo($fila["fav_id"]);?> )"   >
+            <td> <div  <?php if($chkCanceladas=="0"){echo ("  style='visibility:hidden'");}?>>  
+                <a href="#" onClick="eliminarFactura(<?php echo($fila["fav_id"]);?>,<?php echo($fila["gru_id"]);?>,'<?php echo($fila["cod_factura_venta"]);?>' )"   >
                 <img src="images/eliminar.png" alt="eliminar" title="Eliminar Factura" width="32" height="32" border="none" />
                 </a>
                 </div>

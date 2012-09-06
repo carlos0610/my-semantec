@@ -3,6 +3,7 @@
         include("funciones.php");
 
         $fav_id = $_GET["fav_id"];
+        $grup_id = $_GET["grup_id"];
 
         include("conexion.php");
         mysql_query("BEGIN"); // Inicio de Transacción
@@ -30,7 +31,16 @@
         
         if(!$result)
         $error=1;
+        /* volver al estado pendiente de facturacion a la ordenes afectadas*/
+        echo $grup_id;
+        $sql = "UPDATE ordenes SET                                        
+                                        est_id = 11 ,
+                                        gru_id= NULL
+                                WHERE gru_id = $grup_id";
+        $result = mysql_query($sql);
         
+        if(!$result)
+        $error=1;
         
         
                 /* Validación de la transacción */

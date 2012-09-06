@@ -58,18 +58,18 @@ function eliminarProveedor(id,nombre){
 
 
 // BAJA Factura
-function eliminarFactura(id){
+function eliminarFactura(id,grup_id,codigo){
     
-    if(confirm('¿Confirma eliminar Factura: '+id+' ?')==true)
+    if(confirm('¿Confirma eliminar Factura: '+codigo+' ?')==true)
     {
-        window.location="delete-factura.php?fav_id="+id;
+        window.location="delete-factura.php?fav_id="+id+"&grup_id="+grup_id;
     }
 }
 
 
-function pagarFactura(id,cuenta){
+function pagarFactura(id,cuenta,codigo){
     
-    if(confirm('¿Confirma el pago de la factura nro: '+id+'? ')==true)
+    if(confirm('¿Confirma el pago de la factura nro: '+codigo+'? ')==true)
     {
         //window.location="pagar-factura.php?fav_id="+id+"&ccc_id="+cuenta;
         window.location="form-alta-pago.php?fav_id="+id+"&ccc_id="+cuenta;

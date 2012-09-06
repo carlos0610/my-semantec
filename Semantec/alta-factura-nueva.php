@@ -1,13 +1,17 @@
 <?php
     include ("funciones.php");
+    include("validar.php");
     include ("conexion.php");
-
+    include ("Modelo/modeloAbonosDetalle.php");
+    include ("Modelo/modeloOrdenes.php");
+    include ("Modelo/modeloAbonoDeOrden.php");
     
     $cantidadCheckboxs = $_POST["cantidadOrdenesAceptadas"];
     $items   = $_GET["items"];
     $nota    = $_POST["txtNota"];
     $iva     = $_POST["comboIva"];   
     $Remito= $_POST["txtRemito"]; 
+    $usu_id     = $_SESSION["usu_nombre"];
     $vencimiento = gfecha($_POST["vencimiento"]);
     $condicion_venta= $_POST["condicion_venta"];
     $codFactura="0001-";
@@ -58,12 +62,39 @@
         while($i<$cantidadCheckboxs)
         {
             $i++;
+            
             $ord_id=$_POST["ordenCheck$i"];
+            //guardo el valor del abono actual
+            $Orden=getOrdenWithOrdId($ord_id);
+            $filaOrden = mysql_fetch_array($Orden);
+            $cli_idDeOrden=$filaOrden['cli_id'];// obtengo el cli_id de la orden
+            $abono=getAbonosDetalleWithCliId($cli_idDeOrden);
+            $filaAbono = mysql_fetch_array($abono);
+            $valorAbonoVenta=$filaAbono['valor_venta'];
+            $valorAbonoCosto=$filaAbono['valor_costo'];
+            $abonoId=$filaAbono['abonos_id'];
+
+            if(getOrden_esAbonoWithOrdId($ord_id))
+            {    
+                 $result=saveAbonoDeOrden($valorAbonoVenta,$valorAbonoCosto,$usu_id,$abonoId,$ord_id);
+                 if(!$result)
+                 {$error=1;echo 'ACA0';} 
+                 $AbonoDeOrdenId = mysql_insert_id();
+            }
+            // fin abono
+            
             $sql="UPDATE `ordenes` 
-                  SET `gru_id`=$id_grupo_ordenes,`est_id`=12 
-                  WHERE `ord_id`= $ord_id
+                  SET 
+                `gru_id`=$id_grupo_ordenes
+                 ,est_id = 12 ";
+                 if(getOrden_esAbonoWithOrdId($ord_id)==1)
+                     $sql.=" , abono_de_orden = $AbonoDeOrdenId ";
+            $sql.=" WHERE `ord_id`= $ord_id
                 ";
-            mysql_query($sql);
+            echo 'UPDATE DE ORDENES: ',$sql;
+            $result=mysql_query($sql);
+            if(!$result){
+                     $error=1; echo 'ACA1';}
         }
                                                    
     if ($idFile != -1)
@@ -86,8 +117,9 @@
             
         while(($i <= $items)&($descripcion != '')){   
             $query = "INSERT INTO detalle_factura_venta (fav_id,idiva,det_fav_descripcion,det_fav_precio) VALUES ($nro_factura,$iva,'$descripcion',$precio)";
-            mysql_query($query);
-            
+            $result=mysql_query($query);
+            if(!$result)
+                     $error=1;
             $i++;
             $columnaDesc = "txtDescripcionItem".$i;
             $columnaPrec = "txtTotalItem".$i;
