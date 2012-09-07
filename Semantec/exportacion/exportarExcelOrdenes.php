@@ -24,13 +24,13 @@ $nombre=' Ordenes de Servicio';
 <TR>
     
 <TD><b>C&oacute;digo</b></TD>
-<TD><b>Fecha</b></TD>
+<TD style="mso-number-format:'dd/mm/yyyy' "   ><b>Fecha</b></TD>
 <TD><b>Cliente</b></TD>
 <TD><b>Descripci&oacute;n</b></TD>
 <TD><b>Proveedor</b></TD>
 <TD><b>Estado</b></TD>
-<TD><b>Costo</b></TD>
-<TD><b>Venta</b></TD>
+<TD style="mso-number-format:'0.00';"><b>Costo</b></TD>
+<TD style="mso-number-format:'0.00';"><b>Venta</b></TD>
 
 </TR>
 <?php
