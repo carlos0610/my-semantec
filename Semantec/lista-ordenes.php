@@ -147,8 +147,9 @@ $sql="SELECT ord_id, ord_codigo, ord_descripcion, cli_nombre,c.cli_id, prv_nombr
 
    <!--start contenedor-->
    <div id="contenedor" style="height:auto;">
-      <h2>Panel de control - Listado de Ordenes de Servicio</h2>
+      <h2>Panel de control - Listado de Ordenes de Servicio</h2> 
 
+      
       
       <div id="buscador" >     
     <form id="filtro" name="filtro" action="lista-ordenes.php<?php /*echo $PHP_SELF; */?>" method="POST">
@@ -217,7 +218,12 @@ $sql="SELECT ord_id, ord_codigo, ord_descripcion, cli_nombre,c.cli_id, prv_nombr
        <tr>
          <td><div align="right">N° Orden</div></td>
          <td><input type="text" name="filtrartxt" class="campos" value="<?php echo $elementoBusqueda; ?>"  style="text-align:right" ></td>
-         <td><input type="submit" name="filtrar" value="Filtrar" class="botones" ></td>
+         <td><input type="submit" name="filtrar" value="Filtrar" class="botones" >       
+             &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  Exportar Excel
+             <a href="exportacion/exportarExcelOrdenes.php?sql=<?php echo $sql0;?>"> 
+                 <img src="images/icon-header-xls.png" alt="Listado Excel" title="Listado Excel" width="32" height="32" border="none" />
+             </a>
+         </td>
        </tr> 
        
        <!--- Datos necesarios para el header PARTE 3 -->
