@@ -148,11 +148,21 @@
        mysql_query($sql);
        /*UPDATEAMOS LA TABLA TEMP 1 CON LA DATA QUE METIMOS EN LA T3*/
        $sql = "UPDATE tabla_temp t1,tabla_temp3 t3
-					 SET t1.costo_abono = t3.valor_costo
-					 WHERE t1.cli_id = t3.cli_id 
-					 AND t1.es_abono = 1;";
+					 SET t1.costo_abono = t3.valor_costo,t1.saldo_a = t1.saldo_a + t3.valor_costo
+					 WHERE t1.cli_id = t3.cli_id
+					 AND est_id < 12 
+					 AND t1.es_abono = 1";
        
-       mysql_query($sql);
+            mysql_query($sql);
+            
+       $sql = "UPDATE tabla_temp t1,abono_de_orden a
+					 SET t1.costo_abono = a.valor_costo ,t1.saldo_a = t1.saldo_a + a.valor_costo
+					 WHERE t1.ord_id = a.ord_id 
+					 AND est_id >= 12
+					 AND t1.es_abono = 1
+					 AND a.abono_id in (SELECT h.abonos_detalle_id FROM historial_abonos h where ordenes_ord_id = t1.ord_id);";     
+            
+            mysql_query($sql);
        
        $sql = "SELECT * FROM tabla_temp";
        
