@@ -10,7 +10,7 @@
         $est_id = $_POST["est_id"];
         $estado_id_filtro = $_GET["estado_id_filtro"];
         $prov_filtro = $_GET["prov_filtro"];
-        $fecha =  gfecha($_POST["fecha"]);echo $fecha;
+        $fecha =  gfecha($_POST["fecha_detalle"]);
         $usu_nombre = $_SESSION["usu_nombre"];
         $idFile = -1;
         $checkPortada= $_POST["checkPortada"];

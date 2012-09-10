@@ -270,7 +270,7 @@ $sql="SELECT ord_id, ord_codigo, ord_descripcion, cli_nombre,c.cli_id, prv_nombr
                     <img src="images/detalles.png" alt="editar" title="Ver detalle" width="32" height="32" border="none" />
                 </a>
             </td>            
-            <td><a href="#"    onClick="transferirFiltrosAOtroForm('filtro','form-edit-ordenes.php?ord_id=<?php echo($fila["ord_id"]); ?>&action=0&pagina=<?php echo $pagina ?>')">
+            <td><a href="#"    onClick="transferirFiltrosAOtroForm('filtro','form-edit-ordenes-unificado.php?ord_id=<?php echo($fila["ord_id"]); ?>&action=0&pagina=<?php echo $pagina ?>')">
                     <img src="images/editar.png" alt="editar" title="Modificar orden" width="32" height="32" border="none" />
                 </a>
             </td>

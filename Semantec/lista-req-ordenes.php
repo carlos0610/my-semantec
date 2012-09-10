@@ -274,7 +274,7 @@
              $numeroDeTablaDesplegable++;   
   ?>
           <tr class="lista" bgcolor="<?php echo($colores[$i]);?>">
-              <td><a href="#"    onClick="transferirFiltrosAOtroForm('filtro','form-edit-ordenes.php?ord_id=<?php echo($fila["ord_id"]); ?>&action=1&pagina=<?php echo $pagina ?>')">
+              <td><a href="#"    onClick="transferirFiltrosAOtroForm('filtro','form-edit-ordenes-unificado.php?ord_id=<?php echo($fila["ord_id"]); ?>&action=1&pagina=<?php echo $pagina ?>')">
                   <?php echo($fila["ord_codigo"]);?></a></td>
             <td><?php echo(utf8_encode($fila["cli_nombre"]));?>(<?php echo(utf8_encode($fila["sucursal"]))?>)</td>
             <td><?php echo(tfecha($fila["ord_alta"]));?></td>

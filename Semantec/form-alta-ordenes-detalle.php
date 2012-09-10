@@ -21,7 +21,6 @@
         $action=$_GET['action']; 
         $estado_id_filtro=$_GET['estado_id_filtro']; 
         $prov_filtro=$_GET['prov_filtro']; 
-        echo $estado_id_filtro,$prov_filtro;
         
         //----------------------------------
         $sql0 = "SELECT ord_codigo, ord_descripcion, cli_id, prv_id, est_id, ord_alta, ord_plazo, ord_costo, ord_venta ,es_abono
@@ -50,7 +49,7 @@
   <script type="text/javascript" src="js/jquery.datepick-es.js"></script>
   <script type="text/javascript">
   $(function() {
-      $('#fecha').datepick();
+      $('#fecha_detalle').datepick();
   });
   </script>    
   
@@ -81,7 +80,7 @@
 
 	
       <h2>Panel de control</h2>
-      <form id="altaordenDetalle" action="alta-ordenes-detalle.php?estado_id_filtro=<?php echo $estado_id_filtro ?>&prov_filtro=<?php echo $prov_filtro ?>" method="post" enctype="multipart/form-data">
+      <form id="altaordenDetalle" name="altaordenDetalle" action="alta-ordenes-detalle.php?estado_id_filtro=<?php echo $estado_id_filtro ?>&prov_filtro=<?php echo $prov_filtro ?>" method="post" enctype="multipart/form-data">
           
       <input type="hidden" value="<?php echo $orden_id; ?>" name="ord_id"  id="ord_id">
       <table class="forms" cellpadding="5">
@@ -129,8 +128,8 @@
           </tr>
                       
           <tr>
-              <td><label id="texto_respuesta"></label></td>
-            <td><input type="text" class="campos" id="fecha" name="fecha" style="visibility: hidden"/></td>
+              <td><label id="texto_respuesta_detalle"></label></td>
+            <td><input type="text" class="campos" id="fecha_detalle" name="fecha" style="visibility: hidden"/></td>
             <td></td>
           </tr>
       

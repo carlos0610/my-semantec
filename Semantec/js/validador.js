@@ -32,8 +32,8 @@ function leer_doc(url) {
 
 function procesarRespuesta(){
     //NOTA: para q funcione correctamente no olvidarse q deben existir los id
- respuesta = req.responseXML;
- var existe = respuesta.getElementsByTagName('existe').item(0).firstChild.data;
+ respuesta = req.responseXML; 
+ var existe = respuesta.getElementsByTagName('existe').item(0).firstChild.data; 
    if (existe=="true")
    { 
     document.getElementById("botonAgregar").style.visibility = "hidden";
@@ -84,9 +84,8 @@ function autenticaClienteCUIT()
 
 function VerificarProveedor(){
     
- usuario = document.getElementById("prv_id").value;
+ usuario = document.getElementById("prv_idEdit").value;
  url = "esProveedorSinAsignar.php?usuario=" + usuario;
-
  document.getElementById("provedor_id").value = usuario;
  leer_doc(url);
 }

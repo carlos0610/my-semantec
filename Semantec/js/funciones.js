@@ -514,14 +514,68 @@ function actualizarListadoAbono(id){
 function validarFacturacion(costo,venta,esAbono){
 
 //Constantes de estado
-var estado= document.getElementById("est_id").value;
+//var estado= document.getElementById("est_id").value;
 
 var estadoEnviadoProveedor = '2';     
 var estadoConfirmarProveedor = '9'; // verificar
 var estadoAprobadoBajoCosto = '3';
-var estadoFinalizadoPendienteFacturacion = '11';
+var estadoFinalizadoPendienteFacturacion = '11';  
+var nombre='altaordenDetalle';
+var estado= document.forms[nombre].est_id.value;
 
-if((document.getElementById("est_id").value == 11)&(costo==0)&(venta==0))
+  
+
+if((estado == 11)&(costo==0)&(venta==0))
+    {
+              
+        if(esAbono!=1){ // si Abono no va a ocultar el boton guardar 
+        document.getElementById("error").style.visibility = "visible"; 
+        document.getElementById("guardarDetalle").style.visibility = "hidden";
+        }
+    }
+    else
+        {
+           document.getElementById("error").style.visibility = "hidden"; 
+           document.getElementById("guardarDetalle").style.visibility = "visible";
+        }
+          
+ switch (estado)
+{
+  case estadoEnviadoProveedor:  {   
+            document.forms[nombre].fecha_detalle.style.visibility = "visible";
+            document.forms[nombre].fecha_detalle.disabled = false;
+            document.getElementById("texto_respuesta_detalle").style.visibility = "visible";
+            document.getElementById("texto_respuesta_detalle").textContent = "Fecha respuesta proveedor";}
+            break;
+  case estadoConfirmarProveedor: {
+            document.forms[nombre].fecha_detalle.style.visibility = "visible";
+            document.forms[nombre].fecha_detalle.disabled = false;
+            document.getElementById("texto_respuesta_detalle").style.visibility = "visible";
+            document.getElementById("texto_respuesta_detalle").textContent = "Plazo de finalizacion";
+
+        }   
+            break;
+  case estadoAprobadoBajoCosto: {  
+            document.forms[nombre].fecha_detalle.style.visibility = "visible";
+            document.forms[nombre].fecha_detalle.disabled = false;
+            document.getElementById("texto_respuesta_detalle").style.visibility = "visible";
+            document.getElementById("texto_respuesta_detalle").textContent = "Fecha aprobado : "; 
+        }  
+            break;
+  case estadoFinalizadoPendienteFacturacion:{
+            document.forms[nombre].fecha_detalle.style.visibility = "visible";
+            document.forms[nombre].fecha_detalle.disabled = false;
+            document.getElementById("texto_respuesta_detalle").style.visibility = "visible";
+            document.getElementById("texto_respuesta_detalle").textContent = "Fecha Finalizado : ";
+        }
+            break;
+  default:  {
+            document.forms[nombre].fecha_detalle.style.visibility = "hidden";
+            document.forms[nombre].fecha_detalle.disabled = true;
+            document.getElementById("texto_respuesta_detalle").style.visibility = "hidden"; 
+        }   
+} 
+/*if((document.getElementById("est_id").value == 11)&(costo==0)&(venta==0))
     {
         
         if(esAbono!=1){ // si Abono no va a ocultar el boton guardar 
@@ -568,8 +622,8 @@ if((document.getElementById("est_id").value == 11)&(costo==0)&(venta==0))
             document.getElementById("fecha").style.visibility = "hidden";
             document.getElementById("fecha").disabled = true;
             document.getElementById("texto_respuesta").style.visibility = "hidden"; 
-        } 
-}
+        }   
+}  */
 
         
 }

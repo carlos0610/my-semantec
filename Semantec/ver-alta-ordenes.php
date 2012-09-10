@@ -76,7 +76,9 @@
         include("Modelo/modeloAbonosDetalle.php");
         include("Modelo/modeloHistorialAbonos.php");
         
-        $sql0 = "SELECT ord_codigo, ord_descripcion, cli_id, prv_id, est_id, ord_alta, ord_plazo, ord_costo, ord_venta,es_abono 
+        $sql0 = "SELECT ord_codigo, ord_descripcion, cli_id, prv_id,
+                        est_id, ord_alta, ord_plazo, ord_costo, ord_venta,es_abono,
+                        fecha_aprobado_bajocosto, fecha_pendiente_facturacion
                   FROM ordenes WHERE ord_id = $ord_id";
         $resultado0 = mysql_query($sql0);
         $fila0 = mysql_fetch_array($resultado0);  // datos de la orden
@@ -167,7 +169,7 @@
                     <img src="images/home.png"  alt="inicio" title="Volver al panel" width="32" height="32" border="none" />                </a>            </td>
           </tr>
           <tr>
-            <td width="137"><b>C&oacute;digo de Orden</b></td>
+            <td width="170"><b>C&oacute;digo de Orden</b></td>
             <td width="422"><big><b><?php echo($fila0["ord_codigo"]);?></b></big></td>
             <td rowspan="8" align="center"><br>
             </br></td>
@@ -193,10 +195,31 @@
           </tr>
           <?php  if(($fila0["ord_plazo"] != "") and($fila0["ord_plazo"] != "0000-00-00 00:00:00")){?>
           <tr>
-            <td>Plazo de Finalización</td>
+            <td>Plazo de finalización</td>
             <td><?php echo(tfecha($fila0["ord_plazo"]));?>            </td>
           </tr>
           <?php } ?> 
+          
+          <?php  if(($fila0["fecha_aprobado_bajocosto"] != "") 
+                  and($fila0["fecha_aprobado_bajocosto"] != "0000-00-00 00:00:00")
+                  ){?>
+          <tr>
+            <td>Fecha aprobado bajo costo</td>
+            <td><?php echo(tfecha($fila0["fecha_aprobado_bajocosto"]));?>            </td>
+          </tr>
+          <?php } ?> 
+          
+          
+          <?php  if(($fila0["fecha_pendiente_facturacion"] != "") 
+                  and($fila0["fecha_pendiente_facturacion"] != "0000-00-00 00:00:00")
+                  and ($est_id < 12)){?>
+          <tr>
+            <td>Fecha pendiente facturación</td>
+            <td><?php echo(tfecha($fila0["fecha_pendiente_facturacion"]));?> </td>
+          </tr>
+          <?php } ?> 
+          
+          
           <tr>
             <td>Abono</td>
             <td><?php   
@@ -275,7 +298,7 @@
                    <input type="button" value="Agregar otra orden" class="botones" />
                 </a>
                 <span  <?php if(($origen=='listadoOrdenes3')or($origen=='listadoOrdenesDirecto3')){echo ("  style='visibility:hidden'");}?>>         
-                   <a href="form-edit-ordenes.php?ord_id=<?php echo($ord_id)?>&action=2&est_id=<?php  echo $estado_id; ?>&prv_id=<?php echo $proveedorFiltro ?>">
+                   <a href="form-edit-ordenes-unificado.php?ord_id=<?php echo($ord_id)?>&action=2&est_id=<?php  echo $estado_id; ?>&prv_id=<?php echo $proveedorFiltro ?>">
                        <input type="button" value="Modificar datos" class="botones" />                           
                    </a>
                 </span>
@@ -287,7 +310,7 @@
                       <input type="button" value="Agregar otra orden" class="botones" />
                      </a>
                      
-                   <a href="form-edit-ordenes.php?ord_id=<?php echo($ord_id)?>&action=2&est_id=<?php  echo $estado_id; ?>&prv_id=<?php echo $proveedorFiltro ?>&origen=altaOrden">
+                   <a href="form-edit-ordenes-unificado.php?ord_id=<?php echo($ord_id)?>&action=2&est_id=<?php  echo $estado_id; ?>&prv_id=<?php echo $proveedorFiltro ?>&origen=altaOrden">
                        <input type="button" value="Modificar datos" class="botones" />                           
                    </a>
                      <?php }else{ ?>
