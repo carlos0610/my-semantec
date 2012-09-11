@@ -66,6 +66,10 @@
       <a href="lista-cuentasbanco.php">
       <input type="button" value="Cuenta Banco" class="botones" />
       </a>
+      
+      <a href="lista-usuarios-portal.php">
+      <input type="button" value="Usuarios del portal" class="botones" />
+      </a>
       </div>
       <div class="clear"></div>
 

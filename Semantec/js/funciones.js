@@ -45,6 +45,16 @@ function eliminarUsuario(id,nombre){
 }
 
 
+function eliminarUsuarioPortal(id,nombre){
+    if(confirm('¿Confirma eliminar usuario: '+nombre+' ?')==true)
+    {
+        window.location="delete-usuarios-portal.php?usu_id="+id;       
+       
+    }
+      
+}
+
+
 
 
 function eliminarProveedor(id,nombre){

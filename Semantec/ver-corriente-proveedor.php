@@ -458,7 +458,7 @@
                 </td>               
                 <td>
                     <?php // SALDO
-                          $saldoValor=$fila["saldo_a"]+$abonoValor; 
+                          $saldoValor=$fila["saldo_a"];
                           $totalSaldoValor+=$saldoValor;
                           echo number_format($saldoValor, 2, '.', ' '); ?>
                 </td>
