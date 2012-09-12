@@ -234,7 +234,9 @@
           <?php if ($fila0["est_id"] ==  2){ ?>  
           <tr>
               <td><label id="texto_respuesta"><?php echo "Fecha respuesta proveedor" ?></label></td>
-              <td><input type="text" class="campos" id="fecha" name="fecha" value="<?php echo tfecha($fila0["ord_plazo_proveedor"])?>"/></td>
+              <td>
+                  <input type="text" class="campos" id="fecha" name="fecha" value="<?php echo tfecha($fila0["ord_plazo_proveedor"])?>"/>
+              </td>
             <td></td>
           </tr>
           
@@ -242,25 +244,33 @@
           
           <tr>
               <td><label id="texto_respuesta"><?php echo "Plazo de finalización" ?></label></td>
-            <td><input type="text" class="campos" id="fecha" name="fecha" value="<?php echo tfecha($fila0["ord_plazo"])?>"/></td>
+            <td>
+                <input type="text" class="campos" id="fecha" name="fecha" value="<?php echo tfecha($fila0["ord_plazo"])?>"/>
+            </td>
             <td></td>
           </tr>
           <?php } ?>
           
           
-        <?php if ($fila0["est_id"] ==  3){ ?>  
+        <?php if ($fila0["est_id"] ==  3){ /*   */ ?>  
           <tr>
-              <td><label id="texto_respuesta"><?php echo "Fecha aprobado : " ?></label></td>
-              <td><input type="text" class="campos" id="fecha" name="fecha" value="<?php echo tfecha($fila0["fecha_aprobado_bajocosto"])?>"/></td>
+              <td><label id="texto_respuesta"><?php echo "Fecha aprobado  " ?></label></td>
+              <td>
+                  <input type="hidden" class="campos" id="fecha" name="fecha" value="<?php echo tfecha($fila0["fecha_aprobado_bajocosto"])?>"/> 
+                 <?php echo tfecha($fila0["fecha_aprobado_bajocosto"])?>
+              </td>
             <td></td>
           </tr>
           
           <?php  } ?>
           
-         <?php if ($fila0["est_id"] ==  11){ ?>  
+         <?php if ($fila0["est_id"] ==  11){/*   */ ?>  
           <tr>
-              <td><label id="texto_respuesta"><?php echo "Fecha Finalizado : " ?></label></td>
-              <td><input type="text" class="campos" id="fecha" name="fecha" value="<?php echo tfecha($fila0["fecha_pendiente_facturacion"])?>"/></td>
+              <td><label id="texto_respuesta"><?php echo "Fecha Finalizado  " ?></label></td>
+              <td>
+                  <input type="hidden" class="campos" id="fecha" name="fecha" value="<?php echo tfecha($fila0["fecha_pendiente_facturacion"])?>"/>
+                  <?php echo tfecha($fila0["fecha_pendiente_facturacion"])?>
+              </td>
             <td></td>
           </tr>
           
@@ -340,7 +350,7 @@
          </td>
           </tr>
           <tr>
-            <td>Descripci&oacute;n de actualización</td>
+            <td width="160">Descripci&oacute;n de actualización</td>
             <td>
                 <textarea class="campos" id="ord_descripcion" name="ord_descripcion" rows="9"></textarea><br>
                 <input type="checkbox" name="checkPortadaDescripcion" id="checkPortadaDescripcion" value="1" >Publicar descripcion en portal 

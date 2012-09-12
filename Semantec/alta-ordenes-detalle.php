@@ -10,7 +10,10 @@
         $est_id = $_POST["est_id"];
         $estado_id_filtro = $_GET["estado_id_filtro"];
         $prov_filtro = $_GET["prov_filtro"];
-        $fecha =  gfecha($_POST["fecha_detalle"]);
+        // fecha de algunos estados los formatea
+        $fecha .=  gfechaBD($_POST["fecha_detalle"]);
+        if($fecha == "'--'")
+             $fecha=" NOW() ";
         $usu_nombre = $_SESSION["usu_nombre"];
         $idFile = -1;
         $checkPortada= $_POST["checkPortada"];
@@ -80,7 +83,7 @@
                                                         ('$ord_descripcion',
                                                         $ord_det_monto,
                                                         $ord_id,
-                                                        NOW(),
+                                                        $fecha,
                                                         '$usu_nombre',
                                                         1,
                                                         '$est_nombre',
@@ -96,7 +99,7 @@
                                                         '$ord_descripcion',
                                                         $ord_det_monto,
                                                         $ord_id,
-                                                        NOW(),
+                                                        $fecha,
                                                         '$usu_nombre',
                                                         1,
                                                         '$est_nombre',
@@ -105,7 +108,7 @@
         
                                                 }
        // echo $sql2;
-        $result=mysql_query($sql2);
+        $result=mysql_query($sql2); echo $sql2;
         if(!$result)
                      $error=1;
         
@@ -123,13 +126,13 @@
         echo 'aca:',$est_id;
         switch ($est_id) {
     case 2://estadoEnviadoProveedor
-    {$sql = "UPDATE ordenes SET ord_plazo_proveedor = '$fecha' where ord_id = $ord_id";$result=mysql_query($sql);echo $sql; break;}
+    {$sql = "UPDATE ordenes SET ord_plazo_proveedor = $fecha where ord_id = $ord_id";$result=mysql_query($sql);echo $sql; break;}
     case 9://estadoConfirmarProveedor
-    { $sql = "UPDATE ordenes SET ord_plazo = '$fecha' where ord_id = $ord_id"; $result=mysql_query($sql);echo $sql; break;}
+    { $sql = "UPDATE ordenes SET ord_plazo = $fecha where ord_id = $ord_id"; $result=mysql_query($sql);echo $sql; break;}
     case 11://estadoFinalizadoPendienteFacturacion
-    {$sql = "UPDATE ordenes SET fecha_pendiente_facturacion = '$fecha' where ord_id = $ord_id"; $result=mysql_query($sql); echo $sql;break;}
+    {$sql = "UPDATE ordenes SET fecha_pendiente_facturacion = $fecha where ord_id = $ord_id"; $result=mysql_query($sql); echo $sql;break;}
     case 3://estadoAprobadoBajoCosto
-    { $sql = "UPDATE ordenes SET fecha_aprobado_bajocosto = '$fecha' where ord_id = $ord_id"; $result=mysql_query($sql);echo $sql;break;}
+    { $sql = "UPDATE ordenes SET fecha_aprobado_bajocosto = $fecha where ord_id = $ord_id"; $result=mysql_query($sql);echo $sql;break;}
 }
         
         
@@ -152,7 +155,7 @@
                         mysql_query("COMMIT");
                          mysql_close();
                         echo "Transacción exitosa"; echo $estado_id=$_SESSION['est_id'];
-                              header("location:ver-alta-ordenes.php?action=2&est_id=$estado_id_filtro&prv_id=$prov_filtro"); 
+                          header("location:ver-alta-ordenes.php?action=2&est_id=$estado_id_filtro&prv_id=$prov_filtro"); 
                         }
 
 

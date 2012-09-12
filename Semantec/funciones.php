@@ -31,5 +31,10 @@
                         printf("%08d<br>",  $c);
                 } 
                 
+                function gfechaBD($fecha){
+			//04/04/2012-> 2012-04-04 con los '' para la BD
+			$salida ="'".substr($fecha, -4)."-".substr($fecha, 3, 2)."-".substr($fecha, 0,2)."'";
+			return $salida;
+		}
                 
 ?>
