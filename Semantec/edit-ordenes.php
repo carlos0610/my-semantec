@@ -5,10 +5,10 @@
         $ord_id = $_POST["ord_id"];   
         $ord_codigo = $_POST["ord_codigo"];
         $ord_descripcion = utf8_decode($_POST["ord_descripcion"]); 
-       // $cli_id = $_POST["suc_id"];
+        $rub_id = $_POST["rub_id"];
         $prv_id = $_POST["prv_idEdit"];  
         $est_id = $_POST["est_idEdit"];  
-        $ord_alta = date("Y-m-d");    // << -------
+        
         $fecha = gfecha($_POST["fecha"]); 
         $ord_costo = $_POST["ord_costo"];
         $ord_venta = $_POST["ord_venta"]; 
@@ -42,6 +42,7 @@
                                         cli_id=$cli_id,
         				prv_id = $prv_id,
         				est_id = $est_id,
+                                        rub_id = $rub_id,
                                       
                                         ";
                                         
