@@ -285,4 +285,18 @@ function rellenarDatosClienteSucursal(){
  }
 }
 
-
+function validarCamposRequeridos(){
+    
+    if(document.getElementById("cli_id").selectedIndex == 0){
+        alert("Seleccione un cliente");
+        return false;
+    }
+    
+    if(document.getElementById("suc_id").selectedIndex == 0){
+        alert("Seleccione una sucursal");
+        return false;
+    }
+    
+    return true;
+    
+}

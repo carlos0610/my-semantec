@@ -4,6 +4,7 @@
     $titulo = "Formulario de alta de una Orden de Servicio.";
         include("validar.php");
         include("conexion.php");
+        include("Modelo/modeloRubros.php");
         $sql = "SELECT sucursal_id,sucursal,cli_id,cli_nombre,p.nombre as provincia 
            FROM clientes,ubicacion u,provincias p, partidos pa,localidades l
            WHERE 
@@ -24,6 +25,9 @@
         $resultado3 = mysql_query($sql);
         $fila3 = mysql_fetch_array($resultado3);
         // ---
+        
+        /*LISTADO DE  RUBROS*/
+        $rubros = getRubrosAll();
 
 ?>
 <!doctype html>
@@ -85,23 +89,34 @@
             <td colspan="2"> <?php echo($titulo)?> </td>
             <td width="32">
                 <a href="index-admin.php">
-                    <img src="images/home.png"  alt="inicio" title="Volver al panel" width="32" height="32" border="none" />
-                </a>
-            </td>
+                    <img src="images/home.png"  alt="inicio" title="Volver al panel" width="32" height="32" border="none" />                </a>            </td>
           </tr>
           <tr>
             <td>C&oacute;digo de Orden</td>
             <td><input type="text"  style="text-align:right" class="campos" id="ord_codigo" name="ord_codigo" onChange="autentica()" required />
-                <span id="error" style="font-family: Verdana, Arial, Helvetica,sans-serif;font-size: 9pt;color: #CC3300;position:relative;visibility:hidden;">Orden existente</span>
-            </td>
+                <span id="error" style="font-family: Verdana, Arial, Helvetica,sans-serif;font-size: 9pt;color: #CC3300;position:relative;visibility:hidden;">Orden existente</span>            </td>
             <td></td>
           </tr>
           <tr>
             <td>Descripci&oacute;n de Orden</td>
             <td>
                 <textarea class="campos" id="ord_descripcion" name="ord_descripcion" rows="9" required ></textarea><br>
-                <input type="hidden" name="checkPortadaDescripcion" id="checkPortadaDescripcion" value="1" >
-            </td>
+                <input type="hidden" name="checkPortadaDescripcion" id="checkPortadaDescripcion" value="1" >            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Rubro</td>
+            <td><label>
+              <select name="rub_id" class="campos" id="rub_id">
+             <?php
+          while($fila = mysql_fetch_array($rubros)){
+    ?>
+                    <option value="<?php echo($fila["rub_id"]); ?>"><?php echo(utf8_encode($fila["rub_nombre"])); ?></option>
+    <?php
+          }
+    ?>     
+                                          </select>
+            </label></td>
             <td></td>
           </tr>
           <tr>
@@ -116,8 +131,7 @@
     <?php
           }
     ?>
-                </select>
-            </td>
+                </select>            </td>
             <td></td>
           </tr>
           
@@ -126,8 +140,7 @@
             <td>
                 <select name="suc_id" id="suc_id" class="campos" required >
                 <option value='0'>Seleccione</option>;    
-                </select>
-            </td>
+                </select>            </td>
             <td></td>
           </tr>
           <tr>
@@ -142,8 +155,7 @@
     <?php
           }
     ?>
-                </select>
-            </td>
+                </select>            </td>
             <td></td>
           </tr>
           <tr>
@@ -151,8 +163,7 @@
             <td>
                 <?php echo($fila3["est_nombre"]); ?>
                 <input type="hidden" value=" <?php echo($fila3["est_id"]); ?>" name="est_id"  id="est_id">
-                <input type="hidden" value=" <?php echo($fila3["est_nombre"]); ?>" name="est_nombre"  id="est_id">
-            </td>
+                <input type="hidden" value=" <?php echo($fila3["est_nombre"]); ?>" name="est_nombre"  id="est_id">            </td>
             <td></td>
           </tr>
           <tr><td>Fecha de alta</td>
@@ -162,8 +173,7 @@
           <tr><td>¿Es Abono?</td>
               <td>
                   <input type="checkbox" name="ord_checkAbono" id="ord_checkAbono" value="1" onChange="habilitarFecha('formArltaOrden')">
-                  <input type="text" name="ord_abono_fecha" id="ord_abono_fecha" class="campos2" size="10" disabled>
-              </td>
+                  <input type="text" name="ord_abono_fecha" id="ord_abono_fecha" class="campos2" size="10" disabled>              </td>
           </tr>
           <tr>
             <td>Valor Costo de la Orden</td>
@@ -185,15 +195,14 @@
             <td>&nbsp;</td>
             <td>
                 <input type="reset" value="Restablecer" class="botones" /> &nbsp; &nbsp; 
-                <input type="submit" value="Agregar Orden" class="botones" style="visibility:visible" id="botonAgregar" />
-            </td>
+                <input type="submit" value="Agregar Orden" class="botones" style="visibility:visible" id="botonAgregar" onclick="return validarCamposRequeridos()"/>            </td>
             <td></td>
           </tr>
           <tr>
             <td colspan="3" class="pie_lista">&nbsp;</td>
           </tr>
       </table> 
-      </form>  
+   </form>  
       
       <div class="clear"></div>
 

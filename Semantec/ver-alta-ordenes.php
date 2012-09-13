@@ -75,16 +75,18 @@
         include("conexion.php");
         include("Modelo/modeloAbonosDetalle.php");
         include("Modelo/modeloHistorialAbonos.php");
+        include("Modelo/modeloRubros.php");
         
         $sql0 = "SELECT ord_codigo, ord_descripcion, cli_id, prv_id,
                         est_id, ord_alta, ord_plazo, ord_costo, ord_venta,es_abono,
-                        fecha_aprobado_bajocosto, fecha_pendiente_facturacion
+                        fecha_aprobado_bajocosto, fecha_pendiente_facturacion,rub_id
                   FROM ordenes WHERE ord_id = $ord_id";
         $resultado0 = mysql_query($sql0);
         $fila0 = mysql_fetch_array($resultado0);  // datos de la orden
         $cli_idBusqueda = $fila0["cli_id"];
         $prv_id = $fila0["prv_id"];
         $est_id = $fila0["est_id"];
+        $rub_id = $fila0["rub_id"];
 
         $sql = "SELECT  cli_id, cli_nombre,sucursal FROM clientes WHERE cli_id = $cli_idBusqueda"; // datos de cliente
         $resultado1 = mysql_query($sql);
@@ -97,6 +99,13 @@
         $sql = "SELECT  est_id, est_nombre, est_color FROM estados WHERE est_id = $est_id"; //datos del estado
         $resultado3 = mysql_query($sql);
         $fila3 = mysql_fetch_array($resultado3);
+        
+        
+        //datos del rubro
+        
+        $rubros = getRubroNameById($rub_id);
+        $fila4 = mysql_fetch_array($rubros);
+        
         
         $pendienteFacturacion = 11;
         
@@ -171,12 +180,16 @@
           <tr>
             <td width="170"><b>C&oacute;digo de Orden</b></td>
             <td width="422"><big><b><?php echo($fila0["ord_codigo"]);?></b></big></td>
-            <td rowspan="8" align="center"><br>
+            <td rowspan="9" align="center"><br>
             </br></td>
           </tr>
           <tr>
             <td>Descripci&oacute;n de Orden</td>
             <td><?php echo(nl2br(utf8_encode($fila0["ord_descripcion"])));?></td>
+          </tr>
+          <tr>
+            <td>Rubro</td>
+            <td><?php echo(utf8_encode($fila4["rub_nombre"])); ?></td>
           </tr>
           <tr>
             <td>Cliente</td>
@@ -252,8 +265,7 @@
             </tr> 
             <tr>
             <td>Valor Costo Abono </td>
-            <td><?php echo($valor_costo_Abono) ;?>
-             </td>
+            <td><?php echo($valor_costo_Abono) ;?>             </td>
             </tr>   
             
             <tr>
@@ -268,8 +280,7 @@
             
           <tr>
             <td>Valor Venta Abono  </td>
-            <td><?php echo($valor_venta_Abono);?>
-            </td>
+            <td><?php echo($valor_venta_Abono);?>            </td>
           </tr>
           
                     <tr>
@@ -300,8 +311,7 @@
                 <span  <?php if(($origen=='listadoOrdenes3')or($origen=='listadoOrdenesDirecto3')){echo ("  style='visibility:hidden'");}?>>         
                    <a href="form-edit-ordenes-unificado.php?ord_id=<?php echo($ord_id)?>&action=2&est_id=<?php  echo $estado_id; ?>&prv_id=<?php echo $proveedorFiltro ?>">
                        <input type="button" value="Modificar datos" class="botones" />                           
-                   </a>
-                </span>
+                   </a>                </span>
           <?php }else {if($origenOtroForm=='altaOrden'){ ?>
                      <a href="lista-ordenes.php">
                         <input type="button" class="botones" value="Ir al Listado" />
@@ -314,10 +324,9 @@
                        <input type="button" value="Modificar datos" class="botones" />                           
                    </a>
                      <?php }else{ ?>
-                  <input type="button" class="botones" value="Volver" onclick="goBack()" />
+                  <input type="button" class="botones" value="Volver" onClick="goBack()" />
           <?php }
-          }?>            
-         </td>
+          }?>         </td>
             <td></td>
           </tr>          
           <tr>

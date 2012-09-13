@@ -7,6 +7,7 @@
         include("Modelo/modeloHistorialAbonos.php");
         include("Modelo/modeloClientes.php");
         include("Modelo/modeloEstados.php");
+        include("Modelo/modeloRubros.php");
         $ord_id = $_GET["ord_id"];
         $action = $_GET["action"];
         $pagina = $_GET["pagina"];
@@ -47,7 +48,7 @@
         }
         
         $sql0 = "SELECT ord_codigo, ord_descripcion, o.cli_id,c.cli_nombre,c.sucursal, 
-                prv_id, est_id, ord_alta, ord_plazo,ord_plazo_proveedor, ord_costo, ord_venta ,es_abono, fecha_aprobado_bajocosto,fecha_pendiente_facturacion
+                prv_id, est_id, ord_alta, ord_plazo,ord_plazo_proveedor, ord_costo, ord_venta ,es_abono, fecha_aprobado_bajocosto,fecha_pendiente_facturacion,rub_id
                     FROM ordenes o,clientes c 
                     WHERE ord_id = $ord_id
                     AND o.cli_id = c.cli_id";
@@ -79,6 +80,10 @@
         $resultado3 = getEstadosParaCombo();
         $ord_costo=$fila0['ord_costo'];
         $orden_venta=$fila0['ord_venta'];
+        
+        // Rubros
+        $rubros = getRubrosAll();
+        
 ?>
 <!doctype html>
 <html>  
@@ -100,7 +105,7 @@
   </script>    
   
   </head>
-  <body onload="validarFacturacion(<?php echo $ord_costo ?>,<?php echo $orden_venta ?>,<?php echo $fila0["es_abono"] ?>)">
+  <body onLoad="validarFacturacion(<?php echo $ord_costo ?>,<?php echo $orden_venta ?>,<?php echo $fila0["es_abono"] ?>)">
 	
   <!-- start main --><!-- start main --><!-- start main --><!-- start main --><!-- start main -->
   <div id="main">
@@ -145,8 +150,7 @@
           <tr>
             <td>C&oacute;digo de Orden</td>
             <td>
-             <big><?php echo($fila0["ord_codigo"]); ?> </big>          
-            </td>   
+             <big><?php echo($fila0["ord_codigo"]); ?> </big>            </td>   
             <td>            </td>
           </tr>
   
@@ -156,9 +160,7 @@
             <td><!--Guardo proveedor oculto y cambio de estado--> 
 
           <big> <?php echo(utf8_encode($fila4["est_nombre"])); ?> </big>
-                <input type="hidden" value="<?php echo($fila0["prv_id"]); ?>" name="provedor_id" id="provedor_id" />
-              
-                </td>
+                <input type="hidden" value="<?php echo($fila0["prv_id"]); ?>" name="provedor_id" id="provedor_id" />                </td>
             <td></td>
           </tr>
           
@@ -187,10 +189,24 @@
             <td></td>
           </tr>
           <tr>
+            <td>Rubro</td>
+            <td><label>
+              <select name="rub_id" class="campos" id="rub_id">
+              <?php
+          while($fila_rubros = mysql_fetch_array($rubros)){
+    ?>
+                    <option value="<?php echo($fila_rubros["rub_id"]); ?>"<?php if($fila_rubros["rub_id"]==$fila0["rub_id"]){echo(" selected=\"selected\"");} ?>><?php echo(utf8_encode($fila_rubros["rub_nombre"])); ?></option>
+    <?php
+          }
+    ?>    
+                  </select>
+            </label></td>
+            <td></td>
+          </tr>
+          <tr>
             <td>Cliente</td>
             <td>
-              <?php echo($fila0["cli_nombre"]); ?>(<?php echo($fila0["sucursal"]); ?>)             
-            </td>
+              <?php echo($fila0["cli_nombre"]); ?>(<?php echo($fila0["sucursal"]); ?>)            </td>
             <td></td>
           </tr>
           
@@ -210,8 +226,7 @@
     <?php
           }
     ?>
-                </select>
-            </td>
+                </select>            </td>
             <td></td>
           </tr>
         <?php }else{?><input type="hidden"  id="cli_idSucur" name="cli_idSucur" value="<?php echo $fila0["cli_id"]?>"/>     
@@ -235,8 +250,7 @@
           <tr>
               <td><label id="texto_respuesta"><?php echo "Fecha respuesta proveedor" ?></label></td>
               <td>
-                  <input type="text" class="campos" id="fecha" name="fecha" value="<?php echo tfecha($fila0["ord_plazo_proveedor"])?>"/>
-              </td>
+                  <input type="text" class="campos" id="fecha" name="fecha" value="<?php echo tfecha($fila0["ord_plazo_proveedor"])?>"/>              </td>
             <td></td>
           </tr>
           
@@ -245,8 +259,7 @@
           <tr>
               <td><label id="texto_respuesta"><?php echo "Plazo de finalización" ?></label></td>
             <td>
-                <input type="text" class="campos" id="fecha" name="fecha" value="<?php echo tfecha($fila0["ord_plazo"])?>"/>
-            </td>
+                <input type="text" class="campos" id="fecha" name="fecha" value="<?php echo tfecha($fila0["ord_plazo"])?>"/>            </td>
             <td></td>
           </tr>
           <?php } ?>
@@ -257,8 +270,7 @@
               <td><label id="texto_respuesta"><?php echo "Fecha aprobado  " ?></label></td>
               <td>
                   <input type="hidden" class="campos" id="fecha" name="fecha" value="<?php echo tfecha($fila0["fecha_aprobado_bajocosto"])?>"/> 
-                 <?php echo tfecha($fila0["fecha_aprobado_bajocosto"])?>
-              </td>
+                 <?php echo tfecha($fila0["fecha_aprobado_bajocosto"])?>              </td>
             <td></td>
           </tr>
           
@@ -269,8 +281,7 @@
               <td><label id="texto_respuesta"><?php echo "Fecha Finalizado  " ?></label></td>
               <td>
                   <input type="hidden" class="campos" id="fecha" name="fecha" value="<?php echo tfecha($fila0["fecha_pendiente_facturacion"])?>"/>
-                  <?php echo tfecha($fila0["fecha_pendiente_facturacion"])?>
-              </td>
+                  <?php echo tfecha($fila0["fecha_pendiente_facturacion"])?>              </td>
             <td></td>
           </tr>
           
@@ -281,8 +292,7 @@
                   <input type="checkbox" name="ord_checkAbono" id="ord_checkAbono" <?php if($fila0["es_abono"]==1) echo 'checked Disabled'  ?>  value="1" onChange="habilitarFecha('frm')">
                   <?php if($fila0["es_abono"]>1) echo '<b><font color="#FF0000">*</font></b>' ?> 
                   
-                  <input type="text" name="ord_abono_fecha" id="ord_abono_fecha" class="campos2" Disabled size="10" <?php if($fila0["es_abono"]==1){ echo " value=",mfecha((getHistorialAbonos_FechaRegistroWithOrdenId($ord_id)));} ?>>
-              </td>
+                  <input type="text" name="ord_abono_fecha" id="ord_abono_fecha" class="campos2" Disabled size="10" <?php if($fila0["es_abono"]==1){ echo " value=",mfecha((getHistorialAbonos_FechaRegistroWithOrdenId($ord_id)));} ?>>              </td>
           </tr>
            <tr>
             <td>Valor Costo de la Orden</td>

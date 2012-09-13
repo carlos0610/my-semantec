@@ -10,6 +10,7 @@
         $cli_id = $_POST["suc_id"]; 
         $prv_id = $_POST["prv_id"];
         $est_id = $_POST["est_id"];
+        $rub_id = $_POST["rub_id"];
         //$ord_alta = date("Y-m-d");
         $ord_alta = $_POST["ord_alta"];
         $ord_alta = gfecha($ord_alta);
@@ -62,7 +63,7 @@
                                                         } /*FIN DE ADJUNTAR ARCHIVO PARA DETALLE*/
                                                         
         /*INSERTAMOS ORDEN*/
-        $sql = "INSERT INTO ordenes (usu_id,ord_codigo,ord_descripcion,cli_id,prv_id,est_id,ord_alta,ord_costo,ord_venta,estado) VALUES (
+        $sql = "INSERT INTO ordenes (usu_id,ord_codigo,ord_descripcion,cli_id,prv_id,est_id,ord_alta,ord_costo,ord_venta,estado,rub_id) VALUES (
         							
                                                                  $usu_id,
 								 '$ord_codigo',
@@ -73,7 +74,8 @@
         							 '$ord_alta',
         							 $ord_costo,
                                                                  $ord_venta,
-                                                                 1
+                                                                 1,
+                                                                 $rub_id
                                                                  
         				    )";
 	$result=mysql_query($sql);//alta de la orden
