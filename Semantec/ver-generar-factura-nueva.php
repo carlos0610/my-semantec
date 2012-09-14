@@ -65,13 +65,23 @@
   <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
   <script type="text/javascript" src="js/jquery.datepick.js"></script>
   <script type="text/javascript" src="js/jquery.datepick-es.js"></script>
+  <script src="js/jquery.uitablefilter.js" type="text/javascript"></script>
   <script type="text/javascript">
-  $(function() {
+  $(function cargarFecha() {
       $('#vencimiento').datepick();
       $('#fechaalta').datepick();
   });
-  </script></head>
-  <body>
+  </script>
+  <script language="javascript">
+		$(function() {
+		  theTable = $("#dataTableOrdenes");
+		  $("#q").keyup(function() { 
+			$.uiTableFilter(theTable, this.value);
+		  });
+		});
+  </script>
+  </head>
+  <body onload="cargarFecha()">
 	
   <!-- start main --><!-- start main --><!-- start main --><!-- start main --><!-- start main -->
   <div id="main">
@@ -149,7 +159,7 @@
                 ?>
                </select>
                 <label id="nombre" style="visibility:hidden"> </label>
-                Fecha:<input name="fechaalta" type="text" id="fechaalta" value="<?php echo ($_GET["fechaalta"])?>" required>
+                Fecha:<input name="fechaalta" type="text" id="fechaalta" value="<?php echo ($_GET["fechaalta"])?>" class="campos2" required>
             </td>
        </tr>
           <tr>
@@ -167,11 +177,11 @@
           <tr>
             <td class="titulo">Condiciones de venta:</td>
             <td style="background-color:#cbeef5">
-                <input name="condicion_venta" type="text" id="condicion_venta" size="25" required value="<?php echo $condicionventa; ?>">
+                <input name="condicion_venta" type="text" id="condicion_venta" size="25" class="campos" required value="<?php echo $condicionventa; ?>">
             </td>
             <td class="titulo">Remito:</td>
             <td style="background-color:#cbeef5">
-                <input name="txtRemito"      type="number" id="txtRemito" size="12" required value="<?php echo $remito ?>">
+                <input name="txtRemito" class="campos2"     type="number" id="txtRemito" size="12" required value="<?php echo $remito ?>">
             </td>
           </tr>
           <tr>
@@ -185,7 +195,13 @@
         <?php if($cantOrdenes!=0){ ?> 
            <!-- Muestro tabla de ordenes a seleccionar -->  
            <?php if($ocultar=="si"){ ?> 
-                <table width="100%" border="0" id="dataTableOrdenes">  
+           
+               <div id="busqueda"  >
+			<h4>Buscador : <input type="text" id="q" name="q" value="" /></h4>
+		</div><br>
+           
+           
+                <table width="100%" border="0" id="dataTableOrdenes" class="sortable">  
                       <tr>
                              <td width="5%" class="titulo"><div align="center">Selección</div></td>
                              <td width="10%" class="titulo"><div align="center">Código</div></td>
