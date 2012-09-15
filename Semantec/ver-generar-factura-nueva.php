@@ -197,9 +197,10 @@
            <?php if($ocultar=="si"){ ?> 
            
                <div id="busqueda"  >
-			<h4>Buscador : <input type="text" id="q" name="q" value="" /></h4>
-		</div><br>
-           
+			<h4>Buscador : <input type="text" id="q" name="q" value="" />&nbsp;&nbsp; &nbsp; 
+                        <input type="checkbox" value="" id="checkbox_SelectAll" onClick="CheckboxsSeleccionarTodosFacturaVenta(<?php echo $cantOrdenes ?>)" >SELECCIONAR TODO</h4> 
+		</div>
+                
            
                 <table width="100%" border="0" id="dataTableOrdenes" class="sortable">  
                       <tr>

@@ -767,6 +767,17 @@ function CheckboxsSeleccionarTodos(cantTotalCheckboxs){
            eval("document.formSelectSucursales.checkbox_sucursal_id"+i+".checked="+resultado);
         }
     }
+    
+function CheckboxsSeleccionarTodosFacturaVenta(cantTotalCheckboxs){
+    elementoOrden=0; 
+    resultado=eval("document.frmGenerarFactura.checkbox_SelectAll.checked");
+    i=0;
+    while (i<cantTotalCheckboxs)
+        {
+            i++;       
+           eval("document.frmGenerarFactura.checkbox_ord_id"+i+".checked="+resultado);
+        }
+    }
 
 function verificarCheckboxsFacturaCompra(cantTotalCheckboxs,id){
     i=0;
