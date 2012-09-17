@@ -6,19 +6,18 @@
     include ("Modelo/modeloOrdenes.php");
     include ("Modelo/modeloAbonoDeOrden.php");
     
-    $cantidadCheckboxs = $_POST["cantidadOrdenesAceptadas"];
+    $cantidadCheckboxs = $_POST["cantidadOrdenesAceptadas"]; echo $cantidadCheckboxs;
     $items   = $_GET["items"];
     $nota    = $_POST["txtNota"];
     $iva     = $_POST["comboIva"];   
-    $Remito= $_POST["txtRemito"]; 
+    $Remito= $_POST["txtRemitoOculto"]; 
     $usu_id     = $_SESSION["usu_nombre"];
     $vencimiento = gfecha($_POST["vencimiento"]);
-    $condicion_venta= $_POST["condicion_venta"];
+    $condicion_venta= $_POST["condicion_ventaOculto"];
     $codFactura="0001-";
-    $codFactura.= trim($_POST["codFactura"]); 
+    $codFactura.= trim($_POST["cod_facturaOculto"]); 
     
-    $fav_fecha = gfecha($_POST["fechaalta"]);// MOMENTANEO 
-    
+    $fav_fecha = gfecha($_POST["fechaaltaOculto"]);// MOMENTANEO 
         $error = 0; //variable para detectar error
         mysql_query("BEGIN"); // Inicio de Transacción
     
@@ -61,7 +60,7 @@
 
         while($i<$cantidadCheckboxs)
         {
-            $i++;
+            $i++; echo $_POST["ordenCheck$i"];
             
             $ord_id=$_POST["ordenCheck$i"];
             //guardo el valor del abono actual

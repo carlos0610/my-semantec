@@ -130,18 +130,9 @@
 
    
    </div>
- <form name="frmGenerarFactura" method="post" enctype="multipart/form-data" action="alta-factura-nueva.php?items=<?php echo $totalDescripcion ?>" >
+
     <div id="contenedor2" style="height:auto;">  
         
-        
-        <?php // CARGO LAS ORDENES CHECADAS DE FORMA OCULTA
-        $i=0;
-        while ($i <$cantOrdenesChecadas)
-        { $i++;  ?>
-           <input type="hidden" name="ordenCheck<?php echo $i; ?>"  id="ordenCheck<?php echo $i; ?>" value="<?php echo ($_GET["ord_check$i"]); ?>" >               
-        <?php      
-        }       
-        ?>
         
         
     <table width="100%" border="0" id="dataTable">      
@@ -185,7 +176,7 @@
             </td>
           </tr>
           <tr>
-            <td><input type="hidden"  name="cantidadOrdenesAceptadas" id="cantidadOrdenesAceptadas" value="<?php echo $cantOrdenesChecadas; ?>"></td>
+            <td></td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
@@ -194,15 +185,16 @@
         <!-- Si el Cliente no tiene ordenes muestra  mensaje --> 
         <?php if($cantOrdenes!=0){ ?> 
            <!-- Muestro tabla de ordenes a seleccionar -->  
-           <?php if($ocultar=="si"){ ?> 
+           <?php if($ocultar=="si"){      ?> 
            
                <div id="busqueda"  >
 			<h4>Buscador : <input type="text" id="q" name="q" value="" />&nbsp;&nbsp; &nbsp; 
                         <input type="checkbox" value="" id="checkbox_SelectAll" onClick="CheckboxsSeleccionarTodosFacturaVenta(<?php echo $cantOrdenes ?>)" >SELECCIONAR TODO</h4> 
 		</div>
                 
-           
-                <table width="100%" border="0" id="dataTableOrdenes" class="sortable">  
+               <form name="formferificadorOrdenes" id="formferificadorOrdenes" method="post" enctype="multipart/form-data" action="verificador-generar-factura-nueva.php?cant=<?php echo $cantOrdenes; ?>&cli_id=<?php echo $cli_id; ?>" >
+               
+                   <table width="100%" border="0" id="dataTableOrdenes" class="sortable">  
                       <tr>
                              <td width="5%" class="titulo"><div align="center">Selección</div></td>
                              <td width="10%" class="titulo"><div align="center">Código</div></td>
@@ -240,20 +232,21 @@
                    <?php
                }
                ?>
-            </table>  
+               </table>  
+              </form>
            <!-- FIN de Muestro tabla de ordenes a seleccionar --> 
             <?php }else{ ?>
            
            <!-- Muestro ORdenes seleccionas --> 
            
-               Codigos de Órdenes Seleccionados :   
+               Codigos de Órdenes Seleccionados :    <? echo $cantOrdenesChecadas ?>
         <table border="0">
         <?php
         $i=0;
         $totalOrdenVenta=0;
         while ($i <$cantOrdenesChecadas)
         { $i++;    $usu_nombre = $_SESSION["usu_nombre"]; 
-                $unord_ID=$_GET["ord_check$i"];
+                $unord_ID=$_POST["o$i"];  
                 $sql5="SELECT `gru_id`,`ord_codigo`,`ord_descripcion`,`prv_id`,`est_id` ,ord_id ,ord_venta,es_abono,cli_id
               FROM `ordenes` 
               WHERE `ord_id` =$unord_ID
@@ -299,11 +292,28 @@
       
       <?php if($ocultar=="si"){ ?> 
       
-      <input type="button" name="btnConfirmarCheckboxs" id="btnConfirmarCheckboxs" style="visibility:visible" class="botones" value="Confirmar" onClick="verificarCheckboxs(<?php echo $i; ?>,<?php echo $cli_id; ?>);">  
+      <input type="button" name="btnConfirmarCheckboxs" id="btnConfirmarCheckboxs" style="visibility:visible" class="botones" value="Confirmar" onClick="verificarCheckboxsNuevo(<?php echo $i; ?>,<?php echo $cli_id; ?>);">  
       <?php } ?>
   <?php }else{ ?> <b>*No Posee Órdenes Pendientes a Facturar </b> <?php } ?>
       <!-- DESCRIPCION DE FACTURA  -->
  <?php if($ocultar=="no"){  // TOTAL de ORDENES?>  
+<form name="frmGenerarFactura" method="post" enctype="multipart/form-data" action="alta-factura-nueva.php?items=<?php echo $totalDescripcion ?>" >
+      
+      <input name="fechaaltaOculto" type="hidden" id="fechaaltaOculto" >
+      <input name="cod_facturaOculto" type="hidden" id="cod_facturaOculto" >
+      <input name="condicion_ventaOculto" type="hidden" id="condicion_ventaOculto" >
+      <input name="txtRemitoOculto" type="hidden" id="txtRemitoOculto" >
+      <input type="hidden"  name="cantidadOrdenesAceptadas" id="cantidadOrdenesAceptadas" value="<?php echo $cantOrdenesChecadas; ?>">
+      <?php // CARGO LAS ORDENES CHECADAS DE FORMA OCULTA
+        $i=0;
+        while ($i <$cantOrdenesChecadas)
+        { $i++;  ?>
+           <input type="hidden" name="ordenCheck<?php echo $i; ?>"  id="ordenCheck<?php echo $i; ?>" value="<?php echo ($_POST["o$i"]); ?>" >               
+        <?php      
+        }       
+        ?>
+      
+      
       <div id="totalLabel">Total : $<?php echo $totalOrdenVenta; ?></div> 
       <div id="restaLabel">Resta: $<?php echo $totalOrdenVenta; ?></div> 
       

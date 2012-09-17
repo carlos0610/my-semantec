@@ -700,7 +700,7 @@ function verificarCheckboxs(cantTotalCheckboxs,id){
             if(eval("document.frmGenerarFactura.checkbox_ord_id"+i+".checked"))
                 {
                    elementoOrden++; 
-                   url+="&ord_check"+elementoOrden+"="+eval("document.frmGenerarFactura.checkbox_ord_id"+i+".value"); 
+                   url+="&o"+elementoOrden+"="+eval("document.frmGenerarFactura.checkbox_ord_id"+i+".value"); 
                 } 
                 else
                     {
@@ -709,6 +709,48 @@ function verificarCheckboxs(cantTotalCheckboxs,id){
         }
         url+="&cant="+elementoOrden+"&condicionventa="+condicionveanta+"&remito="+remito+"&ocultar=no";      
    window.location=url;  
+    }
+    else
+        {
+            alert("debe seleccionar una orden");
+        }
+}
+
+// verificarCheckBoxs del nuevo POST
+function verificarCheckboxsNuevo(cantTotalCheckboxs,id){
+    i=0;
+    //borrar si se saca fecha y codigo de factura
+    cod_factura=document.getElementById("cod_factura").value;
+    fechaalta=document.getElementById("fechaalta").value;
+    //
+    continua=false;
+    elementoOrden=0;
+    condicionveanta=document.getElementById("condicion_venta").value;
+    remito=document.getElementById("txtRemito").value;
+        while (i<cantTotalCheckboxs)
+        {
+            i++;
+            if(eval("document.formferificadorOrdenes.checkbox_ord_id"+i+".checked"))
+                {
+                   continua=true;
+                } 
+        }
+    if(continua){
+    i=0;
+    while (i<cantTotalCheckboxs)
+        {
+            i++;       
+            if(eval("document.formferificadorOrdenes.checkbox_ord_id"+i+".checked"))
+                {
+                   elementoOrden++; 
+                } 
+                else
+                    {
+                        eval("document.formferificadorOrdenes.checkbox_ord_id"+i+".style.visibility = 'hidden'")
+                    }
+        }       
+        document.getElementById("formferificadorOrdenes").action="verificador-generar-factura-nueva.php?cli_id="+id+"&cod_factura="+cod_factura+"&fechaalta="+fechaalta+"&cant="+elementoOrden+"&cantTotal="+cantTotalCheckboxs+"&condicionventa="+condicionveanta+"&remito="+remito+"&ocultar=no";
+       document.getElementById("formferificadorOrdenes").submit();
     }
     else
         {
@@ -769,13 +811,13 @@ function CheckboxsSeleccionarTodos(cantTotalCheckboxs){
     }
     
 function CheckboxsSeleccionarTodosFacturaVenta(cantTotalCheckboxs){
-    elementoOrden=0; 
-    resultado=eval("document.frmGenerarFactura.checkbox_SelectAll.checked");
+    elementoOrden=0;  
+    resultado=document.getElementById('checkbox_SelectAll').checked; 
     i=0;
     while (i<cantTotalCheckboxs)
         {
-            i++;       
-           eval("document.frmGenerarFactura.checkbox_ord_id"+i+".checked="+resultado);
+            i++;      
+           eval("document.formferificadorOrdenes.checkbox_ord_id"+i+".checked="+resultado); 
         }
     }
 
@@ -885,7 +927,37 @@ function pasaSiguiente(actual, siguiente, longitud)
   // Confirmacion de factura nueva
 function PedirConfirmacionFacturaVenta(nombre,frm){
     // BORRRAR CUANDO SE QUITE LO DE FECHAS SINO LAS PERAS
-    document.getElementById('codFactura').value=document.getElementById('cod_factura').value;
+    codigofac=document.getElementById('cod_factura').value;
+    fechaalta=document.getElementById('fechaalta').value;
+    otrocodigo=document.getElementById('cod_factura').value;
+    venta=document.getElementById('condicion_venta').value;
+    remito=document.getElementById('txtRemito').value;
+    
+    if (remito=='')
+        {
+            alert('Debe ingresar Remito');
+            document.getElementById('txtRemito').focus();
+            return false;
+        }
+        
+    if (venta=='')
+        {
+            alert('Debe ingresar condición venta');
+            document.getElementById('condicion_venta').focus();
+            return false;
+        }
+            if (otrocodigo=='')
+        {
+            alert('Debe ingresar código de factura');
+            document.getElementById('cod_factura').focus();
+            return false;
+        }
+    
+    document.getElementById('codFactura').value=codigofac;
+    document.getElementById('fechaaltaOculto').value=fechaalta;
+    document.getElementById('cod_facturaOculto').value=otrocodigo;
+    document.getElementById('condicion_ventaOculto').value=venta;
+    document.getElementById('txtRemitoOculto').value=remito;
     
     if((confirm('¿Confirma '+nombre+' ?'))==true)
     {
