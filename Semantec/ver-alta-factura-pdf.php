@@ -121,12 +121,12 @@ $pdf->Cell(40,$interlineado,$fila_fecha_factura["fav_remito"],0,1);
        $POsYoriginal=$pdf->GetY();
        $pdf->MultiCell(140,6,utf8_decode($item["det_fav_descripcion"]),0,L);
        $POsYDescpuesDeTExto=$pdf->GetY();
-       $pdf-> SetXY(194,$POsYoriginal);  // ACA MOVES POS de PRECIO
+       $pdf-> SetXY(193,$POsYoriginal);  // ACA MOVES POS de PRECIO
       
          if($item["det_fav_precio"]>0)
         {
-            $pdf->Cell(2,8,'$',0,0,R);
-            $pdf->Cell(15,8,$item["det_fav_precio"],0,0,R);
+            $pdf->Cell(1,8,'$',0,0,R);
+            $pdf->Cell(17,8,number_format($item["det_fav_precio"], 2, ',', '.'),0,0,R);
         }
         else
         { $pdf->Cell(17,8,'S/C',0,0,R);}
@@ -138,27 +138,27 @@ $pdf->Cell(40,$interlineado,$fila_fecha_factura["fav_remito"],0,1);
 $pdf-> SetY(222);
 $pdf->Cell(42);//antes 40
 $pdf->Cell(40,18,$fila_fecha_factura["fav_vencimiento"]);
-$pdf->Cell(100);
-$pdf->Cell(2,18,'$',0,0,R);
-$pdf->Cell(15,18,number_format($subtotal, 2, '.', ''),0,1,R);
+$pdf->Cell(99);
+$pdf->Cell(1,18,'$',0,0,R);
+$pdf->Cell(17,18,number_format($subtotal, 2, ',', '.'),0,1,R);
 //NOTA - IVA INSC - TOTAL IVA INSC
 $pdf->Cell(22);
 $pdf->MultiCell(90,12,utf8_decode($fila_fecha_factura["fav_nota"]),0);
 
 $pdf->SetXY(148,236); // despues de un multycell no puede ir cell 
         
-$pdf->Cell(26,13,$fila_iva["valor"],0,0,R);
+$pdf->Cell(26,13,number_format($fila_iva["valor"], 2, ',', '.'),0,0,R);
 $iva_total = $subtotal*0.21;
-$pdf->Cell(20);
-$pdf->Cell(2,12,'$',0,0,R);
-$pdf->Cell(15,12,number_format($iva_total, 2, '.', ''),0,1,R);
+$pdf->Cell(19);
+$pdf->Cell(1,12,'$',0,0,R);
+$pdf->Cell(17,12,number_format($iva_total, 2, ',', '.'),0,1,R);
 //IVA NO INSC
 $pdf->Cell(180);
 $pdf->Cell(17,11,'-',0,1,R);
 // TOTAL
-$pdf->Cell(182);
-$pdf->Cell(2,10,'$',0,0,R);
-$pdf->Cell(15,10,number_format($iva_total + $subtotal, 2, '.', ''),0,0,R);
+$pdf->Cell(180);
+$pdf->Cell(1,10,'$',0,0,R);
+$pdf->Cell(18,10,number_format($iva_total + $subtotal, 2, ',', '.'),0,0,R);
   
 $pdf->Output();
 ?>

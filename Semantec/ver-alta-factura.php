@@ -219,7 +219,7 @@
       <div align="right">
         <? if($item["det_fav_precio"]>0)
         {
-            echo "$",$item["det_fav_precio"];
+            echo "$",number_format($item["det_fav_precio"], 2, ',', '.');
         }
         else
              echo "S/C";
@@ -249,7 +249,7 @@
       <td width="39%"><div id="ocultarParaImpresion" align="right">SUBTOTAL:</div></td>
       <td width="18%"><label>
         <div align="right">
-          $<?php echo (number_format($subtotal, 2, '.', '')); ?>
+          $<?php echo (number_format($subtotal, 2, ',', '.')); ?>
           </div>
       </label></td>
     </tr>
@@ -258,12 +258,12 @@
       <td rowspan="3"><label>
         <?php echo $fila_fecha_factura["fav_nota"]; ?>
       </label></td>
-      <td height="31"><div align="right"><span id="ocultarParaImpresion">I.V.A INSCRIP&nbsp;&nbsp;&nbsp;&nbsp;</span><?php echo number_format($fila_iva["valor"], 2, '.', ''); ?><span id="ocultarParaImpresion"> %</span></div></td>
+      <td height="31"><div align="right"><span id="ocultarParaImpresion">I.V.A INSCRIP&nbsp;&nbsp;&nbsp;&nbsp;</span><?php echo number_format($fila_iva["valor"], 2, ',', '.'); ?><span id="ocultarParaImpresion"> %</span></div></td>
       <td><label>
         <div align="right">
           $<?php 
           $iva_total = $subtotal*0.21;
-          echo number_format($iva_total, 2, '.', '');
+          echo number_format($iva_total, 2, ',', '.');
           ?>
           </div>
       </label></td>
@@ -272,7 +272,7 @@
       <td height="35"><div id="ocultarParaImpresion" align="right">I.V.A NO INSCRIP.........%</div></td>
       <td><label>
         <div align="right">
-          $0.00
+          $0,00
           </div>
       </label></td>
     </tr>
@@ -280,7 +280,7 @@
       <td><div  id="ocultarParaImpresion" align="right">TOTAL</div></td>
       <td><label>
         <div align="right">
-          $<?php echo number_format(($iva_total + $subtotal), 2, '.', '')?>
+          $<?php echo number_format(($iva_total + $subtotal), 2, ',', '.')?>
           </div>
       </label></td>
     </tr>

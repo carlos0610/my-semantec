@@ -154,7 +154,7 @@
       <div align="right">
         <?if($item["det_fco_preciounitario"]>0)
         {
-            echo "$",$item["det_fco_preciounitario"];
+            echo "$",number_format($item["det_fco_preciounitario"], 2, ',', '.');
         }
         else
              echo "S/C";
@@ -211,7 +211,7 @@
       <td><div  id="ocultarParaImpresion" align="right">TOTAL</div></td>
       <td><label>
         <div align="right">
-         $<?php echo (number_format($subtotal, 2, '.', ''));?>
+         $<?php echo (number_format($subtotal, 2, ',', '.'));?>
           </div>
       </label></td>
     </tr>

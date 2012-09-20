@@ -84,8 +84,8 @@ $pdf->Ln(55);
       
          if($item["det_fco_preciounitario"]>0)
         {
-            $pdf->Cell(2,8,'$',0,0,R);
-            $pdf->Cell(15,8,$item["det_fco_preciounitario"],0,0,R);
+            $pdf->Cell(1,8,'$',0,0,R);
+            $pdf->Cell(16,8,number_format($item["det_fco_preciounitario"], 2, ',', '.'),0,0,R);
         }
         else
         { $pdf->Cell(17,8,'S/C',0,0,R);}
@@ -97,9 +97,9 @@ $pdf->Ln(55);
 $pdf-> SetY(222);
 $pdf->Cell(40);
 $pdf->Cell(40,10,$fila_fecha_factura["fav_vencimiento"]);
-$pdf->Cell(100);
-$pdf->Cell(2,10,'$',0,0,R);
-$pdf->Cell(15,10,number_format($subtotal, 2, '.', ''),0,1,R);
+$pdf->Cell(99);
+$pdf->Cell(1,10,'$',0,0,R);
+$pdf->Cell(16,10,number_format($subtotal, 2, ',', '.'),0,1,R);
 //NOTA - IVA INSC - TOTAL IVA INSC
 $pdf->Cell(20);
 $pdf->MultiCell(90,10,utf8_decode($fila_fecha_factura["fco_nota"]),0);
@@ -190,7 +190,7 @@ $pdf->Output();
       <div align="right">
         <?if($item["det_fco_preciounitario"]>0)
         {
-            echo "$",$item["det_fco_preciounitario"];
+            echo "$",number_format($item["det_fco_preciounitario"], 2, ',', '.');
         }
         else
              echo "S/C";
@@ -247,7 +247,7 @@ $pdf->Output();
       <td><div  id="ocultarParaImpresion" align="right">TOTAL</div></td>
       <td><label>
         <div align="right">
-         $<?php echo (number_format($subtotal, 2, '.', ''));?>
+         $<?php echo (number_format($subtotal, 2, ',', '.'));?>
           </div>
       </label></td>
     </tr>
