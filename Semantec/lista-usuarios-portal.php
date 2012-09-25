@@ -5,7 +5,7 @@
 
         include("conexion.php");
 /* CALCULO PAGINADO */  ###############################################################################
-    $sql0="SELECT u.id,c.cli_nombre,u.usu_nombre,u.usu_login,u.usu_pass FROM usuarios_portal u, clientes c
+    $sql0="SELECT u.id,c.cli_nombre,u.usu_nombre,u.usu_login FROM usuarios_portal u, clientes c
                            WHERE 
                            u.cli_id = c.cli_id
                            AND u.estado = 1";
@@ -13,7 +13,7 @@
     $tamPag=20;
     
     include("paginado.php");        
-        $sql = "SELECT u.id,c.cli_nombre,u.usu_nombre,u.usu_login,u.usu_pass FROM usuarios_portal u, clientes c
+        $sql = "SELECT u.id,c.cli_nombre,u.usu_nombre,u.usu_login FROM usuarios_portal u, clientes c
                 WHERE 
                 u.cli_id = c.cli_id
                 AND u.estado = 1";
@@ -68,7 +68,6 @@
             <td width="120">Usuario</td>
             <td width="384">Nombre</td>
             <td width="384">Cuenta asociada con</td>
-            <td width="199">Clave</td>
             <td width="35">&nbsp;</td>
             <td width="35">&nbsp;</td>           
           <td width="35">
@@ -82,7 +81,6 @@
               <td><?php echo(utf8_encode($fila["usu_login"]));?> </td>
             <td><?php echo $fila["usu_nombre"];?></td>
             <td><?php echo($fila["cli_nombre"]);?></td>
-            <td><?php echo($fila["usu_pass"]);?></td>           
             <td><a href="form-edit-usuarios-portal.php?usu_id=<?php echo($fila["id"]);?>">
                   <img src="images/editar.png" alt="editar" title="Modificar usuario" width="32" height="32" border="none" />                </a>              </td>       
             <td><a href="#" onClick="eliminarUsuarioPortal(<?php echo($fila["id"]);?>,'<?php echo($fila["usu_login"]);?>')">

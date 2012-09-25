@@ -11,7 +11,7 @@ $cli_id     = $_POST["comboPerfil"];
 
 
     $sql = "INSERT INTO usuarios_portal (cli_id, usu_login, usu_pass, usu_nombre)
-	VALUES ($cli_id,'$usuario' ,'$clave' , '$nombre')";
+	VALUES ($cli_id,'$usuario' ,md5('$clave') ,'$nombre')";
 
     mysql_query($sql);
 
