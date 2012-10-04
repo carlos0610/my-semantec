@@ -19,12 +19,14 @@
                   $elementoBusqueda=$_POST['filtrartxt']; 
                   $proveedorFiltro=$_POST['prv_id']; 
                   $estado_id=$_POST['est_id'];
-                  $cli_id = $_POST['cli_idSucur']; echo ' Cliente sucursal: ',$cli_id;
+                  $cli_id = $_POST['cli_idSucur']; 
                   $cli_idMaestro = $_POST['cli_id'];  
                   $unOrden=$_POST['orden'];
                   $contador=$_POST['contador'];
-
-                  $pagina = $_GET["pagina"];
+                  
+                  $suc_id = $_POST['suc_id'];
+                  
+                  $pagina = $_GET["pagina"];                 
                   $action = $_GET["action"];
         
                   if($action==0){$action='listadoOrdenes';}
@@ -110,7 +112,7 @@
 
 	mysql_close();
         // paso los parametros  de filtro por url
-	header("location:ver-alta-ordenes.php?action=2&filtrartxt=$elementoBusqueda&prv_id=$proveedorFiltro&est_id=$estado_id&suc_id=$cli_id&cli_id=$cli_idMaestro&orden=$unOrden&contador=$contador&pagina=$pagina&origen=$action
+	header("location:ver-alta-ordenes.php?action=2&filtrartxt=$elementoBusqueda&prv_id=$proveedorFiltro&est_id=$estado_id&suc_id=$suc_id&cli_id=$cli_idMaestro&orden=$unOrden&contador=$contador&pagina=$pagina&origen=$action
                 ");
 
 ?>

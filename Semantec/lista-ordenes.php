@@ -42,7 +42,7 @@
         
         //filtros Cliente Sucursal PARTE A
         $cli_id = $_POST['suc_id'];
-        $cli_idMaestro = $_POST['cli_id'];
+        $cli_idMaestro = $_POST['cli_id'];  
         if($cli_idMaestro=="")
          {$cli_idMaestro="0";}
         $sql = "SELECT cli_id, cli_nombre,sucursal 
@@ -179,7 +179,7 @@ $sql="SELECT ord_id, ord_codigo, ord_descripcion, cli_nombre,c.cli_id, prv_nombr
        </tr>
        <tr>
          <td><div align="right">Cliente</div></td>
-         <td><select name="cli_id" id="cli_id" class="campos" required onChange="habilitarCombo2('cli_id','suc_id')" <?php if($cli_id==""){echo ("disabled");}?>>
+         <td><select name="cli_id" id="cli_id" class="campos" required onChange="habilitarCombo2('cli_id','suc_id')" <?php if(($cli_idMaestro=="" | $cli_idMaestro=="0")){echo (" disabled");}?>>
           <option value='0'>Seleccione</option>
           
     
@@ -197,7 +197,7 @@ $sql="SELECT ord_id, ord_codigo, ord_descripcion, cli_nombre,c.cli_id, prv_nombr
        </tr>
        <tr>
          <td><div align="right">Sucursal</div></td>
-         <td><select name="suc_id" id="suc_id" class="campos" required <?php if($cli_id==""){echo ("disabled");}?>>
+         <td><select name="suc_id" id="suc_id" class="campos" required <?php if(($cli_id==""| $cli_idMaestro=="0")){echo ("disabled");}?>>
            <option value='todasLasSucursales'>Todas las Sucursales</option>
            
            

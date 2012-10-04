@@ -303,7 +303,7 @@
               <?php }else { // volver a listado ordenes detalle?> 
                  <a href="#" onClick="transferirFiltrosAOtroForm('filtro','lista-req-ordenes.php?pagina=<?php echo $pagina ?>')">               
               <?php }?>                   
-                   <input type="button" value="Ir al Listado" class="botones" />
+                   <input type="button" value="Ir al Listado " class="botones" />
                 </a>  
                 <a href="form-alta-ordenes.php">
                    <input type="button" value="Agregar otra orden" class="botones" />

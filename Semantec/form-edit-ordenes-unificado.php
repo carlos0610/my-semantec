@@ -128,7 +128,7 @@
    <!--start contenedor-->
    <div id="contenedor" style="height:auto;">
 
-      <h2>Panel de control</h2> 
+      <h2>Panel de control</h2>  
       <!--datos de los filtro de listado de ordenes-->
       <form id="filtro" name="filtro" action=''  method="POST">
           <input type="hidden" value="<?php echo($elementoBusqueda); ?>" name="filtrartxt" id="filtrartxt" />  
