@@ -530,9 +530,8 @@ var estadoEnviadoProveedor = '2';
 var estadoConfirmarProveedor = '9'; // verificar
 var estadoAprobadoBajoCosto = '3';
 var estadoFinalizadoPendienteFacturacion = '11';  
-var nombre='altaordenDetalle';
-var estado= document.forms[nombre].est_id.value;
-
+var nombre='frm';
+var estado= document.forms[nombre].est_idDetalle.value;
   
 
 if((estado == 11)&(costo==0)&(venta==0))
@@ -585,57 +584,7 @@ if((estado == 11)&(costo==0)&(venta==0))
             document.getElementById("texto_respuesta_detalle").style.visibility = "hidden"; 
         }   
 } 
-/*if((document.getElementById("est_id").value == 11)&(costo==0)&(venta==0))
-    {
-        
-        if(esAbono!=1){ // si Abono no va a ocultar el boton guardar 
-        document.getElementById("error").style.visibility = "visible"; 
-        document.getElementById("guardarDetalle").style.visibility = "hidden";
-        }
-    }
-    else
-        {
-           document.getElementById("error").style.visibility = "hidden"; 
-           document.getElementById("guardarDetalle").style.visibility = "visible";
-        }
-            
- switch (estado)
-{
-  case estadoEnviadoProveedor:  {   document.getElementById("fecha").style.visibility = "visible";
-            document.getElementById("fecha").disabled = false;
-            document.getElementById("texto_respuesta").style.visibility = "visible";
-            document.getElementById("texto_respuesta").textContent = "Fecha respuesta proveedor";}
-            break;
-  case estadoConfirmarProveedor: {
-            document.getElementById("fecha").style.visibility = "visible";
-            document.getElementById("fecha").disabled = false;
-            document.getElementById("texto_respuesta").style.visibility = "visible";
-            document.getElementById("texto_respuesta").textContent = "Plazo de finalizacion";
-
-        }   
-            break;
-  case estadoAprobadoBajoCosto: {  
-            document.getElementById("fecha").style.visibility = "visible";
-            document.getElementById("fecha").disabled = false;
-            document.getElementById("texto_respuesta").style.visibility = "visible";
-            document.getElementById("texto_respuesta").textContent = "Fecha aprobado : "; 
-        }  
-            break;
-  case estadoFinalizadoPendienteFacturacion:{
-            document.getElementById("fecha").style.visibility = "visible";
-            document.getElementById("fecha").disabled = false;
-            document.getElementById("texto_respuesta").style.visibility = "visible";
-            document.getElementById("texto_respuesta").textContent = "Fecha Finalizado : ";
-        }
-            break;
-  default:  {
-            document.getElementById("fecha").style.visibility = "hidden";
-            document.getElementById("fecha").disabled = true;
-            document.getElementById("texto_respuesta").style.visibility = "hidden"; 
-        }   
-}  */
-
-        
+       
 }
 
 
@@ -808,6 +757,19 @@ function CheckboxsSeleccionarTodos(cantTotalCheckboxs){
             i++;       
            eval("document.formSelectSucursales.checkbox_sucursal_id"+i+".checked="+resultado);
         }
+    }
+    
+    function habilitarModuloEstado(){
+    resultado=eval("document.frm.checkCambiarEstado.checked");
+    resultado=!resultado;
+           document.getElementById("ord_descripcionDetalle").disabled = resultado;  
+           document.getElementById("checkPortadaDescripcion").disabled = resultado; 
+           document.getElementById("est_idDetalle").disabled = resultado; 
+           document.getElementById("ord_det_monto").disabled = resultado; 
+           document.getElementById("userfile").disabled = resultado; 
+           document.getElementById("checkPortada").disabled = resultado; 
+           document.getElementById("fecha_detalle").disabled = resultado; 
+        
     }
     
 function CheckboxsSeleccionarTodosFacturaVenta(cantTotalCheckboxs){

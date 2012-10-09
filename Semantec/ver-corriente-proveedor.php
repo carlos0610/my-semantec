@@ -435,14 +435,14 @@
                             {echo '-';} 
                      ?>
                 </td>
-                <td>
+                <td style="text-align:right;">
                     <?php // COSTO ORDEN
                         $ordenCosto=$fila["costo"];
                         $totalOrdenes+=$ordenCosto;
                         echo $ordenCosto;
                      ?>
                 </td>
-                <td>
+                <td style="text-align:right;">
                     <?php // ABONO
                      $abonoValor=$fila["costo_abono"];
                     echo $abonoValor;
@@ -453,23 +453,23 @@
                      $totalOrdenes+=$abonoValor;
                     ?>
                 </td>
-                <td>
+                <td style="text-align:right;">
                     <?php echo $fila["adelantos"];?>
                 </td>               
-                <td>
+                <td style="text-align:right;">
                     <?php // SALDO
                           $saldoValor=$fila["saldo_a"];
                           $totalSaldoValor+=$saldoValor;
                           echo number_format($saldoValor, 2, '.', ' '); ?>
                 </td>
-                <td>
+                <td style="text-align:right;">
                     <?php  // FACTURADO
                         $Facturado=$fila["compras"];
                         $totalFacturado+=$Facturado;
                         echo $Facturado;
                      ?>
                 </td>
-                <td>  
+                <td style="text-align:right;">  
                     <?php //Resta FACTURAR echo $fila["saldo_c"];  
                         $RestaFacturar=$saldoValor-$Facturado;
                         $totalRestaFacturar+=$RestaFacturar;

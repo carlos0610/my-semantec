@@ -324,13 +324,7 @@
 
                     <input type="button" value="Ir al Listado" class="botones" /></a> &nbsp; &nbsp;
                 <?php }} ?>
-                
-                
-                
-                
-                
-                <input type="reset" value="Restablecer" class="botones" /> &nbsp; &nbsp; 
-                <input type="submit" value="Modificar Orden" class="botones" />
+
                 <input type="hidden" value="<?php echo($ord_id); ?>" name="ord_id" id="ord_id" />            </td>
             <td></td>
           </tr>
@@ -338,7 +332,6 @@
             <td colspan="3" class="pie_lista">&nbsp;</td>
           </tr>
       </table> 
-    </form>  
       
       <div class="clear"></div>
 
@@ -349,28 +342,27 @@
    <?php if ($fila0["est_id"] < 12) { ?>
       <!--start DETALLE  ----------------------------------------------------------------------------------- -->
    <div id="contenedor" style="height:auto;">
-
-      <form id="altaordenDetalle" name="altaordenDetalle" action="alta-ordenes-detalle.php?estado_id_filtro=<?php echo $estado_id ?>&prov_filtro=<?php echo $proveedorFiltro ?>" method="post" enctype="multipart/form-data">
-
-      <input type="hidden" value="<?php echo $ord_id; ?>" name="ord_id"  id="ord_id">
+   
       <table class="forms" cellpadding="5">
           <tr class="titulo">
-            <td colspan="2"> <?php echo('Cambiar Estado de la Orden')?> </td>
+              <td colspan="2"> <?php echo('Cambiar Estado de la Orden')?> 
+                               <input type="checkbox" value="1" name="checkCambiarEstado"  id="checkCambiarEstado" onChange="habilitarModuloEstado()"> 
+              </td>
             <td width="32">
          </td>
           </tr>
           <tr>
             <td width="160">Descripci&oacute;n de actualización</td>
             <td>
-                <textarea class="campos" id="ord_descripcion" name="ord_descripcion" rows="9"></textarea><br>
-                <input type="checkbox" name="checkPortadaDescripcion" id="checkPortadaDescripcion" value="1" >Publicar descripcion en portal 
+                <textarea class="campos" id="ord_descripcionDetalle" name="ord_descripcionDetalle" rows="9" disabled></textarea><br>
+                <input type="checkbox" name="checkPortadaDescripcion" id="checkPortadaDescripcion" disabled value="1" >Publicar descripcion en portal 
             </td>
             <td></td>
           </tr>
           <tr>
             <td>Estado</td>
             <td>
-                <select name="est_id" id="est_id" class="campos" onChange="return validarFacturacion(<?php echo $ord_costo ?>,<?php echo $orden_venta ?>,<?php echo $fila0["es_abono"] ?>)">
+                <select name="est_idDetalle" id="est_idDetalle" class="campos" disabled onChange="return validarFacturacion(<?php echo $ord_costo ?>,<?php echo $orden_venta ?>,<?php echo $fila0["es_abono"] ?>)">
     <?php
           while($fila3 = mysql_fetch_array($resultado3)){
     ?>                 
@@ -386,20 +378,20 @@
                       
           <tr>
               <td><label id="texto_respuesta_detalle"></label></td>
-            <td><input type="text" class="campos" id="fecha_detalle" name="fecha_detalle" style="visibility: hidden"/></td>
+            <td><input  type="text" class="campos" id="fecha_detalle"  name="fecha_detalle"  style="visibility: hidden" disabled/></td>
             <td></td>
           </tr>
           
           <tr>
             <td>Adelanto</td>
-            <td><input type="text" class="campos" id="ord_det_monto" name="ord_det_monto" min="0" required value="0" style="text-align:right" OnKeyUp="return validarReal('ord_det_monto');"  />
+            <td><input type="text" class="campos" id="ord_det_monto" disabled name="ord_det_monto" min="0" required value="0" style="text-align:right" OnKeyUp="return validarReal('ord_det_monto');"  />
                 <span id="errorAdelanto" style="font-family: Verdana, Arial, Helvetica,sans-serif;font-size: 9pt;color: #CC3300;position:relative;visibility:hidden;">Supera al valor costo</span>            </td>
             <td></td>
           </tr>
           <tr>
               <td>Adjuntar archivo</td><td>
-                  <input type="file" class="" id="userfile" name="userfile"/><br>
-                  <input type="checkbox" name="checkPortada" id="checkPortada" value="1" >Publicar en portal 
+                  <input type="file" class="" id="userfile" disabled name="userfile"/><br>
+                  <input type="checkbox" name="checkPortada" disabled id="checkPortada" value="1" >Publicar en portal 
               </td>
           </tr>
           <tr>
@@ -422,7 +414,7 @@
                 <?php } ?>
                     
                 <input type="reset"  value="Restablecer" class="botones" /> &nbsp; &nbsp; 
-                <input type="submit" value="Guardar Estado" class="botones" id="guardarDetalle" style="visibility:<?php if($fila0["prv_id"]==1){echo "hidden";}else{ echo "visible";} ?>"   />
+                <input type="submit" value="Modificar Orden" class="botones" id="guardarDetalle" style="visibility:<?php if($fila0["prv_id"]==1){echo "hidden";}else{ echo "visible";} ?>"   />
                 <input type="hidden" name="MAX_FILE_SIZE" value="200000000000">            </td>
             <td></td>
           </tr>
