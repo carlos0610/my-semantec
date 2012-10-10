@@ -760,7 +760,7 @@ function CheckboxsSeleccionarTodos(cantTotalCheckboxs){
     }
     
     function habilitarModuloEstado(){
-    resultado=eval("document.frm.checkCambiarEstado.checked");
+    resultado=eval("document.frm.checkCambiarEstado.checked");    
     resultado=!resultado;
            document.getElementById("ord_descripcionDetalle").disabled = resultado;  
            document.getElementById("checkPortadaDescripcion").disabled = resultado; 
@@ -769,6 +769,8 @@ function CheckboxsSeleccionarTodos(cantTotalCheckboxs){
            document.getElementById("userfile").disabled = resultado; 
            document.getElementById("checkPortada").disabled = resultado; 
            document.getElementById("fecha_detalle").disabled = resultado; 
+           if(!resultado)
+               document.getElementById("ord_descripcionDetalle").focus();
         
     }
     
