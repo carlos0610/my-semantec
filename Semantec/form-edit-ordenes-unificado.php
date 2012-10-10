@@ -139,7 +139,7 @@
           <input type="hidden" value="<?php echo($unOrden); ?>" name="orden" id="orden" /> 
           <input type="hidden" value="<?php echo($contador); ?>" name="contador" id="contador" /> 
       </form>       
- <form action="edit-ordenes.php?pagina=<?php echo $pagina ?>&action=<?php echo $action?>" method="post" id="frm" name="frm" >
+ <form action="edit-ordenes.php?pagina=<?php echo $pagina ?>&action=<?php echo $action?>" method="post" id="frm" name="frm" enctype="multipart/form-data" >
       <table class="forms" cellpadding="5">
           <tr class="titulo">
             <td colspan="2"> <?php echo($titulo);?></td>

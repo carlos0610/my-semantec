@@ -137,7 +137,7 @@
        if($checkCambiarEstado=='1'){    // si el check de agregar detalle orden esta activo    
         
                     /*ADJUNTAR ARCHIVO PARA DETALLE*/
-                    if($_FILES['userfile']['size']>0){      //SI ELIGIO UN ARCHIVO
+           if($_FILES['userfile']['size']>0){      //SI ELIGIO UN ARCHIVO
         
                                 $fileName = $_FILES['userfile']['name'];
                                 $tmpName  = $_FILES['userfile']['tmp_name'];
@@ -156,7 +156,7 @@
                         }
         $sql_file = "INSERT INTO files (file_name, file_size, file_type, file_content,tabla , publico ) ".
         "VALUES ('$fileName', '$fileSize', '$fileType', '$content','detalles_ordenes',$checkPortada)";
-
+        
         $result=mysql_query($sql_file);
                 if(!$result)
                   {$error=1; echo $sql_file;}
@@ -165,7 +165,7 @@
         echo "<br>File $fileName uploaded<br>";
         $idFile = mysql_insert_id();
         
-                                                        } /*FIN DE ADJUNTAR ARCHIVO PARA DETALLE*/
+                     } /*FIN DE ADJUNTAR ARCHIVO PARA DETALLE*/
         
                                                         
                                                         
@@ -259,7 +259,7 @@
                          mysql_close();
                         echo "Transacción exitosa"; 
                   //        header("location:ver-alta-ordenes.php?action=2&est_id=$estado_id_filtro&prv_id=$prov_filtro"); 
-                        	header("location:ver-alta-ordenes.php?action=2&filtrartxt=$elementoBusqueda&prv_id=$proveedorFiltro&est_id=$estado_id&suc_id=$suc_id&cli_id=$cli_idMaestro&orden=$unOrden&contador=$contador&pagina=$pagina&origen=$action");
+                     	header("location:ver-alta-ordenes.php?action=2&filtrartxt=$elementoBusqueda&prv_id=$proveedorFiltro&est_id=$estado_id&suc_id=$suc_id&cli_id=$cli_idMaestro&orden=$unOrden&contador=$contador&pagina=$pagina&origen=$action");
                         }
         
 
