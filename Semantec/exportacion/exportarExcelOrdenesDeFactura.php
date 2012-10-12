@@ -60,11 +60,12 @@ $nombre=" Planilla de Facturaci&oacute;n de $NombreSuc";
 
 </TR>
 
-<?php
+<?php  $subtotal=0;
 while($row = mysql_fetch_array($result)) {
     //Datos de impresion
          $filaDeRubro = mysql_fetch_array(getRubroNameById($row["rub_id"]));
          $valorVenta= "$";  
+         $subtotal+=$row["ord_venta"];
          $valorVenta.= number_format($row["ord_venta"], 2, ',', '.');
          $presupuesto=$row["presupuesto"];
          if($presupuesto==''){
@@ -76,7 +77,7 @@ printf("<tr>
 <td style=mso-number-format:'dd/mm/yyyy'>&nbsp;%s&nbsp;</td>
 <td>&nbsp;%s&nbsp;</td>
 <td>&nbsp;%s&nbsp;</td>
-<td style=mso-number-format:'@'>&nbsp;%s&nbsp;</td>
+<td >&nbsp;%s&nbsp;</td>
 <td style=mso-number-format:'$#.##0;[Red]-$#.##0'>&nbsp;%s&nbsp;</td>
 <td>&nbsp;%s&nbsp;</td>
 <td >&nbsp;%s&nbsp;</td>
@@ -107,10 +108,10 @@ mysql_close();  //Cierras la Conexión
 <TD  ></TD>
 <TD ></TD>
 <TD ></TD>
-<TD ></TD>
-    
+<TD ></TD> 
 </tr>
 </table>
+<b><? echo 'Subtotal $',(number_format($subtotal, 2, ',', '.')); ?></b>
 </body>
 </html>
 ?>
