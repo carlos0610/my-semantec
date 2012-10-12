@@ -207,8 +207,9 @@
             <td width="100"><a href="#" onClick="agregarOrderBy('cli_nombre')">Sucursal</a></td>
             <td width="32"><a href="#" onClick="agregarOrderBy('fav_fecha_pago')">Pagada</a></td> 
             <td width="32" align="center">Archivo</td>
-            <td width="32"></td>
-            <td width="32">&nbsp;</td>
+            <td width="32">Pago</td>
+            <td width="32">&nbsp; Ver</td>
+            <td width="32">Excel</td>
             <td width="32">
                 <a href="index-admin.php">
                     <img src="images/home.png"  alt="inicio" title="Volver al panel" width="32" height="32" border="none" />
@@ -248,7 +249,16 @@
             <?php }?>
             </div>
             </td>
-            <td width="32" align="center"><a href="ver-alta-factura.php?fav_id=<?php echo($fila["fav_id"]); ?>"><img src="images/detalles.png" alt="editar" title="Ver detalle" width="32" height="32" border="none" /></a></td>            
+            <td width="32" align="center">
+                <a href="ver-alta-factura.php?fav_id=<?php echo($fila["fav_id"]); ?>"><img src="images/detalles.png" alt="editar" title="Ver detalle" width="32" height="32" border="none" /></a>
+            </td>  
+            
+            <td width="32" align="center">
+                <a href="exportacion/exportarExcelOrdenesDeFactura.php?fav_id=<?php echo($fila["fav_id"]); ?>&NombreSuc=<?php echo(utf8_encode($fila["cli_nombre"]));?>&favCodigo=<?php echo($fila["cod_factura_venta"]);?>">
+                    <img src="images/icon-header-xls.png" alt="Excel" title="Exportar Excel" width="32" height="32" border="none" />
+                </a>
+            </td>
+            
             <td> <div  <?php if($chkCanceladas=="0"){echo ("  style='visibility:hidden'");}?>>  
                 <a href="#" onClick="eliminarFactura(<?php echo($fila["fav_id"]);?>,<?php echo($fila["gru_id"]);?>,'<?php echo($fila["cod_factura_venta"]);?>' )"   >
                 <img src="images/eliminar.png" alt="eliminar" title="Eliminar Factura" width="32" height="32" border="none" />

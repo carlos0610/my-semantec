@@ -37,4 +37,24 @@
              
 	}
         
+        
+        function getOrdenesWithFavId($id){
+		 $sql = "SELECT c.cli_nombre,c.cli_direccion, o.ord_codigo, o.rub_id, o.ord_descripcion, o.ord_venta, o.presupuesto, i.iva_nombre,c.cli_cuit ,p.nombre as provincia,pa.nombre as partido,l.nombre as localidad,  c.cli_direccion_fiscal,c.sucursal_id
+                FROM ordenes o,clientes c,iva_tipo i,factura_venta f,grupo_ordenes g_o , ubicacion u,provincias p, partidos pa,localidades l
+                WHERE 
+                f.fav_id 	= $id
+                and f.gru_id    = g_o.gru_id
+                and g_o.gru_id = o.gru_id
+                and o.cli_id = c.cli_id
+                AND c.ubicacion_id = u.id
+                AND u.provincias_id = p.id
+                AND u.partidos_id = pa.id
+                AND u.localidades_id = l.id
+                and c.iva_id = i.iva_id
+                order by provincia
+                "; 
+                 return   mysql_query($sql);
+             
+	}
+        
 ?>
