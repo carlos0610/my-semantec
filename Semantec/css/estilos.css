@@ -296,6 +296,11 @@ a.current:hover{
 	width:95%;
 	margin:auto;
 }
+
+.listadosMasAncho{
+	width:110%;
+	margin:auto;
+}
 .listados a{
 				color:#0066FF;
 				text-decoration:none;

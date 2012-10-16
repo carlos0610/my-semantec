@@ -296,7 +296,7 @@
        </tr>
           <tr>
             <td class="titulo">Domiclio:</td>
-            <td width="24%" style="background-color:#cbeef5"><?php echo utf8_encode($fila_datos_proveedor["prv_direccion"]);?></td>
+            <td width="40%" style="background-color:#cbeef5"><?php echo utf8_encode($fila_datos_proveedor["prv_direccion"]);?></td>
             <td width="9%" class="titulo">Localidad:</td>
             <td width="52%" style="background-color:#cbeef5"><?php echo utf8_encode($fila_datos_proveedor["provincia"]);?>/<?php echo utf8_encode($fila_datos_proveedor["sucursal"]);?></td>
        </tr>
@@ -401,18 +401,18 @@
        <form id="filtro" name="filtro" action="ver-corriente-proveedor.php" method="POST">
       <h2>Cuenta corriente de <?php echo utf8_encode($fila_datos_proveedor["prv_nombre"]);?></h2>
 
-<table class="listados" cellpadding="5">
+<table class="listadosMasAncho" cellpadding="5">
           <tr class="titulo">
-            <td width="99">Código de orden</td>
-            <td width="120">Cliente</td>
-            <td width="449">Descripción</td>
+            <td width="190">Código de orden</td>
+            <td width="190">Cliente</td>
+            <td width="700">Descripción</td>
             <td width="88">Fecha</td>
-            <td width="73">Ord costo</td>
-            <td width="73">Abono</td>
-            <td width="73">Adelantos</td>           
-            <td width="73">Saldo</td>
-            <td width="73">Facturado</td>          
-            <td width="73">Resta facturar</td>
+            <td width="100">Ord costo</td>
+            <td width="100">Abono</td>
+            <td width="100">Adelantos</td>           
+            <td width="100">Saldo</td>
+            <td width="100">Facturado</td>          
+            <td width="100">Resta facturar</td>
         </tr>
   <?php
           $totalSaldoValor=0;
