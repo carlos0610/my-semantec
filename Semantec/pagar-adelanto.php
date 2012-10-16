@@ -8,6 +8,7 @@ $ord_id = $_GET["orden"];
 $monto_adelanto = $_GET["adelanto"];
 $descripcion = $_GET["desc"];
 $usuario = $_SESSION["usu_nombre"];
+$pagina  = $_GET["pagina"];
 
 
 /* OBTENEMOS EL ESTADO EN QUE ESTÁ LA ORDEN */
@@ -28,7 +29,7 @@ mysql_query($sql);
 mysql_close();
 
 //echo "QUERY: ".$sql;
-header("location:ver-corriente-proveedor.php?action=2&prv_id=$prv_id");
+header("location:ver-corriente-proveedor.php?action=2&prv_id=$prv_id&pagina=$pagina");
 
 
 

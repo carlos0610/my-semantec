@@ -102,19 +102,20 @@ function confirmacionAdelanto(){
 
 
 
-function emitirAdelanto(){
+function emitirAdelanto(pagina){
     var orden       = document.getElementById("comboOrdenes").value;
     var index = document.getElementById("comboOrdenes").selectedIndex;
     var cod_orden = document.getElementById("comboOrdenes").options[index].text;
-
     var monto       = document.getElementById("txtAdelanto").value;
+    
+    alert(pagina);
     
     if (monto > 0){
     
                     if(confirm('¿Confirma el adelanto para la orden : '+cod_orden+'?')==true)
                         {
                         var desc =document.getElementById("txtDescripcion").value;
-                        window.location="pagar-adelanto.php?orden="+orden+"&adelanto="+monto+"&desc="+desc;
+                        window.location="pagar-adelanto.php?orden="+orden+"&adelanto="+monto+"&desc="+desc+"&pagina="+pagina;
                         }    
         
                   

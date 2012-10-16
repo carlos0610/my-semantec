@@ -74,7 +74,7 @@
         /* INSERTAMOS EN LA TABLA TEMPORAL EL RESULTADO DE LA CONSULTA QUE AVERIGUA LOS ADELANTOS VS ORD_COSTO */
         
         $sql = "INSERT INTO tabla_temp	      
-		SELECT o.ord_id,ord_codigo,ord_det_fecha,c.cli_id,c.cli_nombre,c.sucursal, o.ord_plazo, o.fecha_pendiente_facturacion, o.es_abono,
+		SELECT o.ord_id,ord_codigo,max(ord_det_fecha),c.cli_id,c.cli_nombre,c.sucursal, o.ord_plazo, o.fecha_pendiente_facturacion, o.es_abono,
                        p.nombre as provincia,l.nombre as localidad,o.ord_descripcion,o.est_id,
                        sum(od.ord_det_monto) as adelantos,
                        round (o.ord_costo,2) as presupuesto ,
@@ -90,7 +90,6 @@
                 AND u.id = c.ubicacion_id
                 AND u.provincias_id = p.id
                 AND u.localidades_id = l.id
-
                 AND o.est_id <> 8           
                 GROUP BY o.ord_id;"; 
      
@@ -345,7 +344,7 @@
          <td width="62%">Descripción: 
            <label>
            <input name="txtDescripcion" type="text" class="campos" id="txtDescripcion" value="Ingrese una descripción">
-           <input type="button" name="btnEmitir" id="btnEmitir" value="Emitir" onClick="emitirAdelanto()">
+           <input type="button" name="btnEmitir" id="btnEmitir" value="Emitir" onClick="emitirAdelanto('<?php echo $pagina?>')">
          </label></td>
        </tr>
        <tr>
@@ -406,7 +405,7 @@
             <td width="190">Código de orden</td>
             <td width="190">Cliente</td>
             <td width="700">Descripción</td>
-            <td width="88">Fecha</td>
+            <td width="88">Actualizado el día</td>
             <td width="100">Ord costo</td>
             <td width="100">Abono</td>
             <td width="100">Adelantos</td>           
@@ -429,8 +428,8 @@
                 </td>
                 <td>
                     <?php 
-                        if($fila["fecha_pendiente_facturacion"]!='')
-                            {echo tfecha($fila["fecha_pendiente_facturacion"]);}
+                        if($fila["ord_det_fecha"]!='')
+                            {echo tfecha($fila["ord_det_fecha"]);}
                         else
                             {echo '-';} 
                      ?>
@@ -456,7 +455,7 @@
                 <td style="text-align:right;">
                     <?php echo $fila["adelantos"];?>
                 </td>               
-                <td style="text-align:right;">
+                <td style="text-align:right; background-color: darksalmon;">
                     <?php // SALDO
                           $saldoValor=$fila["saldo_a"];
                           $totalSaldoValor+=$saldoValor;
@@ -469,7 +468,7 @@
                         echo $Facturado;
                      ?>
                 </td>
-                <td style="text-align:right;">  
+                <td style="text-align:right; background-color:dodgerblue;">  
                     <?php //Resta FACTURAR echo $fila["saldo_c"];  
                         $RestaFacturar=$saldoValor-$Facturado;
                         $totalRestaFacturar+=$RestaFacturar;
