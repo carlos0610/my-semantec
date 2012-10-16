@@ -89,6 +89,15 @@ h3{
 	padding:15px;		/* 980 */	
 }
 
+#mainMasAncho{
+	width:1050px;
+	position: relative;
+	margin:0 auto;
+	background-color:#fff;
+	padding:15px;		/* 980 */	
+}
+
+
 header{
 	width: 100%;
 	height:100px;

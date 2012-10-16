@@ -267,7 +267,7 @@
   <body>
 	
   <!-- start main --><!-- start main --><!-- start main --><!-- start main --><!-- start main -->
-  <div id="main">
+  <div id="mainMasAncho">
 
     <!--start header-->
     <header>
