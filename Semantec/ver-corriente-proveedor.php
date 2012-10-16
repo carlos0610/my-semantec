@@ -489,11 +489,11 @@
           
           echo "<tr><td colspan=8 align=right>Total deuda con proveedor: <b style=color:red>".$totalDeuda['total_adelanto']."</b> pesos -- Total deuda del proveedor: <b style=color:blue>".$totalDeuda['total_compra']."</b> pesos</td></tr>";
        //   echo "<tr><td colspan=8 align=right>Total deuda con proveedor: <b style=color:red>".number_format($totalSaldoValor,2,'.',' ')."</b> pesos -- Total deuda del proveedor: <b style=color:blue>".number_format($totalRestaFacturar,2,'.',' ')."</b> pesos</td></tr>";
-          echo "<tr><td colspan=8 align=right>Monto total de órdenes : <b>".$totalDeuda['total']."</b> pesos";
+          echo "<tr><td colspan=8 align=right>Monto total de órdenes : <b>".$totalDeuda['total']."</b> pesos </tr></td>";
        //    echo "<tr><td colspan=8 align=right>Monto total de órdenes : <b>".number_format($totalOrdenes,2,'.',' ')."</b> pesos";
   ?>
           <tr>
-            <td colspan="8" class="pie_lista"><?php 
+            <td colspan="8" class="pie_lista" ><?php 
 /* PAGINADO */  ###############################################################################            
             echo(verPaginado($cant_registros, $pagina, $inicio, $final, $numPags)); 
             ?></td>
