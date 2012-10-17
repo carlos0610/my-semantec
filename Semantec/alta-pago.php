@@ -11,31 +11,31 @@ include "funciones.php";
         
         $fav_id     =  $_GET["fav_id"];
         $ccc_id     =  $_GET["ccc_id"];
-        
+        $cantIIBB    =  $_GET["cantIIBB"];
         /* PAGO DE LA FACTURA */
         // ACTUALIZAMOS LA FECHA DE PAGO EN LA FACTURA
         $sql = "UPDATE factura_venta SET fav_fecha_pago = NOW(), usu_nombre = '$usuario' where fav_id = $fav_id";
         $result = mysql_query($sql);
         
-        if (!$result)
-            $error = 1;
-        
+        if (!$result){
+            $error = 1;echo 'fallo1';
+        }
   
         // ACTUALIZAMOS LAS ORDENES A ESTADO FINALIZADO PAGADO
         $sql = "UPDATE ordenes set est_id = 14 where gru_id = (SELECT gru_id from factura_venta where fav_id = $fav_id);";
         $result = mysql_query($sql);
     
-        if (!$result)
-            $error = 1;
-        
+        if (!$result){
+            $error = 1;echo 'fallo2';
+        }
         //INSERTAMOS EL PAGO COMO UN DETALLE EN LA CUENTA CORRIENTE 
         $sql = "INSERT into detalle_corriente_cliente (ccc_id,fav_id,estado) VALUES ($ccc_id,$fav_id,1)";
         echo "Query ccc_id: ".$sql;
         $result = mysql_query($sql);
         
-        if (!$result)
-            $error = 1;
-        
+        if (!$result){
+            $error = 1; echo 'fallo3';
+        }
         
         
         $usu_id     =  $_SESSION["usu_id"];
@@ -47,8 +47,9 @@ include "funciones.php";
         echo "QUERY : ".$sql;
         $result     = mysql_query($sql);
 
-        if (!$result)
-            $error = 1; 
+        if (!$result){
+            $error = 1; echo 'fallo4';
+        }
         else
             $cobro_id = mysql_insert_id ();
      
@@ -94,8 +95,8 @@ include "funciones.php";
                             $sql_file = "INSERT INTO files (file_name, file_size, file_type, file_content,tabla ) ".
                                         "VALUES ('$fileName', '$fileSize', '$fileType', '$content','cobros')";
                                         $result=mysql_query($sql_file);
-                                        if(!$result)
-                                            $error=1;
+                                        if(!$result){ echo 'fallo5';
+                                            $error=1;}
                                         else
                                             $idFile = mysql_insert_id();
                     }                                
@@ -133,8 +134,8 @@ include "funciones.php";
                         
                        $result = mysql_query($sql);               
                         echo "<br>QUERY : ".$sql;
-                       if (!$result)
-                           $error = 1;
+                       if (!$result){ echo 'fallo6';
+                           $error = 1;}
              
                        
         }                
@@ -152,8 +153,8 @@ include "funciones.php";
        $sql = "INSERT INTO cobros_detalle_retencion (cobros_id,ret_id,ret_fecha,ret_prefijo,ret_codigo,ret_importe) VALUES ($cobro_id,1,'$fecha','$prefijo','$nro',$importe)"; 
        $result = mysql_query($sql);
         
-        if (!$result)
-            $error = 1;  
+        if (!$result){echo 'fallo7';
+            $error = 1;  }
     }
     
     
@@ -167,45 +168,44 @@ include "funciones.php";
         $sql = "INSERT INTO cobros_detalle_retencion (idiva,cobros_id,ret_id,ret_fecha,ret_prefijo,ret_codigo,ret_importe) VALUES ($idiva,$cobro_id,2,'$fecha','$prefijo','$nro',$importe)"; 
         $result = mysql_query($sql);
         
-        if (!$result)
-            $error = 1;
+        if (!$result){ echo 'fallo8';
+            $error = 1;}
     
         
     }
     
     
-    if (isset($_POST["chkIIBB"])){
+    if (isset($_POST["chkSUSS"])){
         $fecha      = gfecha($_POST["txtFecha3"]);
         $prefijo    = $_POST["txtPrefijo3"];
         $importe    = $_POST["txtImporte3"];
         $nro        = $_POST["txtNro3"];
 
-        $sql = "INSERT INTO cobros_detalle_retencion (cobros_id,ret_id,ret_fecha,ret_prefijo,ret_codigo,ret_importe) VALUES ($cobro_id,3,'$fecha','$prefijo','$nro',$importe)"; 
+        $sql = "INSERT INTO cobros_detalle_retencion (cobros_id,ret_id,ret_fecha,ret_prefijo,ret_codigo,ret_importe) VALUES ($cobro_id,4,'$fecha','$prefijo','$nro',$importe)"; 
         $result = mysql_query($sql);
         
-        if (!$result)
-            $error = 1;     
+        if (!$result){echo 'fallo9';
+            $error = 1;    } 
     }
+  $numeroRetencion=4;      
+  for ($i = 1; $i <= $cantIIBB; $i++) {
+    if (isset($_POST["chkIIBB$i"])){  // en la BD ret_id = 3 es IIBB
+        $fecha      = gfecha($_POST["txtFecha$numeroRetencion"]);
+        $prefijo    = $_POST["txtPrefijo$numeroRetencion"];
+        $importe    = $_POST["txtImporte$numeroRetencion"];
+        $nro        = $_POST["txtNro$numeroRetencion"];
+        $provincia  = $_POST["comboProvincias$numeroRetencion"];
         
-  
-    if (isset($_POST["chkSUSS"])){
-        $fecha      = gfecha($_POST["txtFecha4"]);
-        $prefijo    = $_POST["txtPrefijo4"];
-        $importe    = $_POST["txtImporte4"];
-        $nro        = $_POST["txtNro4"];
-        $provincia  = $_POST["comboProvincias"];
-        
-        $sql = "INSERT INTO cobros_detalle_retencion (provincias_id,cobros_id,ret_id,ret_fecha,ret_prefijo,ret_codigo,ret_importe) VALUES ($provincia,$cobro_id,4,'$fecha','$prefijo','$nro',$importe)";
+        $sql = "INSERT INTO cobros_detalle_retencion (provincias_id,cobros_id,ret_id,ret_fecha,ret_prefijo,ret_codigo,ret_importe) VALUES ($provincia,$cobro_id,3,'$fecha','$prefijo','$nro',$importe)";
         $result = mysql_query($sql);
         
-        if (!$result)
-            $error = 1;            
-            
-        echo "<br>QUERY : ".$sql;
+        if (!$result){ echo "fallo10: <br>QUERY : ".$sql;
+            $error = 1;    }        
+
         
      }
-     
-
+     $numeroRetencion++;
+  }
      
      if ($error){
          mysql_query("ROLLBACK");

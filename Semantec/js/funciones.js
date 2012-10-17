@@ -223,9 +223,10 @@ function habilitarRetenciones(formulario,numero){
         {
             document.getElementById("comboIva").disabled = valor;  
         }
-    if(nombre=="chkSUSS")
-        {
-            document.getElementById("comboProvincias").disabled = valor;  
+        
+    if(nombre >= '4')// cuando son  IIBB
+        {  
+            document.getElementById("comboProvincias"+numero).disabled = valor;  
         }
         
         actualizarDetallePago();
@@ -970,20 +971,30 @@ function validaSeleccione(id,mensaje){
   
 }
 
-function actualizarDetallePago(ord_venta,cantidadTipoPago){
+function actualizarDetallePago(ord_venta,cantidadTipoPago,cantIIBB){
     
     //alert("Ord venta "+ord_venta);
 
     ganancias   = parseFloat(document.getElementById("txtImporte1").value);
     iva         = parseFloat(document.getElementById("txtImporte2").value);
-    iibb        = parseFloat(document.getElementById("txtImporte3").value);
-    suss        = parseFloat(document.getElementById("txtImporte4").value);
+    suss        = parseFloat(document.getElementById("txtImporte3").value);
+   // iibb        = parseFloat(document.getElementById("txtImporte4").value);
+    //cargamos los requerimientos IIBB
+        iibb=0.00;
+        numeroRetencion=4;
+     for ($i = 1; $i <= cantIIBB; $i++) 
+     {
+         unImporteIIBB    = parseFloat(document.getElementById("txtImporte"+numeroRetencion).value);
+          iibb=(parseFloat(iibb)+parseFloat(unImporteIIBB) ).toFixed(2);
+          numeroRetencion++;
+     }
+    
     /* Completamos los datos */
     totalDeposito=0.00;
      for ($i = 1; $i <= cantidadTipoPago; $i++) 
      {
          deposito    = parseFloat(document.getElementById("txtImportePago"+$i).value);
-          totalDeposito=(parseFloat(totalDeposito)+parseFloat(deposito) ).toFixed(2)
+          totalDeposito=(parseFloat(totalDeposito)+parseFloat(deposito) ).toFixed(2);
      }
     document.getElementById("txtDeposito").value    = (parseFloat(totalDeposito)).toFixed(2);
     document.getElementById("txtGanancias").value   = (parseFloat(ganancias)).toFixed(2);
@@ -1002,13 +1013,24 @@ function actualizarDetallePago(ord_venta,cantidadTipoPago){
     else
         document.getElementById("botonRegistrar").style.visibility = "visible";   
 }
-      function generarTipoPago(idForm,operacion)
+  function generarTipoPago(idForm,operacion)
 {    if(operacion=='suma')
 	document.getElementById("cantidadTip").value++;
     else
         {
         if(document.getElementById("cantidadTip").value>1)           
           document.getElementById("cantidadTip").value--;      
+        }
+        document.getElementById(idForm).submit();
+}
+
+  function generarIIBB(idForm,operacion)
+{    if(operacion=='suma')
+	document.getElementById("cantidadIIBB").value++;
+    else
+        {
+        if(document.getElementById("cantidadIIBB").value>1)           
+          document.getElementById("cantidadIIBB").value--;      
         }
         document.getElementById(idForm).submit();
 }

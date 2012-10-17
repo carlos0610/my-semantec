@@ -6,6 +6,7 @@
         include("conexion.php");
         include("Modelo/modeloFacturaVenta.php");
         include("Modelo/modeloBanco.php");
+        include("Modelo/modeloProvincias.php");
         $fav_id     =  $_GET["fav_id"]; 
         $ccc_id     =  $_GET["ccc_id"];
         /*TIPOS DE PAGO*/
@@ -15,11 +16,7 @@
         
         /* BANCOS */
         $bancos     = getListarTodoBancos();
-        
-        /* PROVINCIAS */
-        $sql = "SELECT id,nombre FROM provincias ORDER BY nombre";
-        $provincias = mysql_query($sql);
-        
+       
         /* IVA */
         $sql = "SELECT idiva,valor FROM iva WHERE idiva in (2,3)";
         $iva        = mysql_query($sql);
@@ -36,6 +33,15 @@
                   $cantTipoPago=$cantTipoPagogene;            
             }
         
+         /* Cantidad de IIBB */
+        
+        $cantIIBB=1;
+        $cantIIBBgene  =  $_POST["cantidadIIBB"]; 
+        if($cantIIBBgene>0)
+            {
+                  $cantIIBB=$cantIIBBgene;            
+            }   
+            
         /* FACTURA */        
         $factura      = getListadoFacturasPagadasYno($fav_id);
         $fila_factura = mysql_fetch_array($factura);
@@ -54,7 +60,7 @@
   <script type="text/javascript" src="js/jquery.datepick.js"></script>
   <script type="text/javascript" src="js/jquery.datepick-es.js"></script>
   <script type="text/javascript">
- function cargarCalendarios(cant) {
+ function cargarCalendarios(cant, cantIIBB) {
       for ($i = 1; $i <= cant; $i++) {
       /* Pago */
       $('#txtFechaTransferencia'+$i).datepick();
@@ -64,9 +70,12 @@
       /* Retenciones */
       $('#txtFecha1').datepick();   // Ganancias
       $('#txtFecha2').datepick();   // IVA
-      $('#txtFecha3').datepick();   // IIBB
-      $('#txtFecha4').datepick();   // SUSS
-      
+      $('#txtFecha3').datepick();   // SUSS   
+      $numeroRetencion=4;
+      for ($i = 1; $i <= cantIIBB; $i++) {
+         $('#txtFecha'+$numeroRetencion).datepick();   // IIBB
+         $numeroRetencion++;
+      }
   };
   </script>
       
@@ -85,7 +94,7 @@
 }
   </style>
 </head>
-  <body onLoad="cargarCalendarios(<?php echo $cantTipoPago; ?>)">
+  <body onLoad="cargarCalendarios(<?php echo $cantTipoPago; ?>,<?php echo $cantIIBB; ?>)">
 	
   <!-- start main --><!-- start main --><!-- start main --><!-- start main --><!-- start main -->
   <div id="main">
@@ -123,7 +132,7 @@
           </tr>
           <tr>
             <td><big>Factura nro:</big></td>
-            <td><big><b><?php echo $fila_factura["fav_id"]?></b></big></td>
+            <td><big><b><?php echo  getFacturasCodigoWhitID($fila_factura["fav_id"])?>  </b></big></td>
             <td><big>Total Factura:</big></td>
             <td><big><b><?php echo $fila_factura["ord_venta"]?></b></big></td>
             <td>&nbsp;</td>
@@ -134,19 +143,24 @@
             <td>Agregar tipo Pago</td>
 
             <form action="form-alta-pago.php?fav_id=<?php echo $fav_id ?>&cantTipoPago=<?php echo $cantTipoPago ?>&ccc_id=<?php echo $ccc_id ?>" method="post" id="generadorPago">           
-            <td><input name="cantidadTip" type="number" class="campos2" id="cantidadTip" required style="text-align:right" size="12"  min="1" max="30" value="<?php echo $cantTipoPago ?>" readOnly >
-              
+            <td>
+              <input name="cantidadTip" type="number" class="campos2" id="cantidadTip" required style="text-align:right" size="12"  min="1" max="30" value="<?php echo $cantTipoPago ?>" readOnly >           
               <input type="submit" value="+" class="botones"  id="generarBoton" onClick="generarTipoPago('generadorPago','suma')"/>
               <input type="submit" value="- " class="botones"  id="generarBoton" onClick="generarTipoPago('generadorPago','resta')"/>
             </td>
-            <td>&nbsp;</td>
+            <td>Agregar IIBB</td>
+            <td>
+              <input name="cantidadIIBB" type="number" class="campos2" id="cantidadIIBB" required style="text-align:right" size="12"  min="1" max="30" value="<?php echo $cantIIBB ?>" readOnly >           
+              <input type="submit" value="+" class="botones"  id="generarBoton" onClick="generarIIBB('generadorPago','suma')"/>
+              <input type="submit" value="- " class="botones"  id="generarBoton" onClick="generarIIBB('generadorPago','resta')"/></td>
             </form>
-            <td>(Atención: se debe confeccionar la cantidad correcta en primera instancia)               
+          
+            <td>              
             </td>
             <td>&nbsp;</td>
             <td></td>
           </tr>
-          <form action="alta-pago.php?fav_id=<?php echo $fav_id ?>&cantTipoPago=<?php echo $cantTipoPago ?>&ccc_id=<?php echo $ccc_id ?>" method="post" enctype="multipart/form-data" >
+          <form action="alta-pago.php?fav_id=<?php echo $fav_id ?>&cantTipoPago=<?php echo $cantTipoPago ?>&ccc_id=<?php echo $ccc_id ?>&cantIIBB=<?php echo $cantIIBB ?>" method="post" enctype="multipart/form-data" >
            <!--Bucle Generador de Tipos Pagos-->
           
        <?php for ($i = 1; $i <= $cantTipoPago; $i++) { ?>
@@ -296,10 +310,11 @@
                   <?php }?>
               </select>            </td>
             </tr>
+             <!-- SUSS--->
           <tr>
             <td bgcolor="#CDDCDA">&nbsp;</td>
-            <td bgcolor="#CDDCDA"><input type="checkbox" name="chkIIBB" id="chkIIBB" onClick="habilitarRetencionesYActualizarDetalle('chkIIBB',3,'<?php echo $fila_factura["ord_venta"]?>',<?php echo $cantTipoPago; ?>)">
-            IIBB            </td>
+            <td bgcolor="#CDDCDA"><input type="checkbox" name="chkSUSS" id="chkSUSS" onClick="habilitarRetencionesYActualizarDetalle('chkSUSS',3,'<?php echo $fila_factura["ord_venta"]?>',<?php echo $cantTipoPago; ?>)">
+            SUSS            </td>
             <td bgcolor="#CDDCDA">&nbsp;</td>
             </tr>
           <tr>
@@ -315,26 +330,31 @@ Nro :
             <td><input name="txtImporte3" type="text" disabled class="campos2" id="txtImporte3" onChange="actualizarDetallePago('<?php echo $fila_factura["ord_venta"]?>',<?php echo $cantTipoPago ?>)" value="0" size="8" style="text-align:right"></td>
             <td>&nbsp;</td>
             </tr>
+            
+          <!-- IIBB-------------->
+          <?php  $NumeroDeRetencion=4; 
+             for ($i = 1; $i <= $cantIIBB; $i++) { ?>
           <tr>
             <td bgcolor="#CDDCDA">&nbsp;</td>
-            <td bgcolor="#CDDCDA"><input type="checkbox" name="chkSUSS" id="chkSUSS" onClick="habilitarRetencionesYActualizarDetalle('chkSUSS',4,'<?php echo $fila_factura["ord_venta"]?>',<?php echo $cantTipoPago; ?>)">
-            SUSS            </td>
+            <td bgcolor="#CDDCDA"><input type="checkbox" name="chkIIBB<? echo $i ?>" id="chkIIBB<? echo $i ?>" onClick="habilitarRetencionesYActualizarDetalle('chkIIBB<? echo $i ?>',<? echo $NumeroDeRetencion; ?>,'<?php echo $fila_factura["ord_venta"]?>',<?php echo $cantTipoPago; ?>)">
+            IIBB            </td>
             <td bgcolor="#CDDCDA">&nbsp;</td>
             </tr>
           <tr>
             <td>Fecha:</td>
-            <td><input name="txtFecha4" type="text" class="campos2" id="txtFecha4"  size="12"  min="0" required disabled style="text-align:center" /></td>
+            <td><input name="txtFecha<? echo $NumeroDeRetencion ?>" type="text" class="campos2" id="txtFecha<? echo $NumeroDeRetencion ?>"  size="12"  min="0" required disabled style="text-align:center" /></td>
             <td>Prefijo :
-              <input name="txtPrefijo4" type="text" class="campos2" id="txtPrefijo4" style="text-align:right" size="5"  min="0" disabled />
+              <input name="txtPrefijo<? echo $NumeroDeRetencion ?>" type="text" class="campos2" id="txtPrefijo<? echo $NumeroDeRetencion ?>" style="text-align:right" size="5"  min="0" disabled />
 Nro :
-<input name="txtNro4" type="text" class="campos2" id="txtNro4" size="20" disabled required style="text-align:right"></td>
+<input name="txtNro<? echo $NumeroDeRetencion ?>" type="text" class="campos2" id="txtNro<? echo $NumeroDeRetencion ?>" size="20" disabled required style="text-align:right"></td>
             </tr>
           <tr>
             <td>Importe:</td>
-            <td><input name="txtImporte4" type="text" disabled class="campos2" id="txtImporte4" onChange="actualizarDetallePago('<?php echo $fila_factura["ord_venta"]?>',<?php echo $cantTipoPago ?>)" value="0" size="8" style="text-align:right"></td>
+            <td><input name="txtImporte<? echo $NumeroDeRetencion ?>" type="text" disabled class="campos2" id="txtImporte<? echo $NumeroDeRetencion ?>" onChange="actualizarDetallePago('<?php echo $fila_factura["ord_venta"]?>',<?php echo $cantTipoPago ?>,<?php echo $cantIIBB ?>)" value="0" size="8" style="text-align:right"></td>
             <td>Provincia:
-              <select name="comboProvincias" class="campos2" id="comboProvincias" disabled>
+              <select name="comboProvincias<? echo $NumeroDeRetencion ?>" class="campos2" id="comboProvincias<? echo $NumeroDeRetencion ?>" disabled>
                 <?php
+                    $provincias=getProvincias();
                     while ($fila_provincia = mysql_fetch_array($provincias)){
                 ?>
                 <option value="<?php echo $fila_provincia["id"]?>"><?php echo $fila_provincia["nombre"]?> </option>
@@ -342,9 +362,12 @@ Nro :
               </select>
               Jurisdicción: 
               <label>
-              <input name="txtJurisdiccion" type="text" class="campos2" id="txtJurisdiccion" size="9">
+              <input name="txtJurisdiccion<? echo $NumeroDeRetencion ?>" type="text" class="campos2" id="txtJurisdiccion<? echo $NumeroDeRetencion ?>" size="9">
               </label></td>
             </tr>
+            <?php   $NumeroDeRetencion++; 
+            } ?> 
+          <!-- IIBB  FIN--->
           <tr>
             <td colspan="3" bgcolor="#0099CC"><label></label>
             <div align="center"><span class="Estilo1">Detalle del pago</span></div></td>
@@ -370,17 +393,18 @@ Nro :
             </label></td>
             <td>&nbsp;</td>
           </tr>
-          <tr>
-            <td>IIBB</td>
-            <td><label>
-              <input name="txtIIBB" type="text" class="campos2" id="txtIIBB" value="0" disabled style="text-align:right"  size="12">
-            </label></td>
-            <td>&nbsp;</td>
-          </tr>
+
           <tr>
             <td>SUSS</td>
             <td><label>
               <input name="txtSUSS" type="text" class="campos2" id="txtSUSS"  value="0"disabled style="text-align:right"  size="12">
+            </label></td>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td>IIBB</td>
+            <td><label>
+              <input name="txtIIBB" type="text" class="campos2" id="txtIIBB" value="0" disabled style="text-align:right"  size="12">
             </label></td>
             <td>&nbsp;</td>
           </tr>

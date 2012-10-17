@@ -17,8 +17,15 @@
         }
         
 
+        function getFacturasWhitID($fav_id){
+           $sql = "select * from factura_venta Where fav_id=$fav_id";  
+           return $factura = mysql_query($sql);       
+        }
 
-
-
+         function getFacturasCodigoWhitID($fav_id){  
+           $fila=mysql_fetch_array(getFacturasWhitID($fav_id));
+           $codigo=$fila['cod_factura_venta'];
+           return $codigo;
+         }
 
 ?>
