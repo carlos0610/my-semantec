@@ -1,6 +1,6 @@
 <?php
         function getListadoFacturasPagadasYno($fav_id){
-           $sql = "SELECT f.fav_id,SUM(o.ord_venta) as ord_venta
+           $sql = "SELECT f.fav_id,ROUND(SUM(o.ord_venta)*1.21,2) as ord_venta
                 FROM ordenes o,cuentacorriente_cliente cc ,factura_venta f,grupo_ordenes g_o
                 WHERE cc.cli_id = o.cli_id 
                 AND f.fav_id = $fav_id
