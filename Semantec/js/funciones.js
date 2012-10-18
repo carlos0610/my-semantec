@@ -531,7 +531,8 @@ function validarFacturacion(costo,venta,esAbono){
 var estadoEnviadoProveedor = '2';     
 var estadoConfirmarProveedor = '9'; // verificar
 var estadoAprobadoBajoCosto = '3';
-var estadoFinalizadoPendienteFacturacion = '11';  
+var estadoFinalizadoPendienteFacturacion = '11';
+var estadoPresupuestoEnviadoAlCliente    = '5';
 var nombre='frm';
 var estado= document.forms[nombre].est_idDetalle.value;
   
@@ -580,6 +581,14 @@ if((estado == 11)&(costo==0)&(venta==0))
             document.getElementById("texto_respuesta_detalle").textContent = "Fecha Finalizado : ";
         }
             break;
+ case estadoPresupuestoEnviadoAlCliente: { 
+            document.forms[nombre].txtPresupuesto.style.visibility = "visible";
+            document.forms[nombre].txtPresupuesto.disabled = false;
+            document.getElementById("texto_presupuesto_detalle").style.visibility = "visible";
+            document.getElementById("texto_presupuesto_detalle").textContent = "Nro presupuesto : ";
+        } break;
+            
+            
   default:  {
             document.forms[nombre].fecha_detalle.style.visibility = "hidden";
             document.forms[nombre].fecha_detalle.disabled = true;

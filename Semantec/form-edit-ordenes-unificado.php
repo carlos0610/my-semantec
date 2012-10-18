@@ -397,6 +397,13 @@
           </tr>
           
           <tr>
+              <td><label id="texto_presupuesto_detalle"></label></td>
+            <td><input  type="text" class="campos" id="txtPresupuesto"  name="txtPresupuesto"  style="visibility: hidden" disabled/></td>
+            <td></td>
+          </tr>
+          
+          
+          <tr>
             <td>Adelanto</td>
             <td><input type="text" class="campos" id="ord_det_monto" disabled name="ord_det_monto" min="0" required value="0" style="text-align:right" OnKeyUp="return validarReal('ord_det_monto');"  />
                 <span id="errorAdelanto" style="font-family: Verdana, Arial, Helvetica,sans-serif;font-size: 9pt;color: #CC3300;position:relative;visibility:hidden;">Supera al valor costo</span>            </td>
