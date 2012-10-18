@@ -592,7 +592,12 @@ if((estado == 11)&(costo==0)&(venta==0))
   default:  {
             document.forms[nombre].fecha_detalle.style.visibility = "hidden";
             document.forms[nombre].fecha_detalle.disabled = true;
-            document.getElementById("texto_respuesta_detalle").style.visibility = "hidden"; 
+            document.getElementById("texto_respuesta_detalle").style.visibility = "hidden";
+            
+            document.forms[nombre].txtPresupuesto.style.visibility = "hidden";
+            document.forms[nombre].txtPresupuesto.disabled = true;
+            document.getElementById("texto_presupuesto_detalle").style.visibility = "hidden";
+            
         }   
 } 
        
