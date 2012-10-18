@@ -557,13 +557,25 @@ if((estado == 11)&(costo==0)&(venta==0))
             document.forms[nombre].fecha_detalle.style.visibility = "visible";
             document.forms[nombre].fecha_detalle.disabled = false;
             document.getElementById("texto_respuesta_detalle").style.visibility = "visible";
-            document.getElementById("texto_respuesta_detalle").textContent = "Fecha respuesta proveedor";}
+            document.getElementById("texto_respuesta_detalle").textContent = "Fecha respuesta proveedor";
+        
+             /*LIMPIAR-OCULTAR PRESUPUESTO*/
+            document.forms[nombre].txtPresupuesto.style.visibility = "hidden";
+            document.forms[nombre].txtPresupuesto.disabled = true;
+            document.getElementById("texto_presupuesto_detalle").style.visibility = "hidden";
+
+            }
             break;
   case estadoConfirmarProveedor: {
             document.forms[nombre].fecha_detalle.style.visibility = "visible";
             document.forms[nombre].fecha_detalle.disabled = false;
             document.getElementById("texto_respuesta_detalle").style.visibility = "visible";
             document.getElementById("texto_respuesta_detalle").textContent = "Plazo de finalizacion";
+            
+             /*LIMPIAR-OCULTAR PRESUPUESTO*/
+            document.forms[nombre].txtPresupuesto.style.visibility = "hidden";
+            document.forms[nombre].txtPresupuesto.disabled = true;
+            document.getElementById("texto_presupuesto_detalle").style.visibility = "hidden";
 
         }   
             break;
@@ -571,7 +583,12 @@ if((estado == 11)&(costo==0)&(venta==0))
             document.forms[nombre].fecha_detalle.style.visibility = "visible";
             document.forms[nombre].fecha_detalle.disabled = false;
             document.getElementById("texto_respuesta_detalle").style.visibility = "visible";
-            document.getElementById("texto_respuesta_detalle").textContent = "Fecha aprobado : "; 
+            document.getElementById("texto_respuesta_detalle").textContent = "Fecha aprobado : ";
+            
+             /*LIMPIAR-OCULTAR PRESUPUESTO*/
+            document.forms[nombre].txtPresupuesto.style.visibility = "hidden";
+            document.forms[nombre].txtPresupuesto.disabled = true;
+            document.getElementById("texto_presupuesto_detalle").style.visibility = "hidden";
         }  
             break;
   case estadoFinalizadoPendienteFacturacion:{
@@ -579,6 +596,12 @@ if((estado == 11)&(costo==0)&(venta==0))
             document.forms[nombre].fecha_detalle.disabled = false;
             document.getElementById("texto_respuesta_detalle").style.visibility = "visible";
             document.getElementById("texto_respuesta_detalle").textContent = "Fecha Finalizado : ";
+            
+            /*LIMPIAR-OCULTAR PRESUPUESTO*/
+            document.forms[nombre].txtPresupuesto.style.visibility = "hidden";
+            document.forms[nombre].txtPresupuesto.disabled = true;
+            document.getElementById("texto_presupuesto_detalle").style.visibility = "hidden";
+            
         }
             break;
  case estadoPresupuestoEnviadoAlCliente: { 
