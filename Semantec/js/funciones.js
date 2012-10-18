@@ -609,6 +609,12 @@ if((estado == 11)&(costo==0)&(venta==0))
             document.forms[nombre].txtPresupuesto.disabled = false;
             document.getElementById("texto_presupuesto_detalle").style.visibility = "visible";
             document.getElementById("texto_presupuesto_detalle").textContent = "Nro presupuesto : ";
+            
+            /*LIMPIAR-OCULTAR FECHA*/
+            document.forms[nombre].fecha_detalle.style.visibility = "hidden";
+            document.forms[nombre].fecha_detalle.disabled = true;
+            document.getElementById("texto_respuesta_detalle").style.visibility = "hidden";
+            
         } break;
             
             
