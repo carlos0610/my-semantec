@@ -48,7 +48,7 @@
         }
         
         $sql0 = "SELECT ord_codigo, ord_descripcion, o.cli_id,c.cli_nombre,c.sucursal, 
-                prv_id, est_id, ord_alta, ord_plazo,ord_plazo_proveedor, ord_costo, ord_venta ,es_abono, fecha_aprobado_bajocosto,fecha_pendiente_facturacion,rub_id
+                prv_id, est_id, ord_alta, ord_plazo,ord_plazo_proveedor, ord_costo, ord_venta ,es_abono, fecha_aprobado_bajocosto,fecha_pendiente_facturacion,rub_id,presupuesto
                     FROM ordenes o,clientes c 
                     WHERE ord_id = $ord_id
                     AND o.cli_id = c.cli_id";
@@ -265,7 +265,7 @@
           <?php } ?>
           
           
-        <?php if ($fila0["est_id"] ==  3){ /*   */ ?>  
+        <?php if ($fila0["est_id"] ==  3){  ?>  
           <tr>
               <td><label id="texto_respuesta"><?php echo "Fecha aprobado  " ?></label></td>
               <td>
@@ -275,6 +275,20 @@
           </tr>
           
           <?php  } ?>
+          
+          <?php if ($fila0["est_id"] ==  5){  ?>  
+          <tr>
+              <td><label id="texto_respuesta"><?php echo "Nro. Presupuesto  " ?></label></td>
+              <td>
+                  <input type="hidden" class="campos" id="presupuesto" name="presupuesto" value="<?php echo $fila0["presupuesto"]?>"/> 
+                 <?php echo $fila0["presupuesto"]?>              </td>
+            <td></td>
+          </tr>
+          
+          <?php  } ?>
+          
+          
+          
           
          <?php if ($fila0["est_id"] ==  11){/*   */ ?>  
           <tr>
