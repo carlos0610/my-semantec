@@ -398,7 +398,7 @@
           
           <tr>
               <td><label id="texto_presupuesto_detalle"></label></td>
-            <td><input  type="text" class="campos" id="txtPresupuesto"  name="txtPresupuesto"  style="visibility: hidden" disabled/></td>
+            <td><input  type="text" class="campos" id="txtPresupuesto"  name="txtPresupuesto"  style="visibility: hidden"/></td>
             <td></td>
           </tr>
           

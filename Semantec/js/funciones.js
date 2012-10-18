@@ -561,7 +561,6 @@ if((estado == 11)&(costo==0)&(venta==0))
         
              /*LIMPIAR-OCULTAR PRESUPUESTO*/
             document.forms[nombre].txtPresupuesto.style.visibility = "hidden";
-            document.forms[nombre].txtPresupuesto.disabled = true;
             document.getElementById("texto_presupuesto_detalle").style.visibility = "hidden";
 
             }
@@ -574,7 +573,6 @@ if((estado == 11)&(costo==0)&(venta==0))
             
              /*LIMPIAR-OCULTAR PRESUPUESTO*/
             document.forms[nombre].txtPresupuesto.style.visibility = "hidden";
-            document.forms[nombre].txtPresupuesto.disabled = true;
             document.getElementById("texto_presupuesto_detalle").style.visibility = "hidden";
 
         }   
@@ -587,7 +585,6 @@ if((estado == 11)&(costo==0)&(venta==0))
             
              /*LIMPIAR-OCULTAR PRESUPUESTO*/
             document.forms[nombre].txtPresupuesto.style.visibility = "hidden";
-            document.forms[nombre].txtPresupuesto.disabled = true;
             document.getElementById("texto_presupuesto_detalle").style.visibility = "hidden";
         }  
             break;
@@ -599,7 +596,6 @@ if((estado == 11)&(costo==0)&(venta==0))
             
             /*LIMPIAR-OCULTAR PRESUPUESTO*/
             document.forms[nombre].txtPresupuesto.style.visibility = "hidden";
-            document.forms[nombre].txtPresupuesto.disabled = true;
             document.getElementById("texto_presupuesto_detalle").style.visibility = "hidden";
             
         }
@@ -608,7 +604,7 @@ if((estado == 11)&(costo==0)&(venta==0))
             document.forms[nombre].txtPresupuesto.style.visibility = "visible";
             document.forms[nombre].txtPresupuesto.disabled = false;
             document.getElementById("texto_presupuesto_detalle").style.visibility = "visible";
-            document.getElementById("texto_presupuesto_detalle").textContent = "Nro presupuesto : ";
+            document.getElementById("texto_presupuesto_detalle").textContent = "Nro. Presupuesto  ";
             
             /*LIMPIAR-OCULTAR FECHA*/
             document.forms[nombre].fecha_detalle.style.visibility = "hidden";

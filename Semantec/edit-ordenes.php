@@ -8,7 +8,7 @@
         $rub_id = $_POST["rub_id"];
         $prv_id = $_POST["prv_idEdit"];  
         $est_id = $_POST["est_idEdit"];  
-        
+        $nro_presupuesto = $_POST["txtPresupuesto"];
         $fecha = gfecha($_POST["fecha"]); 
         $ord_costo = $_POST["ord_costo"];
         $ord_venta = $_POST["ord_venta"]; 
@@ -65,9 +65,17 @@
                                         if ($est_id == 11){ //estadoFinalizadoPendienteFacturacion
                                         $sql .=" fecha_pendiente_facturacion = '$fecha', ";
                                         }
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
                                         $sql .= " ord_costo = $ord_costo,
                                         ord_venta = $ord_venta
                                         WHERE ord_id = $ord_id;";
+                                        
+                                        
         
                                         
 	mysql_query($sql);//modificacion de la orden
@@ -236,6 +244,10 @@
     {$sql = "UPDATE ordenes SET fecha_pendiente_facturacion = $fecha where ord_id = $ord_id"; $result=mysql_query($sql); echo $sql;break;}
     case 3://estadoAprobadoBajoCosto
     { $sql = "UPDATE ordenes SET fecha_aprobado_bajocosto = $fecha where ord_id = $ord_id"; $result=mysql_query($sql);echo $sql;break;}
+    
+    case 5://estadoAprobadoBajoCosto
+    { $sql = "UPDATE ordenes SET presupuesto = '$nro_presupuesto' where ord_id = $ord_id"; $result=mysql_query($sql);echo $sql;break;}
+    
 }
         
         

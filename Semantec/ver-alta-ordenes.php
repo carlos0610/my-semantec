@@ -79,7 +79,7 @@
         
         $sql0 = "SELECT ord_codigo, ord_descripcion, cli_id, prv_id,
                         est_id, ord_alta, ord_plazo, ord_costo, ord_venta,es_abono,
-                        fecha_aprobado_bajocosto, fecha_pendiente_facturacion,rub_id
+                        fecha_aprobado_bajocosto, fecha_pendiente_facturacion,rub_id,presupuesto
                   FROM ordenes WHERE ord_id = $ord_id";
         $resultado0 = mysql_query($sql0);
         $fila0 = mysql_fetch_array($resultado0);  // datos de la orden
@@ -231,6 +231,15 @@
             <td><?php echo(tfecha($fila0["fecha_pendiente_facturacion"]));?> </td>
           </tr>
           <?php } ?> 
+          
+          
+          <?php  if($fila0["presupuesto"] != "") {?>
+          <tr>
+            <td>Nro. Presupuesto</td>
+            <td><?php echo $fila0["presupuesto"];?> </td>
+          </tr>
+          <?php } ?> 
+          
           
           
           <tr>
