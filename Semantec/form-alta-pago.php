@@ -43,7 +43,7 @@
             }   
             
         /* FACTURA */        
-        $factura      = getListadoFacturasPagadasYno($fav_id);
+        $factura      = getTotalAPagarConIva($fav_id);
         $fila_factura = mysql_fetch_array($factura);
         
 
@@ -134,7 +134,7 @@
             <td><big>Factura nro:</big></td>
             <td><big><b><?php echo  getFacturasCodigoWhitID($fila_factura["fav_id"])?>  </b></big></td>
             <td><big>Total Factura:</big></td>
-            <td><big><b><?php echo $fila_factura["ord_venta"]?></b></big></td>
+            <td><big><b><?php echo $fila_factura["total"]?></b></big></td>
             <td>&nbsp;</td>
             <td></td>
           </tr>
@@ -237,7 +237,7 @@
           <tr>
             <td>Importe</td>
 
-            <td><input name="txtImportePago<?php echo $i ?>" type="text" disabled required class="campos2" id="txtImportePago<?php echo $i ?>" onChange="actualizarDetallePago('<?php echo $fila_factura["ord_venta"]?>',<?php echo $cantTipoPago; ?>)" value="0" style="text-align:right">
+            <td><input name="txtImportePago<?php echo $i ?>" type="text" disabled required class="campos2" id="txtImportePago<?php echo $i ?>" onChange="actualizarDetallePago('<?php echo $fila_factura["total"]?>',<?php echo $cantTipoPago; ?>)" value="0" style="text-align:right">
             </td>
 
             <td>Adjuntar archivo</td>
@@ -262,7 +262,7 @@
             <td width="18%"></td>
           <tr>
             <td bgcolor="#CDDCDA">&nbsp;</td>
-            <td bgcolor="#CDDCDA"><input type="checkbox" name="chkGanancias" id="chkGanancias" onClick="habilitarRetencionesYActualizarDetalle('chkGanancias',1,'<?php echo $fila_factura["ord_venta"]?>',<?php echo $cantTipoPago; ?>)">
+            <td bgcolor="#CDDCDA"><input type="checkbox" name="chkGanancias" id="chkGanancias" onClick="habilitarRetencionesYActualizarDetalle('chkGanancias',1,'<?php echo $fila_factura["total"]?>',<?php echo $cantTipoPago; ?>)">
             Ganancias            </td>
             <td width="75%" bgcolor="#CDDCDA">&nbsp;</td>
             </tr>          
@@ -278,13 +278,13 @@
           <tr>
             <td>Importe:</td>
             <td><label>
-                    <input name="txtImporte1" type="text" disabled class="campos2" id="txtImporte1" onChange="actualizarDetallePago('<?php echo $fila_factura["ord_venta"]?>',<?php echo $cantTipoPago; ?>)" value="0" size="8" style="text-align:right">
+                    <input name="txtImporte1" type="text" disabled class="campos2" id="txtImporte1" onChange="actualizarDetallePago('<?php echo $fila_factura["total"]?>',<?php echo $cantTipoPago; ?>)" value="0" size="8" style="text-align:right">
             </label></td>
             <td>&nbsp;</td>
             </tr>
           <tr>
             <td bgcolor="#CDDCDA">&nbsp;</td>
-            <td bgcolor="#CDDCDA"><input type="checkbox" name="chkIva" id="chkIva" onClick="habilitarRetencionesYActualizarDetalle('chkIva',2,'<?php echo $fila_factura["ord_venta"]?>',<?php echo $cantTipoPago; ?>)">
+            <td bgcolor="#CDDCDA"><input type="checkbox" name="chkIva" id="chkIva" onClick="habilitarRetencionesYActualizarDetalle('chkIva',2,'<?php echo $fila_factura["total"]?>',<?php echo $cantTipoPago; ?>)">
             IVA            </td>
             <td bgcolor="#CDDCDA">&nbsp;</td>
             </tr>
@@ -299,7 +299,7 @@
             </tr>
           <tr>
             <td>Importe:</td>
-            <td><input name="txtImporte2" type="text" disabled class="campos2" id="txtImporte2" onChange="actualizarDetallePago('<?php echo $fila_factura["ord_venta"]?>',<?php echo $cantTipoPago ?>)" value="0" size="8" style="text-align:right"></td>
+            <td><input name="txtImporte2" type="text" disabled class="campos2" id="txtImporte2" onChange="actualizarDetallePago('<?php echo $fila_factura["total"]?>',<?php echo $cantTipoPago ?>)" value="0" size="8" style="text-align:right"></td>
             <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; %  
               
               <select name="comboIva" class="campos2" id="comboIva" disabled required>
@@ -313,7 +313,7 @@
              <!-- SUSS--->
           <tr>
             <td bgcolor="#CDDCDA">&nbsp;</td>
-            <td bgcolor="#CDDCDA"><input type="checkbox" name="chkSUSS" id="chkSUSS" onClick="habilitarRetencionesYActualizarDetalle('chkSUSS',3,'<?php echo $fila_factura["ord_venta"]?>',<?php echo $cantTipoPago; ?>)">
+            <td bgcolor="#CDDCDA"><input type="checkbox" name="chkSUSS" id="chkSUSS" onClick="habilitarRetencionesYActualizarDetalle('chkSUSS',3,'<?php echo $fila_factura["total"]?>',<?php echo $cantTipoPago; ?>)">
             SUSS            </td>
             <td bgcolor="#CDDCDA">&nbsp;</td>
             </tr>
@@ -327,7 +327,7 @@ Nro :
             </tr>
           <tr>
             <td>Importe:</td>
-            <td><input name="txtImporte3" type="text" disabled class="campos2" id="txtImporte3" onChange="actualizarDetallePago('<?php echo $fila_factura["ord_venta"]?>',<?php echo $cantTipoPago ?>)" value="0" size="8" style="text-align:right"></td>
+            <td><input name="txtImporte3" type="text" disabled class="campos2" id="txtImporte3" onChange="actualizarDetallePago('<?php echo $fila_factura["total"]?>',<?php echo $cantTipoPago ?>)" value="0" size="8" style="text-align:right"></td>
             <td>&nbsp;</td>
             </tr>
             
@@ -336,7 +336,7 @@ Nro :
              for ($i = 1; $i <= $cantIIBB; $i++) { ?>
           <tr>
             <td bgcolor="#CDDCDA">&nbsp;</td>
-            <td bgcolor="#CDDCDA"><input type="checkbox" name="chkIIBB<? echo $i ?>" id="chkIIBB<? echo $i ?>" onClick="habilitarRetencionesYActualizarDetalle('chkIIBB<? echo $i ?>',<? echo $NumeroDeRetencion; ?>,'<?php echo $fila_factura["ord_venta"]?>',<?php echo $cantTipoPago; ?>)">
+            <td bgcolor="#CDDCDA"><input type="checkbox" name="chkIIBB<? echo $i ?>" id="chkIIBB<? echo $i ?>" onClick="habilitarRetencionesYActualizarDetalle('chkIIBB<? echo $i ?>',<? echo $NumeroDeRetencion; ?>,'<?php echo $fila_factura["total"]?>',<?php echo $cantTipoPago; ?>)">
             IIBB            </td>
             <td bgcolor="#CDDCDA">&nbsp;</td>
             </tr>
@@ -350,7 +350,7 @@ Nro :
             </tr>
           <tr>
             <td>Importe:</td>
-            <td><input name="txtImporte<? echo $NumeroDeRetencion ?>" type="text" disabled class="campos2" id="txtImporte<? echo $NumeroDeRetencion ?>" onChange="actualizarDetallePago('<?php echo $fila_factura["ord_venta"]?>',<?php echo $cantTipoPago ?>,<?php echo $cantIIBB ?>)" value="0" size="8" style="text-align:right"></td>
+            <td><input name="txtImporte<? echo $NumeroDeRetencion ?>" type="text" disabled class="campos2" id="txtImporte<? echo $NumeroDeRetencion ?>" onChange="actualizarDetallePago('<?php echo $fila_factura["total"]?>',<?php echo $cantTipoPago ?>,<?php echo $cantIIBB ?>)" value="0" size="8" style="text-align:right"></td>
             <td>Provincia:
               <select name="comboProvincias<? echo $NumeroDeRetencion ?>" class="campos2" id="comboProvincias<? echo $NumeroDeRetencion ?>" disabled>
                 <?php

@@ -2,7 +2,6 @@
     $titulo = "Listado de clientes.";
         include("validar.php");
         include("funciones.php");
-
         include("conexion.php");
 
         $sql = "SELECT  cli_id, cli_nombre FROM clientes WHERE estado=1 and sucursal_id is null order by cli_nombre";
@@ -11,7 +10,8 @@
         
         /* LISTADO DE MOVIMIENTOS DE CUENTAS CORRIENTES DE CLIENTE*/
         
-        $sql0 = "SELECT distinct (ccc_id),c.cli_id,c.cli_nombre,c.sucursal,cc.fav_id,sum(o.ord_venta) as 'Monto',f.fav_fecha_pago,f.usu_nombre  from detalle_corriente_cliente cc, clientes c, factura_venta f, ordenes o,grupo_ordenes g_o
+        $sql0 = "SELECT distinct (ccc_id),c.cli_id,c.cli_nombre,c.sucursal,cc.fav_id,f.cod_factura_venta,sum(o.ord_venta) as 'Monto',f.fav_fecha_pago,u.usu_nombre  
+                FROM detalle_corriente_cliente cc, clientes c, factura_venta f, ordenes o,grupo_ordenes g_o,cobros co,usuarios u
                 WHERE
                 cc.fav_id  	= f.fav_id
                 AND f.gru_id  	= g_o.gru_id
@@ -19,6 +19,8 @@
                 AND o.cli_id	= c.cli_id
                 AND c.cli_id  in (SELECT cli_id from clientes where estado = 1)
                 AND cc.estado = 1
+                AND co.fav_id = cc.fav_id
+                AND u.usu_id  = co.usu_id
                 group by f.fav_id
                 order by fav_fecha_pago desc;";
         
@@ -28,17 +30,22 @@
         
         
         /* PAGINACIÓN */
-        $tamPag=10;
+        $tamPag=10;       
         include("paginado.php");
         
-        $sql = "SELECT distinct (ccc_id),c.cli_nombre,cc.fav_id,sum(o.ord_venta) as 'Monto',f.fav_fecha_pago  from detalle_corriente_cliente cc, clientes c, factura_venta f, ordenes o,grupo_ordenes g_o
+        $sql = "SELECT distinct (ccc_id),c.cli_id,c.cli_nombre,c.sucursal,cc.fav_id,f.cod_factura_venta,sum(o.ord_venta) as 'Monto',f.fav_fecha_pago,u.usu_nombre  
+                FROM detalle_corriente_cliente cc, clientes c, factura_venta f, ordenes o,grupo_ordenes g_o,cobros co,usuarios u
                 WHERE
                 cc.fav_id  	= f.fav_id
-                AND f.gru_id  		= g_o.gru_id
+                AND f.gru_id  	= g_o.gru_id
                 AND g_o.gru_id 	= o.gru_id
-                AND o.cli_id	   = c.cli_id
+                AND o.cli_id	= c.cli_id
+                AND c.cli_id  in (SELECT cli_id from clientes where estado = 1)
+                AND cc.estado = 1
+                AND co.fav_id = cc.fav_id
+                AND u.usu_id  = co.usu_id
                 group by f.fav_id
-                order by fav_fecha_pago desc;";
+                order by fav_fecha_pago desc";
         $sql .= " LIMIT ".$limitInf.",".$tamPag;
         $resultado = mysql_query($sql);
         //$cantidad = mysql_num_rows($resultado);
@@ -58,6 +65,14 @@
 <?php
     include("encabezado-main.php");
 ?>    
+      
+  <script>
+          function transferirFiltros(pagina)
+{    
+	document.getElementById("filtro").action="form-seleccionar-cliente.php?pagina="+pagina;
+	document.getElementById("filtro").submit();
+}
+  </script>    
   </head>
   <body>
 	
@@ -145,7 +160,7 @@
             </a>          
             </td>
             <td><?php echo(utf8_encode($fila["sucursal"]));?></td>
-            <td align="center"><?php echo $fila["fav_id"];?></td>          
+            <td align="center"><?php echo $fila["cod_factura_venta"];?></td>          
             <td><?php echo $fila["Monto"];?></td>     
             <td width="115"><?php echo $fila[fav_fecha_pago];?> </td>
             <td width="95" align="center"><?php echo $fila[usu_nombre]; ?></td>

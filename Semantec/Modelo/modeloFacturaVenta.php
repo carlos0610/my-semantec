@@ -27,5 +27,10 @@
            $codigo=$fila['cod_factura_venta'];
            return $codigo;
          }
+         
+         function getTotalAPagarConIva($fav_id){
+             $sql = "SELECT fav_id,ROUND(det_fav_precio*1.21,2) AS total FROM detalle_factura_venta WHERE fav_id = $fav_id;";
+             return $factura = mysql_query($sql);       
+         }
 
 ?>
