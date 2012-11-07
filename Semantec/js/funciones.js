@@ -203,6 +203,25 @@ function habilitarFecha(formulario){
     document.forms[nombre].ord_abono_fecha.disabled = valor;   
 }
 
+function habilitarFechaOT(formulario){
+    
+    var nombre = formulario;
+    var valor = true;    
+    if(document.forms[nombre].ord_checkOT.checked){ 
+        valor = false;
+         document.getElementById("fecha_ot").setAttribute('readOnly','readonly');
+         document.getElementById("fecha_ot").focus();
+        }
+        else
+            {
+               document.getElementById("fecha_ot").removeAttribute('readOnly');
+            }
+    document.forms[nombre].fecha_ot.disabled = valor;   
+}
+
+
+
+
 function habilitarRetenciones(formulario,numero){
     
     var nombre = formulario;
@@ -568,11 +587,12 @@ if((estado == 11)&(costo==0)&(venta==0))
             document.getElementById("texto_respuesta_detalle").style.visibility = "visible";
             document.getElementById("texto_respuesta_detalle").textContent = "Fecha respuesta proveedor";
         
-            /*MOSTRAR LABEL Y FECHA DE RECEPCION OT*/
+            /*MOSTRAR LABEL , CHECKBOX Y FECHA DE RECEPCION OT*/
             document.forms[nombre].fecha_ot.style.visibility = "visible";
             document.forms[nombre].fecha_ot.disabled = true;
             document.getElementById("texto_fecha_ot").style.visibility = "visible";
-            document.getElementById("texto_fecha_ot").textContent = "Recepcion OT : ";
+            document.getElementById("texto_fecha_ot").textContent = "Recepción OT : ";
+            document.getElementById("ord_checkOT").style.visibility = "visible";
         
         
         
@@ -592,7 +612,8 @@ if((estado == 11)&(costo==0)&(venta==0))
             document.forms[nombre].fecha_ot.style.visibility = "visible";
             document.forms[nombre].fecha_ot.disabled = true;
             document.getElementById("texto_fecha_ot").style.visibility = "visible";
-            document.getElementById("texto_fecha_ot").textContent = "Recepcion OT : ";
+            document.getElementById("texto_fecha_ot").textContent = "Recepción OT : ";
+            document.getElementById("ord_checkOT").style.visibility = "visible";
             
             
             
@@ -613,7 +634,8 @@ if((estado == 11)&(costo==0)&(venta==0))
             document.forms[nombre].fecha_ot.style.visibility = "visible";
             document.forms[nombre].fecha_ot.disabled = true;
             document.getElementById("texto_fecha_ot").style.visibility = "visible";
-            document.getElementById("texto_fecha_ot").textContent = "Recepcion OT : ";
+            document.getElementById("texto_fecha_ot").textContent = "Recepción OT : ";
+            document.getElementById("ord_checkOT").style.visibility = "visible";
            
            
              /*LIMPIAR-OCULTAR PRESUPUESTO*/
@@ -631,7 +653,8 @@ if((estado == 11)&(costo==0)&(venta==0))
             document.forms[nombre].fecha_ot.style.visibility = "visible";
             document.forms[nombre].fecha_ot.disabled = true;
             document.getElementById("texto_fecha_ot").style.visibility = "visible";
-            document.getElementById("texto_fecha_ot").textContent = "Recepcion OT : ";
+            document.getElementById("texto_fecha_ot").textContent = "Recepción OT : ";
+            document.getElementById("ord_checkOT").style.visibility = "visible";
             
             /*LIMPIAR-OCULTAR PRESUPUESTO*/
             document.forms[nombre].txtPresupuesto.style.visibility = "hidden";
@@ -646,11 +669,12 @@ if((estado == 11)&(costo==0)&(venta==0))
             document.getElementById("texto_presupuesto_detalle").textContent = "Nro. Presupuesto  ";
             
             
-            //document.forms[nombre].texto_fecha_ot.style.visibility = "visible";
-            //document.forms[nombre].texto_fecha_ot.style.disabled = "false";
+             /*MOSTRAR LABEL Y FECHA DE RECEPCION OT*/
             document.forms[nombre].fecha_ot.style.visibility = "visible";
+            document.forms[nombre].fecha_ot.disabled = true;
             document.getElementById("texto_fecha_ot").style.visibility = "visible";
-            
+            document.getElementById("texto_fecha_ot").textContent = "Recepción OT : ";
+            document.getElementById("ord_checkOT").style.visibility = "visible";
             
             
             /*LIMPIAR-OCULTAR FECHA*/
@@ -674,15 +698,18 @@ if((estado == 11)&(costo==0)&(venta==0))
                        
                          /*MOSTRAR LABEL Y FECHA DE RECEPCION OT*/
                         document.forms[nombre].fecha_ot.style.visibility = "visible";
-                        document.forms[nombre].fecha_ot.disabled = false;
+                        document.forms[nombre].fecha_ot.disabled = true;
                         document.getElementById("texto_fecha_ot").style.visibility = "visible";
-                        document.getElementById("texto_fecha_ot").textContent = "Recepcion OT : ";
+                        document.getElementById("texto_fecha_ot").textContent = "Recepción OT : ";
+                        document.getElementById("ord_checkOT").style.visibility = "visible";
                 } else {
                         /*OCULTAR LABEL Y FECHA DE RECEPCION OT*/
+                        
                         document.forms[nombre].fecha_ot.style.visibility = "hidden";
                         document.forms[nombre].fecha_ot.disabled = true;
                         document.getElementById("texto_fecha_ot").style.visibility = "hidden";
-                        document.getElementById("texto_fecha_ot").textContent = "Recepcion OT : "; 
+                        document.getElementById("texto_fecha_ot").textContent = "Recepción OT : "; 
+                        document.getElementById("ord_checkOT").style.visibility = "hidden";
                     
                     
                 }
