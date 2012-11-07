@@ -65,6 +65,8 @@
 					    	compras decimal(10,2),
 					    	saldo_c decimal(10,2),
 					    	costo_abono decimal(10,2),
+                                                fecha_recepcion_ot date,
+                                                retraso_ot integer,
 					    	PRIMARY KEY  (`ord_id`)
 					    
 					      )";  
@@ -80,7 +82,7 @@
                        round (o.ord_costo,2) as presupuesto ,
                        o.ord_costo - sum(od.ord_det_monto) as Saldo,
                        0,
-                       round (o.ord_costo,2) as presupuesto,0 
+                       round (o.ord_costo,2) as presupuesto,0 ,o.fecha_recepcion_ot,datediff(now(),o.fecha_recepcion_ot)
                 FROM ordenes o, ordenes_detalle od,clientes c,ubicacion u,provincias p,localidades l
                 WHERE 
                 o.ord_id IN (select ord_id from ordenes where prv_id = $prv_id AND estado = 1)
@@ -174,12 +176,12 @@
              
         }
         
-        if (isset($_POST["filtrar2"])){
+        if (isset($_POST["filtro_ot"])){
             $desde = $_POST["fecha_inicio"];
             $hasta = $_POST["fecha_fin"];
-            $desde = gfecha($desde);
-            $hasta = gfecha($hasta);
-            $sql.=" WHERE est_id = 11 AND ord_det_fecha BETWEEN convert('$desde',datetime) AND convert('$hasta 23:59:59',datetime)";
+            $desde1 = gfecha($desde);
+            $hasta1 = gfecha($hasta);
+            $sql.=" WHERE fecha_recepcion_ot BETWEEN convert('$desde1',datetime) AND convert('$hasta1 23:59:59',datetime)";
         }
        
        $resultado = mysql_query($sql);
@@ -220,6 +222,13 @@
        $sql = "DROP TABLE tabla_temp3;";
        mysql_query($sql);
        
+       /*OBTENEMOS EL PARAMETRO DE FECHA DE VENCIMIENTO DE OT*/
+       
+       $sql = "SELECT valor FROM parametros WHERE par_id = 3";
+       $result = mysql_query($sql);
+       $vencimiento_ot = mysql_fetch_array($result);
+       
+       
        mysql_close();
         
         
@@ -252,7 +261,7 @@
         /*Armamos la fecha para setear el primer dia del mes por defecto como -fecha de inicio- */
                 var primerDiaDelMesActual =("01/"+mes+"/"+anho);
       
-      $("#fecha_inicio").datepick("setDate" , primerDiaDelMesActual);
+     // $("#fecha_inicio").datepick("setDate" , primerDiaDelMesActual);
   })
   
   $(function() {
@@ -378,18 +387,18 @@
      <td width="40%">&nbsp;</td>
    </tr>
    <tr>
-     <td colspan="5"><h2>Filtrar órdenes finalizadas (pendiente de facturación)</h2></td>
+     <td colspan="5"><h2>Filtrar órdenes por fecha de recepción de OT</h2></td>
      </tr>
    <tr>
      <td>Desde</td>
      <td><label>
-       <input type="text" name="fecha_inicio" id="fecha_inicio">
+       <input type="text" name="fecha_inicio" id="fecha_inicio" <?php if (isset($_POST["filtro_ot"])){ ?> value="<?php echo $desde;?>" <?php } ?>>
      </label></td>
      <td width="9%">Hasta</td>
      <td width="24%"><label>
-     <input type="text" name="fecha_fin" id="fecha_fin">
+             <input type="text" name="fecha_fin" id="fecha_fin" <?php if (isset($_POST["filtro_ot"])){ ?> value="<?php echo $hasta;?>" <?php } ?>>
      </label></td>
-     <td><input type="submit" name="filtrar2" id="filtrar2" value="Filtrar" class="botones" onClick=""></td>
+     <td><input type="submit" name="filtro_ot" id="filtro_ot" value="Filtrar" class="botones" onClick=""></td>
    </tr>
    </table>
      </form>
@@ -398,14 +407,14 @@
    
    <div id="contenedor" style="height:auto;">
        <form id="filtro" name="filtro" action="ver-corriente-proveedor.php" method="POST">
-      <h2>Cuenta corriente de <?php echo utf8_encode($fila_datos_proveedor["prv_nombre"]);?></h2>
+      <h2>Cuenta corriente de <?php echo utf8_encode($fila_datos_proveedor["prv_nombre"]);?>  - <br/><?php if (isset($_POST["filtro_ot"])) echo "Viendo OT recibidas desde el $desde hasta $hasta";?></h2>
 
 <table class="listadosMasAncho" cellpadding="5">
           <tr class="titulo">
             <td width="190">Código de orden</td>
             <td width="190">Cliente</td>
             <td width="700">Descripción</td>
-            <td width="88">Actualizado el día</td>
+            <td width="88">Recepción OT</td>
             <td width="100">Ord costo</td>
             <td width="100">Abono</td>
             <td width="100">Adelantos</td>           
@@ -420,16 +429,21 @@
           $totalRestaFacturar=0;
           while($fila = mysql_fetch_array($resultado)){
   ?>
-          <tr class="lista" bgcolor="<?php echo($colores[$i]);?>">
+          <tr class="lista" <?php if($fila["saldo_a"] != 0 && $fila["retraso_ot"] > $vencimiento_ot["valor"]){?> bgcolor="66FF99" <?php }else {?> bgcolor="<?php echo($colores[$i]);}?>">
+              
+              
+              
+              
+              
                 <td><a href="lista-req-ordenes.php?orden=<?php echo($fila["ord_codigo"]);?>&action=1" target="_blank"><?php echo($fila["ord_codigo"]);?></a></td>
                 <td><a href="ver-alta-clientes.php?cli_id=<?php echo($fila["cli_id"]);?>&action=0"><?php echo(utf8_encode($fila["cli_nombre"]));?> (<?php echo(utf8_encode($fila["provincia"]));?>/<?php echo(utf8_encode($fila["sucursal"]));?>)</a></td>
                 <td>
                     <?php echo(utf8_encode($fila["ord_descripcion"]));?>
                 </td>
-                <td>
+                <td style="text-align: center;">
                     <?php 
-                        if($fila["ord_det_fecha"]!='')
-                            {echo tfecha($fila["ord_det_fecha"]);}
+                        if($fila["fecha_recepcion_ot"]!='')
+                            {echo tfecha($fila["fecha_recepcion_ot"]);}
                         else
                             {echo '-';} 
                      ?>
@@ -459,7 +473,7 @@
                     <?php // SALDO
                           $saldoValor=$fila["saldo_a"];
                           $totalSaldoValor+=$saldoValor;
-                          echo number_format($saldoValor, 2, '.', ' '); ?>
+                          echo number_format($saldoValor, 2, ',', '.'); ?>
                 </td>
                 <td style="text-align:right;">
                     <?php  // FACTURADO

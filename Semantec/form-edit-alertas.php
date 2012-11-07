@@ -5,7 +5,7 @@
         include("conexion.php");
         
         
-        $sql = "SELECT par_id,valor FROM parametros";
+        $sql = "SELECT par_id,valor FROM parametros where estado = 1";
         $resultado = mysql_query($sql);
         
         
@@ -94,6 +94,20 @@
             día/s antes</label></td>
             <td></td>
           </tr>
+          <?php $fila = mysql_fetch_array($resultado);?>
+          <input type="hidden" name="alerta3" value="<?php echo $fila["par_id"]?>">
+          <tr>
+            <td>Vencimiento de las OT recibidas :</td>  
+            <td><label>
+              <input type="text" class="campos2" id="alerta_ot" name="alerta_ot" required value="<?php echo $fila["valor"]?>"/>
+            día/s</label></td>
+            <td></td>
+          </tr>
+          
+          
+          
+          
+          
           <tr>
             <td>&nbsp;</td>
             <td>

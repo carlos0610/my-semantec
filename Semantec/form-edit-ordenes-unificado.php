@@ -48,7 +48,7 @@
         }
         
         $sql0 = "SELECT ord_codigo, ord_descripcion, o.cli_id,c.cli_nombre,c.sucursal, 
-                prv_id, est_id, ord_alta, ord_plazo,ord_plazo_proveedor, ord_costo, ord_venta ,es_abono, fecha_aprobado_bajocosto,fecha_pendiente_facturacion,rub_id,presupuesto
+                prv_id, est_id, ord_alta, ord_plazo,ord_plazo_proveedor, ord_costo, ord_venta ,es_abono, fecha_aprobado_bajocosto,fecha_pendiente_facturacion,rub_id,presupuesto,fecha_recepcion_ot
                     FROM ordenes o,clientes c 
                     WHERE ord_id = $ord_id
                     AND o.cli_id = c.cli_id";
@@ -101,6 +101,7 @@
       $('#fecha').datepick(); 
       $('#fecha_detalle').datepick(); 
       $('#ord_abono_fecha').datepick();
+      $('#fecha_ot').datepick();
   });
   </script>    
   
@@ -392,9 +393,15 @@
                       
           <tr>
               <td><label id="texto_respuesta_detalle"></label></td>
-            <td><input  type="text" class="campos" id="fecha_detalle"  name="fecha_detalle"  style="visibility: hidden" disabled/></td>
+            <td><input  type="text" class="campos" id="fecha_detalle"  name="fecha_detalle" disabled="disabled"  style="visibility: hidden;" /></td>
             <td></td>
           </tr>
+          
+          <tr>
+              <td><label id="texto_fecha_ot"></label></td>
+            <td><input  type="text" class="campos" id="fecha_ot"  name="fecha_ot"  style="visibility: hidden;" <?php if($fila0["fecha_recepcion_ot"]==''){?> value="<?php echo date("d/m/Y");?>" <?php }  else { ?>value="<?php echo tfecha($fila0["fecha_recepcion_ot"]);?>" <?php } ?>  /></td>
+            <td></td>
+          </tr>  
           
           <tr>
               <td><label id="texto_presupuesto_detalle"></label></td>

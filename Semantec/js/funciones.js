@@ -528,11 +528,20 @@ function validarFacturacion(costo,venta,esAbono){
 //Constantes de estado
 //var estado= document.getElementById("est_id").value;
 
-var estadoEnviadoProveedor = '2';     
-var estadoConfirmarProveedor = '9'; // verificar
-var estadoAprobadoBajoCosto = '3';
-var estadoFinalizadoPendienteFacturacion = '11';
-var estadoPresupuestoEnviadoAlCliente    = '5';
+var estadoIngresoDeOrden                    = '1';
+var estadoEnviadoProveedor                  = '2';     
+var estadoAprobadoBajoCosto                 = '3';
+var estadoEstadoRespuestaDelProveedor       = '4';
+var estadoPresupuestoEnviadoAlCliente       = '5';
+var estadoRechazadoParaRenegociacion        = '6';
+var estadoRenegociacion                     = '7';
+var estadoRechazado                         = '8';
+var estadoAprobado                          = '9'; // verificar
+var estadoConfirmacionAlProveedor           = '10';
+var estadoFinalizadoPendienteFacturacion    = '11';
+var estadoFinalizadoFacturado               = '12';
+var estadoFinalizadoPago                    = '14'; //El estado 13 esta eliminado
+
 var nombre='frm';
 var estado= document.forms[nombre].est_idDetalle.value;
   
@@ -559,17 +568,34 @@ if((estado == 11)&(costo==0)&(venta==0))
             document.getElementById("texto_respuesta_detalle").style.visibility = "visible";
             document.getElementById("texto_respuesta_detalle").textContent = "Fecha respuesta proveedor";
         
+            /*MOSTRAR LABEL Y FECHA DE RECEPCION OT*/
+            document.forms[nombre].fecha_ot.style.visibility = "visible";
+            document.forms[nombre].fecha_ot.disabled = true;
+            document.getElementById("texto_fecha_ot").style.visibility = "visible";
+            document.getElementById("texto_fecha_ot").textContent = "Recepcion OT : ";
+        
+        
+        
              /*LIMPIAR-OCULTAR PRESUPUESTO*/
             document.forms[nombre].txtPresupuesto.style.visibility = "hidden";
             document.getElementById("texto_presupuesto_detalle").style.visibility = "hidden";
 
             }
             break;
-  case estadoConfirmarProveedor: {
+  case estadoConfirmacionAlProveedor: {
             document.forms[nombre].fecha_detalle.style.visibility = "visible";
             document.forms[nombre].fecha_detalle.disabled = false;
             document.getElementById("texto_respuesta_detalle").style.visibility = "visible";
             document.getElementById("texto_respuesta_detalle").textContent = "Plazo de finalizacion";
+            
+            /*MOSTRAR LABEL Y FECHA DE RECEPCION OT*/
+            document.forms[nombre].fecha_ot.style.visibility = "visible";
+            document.forms[nombre].fecha_ot.disabled = true;
+            document.getElementById("texto_fecha_ot").style.visibility = "visible";
+            document.getElementById("texto_fecha_ot").textContent = "Recepcion OT : ";
+            
+            
+            
             
              /*LIMPIAR-OCULTAR PRESUPUESTO*/
             document.forms[nombre].txtPresupuesto.style.visibility = "hidden";
@@ -582,7 +608,14 @@ if((estado == 11)&(costo==0)&(venta==0))
             document.forms[nombre].fecha_detalle.disabled = false;
             document.getElementById("texto_respuesta_detalle").style.visibility = "visible";
             document.getElementById("texto_respuesta_detalle").textContent = "Fecha aprobado : ";
-            
+           
+           /*MOSTRAR LABEL Y FECHA DE RECEPCION OT*/
+            document.forms[nombre].fecha_ot.style.visibility = "visible";
+            document.forms[nombre].fecha_ot.disabled = true;
+            document.getElementById("texto_fecha_ot").style.visibility = "visible";
+            document.getElementById("texto_fecha_ot").textContent = "Recepcion OT : ";
+           
+           
              /*LIMPIAR-OCULTAR PRESUPUESTO*/
             document.forms[nombre].txtPresupuesto.style.visibility = "hidden";
             document.getElementById("texto_presupuesto_detalle").style.visibility = "hidden";
@@ -593,6 +626,12 @@ if((estado == 11)&(costo==0)&(venta==0))
             document.forms[nombre].fecha_detalle.disabled = false;
             document.getElementById("texto_respuesta_detalle").style.visibility = "visible";
             document.getElementById("texto_respuesta_detalle").textContent = "Fecha Finalizado : ";
+            
+            /*MOSTRAR LABEL Y FECHA DE RECEPCION OT*/
+            document.forms[nombre].fecha_ot.style.visibility = "visible";
+            document.forms[nombre].fecha_ot.disabled = true;
+            document.getElementById("texto_fecha_ot").style.visibility = "visible";
+            document.getElementById("texto_fecha_ot").textContent = "Recepcion OT : ";
             
             /*LIMPIAR-OCULTAR PRESUPUESTO*/
             document.forms[nombre].txtPresupuesto.style.visibility = "hidden";
@@ -605,6 +644,14 @@ if((estado == 11)&(costo==0)&(venta==0))
             document.forms[nombre].txtPresupuesto.disabled = false;
             document.getElementById("texto_presupuesto_detalle").style.visibility = "visible";
             document.getElementById("texto_presupuesto_detalle").textContent = "Nro. Presupuesto  ";
+            
+            
+            //document.forms[nombre].texto_fecha_ot.style.visibility = "visible";
+            //document.forms[nombre].texto_fecha_ot.style.disabled = "false";
+            document.forms[nombre].fecha_ot.style.visibility = "visible";
+            document.getElementById("texto_fecha_ot").style.visibility = "visible";
+            
+            
             
             /*LIMPIAR-OCULTAR FECHA*/
             document.forms[nombre].fecha_detalle.style.visibility = "hidden";
@@ -622,6 +669,27 @@ if((estado == 11)&(costo==0)&(venta==0))
             document.forms[nombre].txtPresupuesto.style.visibility = "hidden";
             document.forms[nombre].txtPresupuesto.disabled = true;
             document.getElementById("texto_presupuesto_detalle").style.visibility = "hidden";
+            
+            if (estado != estadoIngresoDeOrden && estado != estadoRechazado && estado != estadoRechazadoParaRenegociacion && estado != estadoRenegociacion){
+                       
+                         /*MOSTRAR LABEL Y FECHA DE RECEPCION OT*/
+                        document.forms[nombre].fecha_ot.style.visibility = "visible";
+                        document.forms[nombre].fecha_ot.disabled = false;
+                        document.getElementById("texto_fecha_ot").style.visibility = "visible";
+                        document.getElementById("texto_fecha_ot").textContent = "Recepcion OT : ";
+                } else {
+                        /*OCULTAR LABEL Y FECHA DE RECEPCION OT*/
+                        document.forms[nombre].fecha_ot.style.visibility = "hidden";
+                        document.forms[nombre].fecha_ot.disabled = true;
+                        document.getElementById("texto_fecha_ot").style.visibility = "hidden";
+                        document.getElementById("texto_fecha_ot").textContent = "Recepcion OT : "; 
+                    
+                    
+                }
+                
+                
+            
+            
             
         }   
 } 

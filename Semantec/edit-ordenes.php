@@ -7,7 +7,8 @@
         $ord_descripcion = utf8_decode($_POST["ord_descripcion"]); 
         $rub_id = $_POST["rub_id"];
         $prv_id = $_POST["prv_idEdit"];  
-        $est_id = $_POST["est_idEdit"];  
+        $est_id = $_POST["est_idEdit"];
+        $fecha_recepcion_ot = gfecha($_POST["fecha_ot"]);
         $nro_presupuesto = $_POST["txtPresupuesto"];
         $fecha = gfecha($_POST["fecha"]); 
         $ord_costo = $_POST["ord_costo"];
@@ -66,10 +67,7 @@
                                         $sql .=" fecha_pendiente_facturacion = '$fecha', ";
                                         }
                                         
-                                        
-                                        
-                                        
-                                        
+                                   
                                         
                                         $sql .= " ord_costo = $ord_costo,
                                         ord_venta = $ord_venta
@@ -237,18 +235,32 @@
 
         switch ($est_idDetalle) {
     case 2://estadoEnviadoProveedor
-    {$sql = "UPDATE ordenes SET ord_plazo_proveedor = $fecha where ord_id = $ord_id";$result=mysql_query($sql);echo $sql; break;}
+    {$sql = "UPDATE ordenes SET ord_plazo_proveedor = $fecha where ord_id = $ord_id";
+             $sql = " UPDATE ordenes SET fecha_recepcion_ot = '$fecha_recepcion_ot' where ord_id = $ord_id";
+            $result=mysql_query($sql); break;}
     case 9://estadoConfirmarProveedor
-    { $sql = "UPDATE ordenes SET ord_plazo = $fecha where ord_id = $ord_id"; $result=mysql_query($sql);echo $sql; break;}
+                { $sql = "UPDATE ordenes SET ord_plazo = $fecha where ord_id = $ord_id"; 
+                  $sql = " UPDATE ordenes SET fecha_recepcion_ot = '$fecha_recepcion_ot' where ord_id = $ord_id";
+                  $result=mysql_query($sql); 
+                break;}
     case 11://estadoFinalizadoPendienteFacturacion
-    {$sql = "UPDATE ordenes SET fecha_pendiente_facturacion = $fecha where ord_id = $ord_id"; $result=mysql_query($sql); echo $sql;break;}
+            {$sql = "UPDATE ordenes SET fecha_pendiente_facturacion = $fecha where ord_id = $ord_id"; 
+             $sql = " UPDATE ordenes SET fecha_recepcion_ot = '$fecha_recepcion_ot' where ord_id = $ord_id";
+                $result=mysql_query($sql); ;break;}
     case 3://estadoAprobadoBajoCosto
-    { $sql = "UPDATE ordenes SET fecha_aprobado_bajocosto = $fecha where ord_id = $ord_id"; $result=mysql_query($sql);echo $sql;break;}
+            { $sql = "UPDATE ordenes SET fecha_aprobado_bajocosto = $fecha where ord_id = $ord_id"; 
+              $sql = " UPDATE ordenes SET fecha_recepcion_ot = '$fecha_recepcion_ot' where ord_id = $ord_id";
+                $result=mysql_query($sql);break;}
     
-    case 5://estadoAprobadoBajoCosto
-    { $sql = "UPDATE ordenes SET presupuesto = '$nro_presupuesto' where ord_id = $ord_id"; $result=mysql_query($sql);echo $sql;break;}
+    case 5://estadoPresupuestoEnviadoAlCliente
+            { $sql = "UPDATE ordenes SET presupuesto = '$nro_presupuesto' where ord_id = $ord_id";
+              $sql = " UPDATE ordenes SET fecha_recepcion_ot = '$fecha_recepcion_ot' where ord_id = $ord_id"; 
+                $result=mysql_query($sql);break;}
     
-}
+    default: if($est_idDetalle != 1  && $est_idDetalle != 6 && $est_idDetalle != 7 && $est_idDetalle != 8){
+            $sql = "UPDATE ordenes SET fecha_recepcion_ot = '$fecha_recepcion_ot' where ord_id = $ord_id"; $result=mysql_query($sql);echo $sql;break;
+                }
+}   //Fin_switch
         
         
 
@@ -270,7 +282,7 @@
                         mysql_query("COMMIT");
                          mysql_close();
                         echo "Transacción exitosa"; 
-                  //        header("location:ver-alta-ordenes.php?action=2&est_id=$estado_id_filtro&prv_id=$prov_filtro"); 
+                  
                      	header("location:ver-alta-ordenes.php?action=2&filtrartxt=$elementoBusqueda&prv_id=$proveedorFiltro&est_id=$estado_id&suc_id=$suc_id&cli_id=$cli_idMaestro&orden=$unOrden&contador=$contador&pagina=$pagina&origen=$action");
                         }
         
