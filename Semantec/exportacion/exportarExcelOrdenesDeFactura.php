@@ -5,6 +5,7 @@ include("../conexion.php");
 include("../funciones.php");
 include("../Modelo/modeloOrdenes.php");
 include("../Modelo/modeloRubros.php");
+include("../Modelo/modeloClientes.php");
 //Datos
   $NombreSuc=$_GET["NombreSuc"];
   $dia=date("d-m-Y");
@@ -36,8 +37,7 @@ body, table {
 <body>
 <?php
  $favId=$_GET["fav_id"]; 
-
- $favCodigo=$_GET["favCodigo"];
+ $favCodigo=$_GET["favCodigo"];  
 $result=getOrdenesWithFavId($favId);
 // INGRESAR NOMBRE 
 $nombre=" Planilla de Facturaci&oacute;n de $NombreSuc";
@@ -71,6 +71,9 @@ while($row = mysql_fetch_array($result)) {
          if($presupuesto==''){
              $presupuesto='-';
          }
+         $cli_idBusqueda=$row["cli_id"]; 
+         $Sucursal= mysql_fetch_array(getClienteSucursalConID($cli_idBusqueda)); 
+         $SUCC=$row["provincia"]." (".$Sucursal["sucursal"].")";
     //fin de datos de impresion
 printf("<tr>
 <td><font color=black align='middle'> &nbsp;%s </font></td>
@@ -85,7 +88,8 @@ printf("<tr>
 
 </tr>" ,SEMANTEC,
          '',
-        $row["provincia"],
+       // $row["provincia"],
+        $SUCC,
         $filaDeRubro["rub_nombre"],
         $row["ord_descripcion"],
         $valorVenta,
