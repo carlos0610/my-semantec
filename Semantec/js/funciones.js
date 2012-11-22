@@ -107,8 +107,7 @@ function emitirAdelanto(pagina){
     var index = document.getElementById("comboOrdenes").selectedIndex;
     var cod_orden = document.getElementById("comboOrdenes").options[index].text;
     var monto       = document.getElementById("txtAdelanto").value;
-    
-    alert(pagina);
+       
     
     if (monto > 0){
     
@@ -356,8 +355,8 @@ function agregarOrderBy(campo){
 //pasar filtro a otro Form
 function transferirFiltrosAOtroForm(nombreFiltro,url){
 
-	document.getElementById(nombreFiltro).action=url;
-	document.getElementById(nombreFiltro).submit();
+        document.getElementById(nombreFiltro).action=url;
+        document.getElementById(nombreFiltro).submit();
 }
 function limpiarFrmAltaCliente(){
          document.getElementById("cli_cuit_parteA").value="";
@@ -1149,7 +1148,7 @@ function actualizarDetallePago(ord_venta,cantidadTipoPago,cantIIBB){
 }
   function generarTipoPago(idForm,operacion)
 {    if(operacion=='suma')
-	document.getElementById("cantidadTip").value++;
+        document.getElementById("cantidadTip").value++;
     else
         {
         if(document.getElementById("cantidadTip").value>1)           
@@ -1160,7 +1159,7 @@ function actualizarDetallePago(ord_venta,cantidadTipoPago,cantIIBB){
 
   function generarIIBB(idForm,operacion)
 {    if(operacion=='suma')
-	document.getElementById("cantidadIIBB").value++;
+        document.getElementById("cantidadIIBB").value++;
     else
         {
         if(document.getElementById("cantidadIIBB").value>1)           
