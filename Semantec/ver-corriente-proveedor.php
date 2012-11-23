@@ -340,11 +340,7 @@
          <td width="8%">&nbsp;</td>
          <td width="14%"><label>
            Orden:
-               <select name="comboOrdenes" id="comboOrdenes">
-                   <?php while($filita = mysql_fetch_array($resultado)){ ?>
-                   <option value="<?php echo $filita['ord_id']?>"><?php echo $filita['ord_codigo']?></option>
-                   <?php } mysql_data_seek($resultado, 0) ?>
-           </select>
+               <input type="text" name="txtOrden" id="txtOrden" value="" class="campos2">
          </label></td>
          <td width="16%">Adelanto: 
            <label>
