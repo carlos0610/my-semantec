@@ -71,10 +71,12 @@
         //$sql = "SELECT  est_id, est_nombre, est_color FROM estados";
         //$resultado3 = mysql_query($sql);
         // busqueda para  imprimir el nombre del estado.
-	$est_id= $fila0["est_id"];		
-	$sql = "SELECT  est_id, est_nombre, est_color FROM estados WHERE est_id = $est_id"; //datos del estado
+        $est_id= $fila0["est_id"];              
+        $sql = "SELECT  est_id, est_nombre, est_color FROM estados WHERE est_id = $est_id"; //datos del estado
         $resultado4 = mysql_query($sql);
         $fila4 = mysql_fetch_array($resultado4);
+        
+        
         
         $resultado1 =getClientesSucursalesHermanasDe($fila0["cli_id"]);
         $resultado3 = getEstadosParaCombo();
@@ -107,14 +109,14 @@
   
   </head>
   <body onLoad="validarFacturacion(<?php echo $ord_costo ?>,<?php echo $orden_venta ?>,<?php echo $fila0["es_abono"] ?>)">
-	
+        
   <!-- start main --><!-- start main --><!-- start main --><!-- start main --><!-- start main -->
   <div id="main">
 
     <!--start header-->
     <header>
     <a href="#" id="logo"><img src="images/semantec.png" width="470" height="100" alt="logo" /></a>
-	  <!-- form login -->
+          <!-- form login -->
 
     <div id ="login">
          <span id="mensaje_top" style="text-align:right;"><?php echo(utf8_encode($_SESSION["usu_nombre"])); ?>
@@ -399,7 +401,7 @@
           
           <tr>
               <td><label id="texto_fecha_ot"></label></td>
-            <td><input  type="text" class="campos" id="fecha_ot"  name="fecha_ot"  style="visibility: hidden;" <?php if($fila0["fecha_recepcion_ot"]==''){?> value="<?php echo date("d/m/Y");?>" <?php }  else { ?>value="<?php echo tfecha($fila0["fecha_recepcion_ot"]);?>" <?php } ?>  /></td>
+            <td><input type="checkbox" name="ord_checkOT" id="ord_checkOT"   value="1" onChange="habilitarFechaOT('frm')"><input  type="text" class="campos" id="fecha_ot"  name="fecha_ot"  style="visibility: hidden;" <?php if($fila0["fecha_recepcion_ot"]==''){?> value="<?php echo date("d/m/Y");?>" <?php }  else { ?>value="<?php echo tfecha($fila0["fecha_recepcion_ot"]);?>" <?php } ?>  /></td>
             <td></td>
           </tr>  
           
