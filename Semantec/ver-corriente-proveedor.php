@@ -236,6 +236,7 @@
   <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
   <script type="text/javascript" src="js/jquery.datepick.js"></script>
   <script type="text/javascript" src="js/jquery.datepick-es.js"></script>
+  <script type="text/javascript" src="js/validador.js"></script>
   <script type="text/javascript">
   $(function() {
      
@@ -342,10 +343,11 @@
        </tr>
        <tr>
          <td width="8%">&nbsp;</td>
-         <td width="14%"><label>
-           Orden:
-               <input type="text" name="txtOrden" id="txtOrden" value="" class="campos2">
-         </label></td>
+         <td width="14%">
+           Orden
+               <input type="text" name="txtOrden" id="txtOrden" value="" class="campos2" onChange="autenticaOrdenCCProveedor()">
+               <span id="error" style="font-family: Verdana, Arial, Helvetica,sans-serif;font-size: 9pt;color: #CC3300;position:relative;visibility:hidden;">La Orden NO existente</span>
+         </td>
          <td width="16%">Adelanto: 
            <label>
            <input name="txtAdelanto" type="text" class="campos2" id="txtAdelanto" value="0.00" size="8" OnKeyUp="return validarReal('txtAdelanto');">

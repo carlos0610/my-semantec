@@ -9,7 +9,7 @@ var respuesta;
 
 function leer_doc(url) {
  req = false;
- 
+   
  // Llama objeto XMLHttpRequest
  if (window.XMLHttpRequest) {
    req = new XMLHttpRequest();
@@ -47,13 +47,11 @@ function procesarRespuesta(){
 }
 
 // Funciones llamdas del Form
-function autentica(){
+function autentica(){ 
     
- usuario = document.getElementById("ord_codigo").value;
- url = "existeNumeroOrden.php?usuario=" + usuario;
+ usuario = document.getElementById("ord_codigo").value; 
+ url = "existeNumeroOrden.php?usuario=" + usuario; 
  leer_doc(url);
- 
- 
 }
 
 function autenticaCUIT(){
@@ -299,4 +297,51 @@ function validarCamposRequeridos(){
     
     return true;
     
+}
+//--------------------Validacion en cc Proveedor-----
+function leer_docOrdenCCProveedor(url) {
+ req = false; 
+   
+ // Llama objeto XMLHttpRequest
+ if (window.XMLHttpRequest) {
+   req = new XMLHttpRequest();
+   if (req.overrideMimeType) {
+     req.overrideMimeType('text/xml'); 
+   }
+ 
+ // Si no funciona intenta utiliar el objeto IE/Windows ActiveX 
+ } else if (window.ActiveXObject) {
+   req = new ActiveXObject("Microsoft.XMLHTTP"); 
+ }
+ 
+ if(req!=null){
+   req.onreadystatechange = procesarRespuestaOrdenCCProveedor;
+   req.open('GET', url, true);
+   req.send(null);
+ } 
+ 
+}
+
+function procesarRespuestaOrdenCCProveedor(){
+    //NOTA: para q funcione correctamente no olvidarse q deben existir los id
+ respuesta = req.responseXML; 
+ var existe = respuesta.getElementsByTagName('existe').item(0).firstChild.data; 
+   if (existe=="true")
+   { 
+    document.getElementById("error").style.visibility = "hidden";
+    document.getElementById("btnEmitir").style.visibility = "visible";   
+   }
+   else
+   {
+     document.getElementById("error").style.visibility = "visible";
+     document.getElementById("btnEmitir").style.visibility = "hidden";
+   }
+}
+
+// Funciones llamdas del Form
+function autenticaOrdenCCProveedor(){ 
+    
+ usuario = document.getElementById("txtOrden").value; 
+ url = "existeNumeroOrden.php?usuario=" + usuario; 
+ leer_docOrdenCCProveedor(url);
 }
