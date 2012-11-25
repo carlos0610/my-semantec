@@ -48,40 +48,22 @@
         $idFile = mysql_insert_id(); // HAY QUE VALIDAR SI SE ROMPE LA TRANSACCIÓN DEL FILE
         }
         
-        
-        $sql_grupo_ordenes= "INSERT INTO `grupo_ordenes`(`gru_fecha_alta`) VALUES (NOW()) ";
-        $result=mysql_query($sql_grupo_ordenes);
-        if(!$result)
-                     $error=1;
-        $id_grupo_ordenes = mysql_insert_id(); 
+
         
         //actualizo las ordenes
         $i=0;
-        echo $sql_grupo_ordenes;
-        while($i<$cantidadCheckboxs)
-        {
-            $i++;
-            $ord_id=$_POST["ordenCheck$i"];
-            $sql="UPDATE `ordenes` 
-                  SET `gru_id_compra`=$id_grupo_ordenes
-                  WHERE `ord_id`= $ord_id
-                ";
-            echo $sql;
-            mysql_query($sql);
-        }
-        
-        
         
     if ($idFile != -1)
-        $query = "INSERT INTO factura_compra (files_id,idiva,prv_id,fco_fecha,estado,fco_descripcion,fco_subtotal,fco_percepcion,fco_nota,gru_id) VALUES ($idFile,1,$prv_id,NOW(),$estado,'$descripcion',$subtotal,$percepciones,'$nota',$id_grupo_ordenes)";
+        $query = "INSERT INTO factura_compra (files_id,idiva,prv_id,fco_fecha,estado,fco_descripcion,fco_subtotal,fco_percepcion,fco_nota) VALUES ($idFile,1,$prv_id,NOW(),$estado,'$descripcion',$subtotal,$percepciones,'$nota')";
     else
-        $query = "INSERT INTO factura_compra (idiva,prv_id,fco_fecha,estado,fco_descripcion,fco_subtotal,fco_percepcion,fco_nota,gru_id) VALUES (1,$prv_id,NOW(),$estado,'$descripcion',$subtotal,$percepciones,'$nota',$id_grupo_ordenes)";   
+        $query = "INSERT INTO factura_compra (idiva,prv_id,fco_fecha,estado,fco_descripcion,fco_subtotal,fco_percepcion,fco_nota) VALUES (1,$prv_id,NOW(),$estado,'$descripcion',$subtotal,$percepciones,'$nota')";   
     
     $prueba = $query;
     
     $inserto = mysql_query($query);  
-    if(!$inserto)
-                     $error=1;
+    if(!$inserto){
+                     $error=1; echo "Error en : $query";
+    }
     $nro_factura = mysql_insert_id();
            $i=1;
             $columnaDesc = "txtDescripcionItem".$i;
@@ -90,12 +72,11 @@
             $precio = $_POST[$columnaPrec]; 
             
         while(($i <= $cantidadCheckboxs)&($descripcion != '')){   
-            $ord_id=$_POST["ordenCheck$i"];
             
-            $query = "INSERT INTO detalle_factura_compra (fco_id,det_fco_orden_id,det_fco_descripcion, det_fco_preciounitario) VALUES ($nro_factura,$ord_id,'$descripcion',$precio)";
+            $query = "INSERT INTO detalle_factura_compra (fco_id,det_fco_descripcion, det_fco_preciounitario) VALUES ($nro_factura,'$descripcion',$precio)";
             $result=mysql_query($query);
-            if(!$result)
-                     $error=1;
+            if(!$result){
+                     $error=1; echo "Error en : $query";}
             $i++;
             $columnaDesc = "txtDescripcionItem".$i;
             $columnaPrec = "txtTotalItem".$i;

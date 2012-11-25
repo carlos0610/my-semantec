@@ -39,13 +39,11 @@
     $tamPag=10;
     
     
-        $sql = "SELECT distinct f.fco_id,f.fco_fecha ,c.cli_nombre,f.files_id,f.fco_subtotal, f.fco_nota, p.prv_nombre  
-                FROM factura_compra f,ordenes o,clientes c, detalle_factura_compra df, proveedores p
+        $sql = "SELECT distinct f.fco_id,f.fco_fecha ,f.files_id,f.fco_subtotal, f.fco_nota, p.prv_nombre  
+                FROM factura_compra f, detalle_factura_compra df, proveedores p
                 WHERE  f.estado = 1
                 AND df.fco_id= f.fco_id
-                AND df.det_fco_orden_id =o.ord_id
-                AND o.cli_id = c.cli_id
-                AND o.prv_id= p.prv_id
+                AND f.prv_id= p.prv_id
                 ";
                 $sql.=$sqlaux;
                 $sql0=$sql;
@@ -198,23 +196,22 @@
                   <!-- id <?php echo($numeroDeTablaDesplegable);?> -->
                   <table class="listados" cellpadding="5">
                     <tr class="titulo" style="background-color:#cdcdcd">
-                       <td width="100">N°Orden</td>
+                       <td width="100"></td>
                       <td width="600">Descripci&oacute;n</td>                      
                       <td width="100">Monto</td>
                     </tr>
               <?php
                 $orden = $fila["fco_id"];
-                $sql_req = "SELECT det_fco_orden_id , fco_id , det_fco_descripcion , det_fco_preciounitario, o.ord_codigo 
-                              FROM detalle_factura_compra df, ordenes o
+                $sql_req = "SELECT  fco_id , det_fco_descripcion , det_fco_preciounitario
+                              FROM detalle_factura_compra df
                               WHERE df.fco_id  = $orden
-                              AND df.det_fco_orden_id = o.ord_id
                               ORDER BY det_fco_id  DESC";
                 $result_req = mysql_query($sql_req);
                 while($fila_req = mysql_fetch_array($result_req)){
                   //  echo("<hr />". $sql_req ."<hr />");
           ?>
                     <tr class="lista" bgcolor="<?php echo($colores2[$j]);?>">
-                      <td width="600"><?php echo(utf8_encode($fila_req["ord_codigo"])); ?></td>
+                      <td width="0"><?php ?></td>
                       <td width="100"><?php echo(utf8_encode($fila_req["det_fco_descripcion"])); ?></td>
                       <td width="100"><?php echo(utf8_encode($fila_req["det_fco_preciounitario"])); ?></td>
                     </tr>
@@ -234,10 +231,6 @@
               ?>
               </td>
           </tr>
-            
-            
-            
-            
 
   <?php
             $i++;

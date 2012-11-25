@@ -4,21 +4,16 @@
         include("funciones.php");
         include("conexion.php");
         include("Modelo/modeloAbonosDetalle.php");
-        $action = $_GET["action"];
-        
+        include("Modelo/modeloFacturaCompra.php");
+        $action = $_GET["action"];        
         if ($action == 1){
             $prv_id = $_POST["comboProveedor"];
             $_SESSION['proveedor'] = $prv_id;
         }else   {
             $prv_id = $_GET["prv_id"];
-                }
-        
-     
+                }   
           $prv_id = $_SESSION['proveedor'];
-          
-          
-        
-                        
+                    
         /* OBTENGO DATOS DE PROVEEDOR */
         $sql = "SELECT prv.prv_id,prv_nombre,prv_direccion,prv_cuit,iva_nombre,prv_telefono,cc.ccp_id, p.nombre as provincia,pa.nombre as partido,l.nombre as localidad,prv.sucursal
                 FROM proveedores prv ,iva_tipo i,ubicacion u,provincias p, partidos pa,localidades l,cuentacorriente_prv cc
@@ -30,17 +25,12 @@
                 AND u.partidos_id = pa.id
                 AND u.localidades_id = l.id
                 AND prv.prv_id = cc.prv_id
-                ORDER BY prv_nombre";
-        
+                ORDER BY prv_nombre";        
        $proveedor = mysql_query($sql); 
        $fila_datos_proveedor = mysql_fetch_array($proveedor); 
-        
-        
-        
+       
 /* CALCULO PAGINADO - DATOS DE LISTADO DE CUENTA CORRIENTE */  ###############################################################################
-    /*CON LA MAGIA*/
-       
-       
+    /*CON LA MAGIA*/   
      /* CREAMOS TABLA TEMPORAL QUE VA ALMACENAR EL REPORTE CON LOS ADELANTOS */  
         $sql = "CREATE TEMPORARY TABLE tabla_temp
 							(
@@ -119,9 +109,7 @@
                AND o.cli_id = c.cli_id
                GROUP BY dfc.det_fco_orden_id;";
        
-       mysql_query($sql);
-       
-       
+       mysql_query($sql);      
        /*  ACTUALIZAMOS EL TOTAL FACTURADO DE COMPRAS Y EL SALDO DE COMPRAS VS ORD_COSTO EN LA TABLA TEMPORAL 1 DESDE LA TABLA TEMPORAL 2*/
        $sql = "UPDATE tabla_temp t1,tabla_temp2 t2
                 SET t1.compras = t2.compras,
@@ -184,12 +172,10 @@
             $sql.=" WHERE fecha_recepcion_ot BETWEEN convert('$desde1',datetime) AND convert('$hasta1 23:59:59',datetime)";
         }
        
-       $resultado = mysql_query($sql);
-       
-     
+       $resultado = mysql_query($sql);  
        $sql0 = $sql;
     
-    $tamPag=20;
+    $tamPag=15;
     
     include("paginado.php");        
        
@@ -267,6 +253,24 @@
   $(function() {
       $('#fecha_fin').datepick();
   }); 
+  
+  function mostrar(obj, trig){
+    var elDiv = document.getElementById(obj);
+    var laFlecha = document.getElementById(trig);  
+    //alert( elDiv.style.display );
+    if( elDiv.style.display == 'none' ){ 
+      elDiv.style.display = 'block';
+      //laFlecha.style.background = '#fff url(../images/arrows.png) no-repeat 3px 1px';
+      laFlecha.style.backgroundPosition = '3px 1px';
+    }
+    else{ 
+      elDiv.style.display = 'none';
+      //laFlecha.style.background = '#fff url(../images/arrows.png) no-repeat 3px -15px';
+      laFlecha.style.backgroundPosition = '3px -15px';
+    }
+    
+  }
+
  </script>
   
   
@@ -448,13 +452,13 @@
                     <?php // COSTO ORDEN
                         $ordenCosto=$fila["costo"];
                         $totalOrdenes+=$ordenCosto;
-                        echo $ordenCosto;
+                        echo number_format($ordenCosto,2,',','.');
                      ?>
                 </td>
                 <td style="text-align:right;">
                     <?php // ABONO
                      $abonoValor=$fila["costo_abono"];
-                    echo $abonoValor;
+                    echo number_format($abonoValor,2,',','.');
 //                       if($fila["es_abono"]==1){
 //                           echo $abonoValor=getAbonoDetalle_ValorCostoWithCliId($fila["cli_id"]);}
 //                     else
@@ -463,7 +467,7 @@
                     ?>
                 </td>
                 <td style="text-align:right;">
-                    <?php echo $fila["adelantos"];?>
+                    <?php echo number_format($fila["adelantos"],2,',','.');?>
                 </td>               
                 <td style="text-align:right; background-color: darksalmon;">
                     <?php // SALDO
@@ -475,14 +479,14 @@
                     <?php  // FACTURADO
                         $Facturado=$fila["compras"];
                         $totalFacturado+=$Facturado;
-                        echo $Facturado;
+                        echo number_format($Facturado,2,',','.');
                      ?>
                 </td>
                 <td style="text-align:right; background-color:dodgerblue;">  
                     <?php //Resta FACTURAR echo $fila["saldo_c"];  
                         $RestaFacturar=$saldoValor-$Facturado;
                         $totalRestaFacturar+=$RestaFacturar;
-                        echo number_format($RestaFacturar,2,'.',' ');
+                        echo number_format($RestaFacturar,2,',','.');
                     ?>
                 </td>
                 
@@ -496,9 +500,7 @@
             
           } // FIN_WHILE
           
-          echo "<tr><td colspan=8 align=right>Total deuda con proveedor: <b style=color:red>".$totalDeuda['total_adelanto']."</b> pesos -- Total deuda del proveedor: <b style=color:blue>".$totalDeuda['total_compra']."</b> pesos</td></tr>";
-       //   echo "<tr><td colspan=8 align=right>Total deuda con proveedor: <b style=color:red>".number_format($totalSaldoValor,2,'.',' ')."</b> pesos -- Total deuda del proveedor: <b style=color:blue>".number_format($totalRestaFacturar,2,'.',' ')."</b> pesos</td></tr>";
-          echo "<tr><td colspan=8 align=right>Monto total de órdenes : <b>".$totalDeuda['total']."</b> pesos </tr></td>";
+
        //    echo "<tr><td colspan=8 align=right>Monto total de órdenes : <b>".number_format($totalOrdenes,2,'.',' ')."</b> pesos";
   ?>
           <tr>
@@ -510,12 +512,67 @@
       </table>   
 </form>
      <div class="clear"></div>
+     <?php       include("conexion.php"); 
+                $resultado = getFacturasComprasWithProveedorId($prv_id);
+
+                  $i = 0;
+                  $colores = array("#fff","#e8f7fa");
+                  $cant = count($colores);
+
+                ?>
+     
+     <div>
+         <big> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Mostrar Datos de Compra </big>
+            <div id="flechaEspecial" onclick="mostrar('ver1', 'flechaEspecial')">  <br></div>    </div> 
+            
+           <table class="listados" cellpadding="5" id="ver1" style="display:none;">
+          <tr class="titulo">
+            <td width="100"><a href="#" onClick="agregarOrderBy('fco_id')">Factura Nro</a></td>
+            <td width="100"><a href="#" onClick="agregarOrderBy('fco_fecha')">Fecha de emisión</a></td>
+            <td width="300"><a href="#" onClick="agregarOrderBy('det_fco_descripcion')">Descripción</a></td>
+            <td width="100"><a href="#" onClick="agregarOrderBy('fco_subtotal')">Monto</a></td>
+          </tr>
+         
+  <?php  $totalMonto=0;
+          while($fila = mysql_fetch_array($resultado)){
+              //echo($fila["ord_alta"]);
+  ?>
+          <tr class="lista" bgcolor="<?php echo($colores[$i]);?>"> 
+            <td><?php echo($fila["fco_id"]);?></td>
+            <td><?php echo(tfecha($fila["fco_fecha"]));?></td>
+            <td><?php echo(utf8_encode($fila["det_fco_descripcion"]));?></td>                  
+            <td style="text-align:right;">
+                <?php
+                    $totalMonto+=$fila["fco_subtotal"];
+                    echo number_format(($fila["fco_subtotal"]), 2, ',', '.');?>
+            </td> 
+            
+          </tr>
+  <?php  
+            $i++;
+            if($i==$cant){$i=0;}
+
+          }
+          
+  ?>    
+      </table>
+     
+     
+     
+<? 
+          echo "<tr><td colspan=8 align=right><big>Monto total de órdenes : <b>".number_format($totalDeuda['total'], 2, ',', '.')."</b> pesos</big></tr></td> 
+              <tr><td colspan=8 align=right><big> ----- Monto total de Compras : <b>".number_format($totalMonto, 2, ',', '.')."</b> pesos</big></tr></td> 
+              <br>";
+          echo "<tr><td colspan=8 align=right><big>Total deuda con proveedor: <b style=color:red>".number_format($totalDeuda['total_adelanto'], 2, ',', '.')."</b> pesos ---- Total deuda del proveedor: <b style=color:blue>".number_format(($totalDeuda['total_compra']-$totalMonto), 2, ',', '.')."</b> pesos</big></td></tr>";
+
+
+?>
+
+     
           <br>
      <a href="form-seleccionar-proveedor.php?action=1"><input type="button" value="Volver" class="botones" /></a> &nbsp; &nbsp;
    </div>
    <!--end contenedor-->
-
-
   </div>
 
    <!-- fin main --><!-- fin main --><!-- fin main --><!-- fin main --><!-- fin main -->

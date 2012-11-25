@@ -547,6 +547,18 @@ div.up { background-position:0px 0px;}
 	text-align: center;
 	cursor: pointer;
 }
+
+#flechaEspecial{
+	position: relative;
+	
+	top: -18px;
+	/* float: right; */
+	background:#fff url(../images/arrows.png) no-repeat 6px -15px;
+	width:31px; 
+	height:18px;
+	text-align: center;
+	cursor: pointer;
+}
 #ver1, #ver2{
 	display: none;
 }

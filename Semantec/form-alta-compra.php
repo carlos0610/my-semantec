@@ -8,6 +8,7 @@
         $prv_id= $_POST["comboProveedor"];}
         include("funciones.php");
         include("conexion.php");
+        include("Modelo/modeloProveedor.php");
             
         $sql ="SELECT prv_id,prv_nombre,prv_direccion,prv_cuit,iva_nombre,p.nombre as provincia,pa.nombre as partido,l.nombre as localidad
                 FROM proveedores prv ,iva_tipo i,ubicacion u,provincias p, partidos pa,localidades l
@@ -21,19 +22,7 @@
                 ORDER BY prv_nombre";
         $proveedores = mysql_query($sql);  
         $fila_proveedor = mysql_fetch_array($proveedores);
-        
-         
 
-       //Ordenes  
-       /*       $sql="SELECT `gru_id`,`ord_codigo`,`ord_descripcion`,`prv_id`,`est_id` ,ord_id 
-              FROM `ordenes` 
-              WHERE `prv_id` =$prv_id
-              AND    est_id  >= 10 
-              AND    estado  = 1
-              AND    ISNULL(gru_id_compra)
-              ";*/
-        
-        /*ACA VA EL TRUQUITO DEL MAGO */
         $sql = "DROP TABLE taula_temp;";
         mysql_query($sql);
         
@@ -83,11 +72,11 @@
         $cantOrdenes= mysql_num_rows($result_cantordenes);
 
        //+++++++++++Gets de los checkbox
-        $cantOrdenesChecadas=$_GET["cant"]; 
+        $cantOrdenesChecadas=1; 
         $ocultar=$_GET["ocultar"];
        //+++++configuracion  de descripciones a imprimir en pantalla+++++ 
        $numeroDescripcion=0;
-       $totalDescripcion=$cantOrdenesChecadas;
+       $totalDescripcion=1; // cantidad de Descripcciones
        //$_SESSION["ord_id"] = $ord_id;
         
        $sql = "SELECT idiva,valor from IVA";
@@ -162,108 +151,14 @@
        </tr>
           <tr>
             <td>&nbsp;</td>
-            <td>&nbsp;</td>
+            <td><? echo  getProveedorNombreWithId($prv_id) ?></td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
           </tr>
      </table>   
-             
        
-               <?php // CARGO LAS ORDENES CHECADAS DE FORMA OCULTA
-        $i=0;
-        while ($i <$cantOrdenesChecadas)
-        { $i++;  ?>
-           <input type="hidden" name="ordenCheck<?php echo $i; ?>"  id="ordenCheck<?php echo $i; ?>" value="<?php echo ($_GET["ord_check$i"]); ?>" >               
-        <?php      
-        }       
-        ?>
-       
-       
-       
-       <!-- Si el Cliente no tiene ordenes muestra  mensaje --> 
-        <?php if($cantOrdenes!=0){ ?> 
-           <!-- Muestro tabla de ordenes a seleccionar -->  
-           <?php if($ocultar=="si"){ ?> 
-                <table width="100%" border="0" id="dataTableOrdenes">  
-                      <tr>
-                             <td width="5%" class="titulo"><div align="center">Selección</div></td>
-                             <td width="10%" class="titulo"><div align="center">Codigo</div></td>
-                             <td width="18%" class="titulo"><div align="center">descripción</div></td>
-                      </tr>
-               <?php
-               $i=0;
-               while ($item = mysql_fetch_array($result_ordenes)) {
-                   $i++;
-               ?>
-                   <tr>
-                       <td>
-                           <div align="center">
-                               
-                              <input type="checkbox" name="checkbox_ord_id<?php echo $i ?>" value="<?php echo $item["ord_id"]; ?>" />
-                          </div>
-                       </td>
-                       <td><label>   
-                               <div align="right">
-                                        <? echo $item["ord_codigo"]; ?>
-                               </div>
-                           </label></td>
-                       <td><label>
-                               <div align="center">
-                                         <? echo utf8_encode($item["ord_descripcion"]); ?>
-                               </div>
-                           </label></td>
-                   </tr>
-                   <?php
-               }
-               ?>
-            </table>  
-           <!-- FIN de Muestro tabla de ordenes a seleccionar --> 
-            <?php }else{ ?>
-           <!-- Muestro ORdenes seleccionas -->  
-        Codigos de Órdenes Seleccionados :  <br> 
-        <?php
-        $i=0;
-        $arrayOrdenes= array();
-        while ($i <$cantOrdenesChecadas)
-        { $i++;  
-                $unord_ID=$_GET["ord_check$i"];
-                
-                /* METIÉNDOLE MAGIA */
-                
-               $sql59="SELECT `gru_id`,`ord_codigo`,`ord_descripcion`,`prv_id`,`est_id` ,ord_id 
-                        FROM `ordenes` 
-                        WHERE `ord_id` =$unord_ID
-                        AND    est_id  >= 10 
-                        AND    estado  = 1";
-
-               //echo "QUERY: ".$sql59;
-               
-        $resultdeOrdenes=mysql_query($sql59); 
-        $filaDeLasOrdenesCheck=(mysql_fetch_array($resultdeOrdenes));
-
-        
-        ?>
-          &nbsp;&nbsp; &nbsp;#  <?php echo $filaDeLasOrdenesCheck["ord_codigo"]; ?>   <br>            
-        <?php     $arrayOrdenes[]= $filaDeLasOrdenesCheck["ord_codigo"]; 
-        }       
-        ?>        
-        <?php } ?>
-      <!-- Boton confirmar  -->    
-      <?php if($ocultar=="si"){ ?> 
-      <input type="button" name="btnConfirmarCheckboxs" id="btnConfirmarCheckboxs" style="visibility:visible" class="botones" value="Confirmar" onClick="verificarCheckboxsFacturaCompra(<?php echo $i; ?>,<?php echo $prv_id; ?>);">  
-      <?php } ?>
-  <?php }else{ ?> <b>*No Posee Órdenes Pendientes a Facturar </b> <?php } ?>
  <?php if($ocultar=="no"){ ?>  
-      
-       
-       
-       
-       
-       
-       
-       
-       
-       
+   
    <!-- DESCRIPCION DE FACTURA  -->
    
 <div class="contenido_descripcion"  style="visibility:none" enable="true">
@@ -271,7 +166,7 @@
   <table width="100%"  border="0">
 
   <tr class="titulo">
-    <td width="9"><div align="center">N°Orden</div></td>
+    <td width="9"><div align="center"></div></td>
     <td width="90"><div align="center">Descripción</div></td>
     <td width="90" ><div align="center">Total compra</div></td>
   </tr>
