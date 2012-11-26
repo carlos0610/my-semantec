@@ -208,7 +208,7 @@
   
   <table width="100%" border="0">
     <tr>
-      <td width="12%">&nbsp;</td>
+      <td width="33%">&nbsp;</td>
       <td width="31%">&nbsp;</td>
       <td width="39%"><div align="right">SUBTOTAL:</div></td>
       <td width="18%"><label>
@@ -218,7 +218,7 @@
       </label></td>
     </tr>
     <tr >
-      <td rowspan="3" ><big>Nota </big></td>
+      <td rowspan="3"  style="text-align:right" ><big>Nota </big></td>
       <td rowspan="3"><label>
         <textarea name="txtNota" id="txtNota" cols="45" rows="5"></textarea>
       </label></td>
