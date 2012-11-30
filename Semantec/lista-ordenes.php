@@ -108,7 +108,7 @@ $sql="SELECT ord_id, ord_codigo, ord_descripcion, cli_nombre,c.cli_id, prv_nombr
 
         $i = 0;
         $colores = array("#fff","#e8f7fa");
-        $cant = count($colores);
+        $cant = count($colores);       
 ?>
 <!doctype html>
 <html>  
@@ -274,8 +274,13 @@ $sql="SELECT ord_id, ord_codigo, ord_descripcion, cli_nombre,c.cli_id, prv_nombr
                     <img src="images/editar.png" alt="editar" title="Modificar orden" width="32" height="32" border="none" />
                 </a>
             </td>
-            <td><a href="#" onClick="eliminarOrden(<?php echo($fila["ord_id"]);?>,'<?php echo($fila["ord_codigo"]);?>')">
-                <img src="images/eliminar.png" alt="eliminar" title="Eliminar orden" width="32" height="32" border="none" /></a></td>
+            <td>
+                <?php if($_SESSION["rol_id"]==1){ ?>
+                <a href="#" onClick="eliminarOrden(<?php echo($fila["ord_id"]);?>,'<?php echo($fila["ord_codigo"]);?>')">
+                <img src="images/eliminar.png" alt="eliminar" title="Eliminar orden" width="32" height="32" border="none" />
+                </a>
+                <?php }?>
+            </td>
           </tr>
   <?php
             $i++;

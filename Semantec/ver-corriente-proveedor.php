@@ -156,24 +156,39 @@
        $sql = "SELECT * FROM tabla_temp";
        
        /*Filtro para ver ordenes con saldo pendiente */
-       $filtro = $_POST["comboFiltro"];
-       switch($filtro){
+       $filtro = $_POST["chkFiltroEstado"];
+       $opcionComboFiltro = 0;
+       
+       
+       if ($filtro != ""){
+           $opcionComboFiltro =$_POST["comboFiltro"];
+       switch($opcionComboFiltro){
          case 1:    $sql.=" ";break;
          case 2:    $sql.=" WHERE saldo_a <> 0";break;
          case 3:    $sql.=" WHERE saldo_a = 0";break;  // quitar elANS es _abono porq antes revisar q haga la suma  correcta costo de orde mas abono 
              
         }
+       }
         
-        if (isset($_POST["filtro_ot"])){
+       $filtro2 = $_POST["chkFiltroOT"];
+       
+        if ($filtro2!=""){
             $desde = $_POST["fecha_inicio"];
             $hasta = $_POST["fecha_fin"];
             $desde1 = gfecha($desde);
             $hasta1 = gfecha($hasta);
-            $sql.=" WHERE fecha_recepcion_ot BETWEEN convert('$desde1',datetime) AND convert('$hasta1 23:59:59',datetime)";
+           
+            if ($filtro != ""){
+                $sql.=" AND fecha_recepcion_ot BETWEEN convert('$desde1',datetime) AND convert('$hasta1 23:59:59',datetime)";
+            }else{
+                $sql.=" WHERE fecha_recepcion_ot BETWEEN convert('$desde1',datetime) AND convert('$hasta1 23:59:59',datetime)";
+            }
         }
        
        $resultado = mysql_query($sql);  
        $sql0 = $sql;
+       
+       echo $sql;
     
     $tamPag=15;
     
@@ -372,35 +387,35 @@
        <form id="filtro" name="filtro" action="ver-corriente-proveedor.php" method="POST">
    <table width="100%" border="0">
    <tr>
-     <td colspan="5"><h2>Filtrar por estado de orden</h2></td>
+     <td colspan="5"><h2>Filtrar por estado de orden <input type="checkbox" name="chkFiltroEstado" id="chkFiltroEstado" onClick="habilitarFiltros('chkFiltroEstado','comboFiltro')" <?php if ($filtro!="") echo "checked"?>></h2></td>
    <tr>
      <td width="8%">&nbsp;</td>
      <td width="19%"><label>
-       <select name="comboFiltro" id="comboFiltro">
+       <select name="comboFiltro" id="comboFiltro" <?php if ($filtro==""){?>disabled <?php } ?>>
            <option value="0">Seleccione </option>
-         <option value="1" <?php if ($filtro==1) echo "selected"?> >Todos</option>
-         <option value="2" <?php if ($filtro==2) echo "selected"?>>Pendientes de pago</option>
-         <option value="3" <?php if ($filtro==3) echo "selected"?>>Canceladas</option>
+         <option value="1" <?php if ($opcionComboFiltro==1) echo "selected"?> >Todos</option>
+         <option value="2" <?php if ($opcionComboFiltro==2) echo "selected"?>>Pendientes de pago</option>
+         <option value="3" <?php if ($opcionComboFiltro==3) echo "selected"?>>Canceladas</option>
        </select>
      </label></td>
      <td colspan="2"><label>
-     <input type="submit" name="filtrar" id="filtrar" value="Filtrar" class="botones" onClick="return validaSeleccione('comboFiltro', 'Seleccione un filtro')">
+     
      </label></td>
      <td width="40%">&nbsp;</td>
    </tr>
    <tr>
-     <td colspan="5"><h2>Filtrar órdenes por fecha de recepción de OT</h2></td>
+     <td colspan="5"><h2>Filtrar órdenes por fecha de recepción de OT <input type="checkbox" name="chkFiltroOT" id="chkFiltroOT" onClick="habilitarFiltros('chkFiltroOT','fecha_inicio','fecha_fin')" <?php if($filtro2!="") echo "checked";?>></h2></td>
      </tr>
    <tr>
      <td>Desde</td>
      <td><label>
-       <input type="text" name="fecha_inicio" id="fecha_inicio" <?php if (isset($_POST["filtro_ot"])){ ?> value="<?php echo $desde;?>" <?php } ?>>
+       <input type="text" name="fecha_inicio" id="fecha_inicio" <?php if ($filtro2!=""){ ?> value="<?php echo $desde;?>" <?php } else {?> disabled <?php } ?>>
      </label></td>
      <td width="9%">Hasta</td>
      <td width="24%"><label>
-             <input type="text" name="fecha_fin" id="fecha_fin" <?php if (isset($_POST["filtro_ot"])){ ?> value="<?php echo $hasta;?>" <?php } ?>>
+             <input type="text" name="fecha_fin" id="fecha_fin" <?php if ($filtro2!=""){ ?> value="<?php echo $hasta;?>" <?php } else {?> disabled <?php } ?> >
      </label></td>
-     <td><input type="submit" name="filtro_ot" id="filtro_ot" value="Filtrar" class="botones" onClick=""></td>
+     <td><input type="submit" name="filtrar" id="filtrar" value="Filtrar" class="botones" onClick="return validaSeleccione('comboFiltro', 'Seleccione un filtro')"></td>
    </tr>
    </table>
      </form>
@@ -409,7 +424,7 @@
    
    <div id="contenedor" style="height:auto;">
        <form id="filtro" name="filtro" action="ver-corriente-proveedor.php" method="POST">
-      <h2>Cuenta corriente de <?php echo utf8_encode($fila_datos_proveedor["prv_nombre"]);?>  - <br/><?php if (isset($_POST["filtro_ot"])) echo "Viendo OT recibidas desde el $desde hasta $hasta";?></h2>
+      <h2>Cuenta corriente de <?php echo utf8_encode($fila_datos_proveedor["prv_nombre"]);?>  - <br/><?php if ($filtro2 !="") echo "Viendo OT recibidas desde el $desde hasta $hasta";?></h2>
 
 <table class="listadosMasAncho" cellpadding="5">
           <tr class="titulo">

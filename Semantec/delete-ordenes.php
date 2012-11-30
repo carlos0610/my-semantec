@@ -7,17 +7,28 @@
         include("conexion.php");
         include("Modelo/modeloHistorialAbonos.php");
         
+        $fecha_eliminacion = getdate();
+        
+        $fecha = $fecha_eliminacion[mday]."/".$fecha_eliminacion[mon]."/".$fecha_eliminacion[year]." ".$fecha_eliminacion[hours].":".$fecha_eliminacion[minutes].":".$fecha_eliminacion[seconds];
+      
         mysql_query("BEGIN"); // Inicio de Transacción
         $error      = 0;
         
-        $sql = "UPDATE ordenes SET 
-					estado = 0
-
-        			WHERE ord_id = $ord_id";
         
-
-        echo $sql;
-	$result =mysql_query($sql);//modificacion de la orden
+        $sql = "SELECT ord_codigo FROM ordenes WHERE ord_id = $ord_id";
+        $rs = mysql_query($sql);  
+        
+        if(!$rs)
+            $error = 1;
+        
+        $codigo = mysql_fetch_array($rs);
+        $ord_codigo = $codigo["ord_codigo"];
+        $nuevo_codigo_eliminado = $ord_codigo." - ".$fecha;
+        
+        
+        $sql = "UPDATE ordenes SET estado = 0 ,ord_codigo = '$nuevo_codigo_eliminado' WHERE ord_id = $ord_id";
+        
+        $result =mysql_query($sql);//modificacion de la orden
         if (!$result)
                 $error = 1; 
         

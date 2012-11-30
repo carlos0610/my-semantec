@@ -104,8 +104,6 @@ function confirmacionAdelanto(){
 
 function emitirAdelanto(pagina){
     var orden       = document.getElementById("txtOrden").value;
-    //var index = document.getElementById("comboOrdenes").selectedIndex;
-    //var cod_orden = document.getElementById("comboOrdenes").options[index].text;
     var monto       = document.getElementById("txtAdelanto").value;
        
     
@@ -113,7 +111,6 @@ function emitirAdelanto(pagina){
     
                     if(confirm('¿Confirma el adelanto para la orden : '+orden+'?')==true)
                         {
-                        alert(orden);
                         var desc =document.getElementById("txtDescripcion").value;
                         window.location="pagar-adelanto.php?orden="+orden+"&adelanto="+monto+"&desc="+desc+"&pagina="+pagina;
                         }    
@@ -317,6 +314,21 @@ function habilitarFiltros(nombre,gadet){
   }
    
 }
+
+function habilitarFiltros(nombre,gadet,gadet2){
+  if(document.getElementById(nombre).checked){ 
+     document.getElementById(gadet).disabled=false;
+     document.getElementById(gadet2).disabled=false;
+     document.getElementById(gadet).focus();
+  }else{
+      document.getElementById(gadet).disabled=true;
+      document.getElementById(gadet2).disabled=true;
+  }
+   
+}
+
+
+
 
 function colocarvalor(nombre,valor){
   if(document.getElementById(nombre).checked){ 
@@ -1094,13 +1106,13 @@ function eliminarItem(id,nombre,url){
     }
 }
 
-function validaSeleccione(id,mensaje){
-    //alert("ENTROOOO");
+function validaSeleccione(id,mensaje,chek){
+    if(chek.checked ==1){
     if (document.getElementById(id).selectedIndex == 0){
             alert (mensaje);
             return false;
         }
-        
+        }
         return true;
   
 }
