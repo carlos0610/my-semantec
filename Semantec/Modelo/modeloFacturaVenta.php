@@ -12,10 +12,17 @@
                 AND g_o.gru_id = o.gru_id";
            
                   mysql_query($sql);
+           return $factura = mysql_query($sql);    
+            
+        }
+           function getListadoFacturasWithGrupo($fav_id){
+            $sql = "SELECT f.fav_id , f.cod_factura_venta FROM factura_venta f  WHERE grupo_fac_pago = $fav_id AND estado =1
+               ;";
+           
+                  mysql_query($sql); 
            return $factura = mysql_query($sql);   
             
         }
-        
 
         function getFacturasWhitID($fav_id){
            $sql = "select * from factura_venta Where fav_id=$fav_id";  

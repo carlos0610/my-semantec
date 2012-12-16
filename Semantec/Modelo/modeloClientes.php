@@ -107,7 +107,7 @@
 
            function getClienteSucursalConID($cli_idBusqueda){
             $sql = "SELECT  cli_id, cli_nombre,sucursal FROM clientes WHERE cli_id = $cli_idBusqueda"; // datos de cliente
-            $resultado1 = mysql_query($sql);           
+            $resultado1 = mysql_query($sql);
             return $resultado1;
             }
 ?>

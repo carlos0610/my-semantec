@@ -39,7 +39,7 @@
         
         
         function getOrdenesWithFavId($id){
-		 $sql = "SELECT c.cli_nombre,c.cli_direccion, o.cli_id, o.ord_codigo, o.rub_id, o.ord_descripcion, o.ord_venta, o.presupuesto, i.iva_nombre,c.cli_cuit ,p.nombre as provincia,pa.nombre as partido,l.nombre as localidad,  c.cli_direccion_fiscal,c.sucursal_id
+		 $sql = "SELECT c.cli_nombre,o.ord_id, c.cli_direccion, o.cli_id, o.ord_codigo,o.es_abono, o.rub_id, o.ord_descripcion, o.ord_venta, o.presupuesto, i.iva_nombre,c.cli_cuit ,p.nombre as provincia,pa.nombre as partido,l.nombre as localidad,  c.cli_direccion_fiscal,c.sucursal_id
                 FROM ordenes o,clientes c,iva_tipo i,factura_venta f,grupo_ordenes g_o , ubicacion u,provincias p, partidos pa,localidades l
                 WHERE 
                 f.fav_id 	= $id

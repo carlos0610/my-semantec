@@ -314,7 +314,7 @@
                               FROM ordenes_detalle
                               WHERE ord_id = $orden
                               AND   estado = 1 
-                              ORDER BY ord_det_fecha DESC";
+                              ORDER BY ord_det_fecha DESC"; echo $sql_req;
                 $result_req = mysql_query($sql_req);
                 while($fila_req = mysql_fetch_array($result_req)){
 

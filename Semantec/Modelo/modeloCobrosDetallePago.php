@@ -9,7 +9,7 @@
                 ON c.ban_id = b.ban_id
                 LEFT JOIN cuentabanco cu
                 ON c.cuentabanco_id = cu.id
-                WHERE cobros_id = (SELECT id FROM cobros WHERE fav_id = $fav_id)";
+                WHERE cobros_id = (SELECT id FROM cobros WHERE grupo_fav_id = $fav_id)";
                 
                 return $detallesPago = mysql_query($sql);
         

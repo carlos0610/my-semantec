@@ -813,6 +813,8 @@ function verificarCheckboxs(cantTotalCheckboxs,id){
         }
 }
 
+
+
 // verificarCheckBoxs del nuevo POST
 function verificarCheckboxsNuevo(cantTotalCheckboxs,id){
     i=0;
@@ -852,6 +854,29 @@ function verificarCheckboxsNuevo(cantTotalCheckboxs,id){
     else
         {
             alert("debe seleccionar una orden");
+        }
+}
+
+
+
+// verificarCheckBoxs del nuevo POST
+function verificarCheckboxsFavPagos(cantTotalCheckboxs){
+    i=0; 
+    continua=false;
+        while (i<cantTotalCheckboxs)
+        {
+            i++;
+            if(eval("document.formVerificadorFacturas.chckCodFactura"+i+".checked"))
+                {
+                   continua=true;
+                } 
+        }
+    if(continua){   
+       document.getElementById("formVerificadorFacturas").submit();
+    }
+    else
+        {
+            alert("Debe seleccionar al menos una Factura");
         }
 }
 // verificarCheckBoxs
@@ -930,6 +955,17 @@ function CheckboxsSeleccionarTodosFacturaVenta(cantTotalCheckboxs){
         {
             i++;      
            eval("document.formferificadorOrdenes.checkbox_ord_id"+i+".checked="+resultado); 
+        }
+    }
+    
+ function CheckboxsSeleccionarTodosFacturaVentaFav(cantTotalCheckboxs){
+    elementoOrden=0;  
+    resultado=document.getElementById('checkbox_SelectAll').checked; 
+    i=0;
+    while (i<cantTotalCheckboxs)
+        {
+            i++;      
+           eval("document.formVerificadorFacturas.chckCodFactura"+i+".checked="+resultado); 
         }
     }
 

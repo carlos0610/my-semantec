@@ -154,18 +154,24 @@
       <p><a href="form-seleccionar-proveedor.php?action=2" class="current">Nueva compra</a></p>
      </section>
       
+           <section class="cajas">
+     <h3></h3>
+
+      
+     </section>
+      
+     <section class="cajas">
+     <h3>Pagos</h3>
+     <p><a href="form-seleccionar-cliente-pago.php" class="current">Ver Pagos</a></p>
+      <p><a href="form-generar-pago-factura.php" class="current">Pago Facturas</a></p>
+      
+     </section>
       
       
       
      <div class="clear">
      <table width="100%" border="0">
-         
-         <tr>
-           <td colspan="5" ><div align="center"></div></td>
-         </tr>
-         <tr>
-           <td colspan="5" >&nbsp;</td>
-         </tr>
+
          <tr>
            <td colspan="5" class="botones"><div align="center">ALERTAS</div></td>
          </tr>

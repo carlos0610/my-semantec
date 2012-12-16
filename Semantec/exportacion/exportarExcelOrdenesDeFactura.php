@@ -6,6 +6,7 @@ include("../funciones.php");
 include("../Modelo/modeloOrdenes.php");
 include("../Modelo/modeloRubros.php");
 include("../Modelo/modeloClientes.php");
+include("../Modelo/modeloAbonoDeOrden.php");
 //Datos
   $NombreSuc=$_GET["NombreSuc"];
   $dia=date("d-m-Y");
@@ -63,10 +64,24 @@ $nombre=" Planilla de Facturaci&oacute;n de $NombreSuc";
 <?php  $subtotal=0;
 while($row = mysql_fetch_array($result)) {
     //Datos de impresion
+        //valor de venta de la orden
+              $valor_ventaDeOrden=0;
+              $valor_ventaDeOrden=$row["ord_venta"];
+        //valor de Abono
+
+              if(($row["es_abono"])==1){ 
+                 $consult=getAbonosDeOrdenWithCliId($row["ord_id"]);
+                 $filaAbono = mysql_fetch_array($consult);
+                 $valor_venta_Abono=$filaAbono["valor_venta"]; 
+                
+        //         echo "<b>valor del abono : $valor_venta_Abono</b>";
+                 $valor_ventaDeOrden=$valor_ventaDeOrden+$valor_venta_Abono;
+              }
+        //---------------------------------------
          $filaDeRubro = mysql_fetch_array(getRubroNameById($row["rub_id"]));
          $valorVenta= "$";  
-         $subtotal+=$row["ord_venta"];
-         $valorVenta.= number_format($row["ord_venta"], 2, ',', '.');
+         $subtotal+=$valor_ventaDeOrden;
+         $valorVenta.= number_format($valor_ventaDeOrden, 2, ',', '.');
          $presupuesto=$row["presupuesto"];
          if($presupuesto==''){
              $presupuesto='-';
