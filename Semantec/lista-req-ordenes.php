@@ -85,7 +85,7 @@
                 
                 /* Si viene desde delete-files */
                 $eliminado = $_GET["eliminado"];
-                echo "ELIMINADO ".$eliminado;
+                
                 
                 
                 
