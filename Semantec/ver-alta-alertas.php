@@ -92,6 +92,17 @@
 <?php echo $fila["valor"]?>            día/s antes</label></td>
             <td></td>
           </tr>
+          
+          <?php $fila = mysql_fetch_array($resultado);?>
+          
+          <tr>
+            <td>Vencimiento de las OT recibidas :</td>  
+            <td><label>
+<?php echo $fila["valor"]?> día/s</label></td>
+            <td></td>
+          </tr>
+          
+          
           <tr>
             <td>&nbsp;</td>
             <td>&nbsp; &nbsp; 

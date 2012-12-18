@@ -83,6 +83,12 @@
                 
                 
                 
+                /* Si viene desde delete-files */
+                $eliminado = $_GET["eliminado"];
+                echo "ELIMINADO ".$eliminado;
+                
+                
+                
                 //ordenamiento parte 2
         if($unOrden=="")
              {$unOrden=" o.ord_alta ";}
@@ -154,7 +160,7 @@
   <script type="text/javascript" src="js/select_dependientes_cliente_sucursal.js"></script>
   </head>
   
-  <body  <?php if($action == 2){?>onload="confirmacionAdelanto()"<? } ?>>
+  <body  <?php if($action == 2){?>onload="confirmacionAdelanto()"<? } ?> <?php if($eliminado == "ok"){?>onload="mostrarMensaje('Se eliminó el archivo correctamente')"<? } ?>>
 	
   <!-- start main --><!-- start main --><!-- start main --><!-- start main --><!-- start main -->
   <div id="main">
@@ -178,7 +184,7 @@
    <div id="contenedor" style="height:auto;">
       <h2>Panel de control - Listado de Órdenes de Servicio</h2>
       <div id="buscador" >     
-    <form id="filtro" name="filtro" action="lista-req-ordenes.php" method="POST" >
+    <form id="filtro" name="filtro" action="lista-req-ordenes.php" method="POST"  >
      <table width="100%" border="0">
        <tr>
          <td width="15%">&nbsp;</td>
@@ -306,6 +312,7 @@
                       <td width="100">Archivo</td>
                       <td width="100">Portal</td>
                       <td width="100">Cancelar</td>
+                      <td width="100">Borrar archivo</td>
                       
                     </tr>
               <?php
@@ -314,7 +321,7 @@
                               FROM ordenes_detalle
                               WHERE ord_id = $orden
                               AND   estado = 1 
-                              ORDER BY ord_det_fecha DESC"; echo $sql_req;
+                              ORDER BY ord_det_fecha DESC"; 
                 $result_req = mysql_query($sql_req);
                 while($fila_req = mysql_fetch_array($result_req)){
 
@@ -327,12 +334,13 @@
                       <td width="100"><?php echo(utf8_encode($fila_req["ord_det_monto"])); ?></td>
                       <td width="100"><?php echo(utf8_encode($fila_req["usu_nombre"])); ?></td>
                       <?php //echo(utf8_encode($fila_req["files_id"]));
-                         $id = $fila_req["files_id"]; 
+                         $id_file = $fila_req["files_id"]; 
                          $ord_id = $fila["ord_id"];
                          $ord_det_id = $fila_req["ord_det_id"];?>                      
-                      <td width="100" style="text-align: center;"><?php if ($id!=null) echo "<a href=descargar.php?id=$id><img src=images/download.png /></a>";?></td>
-                      <td width="100"><?php echo(getFilePortalWithId($id)) ?></td>
+                      <td width="100" style="text-align: center;"><?php if ($id_file!=null) echo "<a href=descargar.php?id=$id_file><img src=images/download.png /></a>";?></td>
+                      <td width="100"><?php echo(getFilePortalWithId($id_file)) ?></td>
                       <td width="100" style="text-align: center;"><?php if($fila_req["ord_det_monto"]>0){?><a href="#"><img src="images/adelanto_cancel.png" alt="Cancelar adelanto" onclick="cancelarAdelanto('<?echo $ord_id?>', '<?echo $ord_det_id?>')" /></a><?}?></td>
+                      <td style="text-align: center;"><?php if ($id_file!=null) echo "<a href=#><img src=images/delete_file.png onclick=eliminarArchivo($id_file,$ord_id)></a>";?></td>
                     </tr>
 
               <?php

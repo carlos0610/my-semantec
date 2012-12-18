@@ -105,6 +105,12 @@ function confirmacionAdelanto(){
 
 
 
+function eliminarArchivo(id_file,ord_id){
+     if(confirm('¿Desea eliminar el archivo adjunto? ')==true)
+    {
+        window.location="delete-files.php?id="+id_file+"&ord_id="+ord_id;   
+    }    
+}
 function emitirAdelanto(pagina){
     var orden       = document.getElementById("txtOrden").value;
     var monto       = document.getElementById("txtAdelanto").value;
@@ -123,6 +129,9 @@ function emitirAdelanto(pagina){
         alert("El monto de adelanto tiene que ser mayor a 0.00");
                     }
 }
+
+
+
 
 
 function disableTxt(formulario,id){
@@ -549,6 +558,11 @@ function mostrarCuenta(id,nombre){
         window.location="delete-clientes.php?cli_id="+id;       
        
     }
+}
+
+
+function mostrarMensaje(mensaje){
+    alert(mensaje);
 }
 
 function actualizarListadoAbono(id){
