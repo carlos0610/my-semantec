@@ -162,7 +162,7 @@
               $numeroDeTablaDesplegable++;  
   ?>
           <tr class="lista" bgcolor="<?php echo($colores[$i]);?>">
-              <td><a href="ver-alta-pago-grupo.php?grupo_fav=<?php echo($fila["grupo_fav_id"]);?>"><?php echo($fila["id"]);?></a></td>
+              <td><a href="ver-alta-pago-grupo.php?grupo_fav=<?php echo($fila["grupo_fav_id"]);?>" target="_blank"><?php echo($fila["id"]);?></a></td>
               <td><?php echo($fila["fecha"]);?></td>             
             <td><?php echo getUsuarioNombreWithId($fila["usu_id"]);?></td>
             <td align="right"><?php echo number_format($fila["monto_total"], 2, ',', '.');?></td>

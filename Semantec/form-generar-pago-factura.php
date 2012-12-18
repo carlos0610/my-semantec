@@ -149,7 +149,7 @@
          </select></td>
          <td width="52%"></td>
        </tr>
-       <tr>
+       <tr style="visibility:hidden">
          <td><div align="right">Sucursal</div></td>
          <td><select name="suc_id" id="suc_id" class="campos" required <?php if($cli_id==""){echo ("disabled");}?>>
            <option value='todasLasSucursales'>Todas las Sucursales</option>
@@ -170,12 +170,7 @@
          <td>&nbsp; </td>
        </tr>
 
-       <tr>
-         <td><div align="right"></div>
-             </td>
-         <td></td>
-         <td><input type="submit" name="filtrar" value="Filtrar" class="botones" ></td>
-       </tr>
+
               <!--- Datos necesarios para el Ordenamiento header PARTE 3 -->
        <input name="orden" type="hidden" id="orden" value="<?php echo $unOrden; ?>">
        <input name="contador" type="hidden" id="contador" value="<?php echo $contadorinicial ?>">
@@ -222,7 +217,7 @@
             
 
             <td width="32" align="center">
-                <a href="ver-alta-factura.php?fav_id=<?php echo($fila["fav_id"]); ?>"><img src="images/detalles.png" alt="editar" title="Ver detalle" width="32" height="32" border="none" /></a>
+                <a href="ver-alta-factura.php?fav_id=<?php echo($fila["fav_id"]); ?>" target="_blank"><img src="images/detalles.png" alt="editar" title="Ver detalle" width="32" height="32" border="none" /></a>
             </td>  
             
             
