@@ -4,6 +4,7 @@
  */
 var req;
 var respuesta;
+var numeroElemento;
 
 
 
@@ -344,4 +345,45 @@ function autenticaOrdenCCProveedor(){
  usuario = document.getElementById("txtOrden").value; 
  url = "existeNumeroOrden.php?usuario=" + usuario; 
  leer_docOrdenCCProveedor(url);
+}
+//---------------selecciona provincia y retorna jurisdiccion en elemento de pago------------------------------------
+
+function leer_docJurisdiccion(url) {
+ req = false;
+   
+ // Llama objeto XMLHttpRequest
+ if (window.XMLHttpRequest) {
+   req = new XMLHttpRequest();
+   if (req.overrideMimeType) {
+     req.overrideMimeType('text/xml'); 
+   }
+ 
+ // Si no funciona intenta utiliar el objeto IE/Windows ActiveX 
+ } else if (window.ActiveXObject) {
+   req = new ActiveXObject("Microsoft.XMLHTTP"); 
+ }
+ 
+ if(req!=null){  
+   req.onreadystatechange = procesarRespuestaJurisdiccion;
+   req.open('GET', url, true);
+   req.send(null);
+ } 
+ 
+}
+
+function procesarRespuestaJurisdiccion(){
+    //NOTA: para q funcione correctamente no olvidarse q deben existir los id
+ respuesta = req.responseXML; 
+ var existe = respuesta.getElementsByTagName('existe').item(0).firstChild.data; 
+
+    document.getElementById("txtJurisdiccion"+numeroElemento).value = existe;
+
+}
+
+// Funciones llamdas del Form
+function obtenerJurisdiccion(NumeroDeRetencion){ 
+ numeroElemento=NumeroDeRetencion;
+ usuario = document.getElementById("comboProvincias"+NumeroDeRetencion).value; 
+ url = "obtenerJurisdiccion.php?usuario=" + usuario;   
+ leer_docJurisdiccion(url);
 }

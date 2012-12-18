@@ -340,7 +340,7 @@
           <tr>
             <td>Importe:</td>
             <td><input name="txtImporte2" type="text" disabled class="campos2" id="txtImporte2" onChange="actualizarDetallePago('<?php echo $totalFavs ?>',<?php echo $cantTipoPago ?>)" value="0" size="8" style="text-align:right"></td>
-            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; %  
+            <td style="visibility:hidden">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; %  
               
               <select name="comboIva" class="campos2" id="comboIva" disabled required>
                   <?php
@@ -392,7 +392,7 @@ Nro :
             <td>Importe:</td>
             <td><input name="txtImporte<? echo $NumeroDeRetencion ?>" type="text" disabled class="campos2" id="txtImporte<? echo $NumeroDeRetencion ?>" onChange="actualizarDetallePago('<?php echo $totalFavs ?>',<?php echo $cantTipoPago ?>,<?php echo $cantIIBB ?>)" value="0" size="8" style="text-align:right"></td>
             <td>Provincia:
-              <select name="comboProvincias<? echo $NumeroDeRetencion ?>" class="campos2" id="comboProvincias<? echo $NumeroDeRetencion ?>" disabled>
+              <select name="comboProvincias<? echo $NumeroDeRetencion ?>" onChange="obtenerJurisdiccion(<? echo $NumeroDeRetencion?>);" class="campos2" id="comboProvincias<? echo $NumeroDeRetencion ?>" disabled>
                 <?php
                     $provincias=getProvincias();
                     while ($fila_provincia = mysql_fetch_array($provincias)){

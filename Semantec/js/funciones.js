@@ -4,7 +4,10 @@ function goBack()
   window.history.back()
   }
 
-
+function imprimir(value)
+  {
+  alert(value);
+  }
 
 // BAJA de ORDEN
 function eliminarOrden(id,nombre){

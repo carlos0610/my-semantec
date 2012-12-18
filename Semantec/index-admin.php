@@ -154,11 +154,6 @@
       <p><a href="form-seleccionar-proveedor.php?action=2" class="current">Nueva compra</a></p>
      </section>
       
-           <section class="cajas">
-     <h3></h3>
-
-      
-     </section>
       
      <section class="cajas">
      <h3>Pagos</h3>
