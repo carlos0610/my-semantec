@@ -10,20 +10,58 @@
         
         /* LISTADO DE MOVIMIENTOS DE CUENTAS CORRIENTES DE CLIENTE*/
         
-        $sql0 = "SELECT distinct (ccc_id),c.cli_id,c.cli_nombre,c.sucursal,cc.fav_id,f.cod_factura_venta,sum(o.ord_venta) as 'Monto',f.fav_fecha_pago,u.usu_nombre  
-                FROM detalle_corriente_cliente cc, clientes c, factura_venta f, ordenes o,grupo_ordenes g_o,cobros co,usuarios u
-                WHERE
-                cc.fav_id  	= f.fav_id
-                AND f.gru_id  	= g_o.gru_id
-                AND g_o.gru_id 	= o.gru_id
-                AND o.cli_id	= c.cli_id
-                AND c.cli_id  in (SELECT cli_id from clientes where estado = 1)
-                AND cc.estado = 1
-                AND co.fav_id = cc.fav_id
-                AND u.usu_id  = co.usu_id
-                group by f.fav_id
-                order by fav_fecha_pago desc;";
+        $sql0 = "CREATE TEMPORARY TABLE temp1(
+						fav_id int not null,
+						fav_codigo varchar(64) not null,
+						cod_pago int not null,
+					    fav_fecha_pago datetime not null,
+						subtotal varchar(32) not null,
+						iva 	 varchar(32) not null,
+						total    varchar(32) not null,
+						cli_nombre varchar(64) not null,
+                                                grupo_fac_pago int not null
+                                            );";
         
+        mysql_query($sql0);
+        
+        $sql0 = "INSERT INTO temp1
+                    SELECT f.fav_id,f.cod_factura_venta,c.id as pago,f.fav_fecha_pago,FORMAT(SUM(dfv.det_fav_precio),2) as subtotal,FORMAT(SUM(dfv.det_fav_precio)*0.21,2) as iva,FORMAT(SUM(dfv.det_fav_precio)+SUM(dfv.det_fav_precio)*0.21,2) as total,0,f.grupo_fac_pago from factura_venta f
+                    INNER JOIN cobros c
+                    ON c.grupo_fav_id = f.grupo_fac_pago
+                    INNER JOIN detalle_factura_venta dfv
+                    ON dfv.fav_id = f.fav_id
+                    WHERE f.fav_fecha_pago is not null
+                    GROUP BY f.cod_factura_venta
+                    ORDER BY fav_fecha_pago desc;";
+        
+        mysql_query($sql0);
+        
+        $sql0 = "CREATE TEMPORARY TABLE temp2 (
+			cli_nombre varchar(64) not null ,
+			fav_id integer not null
+                                                );";
+        
+        mysql_query($sql0);
+        
+        $sql0 = "INSERT INTO temp2
+                    select DISTINCT(cli_nombre),fv.fav_id from clientes c
+                    INNER JOIN ordenes o
+                    ON o.cli_id = c.cli_id
+                    INNER JOIN grupo_ordenes go
+                    ON go.gru_id = o.gru_id
+                    INNER JOIN factura_venta fv
+                    ON fv.gru_id = go.gru_id
+                    WHERE fv.fav_id in (select fav_id from temp1);";
+        
+        mysql_query($sql0);
+        
+        $sql0 = "UPDATE temp1 t1,temp2 t2
+                    SET t1.cli_nombre = t2.cli_nombre
+                    WHERE t1.fav_id = t2.fav_id;";
+        
+        mysql_query($sql0);
+        
+        $sql0 = "select * from temp1";
         $listado_movimientos = mysql_query($sql0);
         /*FIN_LISTADO*/
         
@@ -33,22 +71,10 @@
         $tamPag=10;       
         include("paginado.php");
         
-        $sql = "SELECT distinct (ccc_id),c.cli_id,c.cli_nombre,c.sucursal,cc.fav_id,f.cod_factura_venta,sum(o.ord_venta) as 'Monto',f.fav_fecha_pago,u.usu_nombre  
-                FROM detalle_corriente_cliente cc, clientes c, factura_venta f, ordenes o,grupo_ordenes g_o,cobros co,usuarios u
-                WHERE
-                cc.fav_id  	= f.fav_id
-                AND f.gru_id  	= g_o.gru_id
-                AND g_o.gru_id 	= o.gru_id
-                AND o.cli_id	= c.cli_id
-                AND c.cli_id  in (SELECT cli_id from clientes where estado = 1)
-                AND cc.estado = 1
-                AND co.fav_id = cc.fav_id
-                AND u.usu_id  = co.usu_id
-                group by f.fav_id
-                order by fav_fecha_pago desc";
+        $sql = "select * from temp1";
         $sql .= " LIMIT ".$limitInf.",".$tamPag;
         $resultado = mysql_query($sql);
-        //$cantidad = mysql_num_rows($resultado);
+        //$cant_registros = mysql_num_rows($resultado);
         
         $i = 0;
         $colores = array("#fff","#e8f7fa");
@@ -56,6 +82,8 @@
         
         /*FIN_PAGINACIÓN*/
         
+        mysql_query("DROP TABLE temp1");
+        mysql_query("DROP TABLE temp2");
         
         
 ?>
@@ -68,10 +96,10 @@
       
   <script>
           function transferirFiltros(pagina)
-{    
+        {    
 	document.getElementById("filtro").action="form-seleccionar-cliente.php?pagina="+pagina;
 	document.getElementById("filtro").submit();
-}
+        }
   </script>    
   </head>
   <body>
@@ -93,13 +121,13 @@
     </header>
     <!--fin header-->
 
-
    <!--start contenedor-->
    <div id="contenedor" style="height:auto;">
    
       <h2>Panel de control - Cuenta corrientes de clientes</h2>
 	<div id="seleccion" style="height:auto">	
-      <form name="frmSeleccionarCliente" action="ver-corriente-clientes.php" method="post" ><table class="listados" cellpadding="5">
+      <form id="filtro" name="filtro" action="form-seleccionar-cliente.php" method="POST">
+          <table class="listados" cellpadding="5">
           <tr class="titulo">
             <td width="149">Seleccione cliente</td>
             <td colspan="3"><div align="right"><a href="index-admin.php"><img src="images/home.png"  alt="inicio" title="Volver al panel" width="32" height="32" border="none" /></a>
@@ -139,32 +167,30 @@
    <h2>Últimos movimientos de cuentas corrientes</h2>
    <table class="listados" cellpadding="5">
           <tr class="titulo">
-            <td width="80">Cuenta corriente</td>
             <td width="240">Cliente</td> 
-            <td width="79">Sucursal</td>
-            <td width="79">Factura nro</td> 
-            <td width="115">Monto de pago</td>
+            <td width="79">Factura nro</td>
+            <td width="60">Nro de pago</td>
             <td width="115">Fecha de pago</td>
-            <td width="95">Registrado por</td>
-            <td width="72">&nbsp;</td>
+            <td width="115">Monto factura</td>
+            <td width="95">Ver pago</td>
+            
         </tr>
   <?php
           while($fila = mysql_fetch_array($listado_movimientos)){
-              //echo($fila["ord_alta"]);
+              
   ?>
           <tr class="lista" bgcolor="<?php echo($colores[$i]);?>">
-            <td><?php echo($fila["ccc_id"]);?></td>
+            <td><?php echo($fila["cli_nombre"]);?></td>
             <td>
-            <a href="ver-alta-clientes.php?cli_id=<?php echo($fila["cli_id"]);?>&action=0&origen=externo">
-            <?php echo(utf8_encode($fila["cli_nombre"]));?>
+            <a href="ver-alta-factura.php?fav_id=<?php echo($fila["fav_id"]); ?>&origen=externo">
+            <?php echo(utf8_encode($fila["fav_codigo"]));?></a>
             </a>          
             </td>
-            <td><?php echo(utf8_encode($fila["sucursal"]));?></td>
-            <td align="center"><?php echo $fila["cod_factura_venta"];?></td>          
-            <td><?php echo $fila["Monto"];?></td>     
-            <td width="115"><?php echo $fila[fav_fecha_pago];?> </td>
-            <td width="95" align="center"><?php echo $fila[usu_nombre]; ?></td>
-            <td width="72" align="center"><a href="ver-alta-factura.php?fav_id=<?php echo($fila["fav_id"]); ?>&origen=externo"><img src="images/detalles.png" alt="editar" title="Ver detalle" width="32" height="32" border="none" /></a></td>            
+            <td align="center"><?php echo $fila["cod_pago"];?></td>
+            <td align="center" width="115"><?php echo mfecha(substr($fila["fav_fecha_pago"], 0, 10));?> </td>
+            <td align="center"><?php echo $fila["total"];?></td>     
+            <td width="95" align="center"><a href="ver-alta-pago-grupo.php?grupo_fav=<?php echo $fila["grupo_fac_pago"];?>"><img src="images/detalles.png"/></a></td>
+                        
         </tr>
   <?php
             $i++;
@@ -173,7 +199,7 @@
           }
   ?>
           <tr>
-            <td colspan="8" class="pie_lista"><?php 
+            <td colspan="6" class="pie_lista"><?php 
 /* PAGINADO */  ###############################################################################            
             echo(verPaginado($cant_registros, $pagina, $inicio, $final, $numPags)); 
             ?></td>

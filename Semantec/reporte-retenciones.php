@@ -130,12 +130,14 @@
         <div align="center">REPORTE DE RETENCIONES</div>
       </div>
       <table class="sortable" cellpadding="5">
-          
           <tr class="titulo">
+            <td width="50">Pago</a>  
             <td width="70">Retención</td>  
-            <td width="70">Total acumulado</td>
-            <td width="100">Desde</td>
-            <td>Hasta</td>
+            <td width="70">Fecha</td>
+            <td width="40">Prefijo</td>
+            <td width="70">Nro</td>
+            <td width="100">Importe</td>
+            <td width="100">Ver pago</td>
             <td width="32">
                 <a href="index-admin.php">
                     <img src="images/home.png"  alt="inicio" title="Volver al panel" width="32" height="32" border="none" />                </a>            </td>
@@ -147,17 +149,19 @@
               //echo($fila["ord_alta"]);
   ?>
           <tr class="lista" bgcolor="<?php echo($colores[$i]);?>">
+            <td><?php echo $fila["id"]?></td> 
             <td><?php echo $fila["nombre"]?></td>
-            <td><?php echo $fila["suma"]?></td>
-            <td><?php echo mfecha($fecha_ini) ?></td>
-            <td><?php echo mfecha($fecha_fin) ?></td>
-            <td>&nbsp;</td>
+            <td><?php echo mfecha($fila["ret_fecha"])?></td>
+            <td><?php echo $fila["ret_prefijo"];?></td>
+            <td><?php echo $fila["ret_codigo"];?></td>
+            <td><?php echo $fila["ret_importe"]?></td>
+            <td align="center"><a href="ver-alta-pago-grupo.php?grupo_fav=<?php echo $fila["grupo_fav_id"]?>"><img src="images/detalles.png"/></a></td>           
         </tr>
   <?php
             $i++;
             if($i==$cant){$i=0;}
             
-            $total += $fila["suma"];
+            $total += $fila["ret_importe"];
             $nombreRetencion = $fila["nombre"];
           }
           }
