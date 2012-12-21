@@ -387,3 +387,14 @@ function obtenerJurisdiccion(NumeroDeRetencion){
  url = "obtenerJurisdiccion.php?usuario=" + usuario;   
  leer_docJurisdiccion(url);
 }
+// validador Pago Fav
+function validartotalPagoFav() {
+    if((document.getElementById("txtTotal").value == document.getElementById("totalFavs").value))
+    {
+        document.getElementById("altaPagoFav").submit();
+    }
+    else
+        {
+          alert('Valores del Pago incorrectos');
+        }
+}

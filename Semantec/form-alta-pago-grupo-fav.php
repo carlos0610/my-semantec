@@ -152,7 +152,8 @@
 ?>
 
 
-            <td><big><b>Total Factura:</b></big></td>
+            <td><big><b>Total Factura:</b></big>   <input name="totalFavs" type="hidden"  id="totalFavs" value="<? echo  $totalFavs ?>"></td>
+
             <td style="text-align:right;"><big><b><?php echo number_format($totalFavs,2,',','.') ?></b></big></td>
             <td>&nbsp;</td>
             <td></td>
@@ -189,7 +190,7 @@
             <td>&nbsp;</td>
             <td></td>
           </tr>
-     <form action="alta-pago-grupo-fav.php?fav_id=<?php echo $fav_id ?>&cantTipoPago=<?php echo $cantTipoPago ?>&ccc_id=<?php echo $ccc_id ?>&cantIIBB=<?php echo $cantIIBB ?>&cant=<?php echo $cantTotalFav ?>&cli_id=<?php echo $cli_id ?>&totalFavs=<?php echo $totalFavs ?>" method="post" enctype="multipart/form-data" >
+     <form id="altaPagoFav" action="alta-pago-grupo-fav.php?fav_id=<?php echo $fav_id ?>&cantTipoPago=<?php echo $cantTipoPago ?>&ccc_id=<?php echo $ccc_id ?>&cantIIBB=<?php echo $cantIIBB ?>&cant=<?php echo $cantTotalFav ?>&cli_id=<?php echo $cli_id ?>&totalFavs=<?php echo $totalFavs ?>" method="post" enctype="multipart/form-data" >
         <?   $i=0;   // guardo las facturas a pagar   
  while ($i < $cantTotalFav) 
 { 
@@ -292,7 +293,7 @@
           </table>
           
 <div class="retenciones">
-          <form action="alta-pago.php?fav_id=<?php echo $fav_id ?>&cantTipoPago=<?php echo $cantTipoPago ?>&ccc_id=<?php echo $ccc_id ?>" method="post" enctype="multipart/form-data" >
+          <form  action="alta-pago.php?fav_id=<?php echo $fav_id ?>&cantTipoPago=<?php echo $cantTipoPago ?>&ccc_id=<?php echo $ccc_id ?>" method="post" enctype="multipart/form-data" >
           <table class="listados">
           <tr>
             <td colspan="3" bgcolor="#0099CC"><div align="center" class="Estilo1">Retenciones</div></td>
@@ -463,7 +464,7 @@ Nro :
           <tr>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
-            <td>&nbsp; <input type="submit" value="Registrar pago" class="botones" style="visibility:visible" id="botonRegistrar" />
+            <td>&nbsp; <input type="button" value="Registrar pago" class="botones" style="visibility:visible" id="botonRegistrar" onClick="validartotalPagoFav()" />
               &nbsp;
             <input type="reset" value="Restablecer" class="botones" /></td>
             </tr>
