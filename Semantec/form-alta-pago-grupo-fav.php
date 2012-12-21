@@ -403,7 +403,7 @@ Nro :
               </select>
               Jurisdicción: 
               <label>
-              <input name="txtJurisdiccion<? echo $NumeroDeRetencion ?>" type="text" class="campos2" id="txtJurisdiccion<? echo $NumeroDeRetencion ?>" size="9">
+              <input name="txtJurisdiccion<? echo $NumeroDeRetencion ?>" type="text" class="campos2" id="txtJurisdiccion<? echo $NumeroDeRetencion ?>" style="text-align:right" size="9" required disabled readOnly>
               </label></td>
             </tr>
             <?php   $NumeroDeRetencion++; 
@@ -464,7 +464,7 @@ Nro :
           <tr>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
-            <td>&nbsp; <input type="button" value="Registrar pago" class="botones" style="visibility:visible" id="botonRegistrar" onClick="validartotalPagoFav()" />
+            <td>&nbsp; <input type="submit" value="Registrar pago" class="botones" style="visibility:hidden" id="botonRegistrar"  />
               &nbsp;
             <input type="reset" value="Restablecer" class="botones" /></td>
             </tr>

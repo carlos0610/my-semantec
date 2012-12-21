@@ -254,7 +254,8 @@ function habilitarRetenciones(formulario,numero){
         
     if(nombre >= '4')// cuando son  IIBB
         {  
-            document.getElementById("comboProvincias"+numero).disabled = valor;  
+            document.getElementById("comboProvincias"+numero).disabled = valor;
+            document.getElementById("txtJurisdiccion"+numero).disabled = valor;
         }
         
         actualizarDetallePago();
