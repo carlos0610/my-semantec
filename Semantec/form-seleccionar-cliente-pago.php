@@ -120,7 +120,7 @@
               </select>
             </label></td>
             <td width="473"><label>
-              <input type="submit" name="btnVerCuenta" id="btnVerCuenta" value="Ver cuenta corriente">
+              <input type="submit" name="btnVerCuenta" id="btnVerCuenta" value=" Ver ">
             </label></td>
             <td colspan="2">&nbsp;</td>
         </tr>

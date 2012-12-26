@@ -7,7 +7,7 @@
         include("Modelo/modeloFacturaVenta.php");
         include("Modelo/modeloCobrosDetalleRetencion.php");
         include("Modelo/modeloCobrosDetallePago.php");
-        
+         include("funciones.php");
         $fav_id     =  $_GET["grupo_fav"]; 
         
         /*TIPOS DE PAGO*/
@@ -42,7 +42,8 @@
         $detallePagos       = getDetallePagoByFavId($fav_id);
         /* DETALLE RETENCIONES */
         $detalleRetenciones = getDetalleRetencionByFavId($fav_id);
-           
+        //Total
+        $montoTotal=0;
         
 
 
@@ -128,14 +129,17 @@
             <?php while($fila_factura = mysql_fetch_array($factura)){?>  
           <tr>
             <td><big>Factura nro:</big></td>
-            <td><big><b><?php echo $fila_factura["cod_factura_venta"]?></b></big></td>
+            <td>              <a href="ver-alta-factura.php?fav_id=<? echo $fila_factura["fav_id"];?>" target="_blank">
+<big><b><?php echo $fila_factura["cod_factura_venta"]?></b></big></a></td>
             <td><big>Total Factura:</big></td>
             <td><big><b><?php  $total=mysql_fetch_array(getTotalAPagarConIva($fila_factura["fav_id"]));echo number_format($total['total'], 2, ',', '.')?></b></big></td>
             <td>&nbsp;</td>
             <td></td>
             </tr>
-            <? }?>
-          
+            <? $montoTotal+=$total['total'];
+            
+            }?>
+            <tr><td> <b><big>TOTAL: <? echo number_format($montoTotal, 2, ',', '.');   ?></big></b></td> </tr>
           <form action="lista-facturas.php" method="post" enctype="multipart/form-data" >
            <!--Bucle Generador de Tipos Pagos-->
           
@@ -163,9 +167,9 @@
           </tr>
           <tr>
             <td width="139">Fecha emision</td>
-            <td width="179"><?php echo $fila_pago["fecha_emision"]?></td>
+            <td width="179"><?php echo mfecha($fila_pago["fecha_emision"]) ?></td>
             <td width="108"><label>Fecha vencimiento</label></td>
-            <td width="343"><?php echo $fila_pago["fecha_vto"]?></td>
+            <td width="343"><?php echo mfecha($fila_pago["fecha_vto"]) ?></td>
             <td width="3">&nbsp;</td>
             <td></td>
           </tr>
@@ -207,7 +211,7 @@
             <td width="139">Cuenta</td>
             <td width="179"><?php echo $fila_pago["nombre"]?></td>
             <td width="108"><label>Fecha transferencia</label></td>
-            <td width="343"><?php echo $fila_pago["fecha_transferencia"]?></td>
+            <td width="343"><?php echo mfecha($fila_pago["fecha_transferencia"])?></td>
             <td width="3">&nbsp;</td>
             <td></td>
           </tr>
@@ -279,7 +283,11 @@
             <td colspan="3" class="pie_lista"><div align="center">
               <a href="form-seleccionar-cliente-pago.php">
                     <input type="button" value="Volver" class="botones" /></a>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                  <a href="form-generar-pago-factura.php">
+                    <input type="button" value="Otro Pago" class="botones" /></a>
             </div></td>
+
           </tr>
       </table>
               

@@ -207,7 +207,6 @@
             <td width="100"><a href="#" onClick="agregarOrderBy('cli_nombre')">Sucursal</a></td>
             <td width="32"><a href="#" onClick="agregarOrderBy('fav_fecha_pago')">Pagada</a></td> 
             <td width="32" align="center">Archivo</td>
-            <td width="32">Pago</td>
             <td width="32">&nbsp; Ver</td>
             <td width="32">Excel</td>
             <td width="32">
@@ -233,22 +232,7 @@
                 <?php //echo(utf8_encode($fila_req["files_id"]));
                       $id = $fila["files_id"] ?>
             <td width="60" align="center"><?php if ($id!=null) echo "<a href=descargar.php?id=$id><img src=images/download.png title=Descargar /></a>";?></td>
-            
-            <td width="32" align="center">
-            <div  <?php if($chkCanceladas=="0"){echo ("  style='visibility:hidden'");}?>>
-            <?php if($fila["fav_fecha_pago"]==NULL){?>
-            <a href="#" onClick="pagarFactura(<?php echo($fila["fav_id"]);?> ,<?php echo($fila["ccc_id"]);?>,'<?php echo($fila["cod_factura_venta"]);?>')">
-            <img src="images/pagar_factura.png" title="Registrar pago de factura">
-            </a>
-            
-            <?php }else {?>
-            <a href="ver-alta-pago.php?fav_id=<?php echo($fila["fav_id"]);?>">
-            <img src="images/cash_register.png" title="Ver detalle del pago">
-            </a>
-                
-            <?php }?>
-            </div>
-            </td>
+
             <td width="32" align="center">
                 <a href="ver-alta-factura.php?fav_id=<?php echo($fila["fav_id"]); ?>"><img src="images/detalles.png" alt="editar" title="Ver detalle" width="32" height="32" border="none" /></a>
             </td>  

@@ -394,7 +394,8 @@ Nro :
             <td><input name="txtImporte<? echo $NumeroDeRetencion ?>" type="text" disabled class="campos2" id="txtImporte<? echo $NumeroDeRetencion ?>" onChange="actualizarDetallePago('<?php echo $totalFavs ?>',<?php echo $cantTipoPago ?>,<?php echo $cantIIBB ?>)" value="0" size="8" style="text-align:right"></td>
             <td>Provincia:
               <select name="comboProvincias<? echo $NumeroDeRetencion ?>" onChange="obtenerJurisdiccion(<? echo $NumeroDeRetencion?>);" class="campos2" id="comboProvincias<? echo $NumeroDeRetencion ?>" disabled>
-                <?php
+                <option value="0">Seleccione </option>
+                  <?php
                     $provincias=getProvincias();
                     while ($fila_provincia = mysql_fetch_array($provincias)){
                 ?>

@@ -74,6 +74,7 @@
         $resultado = mysql_query($sql);
         $cantidad = mysql_num_rows($resultado);
         $unaFila=mysql_fetch_array($resultado);
+        $resultado = mysql_query($sql);
         $ccte_id=$unaFila["ccc_id"]; // echo "id maestro: $cli_idMaestro   ----la cct : $ccte_id el sql: ";
         
         $i = 0;

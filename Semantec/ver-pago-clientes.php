@@ -229,7 +229,7 @@
             $totalDeuda += $fila["ord_venta"];
           } // FIN_WHILE
           
-          echo "<tr><td colspan=5 align=right>Total deuda cliente: <b>$totalDeuda</b> pesos</td></tr>";
+       //   echo "<tr><td colspan=5 align=right>Total deuda cliente: <b>$totalDeuda</b> pesos</td></tr>";
           
   ?>
           <tr>
