@@ -188,7 +188,7 @@
        $resultado = mysql_query($sql);  
        $sql0 = $sql;
        
-       echo $sql;
+      
     
     $tamPag=15;
     
@@ -521,7 +521,7 @@
        //    echo "<tr><td colspan=8 align=right>Monto total de órdenes : <b>".number_format($totalOrdenes,2,'.',' ')."</b> pesos";
   ?>
           <tr>
-            <td colspan="8" class="pie_lista" ><?php 
+            <td colspan="10" class="pie_lista"><?php 
 /* PAGINADO */  ###############################################################################            
             echo(verPaginado($cant_registros, $pagina, $inicio, $final, $numPags)); 
             ?></td>
