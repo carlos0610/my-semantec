@@ -129,7 +129,7 @@
       <div class="clear">
         <div align="center">REPORTE DE RETENCIONES</div>
       </div>
-      <table class="sortable" cellpadding="5">
+      <table class="listado" cellpadding="5">
           <tr class="titulo">
             <td width="50">Pago</a>  
             <td width="70">Retención</td>  
