@@ -340,7 +340,7 @@
                       <td width="100" style="text-align: center;"><?php if ($id_file!=null) echo "<a href=descargar.php?id=$id_file><img src=images/download.png /></a>";?></td>
                       <td width="100"><?php echo(getFilePortalWithId($id_file)) ?></td>
                       <td width="100" style="text-align: center;"><?php if($fila_req["ord_det_monto"]>0){?><a href="#"><img src="images/adelanto_cancel.png" alt="Cancelar adelanto" onclick="cancelarAdelanto('<?echo $ord_id?>', '<?echo $ord_det_id?>')" /></a><?}?></td>
-                      <td style="text-align: center;"><?php if ($id_file!=null) echo "<a href=#><img src=images/delete_file.png onclick=eliminarArchivo($id_file,$ord_id)></a>";?></td>
+                      <td style="text-align: center;"><?php if ($id_file!=null && $_SESSION["rol_id"] == 1) echo "<a href=#><img src=images/delete_file.png onclick=eliminarArchivo($id_file,$ord_id)></a>";?></td>
                     </tr>
 
               <?php
