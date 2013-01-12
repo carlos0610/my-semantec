@@ -418,6 +418,7 @@ function ActualizarTotal(cantidadDescripciones,factura){
          } 
      
     subtotal = 0;
+    resta=0;
     resta=totalOrdenesVenta=document.getElementById("totalOrdenVentatxt").value; 
     numeroDescripcion=0;
     
@@ -453,10 +454,10 @@ function ActualizarTotal(cantidadDescripciones,factura){
 //Aca empieza la magia
    
    
-    if(document.getElementById("totalOrdenVentatxt").value==subtotal.toFixed(2))
-        {document.getElementById("btnConfirma").style.visibility = "visible";}
+    if(resta.toFixed(2)==0.00)
+        {document.getElementById("btnConfirma").style.visibility = "visible"; }
     else{
-            if(document.getElementById("totalOrdenVentatxt").value<=subtotal.toFixed(2))
+            if(resta.toFixed(2)<0)
             {          
                alert("La factura supera el total aceptado");
                document.getElementById("btnConfirma").style.visibility = "hidden";}
