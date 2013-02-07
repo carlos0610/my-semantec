@@ -13,8 +13,10 @@
         $filtrar = $_POST['filtrar'];
         $resultado = null;
            if(isset($filtrar)) {
-                    $fecha_ini = gfecha($_POST["fecha_inicio"]);
-                    $fecha_fin = gfecha($_POST["fecha_fin"]);
+                    $fecha_ini_sinconvertir = $_POST["fecha_inicio"];
+                    $fecha_fin_sinconvertir = $_POST["fecha_fin"];
+                    $fecha_ini = gfecha($fecha_ini_sinconvertir);
+                    $fecha_fin = gfecha($fecha_fin_sinconvertir);
                     $ret_id        = $_POST['comboRetenciones'];
                     
                     if ($ret_id != 0)
@@ -26,7 +28,6 @@
 
               
 
-        
        
         
 
@@ -46,6 +47,8 @@
   <script type="text/javascript" src="js/jquery.datepick.js"></script>
   <script type="text/javascript" src="js/jquery.datepick-es.js"></script>
   <script type="text/javascript">
+  
+  
   $(function() {
       
       $('#fecha_inicio').datepick();
@@ -55,11 +58,13 @@
                 var anho = fecha.getFullYear();
         /*Armamos la fecha para setear el primer dia del mes por defecto como -fecha de inicio- */
                 var primerDiaDelMesActual =("01/"+mes+"/"+anho);
-      
+      <?php if(!isset($filtrar)){ ?>
       $("#fecha_inicio").datepick("setDate" , primerDiaDelMesActual);
-      
+      <? } ?>
       $('#fecha_fin').datepick();
   });
+  
+  
   </script>     
   </head>
   <body>
@@ -104,9 +109,9 @@
        </tr>
        <tr>
          <td><div align="right">Desde</div></td>
-         <td><input type="text" name="fecha_inicio" id="fecha_inicio" class="campos2"></td>
+         <td><input type="text" name="fecha_inicio" id="fecha_inicio" class="campos2" <? if(isset($filtrar)) echo "value=$fecha_ini_sinconvertir"; ?>></td>
          <td>Hasta 
-           <input type="text" name="fecha_fin" id="fecha_fin" class="campos2">
+           <input type="text" name="fecha_fin" id="fecha_fin" class="campos2" <? if(isset($filtrar)) echo "value=$fecha_fin_sinconvertir"; ?>>
            <input type="submit" name="filtrar" value="filtrar" class="botones" ></td>
        </tr>
        <tr>
@@ -122,22 +127,22 @@
      </table>
      <p>&nbsp;</p>
 </form>
-      </div>  
+        
       
       
    </div>
       <div class="clear">
         <div align="center">REPORTE DE RETENCIONES</div>
       </div>
-      <table class="listado" cellpadding="5">
+      <table class="listados" cellpadding="5">
           <tr class="titulo">
-            <td width="50">Pago</a>  
-            <td width="70">Retención</td>  
-            <td width="70">Fecha</td>
-            <td width="40">Prefijo</td>
-            <td width="70">Nro</td>
-            <td width="100">Importe</td>
-            <td width="100">Ver pago</td>
+            <td width="20">Pago</a>  
+            <td width="30">Retención</td>  
+            <td width="40">Fecha</td>
+            <td width="30">Prefijo</td>
+            <td width="30">Nro</td>
+            <td width="50">Importe</td>
+            <td width="50">Ver pago</td>
             <td width="32">
                 <a href="index-admin.php">
                     <img src="images/home.png"  alt="inicio" title="Volver al panel" width="32" height="32" border="none" />                </a>            </td>
@@ -155,7 +160,8 @@
             <td><?php echo $fila["ret_prefijo"];?></td>
             <td><?php echo $fila["ret_codigo"];?></td>
             <td><?php echo $fila["ret_importe"]?></td>
-            <td align="center"><a href="ver-alta-pago-grupo.php?grupo_fav=<?php echo $fila["grupo_fav_id"]?>"><img src="images/detalles.png"/></a></td>           
+            <td></td>
+            <td align="center"><a href="ver-alta-pago-grupo.php?grupo_fav=<?php echo $fila["grupo_fav_id"]?>&action=1" target="_blank"><img src="images/detalles.png"/></a></td>           
         </tr>
   <?php
             $i++;
@@ -166,8 +172,8 @@
           }
           }
   ?>
-      </table>
-<table  class="listados" cellpadding="5">
+      
+
           <tr>
             <td colspan="8" class="pie_lista"><?php 
             if(isset($filtrar))
@@ -181,9 +187,6 @@
 
       
    <!--end contenedor-->
-
-
-
   </div>
    <!-- fin main --><!-- fin main --><!-- fin main --><!-- fin main --><!-- fin main -->
    

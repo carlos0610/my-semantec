@@ -56,7 +56,7 @@
                                         $sql .=" ord_plazo_proveedor = '$fecha', ";
         				
                                         }
-                                        if ($est_id == 9){
+                                        if ($est_id == 10){
                                         //$fecha = gfecha($fecha);
                                         $sql .=" ord_plazo = '$fecha', ";
                                         }                                       
@@ -72,6 +72,8 @@
                                         $sql .= " ord_costo = $ord_costo,
                                         ord_venta = $ord_venta
                                         WHERE ord_id = $ord_id;";
+                                        
+                                        echo "QUERY: ".$sql;
                                         
                                         
         
@@ -199,7 +201,7 @@
                                                         ('$ord_descripcion',
                                                         $ord_det_monto,
                                                         $ord_id,
-                                                        $fecha,
+                                                        NOW(),
                                                         '$usu_nombre',
                                                         1,
                                                         '$est_nombre',
@@ -215,7 +217,7 @@
                                                         '$ord_descripcion',
                                                         $ord_det_monto,
                                                         $ord_id,
-                                                        $fecha,
+                                                        NOW(),
                                                         '$usu_nombre',
                                                         1,
                                                         '$est_nombre',
@@ -239,12 +241,18 @@
             if ($_POST['ord_checkOT'] == '1') 
             $sql = " UPDATE ordenes SET fecha_recepcion_ot = '$fecha_recepcion_ot' where ord_id = $ord_id";
             $result=mysql_query($sql); break;}
-    case 9://estadoConfirmarProveedor
-                { $sql = "UPDATE ordenes SET ord_plazo = $fecha where ord_id = $ord_id"; 
+    case 9: //Aprobado
+                {  
                  if ($_POST['ord_checkOT'] == '1') 
                  $sql = " UPDATE ordenes SET fecha_recepcion_ot = '$fecha_recepcion_ot' where ord_id = $ord_id";
                   $result=mysql_query($sql); 
                 break;}
+                
+    case 10: //estadoConfirmarProveedor
+                {$sql = "UPDATE ordenes SET ord_plazo = $fecha where ord_id = $ord_id";      
+                $result=mysql_query($sql); break;
+                }
+                
     case 11://estadoFinalizadoPendienteFacturacion
             {$sql = "UPDATE ordenes SET fecha_pendiente_facturacion = $fecha where ord_id = $ord_id"; 
                 if ($_POST['ord_checkOT'] == '1')
@@ -293,10 +301,7 @@
                   
                      	header("location:ver-alta-ordenes.php?action=2&filtrartxt=$elementoBusqueda&prv_id=$proveedorFiltro&est_id=$estado_id&suc_id=$suc_id&cli_id=$cli_idMaestro&orden=$unOrden&contador=$contador&pagina=$pagina&origen=$action");
                         }
-        
-
-        
-        
+    
         /* PEDAZO DEL ORDENES EDIT
 	mysql_close();
         // paso los parametros  de filtro por url

@@ -86,6 +86,10 @@
         // Rubros
         $rubros = getRubrosAll();
         
+//        if ($fila0["ord_plazo"]==null){
+//            echo "NO TIENE ORD PLAZO FIN";            
+//        }
+        
 ?>
 <!doctype html>
 <html>  
@@ -209,7 +213,8 @@
           <tr>
             <td>Cliente</td>
             <td>
-              <?php echo($fila0["cli_nombre"]); ?>(<?php echo($fila0["sucursal"]); ?>)            </td>
+              <?php echo($fila0["cli_nombre"]); ?>(<?php echo($fila0["sucursal"]); ?>)
+             </td>
             <td></td>
           </tr>
           
@@ -313,6 +318,7 @@
           </tr>
            <tr>
             <td>Valor Costo de la Orden</td>
+            
             <td><input type="text" style="text-align:right" value="<?php echo($fila0["ord_costo"]); ?>" class="campos" id="ord_costo" name="ord_costo" required OnKeyUp="return validarReal('ord_costo');"/></td>
             <td></td>
           </tr>          <tr>
