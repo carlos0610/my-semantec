@@ -203,7 +203,14 @@
         $total = mysql_query("SELECT sum(saldo_c) as total_compra,sum(saldo_a) as total_adelanto,sum(costo) as total from tabla_temp;");
         $totalDeuda = mysql_fetch_array($total);
         
-        
+        // paso al excel
+        $cc_arreglo = mysql_query($sql0);
+        $array=array();
+        while ($row=mysql_fetch_array($cc_arreglo)) {
+         $array[]=$row;
+        }  
+        $_SESSION["cc_arreglo"]     = $array;
+        // ----Fin---
         $cantidad = mysql_num_rows($resultado);
         
         
@@ -424,7 +431,10 @@
    
    <div id="contenedor" style="height:auto;">
        <form id="filtro" name="filtro" action="ver-corriente-proveedor.php" method="POST">
-      <h2>Cuenta corriente de <?php echo utf8_encode($fila_datos_proveedor["prv_nombre"]);?>  - <br/><?php if ($filtro2 !="") echo "Viendo OT recibidas desde el $desde hasta $hasta";?></h2>
+      <h2>Cuenta corriente de <?php echo utf8_encode($fila_datos_proveedor["prv_nombre"]);?>  - <br/><?php if ($filtro2 !="") echo "Viendo OT recibidas desde el $desde hasta $hasta";?>
+             <a href="exportacion/exportarExcelCC-Proveedor.php?sql=<?php echo $sql0;?>&nombre=<? echo $fila_datos_proveedor["prv_nombre"] ?>"> 
+                 <img src="images/icon-header-xls.png" alt="Listado Excel" title="Listado Excel" width="32" height="32" border="none" />
+             </a></h2>  
 
 <table class="listadosMasAncho" cellpadding="5">
           <tr class="titulo">

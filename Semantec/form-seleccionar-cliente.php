@@ -63,6 +63,15 @@
         
         $sql0 = "select * from temp1";
         $listado_movimientos = mysql_query($sql0);
+        
+        
+        // paso al excel
+        $listado_movimientos_arreglo = mysql_query($sql0);
+        $array=array();
+        while ($row=mysql_fetch_array($listado_movimientos_arreglo)) {
+         $array[]=$row;
+        }  
+        $_SESSION["ccClienteovimientos"]     = $array;
         /*FIN_LISTADO*/
         
         
@@ -164,7 +173,10 @@
      </div>
    <!--end seleccion-->
    <div id="resumen">
-   <h2>Últimos movimientos de cuentas corrientes</h2>
+   <h2>Últimos movimientos de cuentas corrientes        &nbsp; &nbsp; &nbsp; &nbsp; 
+       <a href="exportacion/exportarExcelCC-ClienteMovimiento.php?sql=<?php echo $sql0;?>"> 
+                 <img src="images/icon-header-xls.png" alt="Listado Excel" title="Listado Excel" width="32" height="32" border="none" />
+             </a></h2>  
    <table class="listados" cellpadding="5">
           <tr class="titulo">
             <td width="240">Cliente</td> 
