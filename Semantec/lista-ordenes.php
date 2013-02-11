@@ -86,12 +86,19 @@
             $unOrdenCompleta.=" ( $unOrden ) DESC ";
         //fin
 
-$sql="SELECT ord_id, ord_codigo, ord_descripcion, cli_nombre,c.cli_id, prv_nombre,o.prv_id, est_nombre, est_color, ord_alta, ord_plazo, ord_costo, ord_venta,c.sucursal
-                  FROM ordenes o, clientes c, estados e, proveedores p
-                  WHERE o.cli_id = c.cli_id
-                    AND o.est_id = e.est_id
-                    AND o.prv_id = p.prv_id  
-                    AND o.estado = 1 ";
+$sql="      SELECT ord_id, ord_codigo, ord_descripcion, cli_nombre,c.cli_id, prv_nombre,o.prv_id, est_nombre, est_color, ord_alta, ord_plazo, ord_costo, ord_venta,c.sucursal,f.cod_factura_venta,f.fav_id
+            FROM ordenes o
+            INNER JOIN clientes c
+            ON o.cli_id = c.cli_id
+            INNER JOIN estados e
+            ON o.est_id = e.est_id
+            INNER JOIN proveedores p
+            ON o.prv_id = p.prv_id
+            LEFT JOIN grupo_ordenes g
+            ON o.gru_id = g.gru_id
+            LEFT JOIN factura_venta f
+            ON f.gru_id = g.gru_id
+            WHERE o.estado = 1 ";
                     $sql.=$sqlaux;
                     $sql0=$sql;
 
@@ -128,7 +135,7 @@ $sql="SELECT ord_id, ord_codigo, ord_descripcion, cli_nombre,c.cli_id, prv_nombr
   <body>
 	
   <!-- start main --><!-- start main --><!-- start main --><!-- start main --><!-- start main -->
-  <div id="main">
+  <div id="mainMasAncho">
 
     <!--start header-->
     <header>
@@ -146,7 +153,7 @@ $sql="SELECT ord_id, ord_codigo, ord_descripcion, cli_nombre,c.cli_id, prv_nombr
 
 
    <!--start contenedor-->
-   <div id="contenedor" style="height:auto;">
+   <div id="contenedor_reporte2" style="height: auto;">
       <h2>Panel de control - Listado de Ordenes de Servicio</h2> 
 
       
@@ -243,6 +250,7 @@ $sql="SELECT ord_id, ord_codigo, ord_descripcion, cli_nombre,c.cli_id, prv_nombr
             <td>Descripci&oacute;n</td>
             <td width="100"><a href="#" onClick="agregarOrderBy('prv_nombre')">Proveedor</a></td>
             <td width="100"><a href="#" onClick="agregarOrderBy('est_nombre')">Estado</a></td>
+            <td width="50">Facturado en</td>
             <td width="32">&nbsp;</td>            
             <td width="32">&nbsp;</td>
             <td width="32">
@@ -265,6 +273,7 @@ $sql="SELECT ord_id, ord_codigo, ord_descripcion, cli_nombre,c.cli_id, prv_nombr
                   <img src="images/estado.png" alt="estado" style="background-color:<?php echo($fila["est_color"]);?>">
                   <?php echo(utf8_encode($fila["est_nombre"]));?>
             </td>
+            <td><a href="ver-alta-factura.php?fav_id=<?php echo($fila["fav_id"]);?>" target="_blank"><?php echo($fila["cod_factura_venta"]);?></a></td>
             <td width="32">
                 <a href="#" onClick="transferirFiltrosAOtroForm('filtro','ver-alta-ordenes.php?ord_id=<?php echo($fila["ord_id"]); ?>&action=0&origen=listadoOrdenesDirecto&pagina=<?php echo $pagina ?>')">
                     <img src="images/detalles.png" alt="editar" title="Ver detalle" width="32" height="32" border="none" />
@@ -317,3 +326,4 @@ $sql="SELECT ord_id, ord_codigo, ord_descripcion, cli_nombre,c.cli_id, prv_nombr
 
    </body>
 </html>
+
