@@ -23,7 +23,7 @@ $n=0;
 <form name="formVerificadorOrdenes" id="formVerificadorOrdenes" method="post" enctype="multipart/form-data" 
       action="ver-generar-factura-nueva.php?cli_id=<? echo $cli_id ?>&cod_factura=<? echo $cod_factura ?>&fechaalta=<? echo $fechaalta ?>&ocultar=no&condicionventa=<? echo $condicionventa ?>&remito=<? echo $remito ?>&cant=<? echo $cant ?>" >
 
-<?php echo 'Cargando...';
+<?php echo '<big><b>Cargando... </b></big><img src="images/loader.gif"  alt="Cargando" title="Cargando" width="32" height="32" border="none" valign="middle" hspace="8" />';
 while ($i < $cantTotal)
 { 
     $i++; //echo $i,'---';
