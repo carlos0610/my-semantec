@@ -453,12 +453,15 @@ function ActualizarTotal(cantidadDescripciones,factura){
     
 //Aca empieza la magia
    
+               alert('TOTAL TXT '+document.getElementById("totalOrdenVentatxt").value);
+               alert('SUBTOTAL: '+subtotal);
    
     if(resta.toFixed(2)==0.00)
         {document.getElementById("btnConfirma").style.visibility = "visible"; }
     else{
             if(resta.toFixed(2)<0)
             {          
+            
                alert("La factura supera el total aceptado");
                document.getElementById("btnConfirma").style.visibility = "hidden";}
            else{document.getElementById("btnConfirma").style.visibility = "hidden";}
@@ -905,6 +908,27 @@ function verificarCheckboxsFavPagos(cantTotalCheckboxs){
             alert("Debe seleccionar al menos una Factura");
         }
 }
+
+function verificarCheckboxsDeForm(cantTotalCheckboxs,formulario,nombre_checkbox){
+    i=0; 
+    continua=false;
+        while (i<cantTotalCheckboxs)
+        {
+            i++;
+            if(eval("document."+formulario+"."+nombre_checkbox+i+".checked"))
+                {
+                   continua=true;
+                } 
+        }
+    if(continua){   
+       document.getElementById(formulario).submit();
+    }
+    else
+        {
+            alert("Debe seleccionar al menos una Factura");
+        }
+}
+
 // verificarCheckBoxs
 
 
