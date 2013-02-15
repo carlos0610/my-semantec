@@ -229,7 +229,7 @@
           }
   ?>
       </table>
-          <input type="button" name="btnConfirmarCheckboxs" id="btnConfirmarCheckboxs" style="visibility:visible" class="botones" value="Confirmar" onClick="verificarCheckboxsFavPagos(<?php echo $j; ?>);">  
+    <input type="button" name="btnConfirmarCheckboxs" id="btnConfirmarCheckboxs" style="visibility:visible" class="botones" value="Confirmar" onClick="verificarCheckboxsDeForm(<?php echo $j; ?>,'formNotasCredito','chckCodFactura');">  
 </form>
 <? }else { echo "<div><b>Seleccionar un Cliente</b></div>  <br>
               <a href=index-admin.php>
