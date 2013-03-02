@@ -5,6 +5,7 @@
         include("conexion.php");
         include("Modelo/modeloAbonosDetalle.php");
         include("Modelo/modeloFacturaCompra.php");
+        include("Modelo/modeloOrdenes.php");
         $action = $_GET["action"];        
         if ($action == 1){
             $prv_id = $_POST["comboProveedor"];
@@ -236,6 +237,8 @@
        $result = mysql_query($sql);
        $vencimiento_ot = mysql_fetch_array($result);
        
+       // combo de ordenes proveedor
+       $resultado1 =getOrdenesWithProvId($prv_id);
        
        mysql_close();
         
@@ -366,9 +369,30 @@
        <tr>
          <td width="8%">&nbsp;</td>
          <td width="14%">
-           Orden
-               <input type="text" name="txtOrden" id="txtOrden" value="" class="campos2" onChange="autenticaOrdenCCProveedor()">
+        
+          <!--       <input type="text" name="txtOrden" id="txtOrden" value="" class="campos2" onChange="autenticaOrdenCCProveedor()">
                <span id="error" style="font-family: Verdana, Arial, Helvetica,sans-serif;font-size: 9pt;color: #CC3300;position:relative;visibility:hidden;">La Orden NO existente</span>
+          -->
+         
+         
+         
+               <select name="txtOrden" id="txtOrden" class="campos2"  >
+                    <option value='0'>Seleccione</option>;
+    <?php
+          while($fila = mysql_fetch_array($resultado1)){
+    ?>
+                    <option value="<?php echo($fila["ord_codigo"]); ?>">
+                        <?php echo($fila["ord_codigo"]); ?></option>
+    <?php
+          }
+    ?>
+                </select>
+         
+         
+         
+         
+         
+         
          </td>
          <td width="16%">Adelanto: 
            <label>
@@ -377,7 +401,7 @@
          <td width="62%">Descripción: 
            <label>
            <input name="txtDescripcion" type="text" class="campos" id="txtDescripcion" value="Ingrese una descripción">
-           <input type="button" name="btnEmitir" id="btnEmitir" value="Emitir" onClick="emitirAdelanto('<?php echo $pagina?>')">
+           <input type="button" class="botones" name="btnEmitir" id="btnEmitir" value="Emitir" onClick="emitirAdelanto('<?php echo $pagina?>')">
          </label></td>
        </tr>
        <tr>
@@ -398,7 +422,7 @@
    <tr>
      <td width="8%">&nbsp;</td>
      <td width="19%"><label>
-       <select name="comboFiltro" id="comboFiltro" <?php if ($filtro==""){?>disabled <?php } ?>>
+       <select name="comboFiltro" class="campos2"  id="comboFiltro" <?php if ($filtro==""){?>disabled <?php } ?>>
            <option value="0">Seleccione </option>
          <option value="1" <?php if ($opcionComboFiltro==1) echo "selected"?> >Todos</option>
          <option value="2" <?php if ($opcionComboFiltro==2) echo "selected"?>>Pendientes de pago</option>
@@ -416,11 +440,11 @@
    <tr>
      <td>Desde</td>
      <td><label>
-       <input type="text" name="fecha_inicio" id="fecha_inicio" <?php if ($filtro2!=""){ ?> value="<?php echo $desde;?>" <?php } else {?> disabled <?php } ?>>
+       <input type="text" class="campos2"  name="fecha_inicio" id="fecha_inicio" <?php if ($filtro2!=""){ ?> value="<?php echo $desde;?>" <?php } else {?> disabled <?php } ?>>
      </label></td>
      <td width="9%">Hasta</td>
      <td width="24%"><label>
-             <input type="text" name="fecha_fin" id="fecha_fin" <?php if ($filtro2!=""){ ?> value="<?php echo $hasta;?>" <?php } else {?> disabled <?php } ?> >
+             <input type="text" class="campos2"  name="fecha_fin" id="fecha_fin" <?php if ($filtro2!=""){ ?> value="<?php echo $hasta;?>" <?php } else {?> disabled <?php } ?> >
      </label></td>
      <td><input type="submit" name="filtrar" id="filtrar" value="Filtrar" class="botones" onClick="return validaSeleccione('comboFiltro', 'Seleccione un filtro')"></td>
    </tr>
