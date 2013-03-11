@@ -86,7 +86,7 @@
             $unOrdenCompleta.=" ( $unOrden ) DESC ";
         //fin
 
-$sql="      SELECT ord_id, ord_codigo, ord_descripcion, cli_nombre,c.cli_id, prv_nombre,o.prv_id, est_nombre, est_color, ord_alta, ord_plazo, ord_costo, ord_venta,c.sucursal,f.cod_factura_venta,f.fav_id
+      $sql="SELECT ord_id, ord_codigo, ord_descripcion, cli_nombre,c.cli_id, prv_nombre,o.prv_id, est_nombre, est_color, ord_alta, ord_plazo, ord_costo, ord_venta,c.sucursal,f.cod_factura_venta,f.fav_id
             FROM ordenes o
             INNER JOIN clientes c
             ON o.cli_id = c.cli_id
@@ -115,7 +115,9 @@ $sql="      SELECT ord_id, ord_codigo, ord_descripcion, cli_nombre,c.cli_id, prv
 
         $i = 0;
         $colores = array("#fff","#e8f7fa");
-        $cant = count($colores);       
+        $cant = count($colores); 
+        unset($_SESSION['sqlSession']);
+        $_SESSION['sqlSession']=$sql0;
 ?>
 <!doctype html>
 <html>  
@@ -227,7 +229,7 @@ $sql="      SELECT ord_id, ord_codigo, ord_descripcion, cli_nombre,c.cli_id, prv
          <td><input type="text" name="filtrartxt" class="campos" value="<?php echo $elementoBusqueda; ?>"  style="text-align:right" ></td>
          <td><input type="submit" name="filtrar" value="Filtrar" class="botones" >       
              &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  Exportar Excel
-             <a href="exportacion/exportarExcelOrdenes.php?sql=<?php echo $sql0;?>"> 
+             <a href="exportacion/exportarExcelOrdenes.php?sql=<?php ?>"> 
                  <img src="images/icon-header-xls.png" alt="Listado Excel" title="Listado Excel" width="32" height="32" border="none" />
              </a>
          </td>

@@ -13,12 +13,12 @@ header("content-disposition: attachment;filename=Reportes.xls");
 </head>
 <body>
 <?php
- $sql=$_GET["sql"]; 
+ $sql=$_SESSION['sqlSession']; 
 $result=mysql_query($sql);
 // INGRESAR NOMBRE 
 $nombre=' Ordenes de Servicio';
 ?>
-<b><big>SEMANTEC - </big>   <?php echo date("d-m-Y H:i:s"),'  ',$nombre; ?></b>
+<b><big>SEMANTEC  - </big>   <?php echo date("d-m-Y H:i:s"),'  ',$nombre; ?></b>
 
 <TABLE BORDER=1 align="center" CELLPADDING=1 CELLSPACING=1>
 <TR>
@@ -57,6 +57,7 @@ printf("<tr>
 }
 mysql_free_result($result);
 mysql_close();  //Cierras la Conexión
+
 ?>
 </table>
 </body>
