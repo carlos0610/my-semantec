@@ -10,7 +10,7 @@
         
         /* LISTADO DE MOVIMIENTOS DE CUENTAS CORRIENTES DE CLIENTE*/
         
-        $sql0 = "CREATE TEMPORARY TABLE temp1(
+        $sql = "CREATE TEMPORARY TABLE temp1(
 						fav_id int not null,
 						fav_codigo varchar(64) not null,
 						cod_pago int not null,
@@ -22,9 +22,9 @@
                                                 grupo_fac_pago int not null
                                             );";
         
-        mysql_query($sql0);
+        mysql_query($sql);
         
-        $sql0 = "INSERT INTO temp1
+        $sql = "INSERT INTO temp1
                     SELECT f.fav_id,f.cod_factura_venta,c.id as pago,f.fav_fecha_pago,FORMAT(SUM(dfv.det_fav_precio),2) as subtotal,FORMAT(SUM(dfv.det_fav_precio)*0.21,2) as iva,FORMAT(SUM(dfv.det_fav_precio)+SUM(dfv.det_fav_precio)*0.21,2) as total,0,f.grupo_fac_pago from factura_venta f
                     INNER JOIN cobros c
                     ON c.grupo_fav_id = f.grupo_fac_pago
@@ -34,16 +34,16 @@
                     GROUP BY f.cod_factura_venta
                     ORDER BY fav_fecha_pago desc;";
         
-        mysql_query($sql0);
+        mysql_query($sql);
         
-        $sql0 = "CREATE TEMPORARY TABLE temp2 (
+        $sql = "CREATE TEMPORARY TABLE temp2 (
 			cli_nombre varchar(64) not null ,
 			fav_id integer not null
                                                 );";
         
-        mysql_query($sql0);
+        mysql_query($sql);
         
-        $sql0 = "INSERT INTO temp2
+        $sql = "INSERT INTO temp2
                     select DISTINCT(cli_nombre),fv.fav_id from clientes c
                     INNER JOIN ordenes o
                     ON o.cli_id = c.cli_id
@@ -53,13 +53,13 @@
                     ON fv.gru_id = go.gru_id
                     WHERE fv.fav_id in (select fav_id from temp1);";
         
-        mysql_query($sql0);
+        mysql_query($sql);
         
-        $sql0 = "UPDATE temp1 t1,temp2 t2
+        $sql = "UPDATE temp1 t1,temp2 t2
                     SET t1.cli_nombre = t2.cli_nombre
                     WHERE t1.fav_id = t2.fav_id;";
         
-        mysql_query($sql0);
+        mysql_query($sql);
         
         $sql0 = "select * from temp1";
         $listado_movimientos = mysql_query($sql0);
@@ -74,15 +74,18 @@
         $_SESSION["ccClienteovimientos"]     = $array;
         /*FIN_LISTADO*/
         
+       
+        /*FIN_LISTADO*/
         
         
+        $sql0 = "select * from temp1";
         /* PAGINACIÓN */
-        $tamPag=10;       
+        $tamPag=20;       
         include("paginado.php");
         
         $sql = "select * from temp1";
         $sql .= " LIMIT ".$limitInf.",".$tamPag;
-        $resultado = mysql_query($sql);
+        $listado_movimientos = mysql_query($sql);
         //$cant_registros = mysql_num_rows($resultado);
         
         $i = 0;
@@ -135,7 +138,7 @@
    
       <h2>Panel de control - Cuenta corrientes de clientes</h2>
 	<div id="seleccion" style="height:auto">	
-      <form id="filtro" name="filtro" action="form-seleccionar-cliente.php" method="POST">
+      <form id="filtro" name="filtro" action="ver-corriente-clientes.php" method="POST">
           <table class="listados" cellpadding="5">
           <tr class="titulo">
             <td width="149">Seleccione cliente</td>

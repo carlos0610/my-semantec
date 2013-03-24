@@ -146,6 +146,8 @@
       <p><a href="ver-generar-factura-nueva.php?cli_id=1&ocultar=si" class="current">Nueva factura</a></p>
       <p><a href="reporte-iva.php" class="current">Reporte IVA</a></p>
       <p><a href="reporte-retenciones.php" class="current">Reporte Retenciones</a></p>
+      <p><a href="form-generar-nota-credito.php" class="current">Notas de crédito</a></p>
+      <p><a href="lista-notas-credito.php" class="current">Listado NC</a></p>
      </section>
       
       <section class="cajas">

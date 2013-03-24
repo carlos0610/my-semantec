@@ -473,6 +473,76 @@ function ActualizarTotal(cantidadDescripciones,factura){
     document.getElementById("txtTotalFactura").value =  subtotal + percepciones;      
     }
 }
+
+//ACTUALIZAR PARA NOTA DE CREDITO
+function ActualizarTotalNotaCredito(cantidadDescripciones,factura){  
+    iva = document.getElementById("comboIva").value;
+    document.getElementById("btnConfirma").style.visibility = "visible"; 
+    
+    if (iva == 1){
+         iva = 0.21;
+    }else{
+         iva = 0.105;   
+         } 
+     
+    subtotal = 0;
+    resta=0;
+    resta=totalOrdenesVenta=document.getElementById("totalOrdenVentatxt").value; 
+    numeroDescripcion=0;
+    
+        
+        while(numeroDescripcion < cantidadDescripciones)
+            {        
+                numeroDescripcion++;
+                if (validarSiNumeroYComa(document.getElementById("txtTotalItem"+numeroDescripcion).value))
+                {
+                     subtotal += parseFloat(document.getElementById("txtTotalItem"+numeroDescripcion).value); 
+                     resta-=parseFloat(document.getElementById("txtTotalItem"+numeroDescripcion).value); 
+                }else
+                {document.getElementById("txtTotalItem"+numeroDescripcion).value="0.00";}
+            }   //Fin_While
+    
+    
+    
+    document.getElementById("txtSubtotal").value = subtotal.toFixed(2);
+    total_iva = subtotal * iva;    
+    document.getElementById("txtIva_Ins").value = total_iva.toFixed(2);
+ 
+    //1 = FACTURA VENTA
+    //2 = FACTURA COMPRA
+    
+    if(factura == 1){ 
+    document.getElementById("txtTotalFactura").value = (total_iva + subtotal).toFixed(2);
+    totalOrdenesVenta=document.getElementById("totalOrdenVenta").value;  
+    totalIva=totalOrdenesVenta*iva;
+    totalOrdenesVenta2 = parseFloat(totalOrdenesVenta) + parseFloat(totalIva);
+    
+    document.getElementById('restaLabel').innerHTML ="Resta: $ "+(resta).toFixed(2);
+    
+//Aca empieza la magia
+   
+
+            if(resta.toFixed(2)<0)
+            {          
+            
+               alert("La factura supera el total aceptado");
+               document.getElementById("btnConfirma").style.visibility = "hidden";}
+
+    } 
+    // FACTURA COMPRA
+    else {
+    percepciones = parseFloat(document.getElementById("txtPercepciones").value);
+    document.getElementById("txtTotalFactura").value =  subtotal + percepciones;      
+    }
+}
+
+
+
+
+
+
+
+
 // otro actualizar solo de factura compra
 
 function ActualizarTotalFacturaCompra(cantidadDescripciones,factura){
@@ -1122,6 +1192,37 @@ function pasaSiguiente(actual, siguiente, longitud)
      return true;     
       
   }
+
+function PedirConfirmacionNotaCredito(mensaje){
+    // BORRRAR CUANDO SE QUITE LO DE FECHAS SINO LAS PERAS
+    codigonota=document.getElementById('cod_nota_credito').value;
+    fechaalta=document.getElementById('fechaalta').value;
+    
+    
+    
+        
+    if (codigonota=='')
+        {
+            alert('Debe ingresar un número de NC');
+            document.getElementById('cod_nota_credito').focus();
+            return false;
+        }
+                
+    document.getElementById('cod_notaOculto').value=codigonota;
+    document.getElementById('fechaaltaOculto').value=fechaalta;
+    
+    
+    
+    if((confirm('¿Confirma '+mensaje+' ?'))==true)
+    {
+        return true;
+    }else{
+        return false;
+        
+    }
+}
+
+
   // Confirmacion de factura nueva
 function PedirConfirmacionFacturaVenta(nombre,frm){
     // BORRRAR CUANDO SE QUITE LO DE FECHAS SINO LAS PERAS

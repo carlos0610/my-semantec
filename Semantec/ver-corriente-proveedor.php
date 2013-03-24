@@ -272,8 +272,9 @@
                 var anho = fecha.getFullYear();
         /*Armamos la fecha para setear el primer dia del mes por defecto como -fecha de inicio- */
                 var primerDiaDelMesActual =("01/"+mes+"/"+anho);
-      
-     // $("#fecha_inicio").datepick("setDate" , primerDiaDelMesActual);
+      <?php if ($filtro2 ==""){ ?>
+      $("#fecha_inicio").datepick("setDate" , primerDiaDelMesActual);
+      <?php } ?>      
   })
   
   $(function() {

@@ -34,7 +34,7 @@ $n=0;
     
     
 <form name="formVerificadorNotasCredito" id="formVerificadorNotasCredito" method="post" enctype="multipart/form-data" 
-      action="ver-generar-nota-credito.php?ocultar=no&cant=<?php echo $n;?>" >
+      action="ver-generar-nota-credito.php?ocultar=no&cant=<?php echo $n;?>&cli_id=<?php echo $cli_id;?>" >
 
 <?php 
 $i=0;

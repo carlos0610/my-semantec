@@ -326,6 +326,13 @@ a.current:hover{
 				color:white;
 				text-decoration:none;
 		}
+                
+.titulo_nota_credito{
+	background-color:#9933FF;
+	color:#fff;
+	border-top:1px solid #ccc;
+}
+                
 
 .lista{
 	border-bottom:1px solid #ccc;

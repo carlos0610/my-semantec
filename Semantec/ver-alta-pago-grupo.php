@@ -8,7 +8,8 @@
         include("Modelo/modeloCobrosDetalleRetencion.php");
         include("Modelo/modeloCobrosDetallePago.php");
          include("funciones.php");
-        $fav_id     =  $_GET["grupo_fav"]; 
+        $fav_id     =  $_GET["grupo_fav"];
+        $action     =  $_GET["action"];
         
         /*TIPOS DE PAGO*/
         
@@ -281,8 +282,13 @@
             </tr>
           <tr>
             <td colspan="3" class="pie_lista"><div align="center">
-              <a href="form-seleccionar-cliente-pago.php">
-                    <input type="button" value="Volver" class="botones" /></a>
+             <? if($action ==1) { ?>
+                  <a href="reporte-retenciones.php">  
+                    <? }else{?>
+                  <a href="form-seleccionar-cliente-pago.php">
+                      <? } ?>
+                      
+                  <input type="button" value="Volver" class="botones" /></a>
                     &nbsp;&nbsp;&nbsp;&nbsp;
                                   <a href="form-generar-pago-factura.php">
                     <input type="button" value="Otro Pago" class="botones" /></a>

@@ -44,13 +44,11 @@
               and    u.localidades_id = l.id
               AND    ISNULL(gru_id)
               ";
-        $result_ordenes=mysql_query($sql); 
-        $result_cantordenes=mysql_query($sql);
-        $cantOrdenes= mysql_num_rows($result_cantordenes);
+        $result_facturas=mysql_query($sql); 
+        $result_cantfacturas=mysql_query($sql);
+        $cantFacturas= mysql_num_rows($result_cantfacturas);
        //+++++++++++Gets de los checkbox
-        $cantOrdenesChecadas=$_GET["cant"]; 
-        $remito=$_GET["remito"]; 
-        $condicionventa=$_GET["condicionventa"];
+        $cantFacturasChecadas=$_GET["cant"]; 
         $ocultar=$_GET["ocultar"];
         $cod_factura=$_GET["cod_factura"]; 
        
@@ -105,26 +103,26 @@
      
   <tr>
     <td rowspan="3"><a href="#" id="logo2"><img src="images/semantec.png" width="401" height="71" alt="logo" /></a></td>
-    <td width="51%" class="titulo"><span id="ocultarParaImpresion">FACTURA N° 0001- </span> <input name="cod_factura" type="number" id="cod_factura" size="12" class="campos2" required value="<?php echo $cod_factura ?>"></td>
+    <td width="51%" class="titulo_nota_credito"><span id="ocultarParaImpresion">Nota de crédito N° 0001- </span> <input name="cod_nota_credito" type="number" id="cod_nota_credito" size="12" class="campos2"  value="<?php echo $cod_factura ?>" required></td>
     <td width="1%">&nbsp;</td>
   </tr>
   <tr>
-    <td class="titulo"><span id="ocultarParaImpresion">Buenos Aires,</span> <?php /*echo date("d/m/Y")*/  ?></td>
+    <td class="titulo_nota_credito"><span id="ocultarParaImpresion">Buenos Aires,</span> <?php /*echo date("d/m/Y")*/  ?></td>
     <td>&nbsp;</td>
   </tr>
   <tr>
-    <td class="titulo"><span id="ocultarParaImpresion">CUIT: 30-70877618-8</span></td>
+    <td class="titulo_nota_credito"><span id="ocultarParaImpresion">CUIT: 30-70877618-8</span></td>
     <td>&nbsp;</td>
   </tr>
   <tr>
-    <td class="titulo"> <div id="ocultarParaImpresion" align="center">Dr. Aleu 3139 (1651) - 1er piso of 11 - San Andrés <br>
+    <td class="titulo_nota_credito"> <div id="ocultarParaImpresion" align="center">Dr. Aleu 3139 (1651) - 1er piso of 11 - San Andrés <br>
       Provincia de Buenos Aires</div></td>
-    <td class="titulo"><span id="ocultarParaImpresion">Ing.Brutos : 902-820067 -3</span></td>
+    <td class="titulo_nota_credito"><span id="ocultarParaImpresion">Ing.Brutos : 902-820067 -3</span></td>
     <td rowspan="2">&nbsp;</td>
   </tr>
   <tr>
-    <td class="titulo"><div align="center" id="ocultarParaImpresion"><strong>I.V.A Responsable inscripto</strong></div></td>
-    <td bgcolor="#F0F0F0" class="titulo"><span id="ocultarParaImpresion">Inicio de actividades: 01/06/2004</span></td>
+    <td class="titulo_nota_credito"><div align="center" id="ocultarParaImpresion"><strong>I.V.A Responsable inscripto</strong></div></td>
+    <td bgcolor="#F0F0F0" class="titulo_nota_credito"><span id="ocultarParaImpresion">Inicio de actividades: 01/06/2004</span></td>
   </tr>
 </table>
 
@@ -137,43 +135,30 @@
         
     <table width="100%" border="0" id="dataTable">      
     <tr>
-            <td width="15%" class="titulo">Señores:</td>
-            <td colspan="3" style="background-color:#cbeef5">
-             <select name="cli_id" id="cli_id" class="campos" required onChange="return refrescarDatosDeCliente(value);" >
-                 <option value="0">Seleccione</option>
-             <?php
-                 while($fila = mysql_fetch_array($resultado1)){
-                ?>
-                    <option value="<?php echo($fila["cli_id"]); ?>"<?php if($fila["cli_id"]==$cli_id){echo(" selected=\"selected\"");} ?>><?php echo(utf8_encode($fila["cli_nombre"])); ?></option>
-             <?php
-                     }
-                ?>
-               </select>
+            <td width="15%" class="titulo_nota_credito">Señores:</td>
+            <td style="background-color:#CCCCFF">
+            <?php echo utf8_encode($fila_datos_cliente["cli_nombre"]);?> 
                 <label id="nombre" style="visibility:hidden"> </label>
-                Fecha:<input name="fechaalta" type="text" id="fechaalta" value="<?php echo ($_GET["fechaalta"])?>" class="campos2" required>
             </td>
+            <td class="titulo_nota_credito">Fecha:</td>
+            <td style="background-color:#CCCCFF">
+            <input name="fechaalta" type="text" id="fechaalta" value="" class="campos2" required>
+            </td>
+            
        </tr>
           <tr>
-            <td class="titulo">Domicilio:</td>
-            <td width="24%" style="background-color:#cbeef5"><label id="domicilio"><?php echo utf8_encode($fila_datos_cliente["cli_direccion_fiscal"]);?></label></td>
-            <td width="9%" class="titulo">Localidad:</td>
-            <td width="52%" style="background-color:#cbeef5"><label id="localidad"><?php echo utf8_encode($fila_datos_cliente["provincia"]);?>/<?php echo utf8_encode($fila_datos_cliente["sucursal"]);?> </label></td>
+            <td class="titulo_nota_credito" >Domicilio:</td>
+            <td width="24%" style="background-color:#CCCCFF"><label id="domicilio"><?php echo utf8_encode($fila_datos_cliente["cli_direccion_fiscal"]);?></label></td>
+            <td width="9%" class="titulo_nota_credito">Localidad:</td>
+            <td width="52%" style="background-color:#CCCCFF"><label id="localidad"><?php echo utf8_encode($fila_datos_cliente["provincia"]);?>/<?php echo utf8_encode($fila_datos_cliente["sucursal"]);?> </label></td>
        </tr>
           <tr>
-            <td class="titulo">IVA:</td>
-            <td style="background-color:#cbeef5"><label id="iva"><?php echo $fila_datos_cliente["iva_nombre"]?> </label></td>
-            <td class="titulo">Cuit:</td>
-            <td style="background-color:#cbeef5"><label id="cuit"><?php echo (verCUIT($fila_datos_cliente["cli_cuit"]));?> </label></td>
+            <td class="titulo_nota_credito">IVA:</td>
+            <td style="background-color:#CCCCFF"><label id="iva"><?php echo $fila_datos_cliente["iva_nombre"]?> </label></td>
+            <td class="titulo_nota_credito">Cuit:</td>
+            <td style="background-color:#CCCCFF"><label id="cuit"><?php echo (verCUIT($fila_datos_cliente["cli_cuit"]));?> </label></td>
           </tr>
-          <tr>
-            <td class="titulo">Condiciones de venta:</td>
-            <td style="background-color:#cbeef5">
-                <input name="condicion_venta" type="text" id="condicion_venta" size="25" class="campos" required value="<?php echo $condicionventa; ?>">
-            </td>
-            <td class="titulo">Remito:</td>
-            <td style="background-color:#cbeef5">
-                <input name="txtRemito" class="campos2"     type="number" id="txtRemito" size="12" required value="<?php echo $remito ?>">
-            </td>
+          <tr>            
           </tr>
           <tr>
             <td></td>
@@ -183,68 +168,16 @@
           </tr>
      </table> 
         <!-- Si el Cliente no tiene ordenes muestra  mensaje --> 
-        <?php if($cantOrdenesChecadas>0){ ?> 
-           <!-- Muestro tabla de ordenes a seleccionar -->  
-           <?php if($ocultar=="si"){      ?> 
+        <?php if($cantFacturasChecadas>0){ ?> 
+            
+          <!-- Muestro Facturas seleccionas --> 
            
-               <div id="busqueda"  >
-			<h4>Buscador : <input type="text" id="q" name="q" value="" />&nbsp;&nbsp; &nbsp; 
-                        <input type="checkbox" value="" id="checkbox_SelectAll" onClick="CheckboxsSeleccionarTodosFacturaVenta(<?php echo $cantOrdenes ?>)" >SELECCIONAR TODO</h4> 
-		</div>
-                
-               <form name="formferificadorOrdenes" id="formferificadorOrdenes" method="post" enctype="multipart/form-data" action="verificador-generar-factura-nueva.php?cant=<?php echo $cantOrdenes; ?>&cli_id=<?php echo $cli_id; ?>" >
-               
-                   <table width="100%" border="0" id="dataTableOrdenes" class="sortable">  
-                      <tr>
-                             <td width="5%" class="titulo"><div align="center">Selección</div></td>
-                             <td width="10%" class="titulo"><div align="center">Código</div></td>
-                             <td width="18%" class="titulo"><div align="center">Descripción</div></td>
-                             <td width="18%" class="titulo"><div align="center">Sucursal</div></td>
-                      </tr>
-               <?php
-               $i=0;
-               while ($item = mysql_fetch_array($result_ordenes)) {
-                   $i++;
-               ?>
-                   <tr>
-                       <td>
-                           <div align="center">
-                               
-                              <input type="checkbox" name="checkbox_ord_id<?php echo $i ?>" value="<?php echo $item["ord_id"]; ?>" />
-                          </div>
-                       </td>
-                       <td><label>   
-                               <div align="center">
-                                        <a href="ver-alta-ordenes.php?ord_id=<?php echo($item["ord_id"]);?>&action=0" target="_blank"><? echo $item["ord_codigo"]; ?></a>
-                               </div>
-                           </label></td>
-                       <td><label>
-                               <div align="center">
-                                         <? echo utf8_encode($item["ord_descripcion"]); ?>
-                               </div>
-                           </label></td>
-                           <td><label>
-                               <div align="center">
-                                         <? echo utf8_encode($item["provincia"]); ?>/<? echo utf8_encode($item["sucursal"]); ?>
-                               </div>
-                           </label></td>
-                   </tr>
-                   <?php
-               }
-               ?>
-               </table>  
-              </form>
-           <!-- FIN de Muestro tabla de ordenes a seleccionar --> 
-            <?php }else{ ?>
-           
-           <!-- Muestro ORdenes seleccionas --> 
-           
-               Codigos de Órdenes Seleccionados :    <? echo $cantOrdenesChecadas ?>
+               Facturas seleccionadas :    <? echo $cantFacturasChecadas ?>
         <table border="0">
         <?php
         $i=0;
         $totalOrdenVenta=0;
-        while ($i <$cantOrdenesChecadas)
+        while ($i <$cantFacturasChecadas)
         { $i++;    $usu_nombre = $_SESSION["usu_nombre"]; 
                 $unord_ID=$_POST["o$i"];  
                 $sql5="select f.fav_id,f.cod_factura_venta,CONVERT(f.fav_fecha,date) as fav_fecha,SUM(dfv.det_fav_precio)+SUM(dfv.det_fav_precio)*0.21 as total_factura from factura_venta f
@@ -266,7 +199,7 @@
                 &nbsp;&nbsp; &nbsp; 
             </td>
             <td>                                
-                    <a href="#" onClick="popup('ver-alta-ordenes.php?origenOtroForm=externo&ord_id=<?php echo($filaDeLasOrdenesCheckeadas["fav_id"]);?>', 'Alerta')">
+                    <a href="#" onClick="popup('ver-alta-factura.php?fav_id=<?php echo($filaDeLasOrdenesCheckeadas["fav_id"]);?>', 'Factura')">
                         # <?php echo $filaDeLasOrdenesCheckeadas["cod_factura_venta"],'<br> - - -  Total factura: ',$filaDeLasOrdenesCheckeadas["total_factura"],'<br>';  ?>
                     </a>
             </td>
@@ -275,36 +208,30 @@
         }       
         ?>   
          </table>
-        <?php }    
-        ?>
+        
       <!-- Boton confirmar  -->    
       
-      <?php if($ocultar=="si"){ ?> 
       
-      <input type="button" name="btnConfirmarCheckboxs" id="btnConfirmarCheckboxs" style="visibility:visible" class="botones" value="Confirmar" onClick="verificarCheckboxsNuevo(<?php echo $i; ?>,<?php echo $cli_id; ?>);">  
-      <?php } ?>
-  <?php }else{ ?> <b>*No Posee Órdenes Pendientes a Facturar </b> <?php } ?>
+      
+      <!--  FIN DEL PRIMER IF -->
+  <?php }else{ ?> <b>*No posee facturas emitidas </b> <?php } ?>
       <!-- DESCRIPCION DE FACTURA  -->
  <?php if($ocultar=="no"){  // TOTAL de ORDENES?>  
-<form name="frmGenerarFactura" method="post" enctype="multipart/form-data" action="alta-factura-nueva.php?items=<?php echo $totalDescripcion ?>" >
+<form name="frmGenerarFactura" method="post" enctype="multipart/form-data" action="alta-nota-credito.php?items=<?php echo $totalDescripcion ?>&cli_id=<?php echo $cli_id ?>" >
       
       <input name="fechaaltaOculto" type="hidden" id="fechaaltaOculto" >
-      <input name="cod_facturaOculto" type="hidden" id="cod_facturaOculto" >
-      <input name="condicion_ventaOculto" type="hidden" id="condicion_ventaOculto" >
-      <input name="txtRemitoOculto" type="hidden" id="txtRemitoOculto" >
-      <input type="hidden"  name="cantidadOrdenesAceptadas" id="cantidadOrdenesAceptadas" value="<?php echo $cantOrdenesChecadas; ?>">
+      <input name="cod_notaOculto" type="hidden" id="cod_notaOculto" >
+      <input type="hidden"  name="cantidadOrdenesAceptadas" id="cantidadOrdenesAceptadas" value="<?php echo $cantFacturasChecadas; ?>">
       <?php // CARGO LAS ORDENES CHECADAS DE FORMA OCULTA
         $i=0;
-        while ($i <$cantOrdenesChecadas)
+        while ($i <$cantFacturasChecadas)
         { $i++;  ?>
            <input type="hidden" name="ordenCheck<?php echo $i; ?>"  id="ordenCheck<?php echo $i; ?>" value="<?php echo ($_POST["o$i"]); ?>" >               
         <?php      
         }       
         ?>
-      
-      
-      <div id="totalLabel">Total : $<?php echo $totalOrdenVenta; ?></div> 
-      <div id="restaLabel">Resta: $<?php echo $totalOrdenVenta; ?></div> 
+      <div id="totalLabel" style="visibility: hidden;">Total : $<?php echo $totalOrdenVenta; ?></div> 
+      <div id="restaLabel" style="visibility: hidden;">Resta: $<?php echo $totalOrdenVenta; ?></div> 
       
       <input type="hidden" name="totalOrdenVentatxt" id="totalOrdenVentatxt" style="visibility:visible" value="<?php echo $totalOrdenVenta ?>">
       <input type="hidden" name="totalOrdenVenta" id="totalOrdenVenta" style="visibility:visible" value="<?php echo $totalOrdenVenta ?>">
@@ -316,8 +243,8 @@
     <td><div align="center"><input type="hidden" src="images/add.png" onClick="addRow('dataTable')"></div></td>
   </tr>
   <tr>
-    <td width="82%" class="titulo"><div align="center">Descripción</div></td>
-    <td width="18%" class="titulo"><div align="center">Total</div></td>
+    <td width="82%" class="titulo_nota_credito"><div align="center">Descripción</div></td>
+    <td width="18%" class="titulo_nota_credito"><div align="center">Total</div></td>
   </tr>
   
   <?php while($numeroDescripcion < $totalDescripcion){
@@ -333,7 +260,7 @@
     </label></td>
     <td><label>
       <div align="center">
-        <input type="text" align="left" name="txtTotalItem<?php echo($numeroDescripcion);?>" style="text-align:right"  id="txtTotalItem<?php echo($numeroDescripcion);?>" value="0.00" onChange="return ActualizarTotal(<?php echo($totalDescripcion);?>,1);" >
+        <input type="text" align="left" name="txtTotalItem<?php echo($numeroDescripcion);?>" style="text-align:right"  id="txtTotalItem<?php echo($numeroDescripcion);?>" value="0.00" onChange="return ActualizarTotalNotaCredito(<?php echo($totalDescripcion);?>,1);" >
         </div>
     </label></td>
   </tr>
@@ -352,7 +279,7 @@
       <td width="39%"><div align="right">SUBTOTAL:</div></td>
       <td width="18%"><label>
         <div align="center">
-          <input type="text" name="txtSubtotal" style="text-align:right" value="0.00" id="txtSubtotal" readonly>
+          <input type="text" name="txtSubtotal" style="text-align:right" value="0.00" id="txtSubtotal" readonly >
           </div>
       </label></td>
     </tr>
@@ -377,10 +304,10 @@
       </label></td>
     </tr>
     <tr>
-      <td><div align="right">I.V.A NO INSCRIP.........%</div></td>
+      <td style="visibility: hidden"><div align="right">I.V.A NO INSCRIP.........%</div></td>
       <td><label>
         <div align="center">
-          <input type="text" style="text-align:right" value="0.00"  name="txtIva_No" id="txtIva_No" readonly>
+          <input type="text" style="text-align:right;visibility: hidden;" value="0.00"  name="txtIva_No" id="txtIva_No" readonly>
           </div>
       </label></td>
     </tr>
@@ -388,7 +315,7 @@
       <td><div align="right">TOTAL</div></td>
       <td><label>
         <div align="center">
-          <input type="text" style="text-align:right" value="0.00"  name="txtTotalFactura" id="txtTotalFactura" readonly>
+          <input type="text" style="text-align:right;" value="0.00"  name="txtTotalFactura" id="txtTotalFactura" readonly>
           </div>
       </label></td>
     </tr>
@@ -404,7 +331,7 @@
       <td>&nbsp;</td>
       <td>
          <input type="hidden"  name="codFactura" id="codFactura" value="<?php echo $cod_factura; ?>">
-          <input type="submit" name="btnConfirma" id="btnConfirma" style="visibility:hidden" class="botones"  value="Confirmar" onClick="return PedirConfirmacionFacturaVenta('generar Factura','frmGenerarFactura')" >
+          <input type="submit" name="btnConfirma" id="btnConfirma"  class="botones"  value="Confirmar"  onClick="return PedirConfirmacionNotaCredito('generar nota de crédito')" >
           
       </td>
       <td>&nbsp;</td>

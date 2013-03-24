@@ -38,7 +38,7 @@
         
         
         $sqlaux="";
-        $sqlaux.=" AND ISNULL (f.fav_fecha_pago) ";
+        //$sqlaux.=" AND ISNULL (f.fav_fecha_pago) ";
 
                 //filtros Cliente Sucursal PARTE B
         if($cli_id!="")
@@ -48,7 +48,7 @@
                 {$sqlaux.=" AND o.cli_id = $cli_id ";}
                      //ordenamiento parte 2
         if($unOrden=="")
-        {$unOrden=" f.fav_fecha ";}
+        {$unOrden=" fv.fav_fecha ";}
         if($contador%2)
             $unOrdenCompleta.=" $unOrden ASC ";
         else
@@ -60,17 +60,31 @@
     $tamPag=20;
     
     
-        $sql = "SELECT distinct f.fav_id,f.fav_fecha,c.cli_nombre,c.cli_id,c.sucursal,cc.ccc_id,f.files_id,f.fav_fecha_pago ,f.cod_factura_venta, f.gru_id 
-                FROM factura_venta f,ordenes o,clientes c,grupo_ordenes g_o,cuentacorriente_cliente cc
-                WHERE f.gru_id = g_o.gru_id
-                AND g_o.gru_id = o.gru_id
-                AND o.cli_id = c.cli_id
-                AND c.cli_id = cc.cli_id
-                AND f.estado = 1";
+//        $sql = "SELECT distinct f.fav_id,f.fav_fecha,c.cli_nombre,c.cli_id,c.sucursal,cc.ccc_id,f.files_id,f.fav_fecha_pago ,f.cod_factura_venta, f.gru_id 
+//                FROM factura_venta f,ordenes o,clientes c,grupo_ordenes g_o,cuentacorriente_cliente cc
+//                WHERE f.gru_id = g_o.gru_id
+//                AND g_o.gru_id = o.gru_id
+//                AND o.cli_id = c.cli_id
+//                AND c.cli_id = cc.cli_id
+//                AND f.estado = 1";
+    
+    
+
+    
+         $sql = "SELECT distinct(fv.fav_id),fv.cod_factura_venta,fv.fav_fecha,fi.id FROM factura_venta fv
+                    LEFT JOIN files fi ON fv.files_id = fi.id
+                    INNER JOIN grupo_ordenes go ON fv.gru_id = go.gru_id
+                    INNER JOIN ordenes o ON o.gru_id = go.gru_id
+                    INNER JOIN clientes c ON o.cli_id = c.cli_id
+                    WHERE fv.estado = 1
+                    AND fv.grupo_nota_credito is null";   
+         
+         
+         
                 $sql.=$sqlaux;
-                $sql.=" GROUP BY  f.fav_id ";
+                //$sql.=" GROUP BY  f.fav_id ";
                 $sql .= " ORDER BY $unOrdenCompleta";  
-           
+                          
         $resultado = mysql_query($sql);
         $cantidad = mysql_num_rows($resultado);
         $unaFila=mysql_fetch_array($resultado);
