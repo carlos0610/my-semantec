@@ -6,6 +6,7 @@
         include("Modelo/modeloAbonosDetalle.php");
         include("Modelo/modeloFacturaCompra.php");
         include("Modelo/modeloOrdenes.php");
+        include("Modelo/modeloClientes.php");
         $action = $_GET["action"];        
         if ($action == 1){
             $prv_id = $_POST["comboProveedor"];
@@ -41,7 +42,8 @@
                                                 cli_id     int        not null,
 					    	cli_nombre varchar(100) not null,
                                                 sucursal   varchar(100) ,
-
+                                                sucursal_id integer,
+                                                
                                                 ord_plazo datetime   null,
                                                 fecha_pendiente_facturacion datetime   null,
                                                 es_abono     int        not null,
@@ -67,13 +69,30 @@
         /* INSERTAMOS EN LA TABLA TEMPORAL EL RESULTADO DE LA CONSULTA QUE AVERIGUA LOS ADELANTOS VS ORD_COSTO */
         
         $sql = "INSERT INTO tabla_temp	      
-		SELECT o.ord_id,ord_codigo,max(ord_det_fecha),c.cli_id,c.cli_nombre,c.sucursal, o.ord_plazo, o.fecha_pendiente_facturacion, o.es_abono,
-                       p.nombre as provincia,l.nombre as localidad,o.ord_descripcion,o.est_id,
-                       sum(od.ord_det_monto) as adelantos,
-                       round (o.ord_costo,2) as presupuesto ,
-                       o.ord_costo - sum(od.ord_det_monto) as Saldo,
-                       0,
-                       round (o.ord_costo,2) as presupuesto,0 ,o.fecha_recepcion_ot,datediff(now(),o.fecha_recepcion_ot)
+		SELECT  o.ord_id,
+                        ord_codigo,
+                        max(ord_det_fecha),
+                        c.cli_id,c.cli_nombre,
+                        c.sucursal, 
+                        c.sucursal_id,
+        
+                        o.ord_plazo, 
+                        o.fecha_pendiente_facturacion, 
+                        o.es_abono,
+        
+                        p.nombre as provincia,
+                        l.nombre as localidad,
+                        o.ord_descripcion,
+                        o.est_id,
+                        sum(od.ord_det_monto) as adelantos,
+                        round (o.ord_costo,2) as presupuesto ,
+                        o.ord_costo - sum(od.ord_det_monto) as Saldo,
+                        0,
+                        round (o.ord_costo,2) as presupuesto,
+                        0 ,
+                        o.fecha_recepcion_ot,
+                        datediff(now(),
+                        o.fecha_recepcion_ot)
                 FROM ordenes o, ordenes_detalle od,clientes c,ubicacion u,provincias p,localidades l
                 WHERE 
                 o.ord_id IN (select ord_id from ordenes where prv_id = $prv_id AND estado = 1)
@@ -164,7 +183,7 @@
        if ($filtro != ""){
            $opcionComboFiltro =$_POST["comboFiltro"];
        switch($opcionComboFiltro){
-         case 1:    $sql.=" ";break;
+         case 1:    $sql.=" WHERE 'a'='a' ";break;
          case 2:    $sql.=" WHERE saldo_a <> 0";break;
          case 3:    $sql.=" WHERE saldo_a = 0";break;  // quitar elANS es _abono porq antes revisar q haga la suma  correcta costo de orde mas abono 
              
@@ -186,6 +205,37 @@
             }
         }
        
+        //Filtro por Cliente
+        $resultadoClientesCombo=getClienteMatriz();
+        
+        $filtro3 = $_POST["chkFiltroCliente"];      
+        if ($filtro3!=""){
+            $clienIdCombo = $_POST["comboFiltroCliente"];       
+            if (($filtro != "") or ($filtro2 != "") ){
+                $sql.=" AND sucursal_id = $clienIdCombo"; 
+            }else{$sql.=" WHERE sucursal_id = $clienIdCombo"; }
+        }     
+        //Fin de Filtro por Cliente
+        
+        //Filtro por Adelanto      
+        $filtro4 = $_POST["chkFiltroAdelanto"];      
+        if ($filtro4!=""){      
+            if (($filtro != "") or ($filtro2 != "")or ($filtro3 != "") ){
+                $sql.=" AND adelantos > 0 "; 
+            }else{$sql.=" WHERE adelantos > 0 "; }
+        }    
+        //Fin de Filtro por Adelanto
+        
+        //Filtro por numero Orden      
+        $filtro5 = $_POST["chkFiltroOrden"];      
+        if ($filtro5!=""){     
+            $textboxOrden = $_POST["tag"];
+            if (($filtro != "") or ($filtro2 != "")or ($filtro3 != "")or ($filtro4 != "") ){
+                $sql.=" AND ord_codigo LIKE '$textboxOrden%' ORDER BY ord_codigo "; 
+            }else{$sql.=" WHERE ord_codigo LIKE '$textboxOrden%' ORDER BY ord_codigo "; }
+        }   
+        //Fin de Filtro por Orden
+               
        $resultado = mysql_query($sql);  
        $sql0 = $sql;
        
@@ -262,6 +312,24 @@
   <script type="text/javascript" src="js/jquery.datepick.js"></script>
   <script type="text/javascript" src="js/jquery.datepick-es.js"></script>
   <script type="text/javascript" src="js/validador.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/jquery.autocomplete.css" />
+  <script type="text/javascript" src="js/jquery.autocomplete.js"></script>
+<script>
+$(document).ready(function(){
+ $("#tag").autocomplete("autocomplete/autocompleteOrdenes.php", {
+		selectFirst: true
+	});
+});
+</script>
+
+<script>
+$(document).ready(function(){
+ $("#txtOrden").autocomplete("autocomplete/autocompleteOrdenes.php", {
+		selectFirst: true
+	});
+});
+</script>
+
   <script type="text/javascript">
   $(function() {
      
@@ -351,19 +419,13 @@
             <td class="titulo">Teléfono:</td>
             <td style="background-color:#cbeef5"><?php echo $fila_datos_proveedor["prv_telefono"]?></td>
           </tr>
-          <tr>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-          </tr>
      </table>
    </div>
    <!--end datos_cliente-->
    
    <!-- adelanto -->
    <div id="adelanto">
-     <table width="100%" border="0">
+     <table width="100%"  >
        <tr>
          <td colspan="4"><h2>Emitir un adelanto</h2></td>
        </tr>
@@ -374,26 +436,8 @@
           <!--       <input type="text" name="txtOrden" id="txtOrden" value="" class="campos2" onChange="autenticaOrdenCCProveedor()">
                <span id="error" style="font-family: Verdana, Arial, Helvetica,sans-serif;font-size: 9pt;color: #CC3300;position:relative;visibility:hidden;">La Orden NO existente</span>
           -->
-         
-         
-         
-               <select name="txtOrden" id="txtOrden" class="campos2"  >
-                    <option value='0'>Seleccione</option>;
-    <?php
-          while($fila = mysql_fetch_array($resultado1)){
-    ?>
-                    <option value="<?php echo($fila["ord_codigo"]); ?>">
-                        <?php echo($fila["ord_codigo"]); ?></option>
-    <?php
-          }
-    ?>
-                </select>
-         
-         
-         
-         
-         
-         
+                 <input name="txtOrden" type="text" id="txtOrden" class="campos2" size="20"/>
+     
          </td>
          <td width="16%">Adelanto: 
            <label>
@@ -405,12 +449,6 @@
            <input type="button" class="botones" name="btnEmitir" id="btnEmitir" value="Emitir" onClick="emitirAdelanto('<?php echo $pagina?>')">
          </label></td>
        </tr>
-       <tr>
-         <td>&nbsp;</td>
-         <td>&nbsp;</td>
-         <td>&nbsp;</td>
-         <td>&nbsp;</td>
-       </tr>
      </table>
     </div>
    <!-- div adelantos -->
@@ -419,15 +457,31 @@
        <form id="filtro" name="filtro" action="ver-corriente-proveedor.php" method="POST">
    <table width="100%" border="0">
    <tr>
-     <td colspan="5"><h2>Filtrar por estado de orden <input type="checkbox" name="chkFiltroEstado" id="chkFiltroEstado" onClick="habilitarFiltros('chkFiltroEstado','comboFiltro')" <?php if ($filtro!="") echo "checked"?>></h2></td>
+     <td colspan="5" ><h2>Filtrar por Estado de Orden <input type="checkbox" name="chkFiltroEstado" id="chkFiltroEstado" onClick="habilitarFiltros('chkFiltroEstado','comboFiltro')" <?php if ($filtro!="") echo "checked"?>></h2></td>
+   </tr> 
    <tr>
-     <td width="8%">&nbsp;</td>
+     <td width="8%">&nbsp; </td>
      <td width="19%"><label>
        <select name="comboFiltro" class="campos2"  id="comboFiltro" <?php if ($filtro==""){?>disabled <?php } ?>>
-           <option value="0">Seleccione </option>
          <option value="1" <?php if ($opcionComboFiltro==1) echo "selected"?> >Todos</option>
          <option value="2" <?php if ($opcionComboFiltro==2) echo "selected"?>>Pendientes de pago</option>
          <option value="3" <?php if ($opcionComboFiltro==3) echo "selected"?>>Canceladas</option>
+       </select>
+     </label></td>
+   </tr>
+   
+   
+      <tr>
+     <td colspan="5"><h2>Filtrar por Cliente <input type="checkbox" name="chkFiltroCliente" id="chkFiltroCliente" onClick="habilitarFiltros('chkFiltroCliente','comboFiltroCliente')" <?php if ($filtro3!="") echo "checked"?>></h2></td>
+   </tr> 
+   <tr>
+     <td width="8%">&nbsp;</td>
+     <td width="19%"><label>
+       <select name="comboFiltroCliente" class="campos2"  id="comboFiltroCliente" <?php if ($filtro3==""){?>disabled <?php } ?>>
+          <?php
+          while($fila = mysql_fetch_array($resultadoClientesCombo)){ ?>
+               <option value="<?php echo($fila["cli_id"]); ?>"<?php if ($clienIdCombo==$fila["cli_id"]) echo " selected" ?>><?php echo(utf8_encode($fila["cli_nombre"])); ?></option>
+            <?php } ?>
        </select>
      </label></td>
      <td colspan="2"><label>
@@ -435,15 +489,38 @@
      </label></td>
      <td width="40%">&nbsp;</td>
    </tr>
+   <!--  BORRAR PARA HABILITAR EL FILTRO ADELANTO
+   <tr>
+     <td colspan="5"><h2>Filtrar Adelantos &nbsp;&nbsp;<input type="checkbox" name="chkFiltroAdelanto" id="chkFiltroAdelanto"  <?php if ($filtro4!="") echo "checked"?>></h2></td>
+   </tr> -->
+   
+   
+         <tr>
+     <td colspan="5"><h2>Filtrar N° Orden&nbsp;&nbsp;&nbsp;&nbsp; <input type="checkbox" name="chkFiltroOrden" id="chkFiltroOrden" onClick="habilitarFiltros('chkFiltroOrden','tag')" <?php if ($filtro5!="") echo "checked"?>></h2></td>
+   </tr> 
+   <tr>
+     <td width="8%">&nbsp;</td>
+     <td width="19%"><label>
+                 <input name="tag" type="text" id="tag" value ="<? echo $textboxOrden  ?>"class="campos2" size="20" <?php if ($filtro5==""){?>disabled <?php } ?>/>
+     </label></td>
+     <td colspan="2"><label>
+     
+     </label></td>
+     <td width="40%">&nbsp;</td>
+   </tr>
+   
+   
+   
+   
    <tr>
      <td colspan="5"><h2>Filtrar órdenes por fecha de recepción de OT <input type="checkbox" name="chkFiltroOT" id="chkFiltroOT" onClick="habilitarFiltros('chkFiltroOT','fecha_inicio','fecha_fin')" <?php if($filtro2!="") echo "checked";?>></h2></td>
      </tr>
    <tr>
-     <td>Desde</td>
+     <td></td>
      <td><label>
-       <input type="text" class="campos2"  name="fecha_inicio" id="fecha_inicio" <?php if ($filtro2!=""){ ?> value="<?php echo $desde;?>" <?php } else {?> disabled <?php } ?>>
+       Desde : <input type="text" class="campos2"  name="fecha_inicio" id="fecha_inicio" <?php if ($filtro2!=""){ ?> value="<?php echo $desde;?>" <?php } else {?> disabled <?php } ?>>
      </label></td>
-     <td width="9%">Hasta</td>
+     <td width="9%">Hasta :</td>
      <td width="24%"><label>
              <input type="text" class="campos2"  name="fecha_fin" id="fecha_fin" <?php if ($filtro2!=""){ ?> value="<?php echo $hasta;?>" <?php } else {?> disabled <?php } ?> >
      </label></td>
@@ -456,10 +533,10 @@
    
    <div id="contenedor" style="height:auto;">
        <form id="filtro" name="filtro" action="ver-corriente-proveedor.php" method="POST">
-      <h2>Cuenta corriente de <?php echo utf8_encode($fila_datos_proveedor["prv_nombre"]);?>  - <br/><?php if ($filtro2 !="") echo "Viendo OT recibidas desde el $desde hasta $hasta";?>
+      <h4>Cuenta corriente de <?php echo utf8_encode($fila_datos_proveedor["prv_nombre"]);?>  - <br/><?php if ($filtro2 !="") echo "Viendo OT recibidas desde el $desde hasta $hasta";?>
              <a href="exportacion/exportarExcelCC-Proveedor.php?sql=<?php echo $sql0;?>&nombre=<? echo $fila_datos_proveedor["prv_nombre"] ?>"> 
                  <img src="images/icon-header-xls.png" alt="Listado Excel" title="Listado Excel" width="32" height="32" border="none" />
-             </a></h2>  
+             </a></h4>  
 
 <table class="listadosMasAncho" cellpadding="5">
           <tr class="titulo">
