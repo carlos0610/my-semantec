@@ -410,6 +410,22 @@ Nro :
             <?php   $NumeroDeRetencion++; 
             } ?> 
           <!-- IIBB  FIN--->
+          <!-- OTRAS DEDUCCIONES INICIO  --->         
+           <tr>
+            <td colspan="3" bgcolor="#0099CC"><label></label>
+            <div align="center"><span class="Estilo1">Otras deducciones</span></div></td>
+          </tr>
+          <tr>
+            <td><div align="center">
+                <input type="checkbox" name="chkComisionBancaria" id="chkComisionBancaria" onClick="habilitarDeducciones('chkComisionBancaria','<?php echo $totalFavs ?>',<?php echo $cantTipoPago; ?>,<?php echo $cantIIBB ?>)">
+            </div></td>
+            <td><label>
+              <input name="txtComisionBancaria" type="text" class="campos2" id="txtComisionBancaria" value="0" disabled style="text-align:right"  size="12" onChange="actualizarDetallePago('<?php echo $totalFavs ?>',<?php echo $cantTipoPago ?>,<?php echo $cantIIBB ?>)">
+            </label></td>
+            <td>Comisión por transferencia bancaria</td>
+          </tr>        
+          <!-- OTRAS DEDUCCIONES FIN  --->  
+          <!-- DETALLE DE PAGO  INICIO--->
           <tr>
             <td colspan="3" bgcolor="#0099CC"><label></label>
             <div align="center"><span class="Estilo1">Detalle del pago</span></div></td>
@@ -450,7 +466,16 @@ Nro :
             </label></td>
             <td>&nbsp;</td>
           </tr>
+          
           <tr>
+            <td>Comisión </td>
+            <td><label>
+              <input name="txtComision" type="text" class="campos2" id="txtComision" value="0" disabled style="text-align:right"  size="12">
+            </label></td>
+            <td>&nbsp;</td>
+          </tr>
+                    
+           <tr>
             <td>Total</td>
             <td><label>
               <input name="txtTotal" type="text" class="campos2" id="txtTotal" value="0" disabled style="text-align:right"  size="12">

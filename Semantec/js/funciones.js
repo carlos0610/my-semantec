@@ -261,6 +261,40 @@ function habilitarRetenciones(formulario,numero){
         actualizarDetallePago();
         
 }
+
+function habilitarDeducciones(nombre,ord_venta,cantidadTipoPago,cantIIBB){
+    
+    var valor = true; 
+    if(document.getElementById(nombre).checked)
+    {
+      valor = false;
+    }
+     document.getElementById("txtComisionBancaria").value=0;
+    document.getElementById("txtComisionBancaria").disabled = valor; 
+   // cantidadRetencionesHabilitadas(cantIIBB);
+    actualizarDetallePago(ord_venta,cantidadTipoPago,cantIIBB);
+}
+
+function cantidadRetencionesHabilitadas(cantIIBB){
+    var cantChek=0
+    if(document.getElementById("chkGanancias").checked){
+        cantChek++;
+    }
+        if(document.getElementById("chkIva").checked){
+        cantChek++;
+    }
+       if(document.getElementById("chkSUSS").checked){
+        cantChek++;
+    }
+         for ($i = 1; $i <= cantIIBB; $i++)   
+     {
+               if(document.getElementById("chkIIBB"+$i).checked){
+                   cantChek++;
+          }
+     }
+     return cantChek;
+}
+
 function habilitarRetencionesYActualizarDetalle(formulario,numero,ord_venta,cantidadTipoPago){
    habilitarRetenciones(formulario,numero);
    actualizarDetallePago(ord_venta,cantidadTipoPago);
@@ -457,7 +491,7 @@ function ActualizarTotal(cantidadDescripciones,factura){
                alert('SUBTOTAL: '+subtotal);
    
     if(resta.toFixed(2)==0.00)
-        {document.getElementById("btnConfirma").style.visibility = "visible"; }
+        {document.getElementById("btnConfirma").style.visibility = "visible";}
     else{
             if(resta.toFixed(2)<0)
             {          
@@ -586,9 +620,9 @@ function ActualizarTotalFacturaCompra(cantidadDescripciones,factura){
     totalOrdenesVenta2 = parseFloat(totalOrdenesVenta) + parseFloat(totalIva);
     document.getElementById('totalLabel').innerHTML ="Total Órdenes venta: $ "+(totalOrdenesVenta2).toFixed(2);
     if(document.getElementById("txtTotalFactura").value==totalOrdenesVenta2)
-        {document.getElementById("btnConfirma").style.visibility = "visible"; }
+        {document.getElementById("btnConfirma").style.visibility = "visible";}
         else{alert("La factura no iguala el total aceptado");
-          document.getElementById("btnConfirma").style.visibility = "hidden"; }
+          document.getElementById("btnConfirma").style.visibility = "hidden";}
     } else {
     percepciones = parseFloat(document.getElementById("txtPercepciones").value);
     document.getElementById("txtTotalFactura").value =  subtotal + percepciones;      
@@ -692,7 +726,7 @@ if((estado == 11)&(costo==0)&(venta==0))
           
  switch (estado)
 {
-  case estadoEnviadoProveedor:  {   
+  case estadoEnviadoProveedor:  {
             document.forms[nombre].fecha_detalle.style.visibility = "visible";
             document.forms[nombre].fecha_detalle.disabled = false;
             document.getElementById("texto_respuesta_detalle").style.visibility = "visible";
@@ -735,7 +769,7 @@ if((estado == 11)&(costo==0)&(venta==0))
 
         }   
             break;
-  case estadoAprobadoBajoCosto: {  
+  case estadoAprobadoBajoCosto: {
             document.forms[nombre].fecha_detalle.style.visibility = "visible";
             document.forms[nombre].fecha_detalle.disabled = false;
             document.getElementById("texto_respuesta_detalle").style.visibility = "visible";
@@ -773,7 +807,7 @@ if((estado == 11)&(costo==0)&(venta==0))
             
         }
             break;
- case estadoPresupuestoEnviadoAlCliente: { 
+ case estadoPresupuestoEnviadoAlCliente: {
             document.forms[nombre].txtPresupuesto.style.visibility = "visible";
             document.forms[nombre].txtPresupuesto.disabled = false;
             document.getElementById("texto_presupuesto_detalle").style.visibility = "visible";
@@ -793,7 +827,7 @@ if((estado == 11)&(costo==0)&(venta==0))
             document.forms[nombre].fecha_detalle.disabled = true;
             document.getElementById("texto_respuesta_detalle").style.visibility = "hidden";
             
-        } break;
+        }break;
             
             
   default:  {
@@ -1311,6 +1345,7 @@ function actualizarDetallePago(ord_venta,cantidadTipoPago,cantIIBB){
     ganancias   = parseFloat(document.getElementById("txtImporte1").value);
     iva         = parseFloat(document.getElementById("txtImporte2").value);
     suss        = parseFloat(document.getElementById("txtImporte3").value);
+    comision    = parseFloat(document.getElementById("txtComisionBancaria").value) * cantidadRetencionesHabilitadas(cantIIBB); 
    // iibb        = parseFloat(document.getElementById("txtImporte4").value);
     //cargamos los requerimientos IIBB
         iibb=0.00;
@@ -1334,9 +1369,10 @@ function actualizarDetallePago(ord_venta,cantidadTipoPago,cantIIBB){
     document.getElementById("txtIva").value         = (parseFloat(iva)).toFixed(2);
     document.getElementById("txtIIBB").value        = (parseFloat(iibb)).toFixed(2);
     document.getElementById("txtSUSS").value        = (parseFloat(suss)).toFixed(2);
+    document.getElementById("txtComision").value        = (parseFloat(comision)).toFixed(2);
     
     depositoActual=document.getElementById("txtDeposito").value;
-    document.getElementById("txtTotal").value = (parseFloat(ganancias) +parseFloat(iva) + parseFloat(iibb) +parseFloat(suss)+parseFloat(depositoActual)).toFixed(2);
+    document.getElementById("txtTotal").value = (parseFloat(ganancias) +parseFloat(iva) + parseFloat(iibb) +parseFloat(suss)+parseFloat(depositoActual)+parseFloat(comision)).toFixed(2);
     total = parseFloat(document.getElementById("txtTotal").value);
     
     
@@ -1347,7 +1383,7 @@ function actualizarDetallePago(ord_venta,cantidadTipoPago,cantIIBB){
         document.getElementById("botonRegistrar").style.visibility = "visible";   
 }
   function generarTipoPago(idForm,operacion)
-{    if(operacion=='suma')
+{if(operacion=='suma')
         document.getElementById("cantidadTip").value++;
     else
         {
@@ -1358,7 +1394,7 @@ function actualizarDetallePago(ord_venta,cantidadTipoPago,cantIIBB){
 }
 
   function generarIIBB(idForm,operacion)
-{    if(operacion=='suma')
+{if(operacion=='suma')
         document.getElementById("cantidadIIBB").value++;
     else
         {

@@ -164,6 +164,8 @@ include "funciones.php";
         $fecha      = gfecha($_POST["txtFecha1"]);
         $prefijo    = $_POST["txtPrefijo1"];
         $importe    = $_POST["txtImporte1"];
+        if (isset($_POST["chkComisionBancaria"])){
+        $importe    = $importe + $_POST["txtComisionBancaria"];}
         $nro        = $_POST["txtNro1"];
 
        $sql = "INSERT INTO cobros_detalle_retencion (cobros_id,ret_id,ret_fecha,ret_prefijo,ret_codigo,ret_importe) VALUES ($cobro_id,1,'$fecha','$prefijo','$nro',$importe)"; 
@@ -178,6 +180,8 @@ include "funciones.php";
         $fecha      = gfecha($_POST["txtFecha2"]);
         $prefijo    = $_POST["txtPrefijo2"];
         $importe    = $_POST["txtImporte2"];
+        if (isset($_POST["chkComisionBancaria"])){
+        $importe    = $importe + $_POST["txtComisionBancaria"];}
         $nro        = $_POST["txtNro2"];
         $idiva      = $_POST["comboIva"];
 
@@ -195,6 +199,8 @@ include "funciones.php";
         $fecha      = gfecha($_POST["txtFecha3"]);
         $prefijo    = $_POST["txtPrefijo3"];
         $importe    = $_POST["txtImporte3"];
+        if (isset($_POST["chkComisionBancaria"])){
+        $importe    = $importe + $_POST["txtComisionBancaria"];}
         $nro        = $_POST["txtNro3"];
 
         $sql = "INSERT INTO cobros_detalle_retencion (cobros_id,ret_id,ret_fecha,ret_prefijo,ret_codigo,ret_importe) VALUES ($cobro_id,4,'$fecha','$prefijo','$nro',$importe)"; 
@@ -209,20 +215,33 @@ include "funciones.php";
         $fecha      = gfecha($_POST["txtFecha$numeroRetencion"]);
         $prefijo    = $_POST["txtPrefijo$numeroRetencion"];
         $importe    = $_POST["txtImporte$numeroRetencion"];
+        if (isset($_POST["chkComisionBancaria"])){
+        $importe    = $importe + $_POST["txtComisionBancaria"];}
         $nro        = $_POST["txtNro$numeroRetencion"];
         $provincia  = $_POST["comboProvincias$numeroRetencion"];
         
         $sql = "INSERT INTO cobros_detalle_retencion (provincias_id,cobros_id,ret_id,ret_fecha,ret_prefijo,ret_codigo,ret_importe) VALUES ($provincia,$cobro_id,3,'$fecha','$prefijo','$nro',$importe)";
         $result = mysql_query($sql);
         
-        if (!$result){ echo "fallo10: <br>QUERY : ".$sql;
+        if (!$result){ echo "fallo 10: No se selecciono Provincia!!";
             $error = 1;    }        
 
         
      }
      $numeroRetencion++;
   }
-     
+  // Otras deducciones
+      if (isset($_POST["chkComisionBancaria"])){
+        $importe    = $_POST["txtComisionBancaria"];
+
+        $sql = "INSERT INTO cobros_detalle_retencion (cobros_id,ret_id,ret_importe,ret_fecha) VALUES ($cobro_id,5,$importe, NOW() )"; 
+        $result = mysql_query($sql);
+        
+        if (!$result){echo 'fallo deducciones';
+            $error = 1;    } 
+    }
+  
+  // Fin Otras deducciones   
      if ($error){
          mysql_query("ROLLBACK");
          echo "<br> Error en transacción";
