@@ -1,6 +1,12 @@
 <?php
         include("validar.php");
         include("funciones.php");
+        
+        /*SI NO ES ADMIN NO PUEDE ELIMINAR LA ORDEN*/
+        if($_SESSION["rol_id"] !=1){
+			header("location:index-admin.php");
+                        
+	}else{
 
         $ord_id = $_GET["orden_id"];
 
@@ -21,9 +27,14 @@
         if(!$rs)
             $error = 1;
         
+        /*AL ELIMINARSE UNA ORDEN SE LE ADICIONA LA FECHA DE ELIMINACIÓN AL CÓDIGO DE ORDEN 
+          DE MANERA QUE EL CÓDIGO UTILIZADO PARA LA ORDEN VUELVA A ESTAR DISPONIBLE
+         YA QUE ES UN CAMPO UNIQUE
+         */
+        
         $codigo = mysql_fetch_array($rs);
         $ord_codigo = $codigo["ord_codigo"];
-        $nuevo_codigo_eliminado = $ord_codigo." - ".$fecha;
+        $nuevo_codigo_eliminado = $ord_codigo." - ".$fecha;  // <----- Just magic !
         
         
         $sql = "UPDATE ordenes SET estado = 0 ,ord_codigo = '$nuevo_codigo_eliminado' WHERE ord_id = $ord_id";
@@ -48,5 +59,5 @@
 	header("location:lista-ordenes.php");
         
         }
-
+        }
 ?>
