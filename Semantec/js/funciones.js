@@ -1345,7 +1345,7 @@ function actualizarDetallePago(ord_venta,cantidadTipoPago,cantIIBB){
     ganancias   = parseFloat(document.getElementById("txtImporte1").value);
     iva         = parseFloat(document.getElementById("txtImporte2").value);
     suss        = parseFloat(document.getElementById("txtImporte3").value);
-    comision    = parseFloat(document.getElementById("txtComisionBancaria").value) * cantidadRetencionesHabilitadas(cantIIBB); 
+    comision    = parseFloat(document.getElementById("txtComisionBancaria").value); 
    // iibb        = parseFloat(document.getElementById("txtImporte4").value);
     //cargamos los requerimientos IIBB
         iibb=0.00;

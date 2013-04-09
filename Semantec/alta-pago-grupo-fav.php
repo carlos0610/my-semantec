@@ -164,8 +164,6 @@ include "funciones.php";
         $fecha      = gfecha($_POST["txtFecha1"]);
         $prefijo    = $_POST["txtPrefijo1"];
         $importe    = $_POST["txtImporte1"];
-        if (isset($_POST["chkComisionBancaria"])){
-        $importe    = $importe + $_POST["txtComisionBancaria"];}
         $nro        = $_POST["txtNro1"];
 
        $sql = "INSERT INTO cobros_detalle_retencion (cobros_id,ret_id,ret_fecha,ret_prefijo,ret_codigo,ret_importe) VALUES ($cobro_id,1,'$fecha','$prefijo','$nro',$importe)"; 
@@ -180,8 +178,6 @@ include "funciones.php";
         $fecha      = gfecha($_POST["txtFecha2"]);
         $prefijo    = $_POST["txtPrefijo2"];
         $importe    = $_POST["txtImporte2"];
-        if (isset($_POST["chkComisionBancaria"])){
-        $importe    = $importe + $_POST["txtComisionBancaria"];}
         $nro        = $_POST["txtNro2"];
         $idiva      = $_POST["comboIva"];
 
@@ -199,8 +195,6 @@ include "funciones.php";
         $fecha      = gfecha($_POST["txtFecha3"]);
         $prefijo    = $_POST["txtPrefijo3"];
         $importe    = $_POST["txtImporte3"];
-        if (isset($_POST["chkComisionBancaria"])){
-        $importe    = $importe + $_POST["txtComisionBancaria"];}
         $nro        = $_POST["txtNro3"];
 
         $sql = "INSERT INTO cobros_detalle_retencion (cobros_id,ret_id,ret_fecha,ret_prefijo,ret_codigo,ret_importe) VALUES ($cobro_id,4,'$fecha','$prefijo','$nro',$importe)"; 
@@ -215,8 +209,6 @@ include "funciones.php";
         $fecha      = gfecha($_POST["txtFecha$numeroRetencion"]);
         $prefijo    = $_POST["txtPrefijo$numeroRetencion"];
         $importe    = $_POST["txtImporte$numeroRetencion"];
-        if (isset($_POST["chkComisionBancaria"])){
-        $importe    = $importe + $_POST["txtComisionBancaria"];}
         $nro        = $_POST["txtNro$numeroRetencion"];
         $provincia  = $_POST["comboProvincias$numeroRetencion"];
         
