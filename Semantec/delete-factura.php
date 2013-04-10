@@ -5,6 +5,14 @@
         $fav_id = $_GET["fav_id"];
         $grup_id = $_GET["grup_id"];
 
+        
+        /*VALIDACIÓN : SI NO ES ADMIN NO PUEDE ELIMINAR LA FACTURA*/
+         if($_SESSION["rol_id"] !=1){
+			header("location:index-admin.php");
+                        
+	}else{
+        
+        
         include("conexion.php");
         mysql_query("BEGIN"); // Inicio de Transacción
         
@@ -62,6 +70,6 @@
                         }
         
         
-	
+        }
 
 ?>

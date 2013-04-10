@@ -25,9 +25,19 @@
                         $resultado = getRetencionesByFecha($fecha_ini, $fecha_fin);
                     
            }
-
-              
-
+ 
+                $array=array();
+            while ($row=mysql_fetch_array($resultado)) {
+                $array[]=$row;
+            }  
+            
+            $_SESSION["retenciones_arreglo"]     = $array;
+            echo "ARRAY SIZE: ".  count($array);
+            
+            
+           
+            mysql_data_seek($resultado,0);
+           
        
         
 
@@ -113,6 +123,9 @@
          <td>Hasta 
            <input type="text" name="fecha_fin" id="fecha_fin" class="campos2" <? if(isset($filtrar)) echo "value=$fecha_fin_sinconvertir"; ?>>
            <input type="submit" name="filtrar" value="filtrar" class="botones" ></td>
+         <td><a href="exportacion/exportarExcelPrueba.php"> 
+                 <img src="images/icon-header-xls.png" alt="Listado Excel" title="Listado Excel" width="32" height="32" border="none" />
+             </a></td>
        </tr>
        <tr>
          <td>&nbsp;</td>

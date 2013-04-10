@@ -43,7 +43,7 @@
                 //filtros Cliente Sucursal PARTE B
         if($cli_id!="")
             if($cli_id=="todasLasSucursales")
-                {$sqlaux.=" AND c.sucursal_id = $cli_idMaestro ";}
+                {$sqlaux.=" AND (c.sucursal_id = $cli_idMaestro OR  c.sucursal_id is null)";}
             else
                 {$sqlaux.=" AND o.cli_id = $cli_id ";}
                      //ordenamiento parte 2
@@ -76,6 +76,7 @@
         $unaFila=mysql_fetch_array($resultado);
         $resultado = mysql_query($sql);
         $ccte_id=$unaFila["ccc_id"]; // echo "id maestro: $cli_idMaestro   ----la cct : $ccte_id el sql: ";
+        
         
         $i = 0;
         $colores = array("#fff","#e8f7fa");

@@ -1,5 +1,5 @@
 <?php
-        $titulo = "Listado de Facturas.";
+        $titulo = "Reporte de IVA";
         include("validar.php");
         include("funciones.php");
         include("conexion.php");
@@ -30,10 +30,10 @@
                             }
         
         
-        //echo " CLIENTE: ".$cli_id;
+        
               
         $filtrar = $_POST['filtrar'];
-        //if($elementoBusqueda!="")
+        
            if(isset($filtrar)) {
                $fecha_ini = $_POST["fecha_inicio"];
                $fecha_fin = $_POST["fecha_fin"];
@@ -62,34 +62,12 @@
                                                             det.fav_id = fa.fav_id
                                                     )
                                     AND fa.fav_fecha BETWEEN '$fecha_ini 00:00:00' AND '$fecha_fin 23:59:59'";
-            //echo "QUERY: ".$sql;
+            
                         
         }
-              
-/* CALCULO PAGINADO */  ###############################################################################
- 
-    //$tamPag=10;
-    
-    
-        /*$sql = "SELECT distinct f.fav_id,f.fav_fecha,c.cli_nombre,cc.ccc_id,f.files_id,f.fav_fecha_pago 
-                FROM factura_venta f,ordenes o,clientes c,grupo_ordenes g_o,cuentacorriente_cliente cc
-                WHERE f.gru_id = g_o.gru_id
-                AND g_o.gru_id = o.gru_id
-                AND o.cli_id = c.cli_id
-                AND c.cli_id = cc.cli_id
-                AND f.estado = 1";*/
-        
-        
-        
-        
-                //$sql.=$sqlaux;
-                //$sql0=$sql;
-                //include("paginado.php");
-                
-                //$sql .= " ORDER BY f.fav_fecha desc LIMIT ".$limitInf.",".$tamPag;
-        
+                      
         $resultado = mysql_query($sql);
-        //$cantidad = mysql_num_rows($resultado);
+        
 
         $i = 0;
         $colores = array("#fff","#e8f7fa");
@@ -145,7 +123,7 @@
 
    <!--start contenedor-->
    <div id="contenedor" style="height:auto;">
-      <h2>Panel de control - Listado de Facturas</h2>
+      <h2>Panel de control - <?php echo $titulo; ?></h2>
 
      <div id="buscador" >     
 <form name="filtro" action="<?php echo $PHP_SELF;?>" method="POST">

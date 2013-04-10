@@ -9,11 +9,6 @@ function getListarTodoRetenciones(){
 
 
 function getRetencionesByIdAndFecha($id,$fecha_ini,$fecha_fin){
-//            $sql =    "SELECT r.nombre,SUM(ret_importe) as suma FROM cobros_detalle_retencion c
-//                        INNER JOIN retenciones r
-//                        ON r.ret_id = c.ret_id
-//                        WHERE c.ret_id = $id
-//                        AND ret_fecha BETWEEN '$fecha_ini' AND '$fecha_fin'";
     
     $sql = "SELECT c.id,r.nombre,dr.ret_fecha,c.grupo_fav_id,dr.ret_importe,dr.ret_prefijo,dr.ret_codigo FROM retenciones r 
                             INNER JOIN cobros_detalle_retencion dr
@@ -30,11 +25,7 @@ function getRetencionesByIdAndFecha($id,$fecha_ini,$fecha_fin){
 
 
 function getRetencionesByFecha($fecha_ini,$fecha_fin){
-//            $sql =    "SELECT r.nombre,SUM(ret_importe) as suma FROM cobros_detalle_retencion c
-//                        INNER JOIN retenciones r
-//                        ON r.ret_id = c.ret_id
-//                        AND ret_fecha BETWEEN '$fecha_ini' AND '$fecha_fin'
-//                        GROUP BY r.nombre;";
+
     
               $sql = "SELECT c.id,r.nombre,dr.ret_fecha,c.grupo_fav_id,dr.ret_importe,dr.ret_prefijo,dr.ret_codigo FROM retenciones r 
                             INNER JOIN cobros_detalle_retencion dr

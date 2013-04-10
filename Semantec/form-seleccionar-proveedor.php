@@ -1,5 +1,4 @@
 <?php
-    $titulo = "Seleccion proveedor";
         include("validar.php");
         include("funciones.php");
 
@@ -11,7 +10,7 @@
         $resultado1 = mysql_query($sql);
         
         if ($action == 1){
-           $tituloPanel = "Cuenta corriente de clientes";
+           $tituloPanel = "Cuenta corriente de proveedores";
            $botonValue  = "Ver cuenta corriente";
            
         }else{

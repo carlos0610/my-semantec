@@ -1,9 +1,9 @@
 <?php
-    $titulo = "Listado de clientes.";
+        $titulo = "Listado de clientes.";
         include("validar.php");
         include("funciones.php");
-
         include("conexion.php");
+        include("Modelo/modeloFacturaVenta.php");
         
         
         if (isset($_POST["comboCliente"])){
@@ -34,19 +34,30 @@
         
         
         
-/* CALCULO PAGINADO */  ###############################################################################
-//    $sql0="SELECT o.ord_id,o.ord_codigo,f.fav_id,o.ord_descripcion,o.ord_venta,o.est_id 
-//                FROM ordenes o,cuentacorriente_cliente cc ,factura_venta f,grupo_ordenes g_o
-//                WHERE cc.cli_id = o.cli_id 
-//                AND cc.cli_id in (SELECT cli_id from clientes where sucursal_id = $cli_id)
-//                AND o.estado = 1 
-//                AND cc.estado = 1 
-//                AND o.est_id >= 12
-//                AND f.estado = 1
-//                AND g_o.gru_id = f.gru_id
-//                AND g_o.gru_id = o.gru_id";
-       
-       $sql0 = "SELECT fv.fav_id,fv.cod_factura_venta,IFNULL(fv.grupo_fac_pago,'-') as grupo_fac_pago,IFNULL(fv.fav_fecha_pago,'-') as fecha_pago,fv.fav_fecha,SUM(dfv.det_fav_precio) as total,IFNULL(nc.nrc_id,'-') as nrc_id,SUM(dnc.det_nrc_precio) as total_nota 
+/* OBTENEMOS EL LISTADO DE FACTURAS SIN PAGAR POR CLIENTE , LO ITERAMOS PARA SUMAR EL TOTAL DE DEUDA  */ 
+
+$total_deuda        = 0;
+$total_nota_credito = 0;
+$resultado_deuda = getFacturasSinPagarPorClienteId($cli_id);
+
+
+/*REVISAR Y CONFIRMAR SI ESTÁ BIEN EL CÁLCULO */
+while($fila = mysql_fetch_array($resultado_deuda)){
+        if ($fila['total_nota']==0){
+        $total_deuda += $fila['total'];
+        }
+        
+        $total_nota_credito  += $fila['total_nota'];
+   
+}
+
+
+$total_deuda_menos_nc = $total_deuda - $total_nota_credito;
+
+
+/* FIN DE CÁLCULO DE TOTAL DE DEUDA */
+
+             $sql0 = "SELECT fv.fav_id,fv.cod_factura_venta,IFNULL(fv.grupo_fac_pago,'-') as grupo_fac_pago,IFNULL(fv.fav_fecha_pago,'-') as fecha_pago,fv.fav_fecha,SUM(dfv.det_fav_precio) as total,IFNULL(nc.nrc_id,'-') as nrc_id,IFNULL(dnc.det_nrc_precio,0) as total_nota 
                 FROM factura_venta fv
                 INNER JOIN detalle_factura_venta dfv ON dfv.fav_id = fv.fav_id
                 LEFT JOIN nota_credito nc ON nc.gfn_id = fv.grupo_nota_credito
@@ -58,12 +69,11 @@
                                     WHERE o.cli_id in (SELECT cli_id from clientes where sucursal_id = $cli_id or cli_id = $cli_id and estado = 1)
                                     AND o.estado = 1
                                     )
-                group by fav_id";
-       
-       
-       
+                GROUP BY fav_id
+                ORDER BY fav_fecha desc";
+             
         $tamPag=20;
-        //echo "QUERY 0".$sql0;
+        
     include("paginado.php");        
         $sql = $sql0;
                 $sql .= " LIMIT ".$limitInf.",".$tamPag; 
@@ -199,12 +209,11 @@
             $i++;
             if($i==$cant){$i=0;}
             
-             if ($fila["grupo_fac_pago"]=="-")   //SI NO REALIZO UN PAGO, SUMAMOS AL $totalDeuda
-            $totalDeuda += $fila["total"];
+             
           } // FIN_WHILE
           
-          echo "<tr><td colspan=7 align=right>Total deuda cliente: <b>$totalDeuda</b> pesos</td></tr>";
-          
+          echo "<tr><td colspan=7 align=right>Total deuda cliente: <b>$total_deuda_menos_nc</b> pesos</td></tr>";
+                  
   ?>
           <tr>
             <td colspan="7" class="pie_lista"><?php 

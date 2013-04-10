@@ -1,5 +1,5 @@
 <?php
-    $titulo = "Listado de Facturas.";
+        $titulo = "Listado de Facturas de compra";
         include("validar.php");
         include("funciones.php");
         include("conexion.php");
@@ -113,7 +113,7 @@
 
    <!--start contenedor-->
    <div id="contenedor" style="height:auto;">
-      <h2>Panel de control - Listado de Facturas</h2>
+      <h2>Panel de control - <?php echo $titulo ?></h2>
 
      <div id="buscador" >     
 <form id="filtro" name="filtro" action="lista-facturas-compra.php" method="POST">

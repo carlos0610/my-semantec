@@ -11,7 +11,7 @@
        
        //+++++configuracion  de descripciones a imprimir en pantalla+++++
        $numeroDescripcion=0;
-       $totalDescripcion=5;
+       $totalDescripcion=1;
        
        
        $_SESSION["ord_id"] = $ord_id;

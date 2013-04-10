@@ -243,11 +243,13 @@
                 </a>
             </td>
             
-            <td> <div  <?php if($chkCanceladas=="0"){echo ("  style='visibility:hidden'");}?>>  
+            <td><?php if($_SESSION["rol_id"]==1){ ?> 
+                <div  <?php if($chkCanceladas=="0"){echo ("  style='visibility:hidden'");}?>>  
                 <a href="#" onClick="eliminarFactura(<?php echo($fila["fav_id"]);?>,<?php echo($fila["gru_id"]);?>,'<?php echo($fila["cod_factura_venta"]);?>' )"   >
                 <img src="images/eliminar.png" alt="eliminar" title="Eliminar Factura" width="32" height="32" border="none" />
                 </a>
                 </div>
+                <?php }?>
             </td>
           </tr>
   <?php

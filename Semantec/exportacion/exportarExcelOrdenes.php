@@ -13,8 +13,10 @@ header("content-disposition: attachment;filename=Reportes.xls");
 </head>
 <body>
 <?php
- $sql=$_SESSION['sqlSession']; 
-$result=mysql_query($sql);
+// $sql=$_SESSION['sqlSession']; 
+//$result=mysql_query($sql);
+//
+$result = $_SESSION["reporte_retenciones"];
 // INGRESAR NOMBRE 
 $nombre=' Ordenes de Servicio';
 ?>
