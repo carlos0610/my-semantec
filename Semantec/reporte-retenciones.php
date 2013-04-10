@@ -32,7 +32,7 @@
             }  
             
             $_SESSION["retenciones_arreglo"]     = $array;
-            echo "ARRAY SIZE: ".  count($array);
+            
             
             
            
