@@ -1,5 +1,5 @@
 <?php
-    $titulo = "Listado de Facturas.";
+    $titulo = "Listado de Notas de Credito.";
         include("validar.php");
         include("funciones.php");
         include("conexion.php");

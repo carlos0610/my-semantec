@@ -58,6 +58,43 @@ include "funciones.php";
         }
         
         
+        // actualizamos las NC chekeadas a usadas
+                $i=0; 
+         while ($i < $cantTotalFav) 
+{   
+    $i++; //echo $i,'---';
+    if (isset($_POST["chkNC$i"])){
+        $nota_credito_id= $_POST["chkNC$i"];
+        $sql = "Update nota_credito set grupo_fac_pago = $id_grupo_fav where nrc_id= $nota_credito_id ";
+        echo "id fac:",$_POST["facDeNC$i"];
+        $result = mysql_query($sql); 
+    }
+        if (!$result){
+            $error = 1;echo "fallo en update de NC : $sql <br>";
+        }
+
+        }
+                      
+       // actualizamos las Facturas con su NC usado
+                $i=0; 
+         while ($i < $cantTotalFav) 
+{   
+    $i++; //echo $i,'---';
+    if (isset($_POST["chkNC$i"])){
+        $favNC= $_POST["facDeNC$i"];
+        $sql = "Update factura_venta set nota_credito_id = $nota_credito_id where fav_id= $favNC ";
+        $result = mysql_query($sql);
+    }
+        if (!$result){
+            $error = 1;echo "fallo en update de facturas NC: $sql <br>";
+        }
+
+        }
+        
+        
+        
+        
+        
        //-----------------------------CAMBIAR EL FAV ID POR EL GRUPO------------------------------------------------  
         
       //  $fav_id     = 20;           //modificar 

@@ -177,6 +177,7 @@
         <?php
         $i=0;
         $totalOrdenVenta=0;
+        $MontoMasBajo=99999999;
         while ($i <$cantFacturasChecadas)
         { $i++;    $usu_nombre = $_SESSION["usu_nombre"]; 
                 $unord_ID=$_POST["o$i"];  
@@ -190,6 +191,9 @@
         $resultado_deOredenes=mysql_query($sql5); 
         $filaDeLasOrdenesCheckeadas=mysql_fetch_array($resultado_deOredenes);
         $totalOrdenVenta+=$filaDeLasOrdenesCheckeadas["total_factura"];
+        if( $MontoMasBajo > $filaDeLasOrdenesCheckeadas["total_factura"]){
+            $MontoMasBajo= $filaDeLasOrdenesCheckeadas["total_factura"];
+        }
        
         ?>
 
@@ -199,8 +203,8 @@
                 &nbsp;&nbsp; &nbsp; 
             </td>
             <td>                                
-                    <a href="#" onClick="popup('ver-alta-factura.php?fav_id=<?php echo($filaDeLasOrdenesCheckeadas["fav_id"]);?>', 'Factura')">
-                        # <?php echo $filaDeLasOrdenesCheckeadas["cod_factura_venta"],'<br> - - -  Total factura: ',$filaDeLasOrdenesCheckeadas["total_factura"],'<br>';  ?>
+                    <a href="#" onClick="popup('ver-alta-factura.php?fav_id=<?php echo($filaDeLasOrdenesCheckeadas["fav_id"]);?>', 'Factura')"> 
+                        # <?php echo $filaDeLasOrdenesCheckeadas["cod_factura_venta"],'<br> - - -  Total factura: ',number_format($filaDeLasOrdenesCheckeadas["total_factura"],2,',','.'),'<br>';  ?>
                     </a>
             </td>
         </tr>            
@@ -230,7 +234,7 @@
         <?php      
         }       
         ?>
-      <div id="totalLabel" style="visibility: hidden;">Total : $<?php echo $totalOrdenVenta; ?></div> 
+      <div id="totalLabel" style="visibility: hidden;">Total: $<?php echo $totalOrdenVenta; ?></div> 
       <div id="restaLabel" style="visibility: hidden;">Resta: $<?php echo $totalOrdenVenta; ?></div> 
       
       <input type="hidden" name="totalOrdenVentatxt" id="totalOrdenVentatxt" style="visibility:visible" value="<?php echo $totalOrdenVenta ?>">
@@ -255,7 +259,7 @@
   <tr>
     <td><label>   
         <div align="left">
-          <input name="txtDescripcionItem<?php echo($numeroDescripcion);?>"  type="text" id="txtDescripcionItem<?php echo($numeroDescripcion);?>" size="110">
+            <input name="txtDescripcionItem<?php echo($numeroDescripcion);?>"  type="text" id="txtDescripcionItem<?php echo($numeroDescripcion);?>" size="110" required>
         </div>
     </label></td>
     <td><label>
@@ -274,8 +278,8 @@
   
   <table width="100%" border="0">
     <tr>
-      <td width="12%">VENCIMIENTO:  </td>
-      <td width="31%"><input name="vencimiento" type="text" id="vencimiento" required></td>
+      <td width="12%"></td>
+      <td width="31%"><input name="vencimiento" type="hidden" id="vencimiento" ></td>
       <td width="39%"><div align="right">SUBTOTAL:</div></td>
       <td width="18%"><label>
         <div align="center">
@@ -331,7 +335,7 @@
       <td>&nbsp;</td>
       <td>
          <input type="hidden"  name="codFactura" id="codFactura" value="<?php echo $cod_factura; ?>">
-          <input type="submit" name="btnConfirma" id="btnConfirma"  class="botones"  value="Confirmar"  onClick="return PedirConfirmacionNotaCredito('generar nota de crédito')" >
+          <input type="submit" name="btnConfirma"  id="btnConfirma"  class="botones"  value="Confirmar"  onClick="return PedirConfirmacionNotaCredito('generar nota de crédito')" >
           
       </td>
       <td>&nbsp;</td>

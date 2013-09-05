@@ -281,6 +281,9 @@
                 <a href="lista-notas-credito.php">
                      <input type="button" value="Ir al Listado"s class="botones" />
                 </a>  
+                <a href="form-generar-nota-credito.php">
+                     <input type="button" value="Nueva NC"s class="botones" />
+                </a> 
           <?php }else { ?>
                  <input type="button" class="botones" value="Volver" onclick="goBack()" />
           <?php } ?>

@@ -7,6 +7,7 @@
         include("Modelo/modeloFacturaVenta.php");
         include("Modelo/modeloCobrosDetalleRetencion.php");
         include("Modelo/modeloCobrosDetallePago.php");
+        include("Modelo/modeloNotaCredito.php");
          include("funciones.php");
         $fav_id     =  $_GET["grupo_fav"];
         $action     =  $_GET["action"];
@@ -45,7 +46,8 @@
         $detalleRetenciones = getDetalleRetencionByFavId($fav_id);
         //Total
         $montoTotal=0;
-        
+        //NC de PAgo
+        $NC= getNCIDWhitgrupoFavId($fav_id);
 
 
 ?>
@@ -234,7 +236,27 @@
           
           
           </table>
-          
+      
+          <table class="listados">
+          <tr>
+            <td colspan="3" bgcolor="#0099CC"><div align="center" class="Estilo1">Nota de Crédito</div></td>
+        </tr>
+        <!-- Tabla dinamica -->
+        <?php while($fila_NC = mysql_fetch_array($NC)){
+            $FilaDetalleNC=getmontoTotalWhitNCID($fila_NC["nrc_id"]);
+            $montoNC=mysql_fetch_array($FilaDetalleNC);
+            ?>
+            
+          <tr>
+            <td bgcolor="#CDDCDA">N° <?php echo $fila_NC["nrc_codigo"]?>            </td>
+            <td width="75%" bgcolor="#CDDCDA" ><?php echo number_format($montoNC["monto"],2,',','.')?> </td>
+            </tr>          
+  
+        
+        <?php } ?>
+ 
+      </table>
+       
 <div class="retenciones">
         
           
@@ -300,7 +322,7 @@
       
 </div>
  
-      
+          
       <div class="clear"></div>
 
    </div>

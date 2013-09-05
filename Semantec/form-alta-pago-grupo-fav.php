@@ -8,6 +8,7 @@
         include("Modelo/modeloBanco.php");
         include("Modelo/modeloProvincias.php");
         include("Modelo/modeloClientes.php");
+        include("Modelo/modeloNotaCredito.php");
         $fav_id     =  $_GET["fav_id"]; 
         $ccc_id     =  $_GET["ccc_id"];
         /*TIPOS DE PAGO*/
@@ -134,8 +135,8 @@
             </td>
           </tr>
           <tr>
-            <td width="6"><big>N° Factura</big></td>
- <?   $i=0; $totalFavs=0;           
+            <td width="6"><big>N° Factura</big></td> <td></td> <td></td>  
+ <?   $i=0; $totalFavs=0; 
  while ($i < $cantTotalFav) 
 { include("conexion.php");  // borrrARR SACAR ESTE CONEXION!!!!1
     $i++; //echo $i,'---';
@@ -143,19 +144,25 @@
         $filaFactura = getTotalAPagarConIva($CodigoFav);
        $facturaTotal = mysql_fetch_array($filaFactura);
        $totalFavs+=$facturaTotal["total"];
-        echo "<tr><td  >",getFacturasCodigoWhitID($CodigoFav),"</td>";
-        echo "<td style=text-align:right>",number_format( $facturaTotal["total"],2,',','.'),"</td></tr>";
+       
+       
+        echo "<tr bgcolor=#CDDCDA><td width=508 >",getFacturasCodigoWhitID($CodigoFav),"</td>";
+        echo "<td style=text-align:right>",number_format( $facturaTotal["total"],2,',','.'),"</td>";
+ 
+         echo"</tr>";
 
 }
-        
 
 ?>
 
 
-            <td><big><b>Total Factura:</b></big>   <input name="totalFavs" type="hidden"  id="totalFavs" value="<? echo  $totalFavs ?>"></td>
-
+            <td><big><b>Total:</b></big>  </td> 
+            <td><input name="totalFavs"  type="hidden2"  id="totalFavs" value="<? echo  $totalFavs ?>" readonly style="background-color:white; border: solid 0px ;
+height: 25px; font-size:18px; vertical-align:6px"></td>
+            
+<td width=208 ><b>Total Factura:</b></td>
             <td style="text-align:right;"><big><b><?php echo number_format($totalFavs,2,',','.') ?></b></big></td>
-            <td>&nbsp;</td>
+            
             <td></td>
           </tr>
           
@@ -201,7 +208,7 @@
 }
 ?>
          
-         
+            
          <!--Bucle Generador de Tipos Pagos-->
           
        <?php for ($i = 1; $i <= $cantTipoPago; $i++) { ?>
@@ -291,7 +298,49 @@
           <?php } ?>
                   
           </table>
-          
+      
+       
+      <table class="listados">
+          <tr>
+              <td colspan="9" bgcolor="#0099CC"><div align="center" class="Estilo1">Nota de Credito</div></td>
+          </tr>
+     <tr>
+           
+     <?   $i=0; $totalFavs=0; 
+ $arregloNC=array();// arreglo para no repetir NC q contengan facturas en el grupo seleccionado
+ while ($i < $cantTotalFav) 
+{ include("conexion.php");  // borrrARR SACAR ESTE CONEXION!!!!1
+    $i++; //echo $i,'---';
+    $CodigoFav=$_POST["o$i"];
+        $filaFactura = getTotalAPagarConIva($CodigoFav);
+       $facturaTotal = mysql_fetch_array($filaFactura);
+       $totalFavs+=$facturaTotal["total"];
+       $filaNC=mysql_fetch_array((getMontoTotalWhitFavId($CodigoFav)));
+       
+        if((   $filaNC['monto'] >0) and  !(in_array($filaNC['nrc_id'], $arregloNC))and (   $filaNC['codigo_nc'] != '') ){  
+            
+        echo "<tr bgcolor=#CDDCDA>
+            <td width=3%><input type=checkbox name=chkNC$i value=$filaNC[nrc_id] id=chkNC$i onClick= ActualizarTotalPagoFac('chkNC$i',$filaNC[monto],$cantTipoPago) > </td>  
+        <td width=17% style=text-align:right> N° NC: ",($filaNC['codigo_nc']),"</td>  <td style=text-align:right ><b>",number_format( $filaNC['monto'],2,',','.'),"</b></td> ";
+            
+        echo "<td style=text-align:right> N° Factura: ",getFacturasCodigoWhitID($CodigoFav),"</td>";
+        echo "<td style=text-align:right>",number_format( $facturaTotal["total"],2,',','.'),"</td>";
+        echo " <input type=hidden name=facDeNC$i id=facDeNC$i value=$CodigoFav > ";
+ 
+         
+         $arregloNC[]=($filaNC['nrc_id']); 
+
+         }
+         echo"</tr>";
+
+}
+
+?>
+
+          </tr>
+    
+      </table>
+     
 <div class="retenciones">
           <form  action="alta-pago.php?fav_id=<?php echo $fav_id ?>&cantTipoPago=<?php echo $cantTipoPago ?>&ccc_id=<?php echo $ccc_id ?>" method="post" enctype="multipart/form-data" >
           <table class="listados">

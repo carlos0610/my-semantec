@@ -4,6 +4,7 @@
         include("funciones.php");
         include("conexion.php");
         include("Modelo/modeloFacturaVenta.php");
+        include("Modelo/modeloNotaCredito.php");
         
         
         if (isset($_POST["comboCliente"])){
@@ -13,7 +14,8 @@
             $cli_id              = $_SESSION["cli_id"];
             }
         
-        
+        $resultadoNC=getNCWhitCliId($cli_id);
+        $resultadoNCTotal=getNCWhitCliId($cli_id);
                         
         /* OBTENGO DATOS DE CLIENTE */
         
@@ -39,25 +41,50 @@
 $total_deuda        = 0;
 $total_nota_credito = 0;
 $resultado_deuda = getFacturasSinPagarPorClienteId($cli_id);
+$resultado_nc_utilizadas = getFacturasPagasUsanNCPorClienteId($cli_id);
 
-
-/*REVISAR Y CONFIRMAR SI ESTÁ BIEN EL CÁLCULO */
+/*REVISAR Y CONFIRMAR SI ESTÁ BIEN EL CÁLCULO   facturas no pagas*/
 while($fila = mysql_fetch_array($resultado_deuda)){
-        if ($fila['total_nota']==0){
+    //    if ($fila['total_nota']==0)
+            {
         $total_deuda += $fila['total'];
         }
         
-        $total_nota_credito  += $fila['total_nota'];
+       // $total_nota_credito  += $fila['total_nota'];  
+}
+//echo " facturas no pagas:: ",$total_deuda  ;
+
+$total_de_NC_usadas=0; // nc usadas q suman
+while($fila = mysql_fetch_array($resultado_nc_utilizadas)){
+        $total_de_NC_usadas += $fila['total_nota'];
    
 }
 
+//echo " NC usados : ",$total_de_NC_usadas  ;
 
-$total_deuda_menos_nc = $total_deuda - $total_nota_credito;
+
+//total de NC del CLiente
+$total_de_NC_de_Cliente=0;
+ while($fila = mysql_fetch_array($resultadoNCTotal)){  include("conexion.php");
+
+        $totalmontoNC=mysql_fetch_array(getmontoTotalWhitNCID($fila["nrc_id"])); 
+            $total_de_NC_de_Cliente+= $totalmontoNC['monto'];
+ 
+ } // FIN_WHILE
+ //echo "NC totales",$total_de_NC_de_Cliente;
+           
+
+
+
+
+
+
+$total_deuda_menos_nc = $total_deuda - $total_de_NC_de_Cliente + $total_de_NC_usadas;
 
 
 /* FIN DE CÁLCULO DE TOTAL DE DEUDA */
 
-             $sql0 = "SELECT fv.fav_id,fv.cod_factura_venta,IFNULL(fv.grupo_fac_pago,'-') as grupo_fac_pago,IFNULL(fv.fav_fecha_pago,'-') as fecha_pago,fv.fav_fecha,SUM(dfv.det_fav_precio) as total,IFNULL(nc.nrc_id,'-') as nrc_id,IFNULL(dnc.det_nrc_precio,0) as total_nota 
+             $sql0 = "SELECT fv.fav_id,fv.cod_factura_venta,fv.nota_credito_id, IFNULL(fv.grupo_fac_pago,'-') as grupo_fac_pago,IFNULL(fv.fav_fecha_pago,'-') as fecha_pago,fv.fav_fecha,SUM(dfv.det_fav_precio) as total,IFNULL(nc.nrc_id,'-') as nrc_id,IFNULL(dnc.det_nrc_precio,0) as total_nota 
                 FROM factura_venta fv
                 INNER JOIN detalle_factura_venta dfv ON dfv.fav_id = fv.fav_id
                 LEFT JOIN nota_credito nc ON nc.gfn_id = fv.grupo_nota_credito
@@ -90,10 +117,16 @@ $total_deuda_menos_nc = $total_deuda - $total_nota_credito;
         $totalDeuda = 0;
         $estadoPagado = 14;  //ESTADO HARDCODEADO del Estado Finalizado.
         
-        
-        
+  // sumo total de NC      
+   $totalNc=0;
+          while($fila = mysql_fetch_array($resultadoNC)){ //  include("conexion.php");
+         $totalmonto=mysql_fetch_array(getmontoTotalWhitNCID($fila["nrc_id"])); 
+         $totalNc+=$totalmonto['monto'];
+          } // FIN_WHILE
+          $resultadoNC=getNCWhitCliId($cli_id);
+    //      $total_deuda_menos_nc = $total_deuda - $totalNc;
         mysql_close();
-        
+ // fin       
         
 ?>
 <!doctype html>
@@ -212,7 +245,7 @@ $total_deuda_menos_nc = $total_deuda - $total_nota_credito;
              
           } // FIN_WHILE
           
-          echo "<tr><td colspan=7 align=right>Total deuda cliente: <b>$total_deuda_menos_nc</b> pesos</td></tr>";
+          echo "<tr><td colspan=7 align=right>Total deuda cliente: <b>",number_format($total_deuda_menos_nc, 2, ',', '.'),"</b> pesos</td></tr>";
                   
   ?>
           <tr>
@@ -222,6 +255,32 @@ $total_deuda_menos_nc = $total_deuda - $total_nota_credito;
             ?></td>
           </tr>
       </table>   
+    
+    
+    
+    
+      <table class="listados" cellpadding="5">
+          <tr class="titulo">
+            <td width="100">Nota de credito</td>
+            <td width="100">Fecha de emisión</td>
+            <td width="67">Monto NC</td>
+        </tr>
+  <?php   
+          while($fila = mysql_fetch_array($resultadoNC)){  include("conexion.php");
+  ?>
+          <tr class="lista" bgcolor="<?php echo($colores[$i]);?>">
+              <td><?php echo($fila["nrc_codigo"]);?></td>
+              <td><?php echo tfecha($fila["nrc_fecha"]);?></td>
+          <?    $totalmonto=mysql_fetch_array(getmontoTotalWhitNCID($fila["nrc_id"])); ?>
+              <td><?php echo $totalmonto['monto'];?></td>
+
+  <?php
+ 
+          } // FIN_WHILE
+             
+  ?>
+      </table>  
+
 </form>
      <div class="clear"></div>
      <br>

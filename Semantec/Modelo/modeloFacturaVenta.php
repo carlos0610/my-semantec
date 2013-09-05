@@ -55,11 +55,35 @@
                                     AND o.estado = 1
                                     )
                 AND fv.fav_fecha_pago is null                    
+                group by fav_id";   
+             
+                return $factura = mysql_query($sql);
+             
+         }
+         
+            function getFacturasPagasUsanNCPorClienteId($cli_id){
+             $sql = "SELECT fv.fav_id,fv.cod_factura_venta,IFNULL(fv.grupo_fac_pago,'-') as grupo_fac_pago,IFNULL(fv.fav_fecha_pago,'-') as fecha_pago,fv.fav_fecha,SUM(dfv.det_fav_precio) as total,IFNULL(nc.nrc_id,'-') as nrc_id,IFNULL(dnc.det_nrc_precio,0) as total_nota 
+                FROM factura_venta fv
+                INNER JOIN detalle_factura_venta dfv ON dfv.fav_id = fv.fav_id
+                LEFT JOIN nota_credito nc ON nc.gfn_id = fv.grupo_nota_credito
+                LEFT JOIN detalle_nota_credito dnc ON  nc.nrc_id = dnc.nrc_id 
+                WHERE fv.gru_id in 
+                                    (SELECT DISTINCT(go.gru_id) FROM grupo_ordenes go
+                                    INNER JOIN ordenes o
+                                    ON go.gru_id = o.gru_id
+                                    WHERE o.cli_id in (SELECT cli_id from clientes where sucursal_id = $cli_id or cli_id = $cli_id and estado = 1)
+                                    AND o.estado = 1
+                                    )
+                AND fv.nota_credito_id is not null                    
                 group by fav_id";
              
                 return $factura = mysql_query($sql);
              
          }
          
+        function getFacturasGrupoNota_CreditoWhitID($fav_id){
+           $sql = "select grupo_nota_credito from factura_venta Where fav_id =$fav_id ";  
+           return $factura = mysql_query($sql);       
+        }
 
 ?>

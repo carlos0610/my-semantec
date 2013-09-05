@@ -10,7 +10,7 @@ function getDetalleRetencionByFavId($fav_id){
             ON c.idiva = i.idiva
             INNER JOIN retenciones r
             ON c.ret_id = r.ret_id
-            WHERE cobros_id = (SELECT id FROM cobros WHERE grupo_fav_id = $fav_id)";
+            WHERE cobros_id = (SELECT id FROM cobros WHERE grupo_fav_id = $fav_id)";  
     //echo "QUERY : ".$sql;
     return $detallesRetencion = mysql_query($sql);
     

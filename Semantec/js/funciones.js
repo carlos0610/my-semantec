@@ -299,6 +299,24 @@ function habilitarRetencionesYActualizarDetalle(formulario,numero,ord_venta,cant
    habilitarRetenciones(formulario,numero);
    actualizarDetallePago(ord_venta,cantidadTipoPago);
 }
+
+function ActualizarTotalPagoFac(checkNc , monto, cantTipoPago){
+    valor= parseFloat(document.getElementById("totalFavs").value); 
+    if(document.getElementById(checkNc).checked){ 
+        if(valor<monto){
+           document.getElementById(checkNc).checked=false;
+           alert("Genera monto Negativo");
+        }else{
+         valor-=parseFloat(monto);
+        }
+    }
+    else{                                                        
+        valor+=parseFloat(monto);    
+    }
+    document.getElementById("totalFavs").value=parseFloat(valor).toFixed(2); 
+    actualizarDetallePago(valor,cantTipoPago)
+}
+
 function filtroTipoDePago(valorCombo,numero){
     var valor = true; 
     if(valorCombo!=0)
@@ -512,6 +530,7 @@ function ActualizarTotal(cantidadDescripciones,factura){
 function ActualizarTotalNotaCredito(cantidadDescripciones,factura){  
     iva = document.getElementById("comboIva").value;
     document.getElementById("btnConfirma").style.visibility = "visible"; 
+    document.getElementById("btnConfirma").disabled =false; 
     
     if (iva == 1){
          iva = 0.21;
@@ -545,7 +564,7 @@ function ActualizarTotalNotaCredito(cantidadDescripciones,factura){
     //1 = FACTURA VENTA
     //2 = FACTURA COMPRA
     
-    if(factura == 1){ 
+    if(factura == 1){  
     document.getElementById("txtTotalFactura").value = (total_iva + subtotal).toFixed(2);
     totalOrdenesVenta=document.getElementById("totalOrdenVenta").value;  
     totalIva=totalOrdenesVenta*iva;
@@ -560,7 +579,9 @@ function ActualizarTotalNotaCredito(cantidadDescripciones,factura){
             {          
             
                alert("La factura supera el total aceptado");
-               document.getElementById("btnConfirma").style.visibility = "hidden";}
+               document.getElementById("btnConfirma").style.visibility = "hidden";
+               document.getElementById("btnConfirma").disabled =true;  
+           }
 
     } 
     // FACTURA COMPRA
@@ -1246,7 +1267,7 @@ function PedirConfirmacionNotaCredito(mensaje){
     document.getElementById('fechaaltaOculto').value=fechaalta;
     
     
-    
+   
     if((confirm('¿Confirma '+mensaje+' ?'))==true)
     {
         return true;
@@ -1339,9 +1360,8 @@ function validaSeleccione(id,mensaje,chek){
 }
 
 function actualizarDetallePago(ord_venta,cantidadTipoPago,cantIIBB){
-    
     //alert("Ord venta "+ord_venta);
-
+    ord_venta   = parseFloat(document.getElementById("totalFavs").value);
     ganancias   = parseFloat(document.getElementById("txtImporte1").value);
     iva         = parseFloat(document.getElementById("txtImporte2").value);
     suss        = parseFloat(document.getElementById("txtImporte3").value);
@@ -1377,10 +1397,14 @@ function actualizarDetallePago(ord_venta,cantidadTipoPago,cantIIBB){
     
     
     //alert("Ord venta: "+ord_venta+" total: "+total);   
-    if (parseFloat(ord_venta) != total)
+    if (parseFloat(ord_venta) != total){
         document.getElementById("botonRegistrar").style.visibility = "hidden";
-    else
-        document.getElementById("botonRegistrar").style.visibility = "visible";   
+        document.getElementById("botonRegistrar").disabled=true; 
+    }
+    else {
+        document.getElementById("botonRegistrar").style.visibility = "visible";
+        document.getElementById("botonRegistrar").disabled=false;
+    }
 }
   function generarTipoPago(idForm,operacion)
 {if(operacion=='suma')
