@@ -13,17 +13,15 @@ header("content-disposition: attachment;filename=Reportes.xls");
 </head>
 <body>
 <?php
-// $sql=$_SESSION['sqlSession']; 
-//$result=mysql_query($sql);
-//
-$result = $_SESSION["reporte_retenciones"];
+ $sql=$_SESSION['sqlSession']; 
+$result=mysql_query($sql);
 // INGRESAR NOMBRE 
 $nombre=' Ordenes de Servicio';
 ?>
 <b><big>SEMANTEC  - </big>   <?php echo date("d-m-Y H:i:s"),'  ',$nombre; ?></b>
 
 <TABLE BORDER=1 align="center" CELLPADDING=1 CELLSPACING=1>
-<TR>
+<TR bgcolor="#A9E2F3">
     
 <TD><b>C&oacute;digo</b></TD>
 <TD style="mso-number-format:'dd/mm/yyyy' "   ><b>Fecha</b></TD>
@@ -31,30 +29,30 @@ $nombre=' Ordenes de Servicio';
 <TD><b>Descripci&oacute;n</b></TD>
 <TD><b>Proveedor</b></TD>
 <TD><b>Estado</b></TD>
-<TD style="mso-number-format:'0.00';"><b>Costo</b></TD>
-<TD style="mso-number-format:'0.00';"><b>Venta</b></TD>
+<TD style="mso-number-format:'0,00';"><b>Costo</b></TD>
+<TD style="mso-number-format:'0,00';"><b>Venta</b></TD>
 
-</TR>
-<?php
-while($row = mysql_fetch_array($result)) {
+</TR>   
+<?php   //(<?php echo(utf8_encode($fila["sucursal"]))
+while($row = mysql_fetch_array($result)) {  
 printf("<tr>
 <td>&nbsp;%s</td>
 <td>&nbsp;%s&nbsp;</td>
+<td>&nbsp;%s&nbsp;( %s )</td>
 <td>&nbsp;%s&nbsp;</td>
 <td>&nbsp;%s&nbsp;</td>
 <td>&nbsp;%s&nbsp;</td>
-<td>&nbsp;%s&nbsp;</td>
-<td>&nbsp;%s&nbsp;</td>
-<td>&nbsp;%s&nbsp;</td>
+<td style=mso-number-format:0.00 >%s</td>
+<td style=mso-number-format:0.00 >%s</td>
 
 </tr>", $row["ord_codigo"],
-       tfecha($row["ord_alta"]),
-        $row["cli_nombre"],
+       tfecha($row["ord_alta"]), 
+        $row["cli_nombre"], $row["sucursal"],
         $row["ord_descripcion"],
         $row["prv_nombre"],
         $row["est_nombre"],
-        $row["ord_costo"],
-        $row["ord_venta"]
+        number_format(($row["ord_costo"]), 2,',',''),
+        number_format(($row["ord_venta"]), 2,',','')
         );
 }
 mysql_free_result($result);

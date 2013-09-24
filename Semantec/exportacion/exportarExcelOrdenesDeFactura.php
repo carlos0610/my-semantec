@@ -96,7 +96,7 @@ printf("<tr>
 <td>&nbsp;%s&nbsp;</td>
 <td>&nbsp;%s&nbsp;</td>
 <td >&nbsp;%s&nbsp;</td>
-<td style=mso-number-format:'$#.##0;[Red]-$#.##0'>&nbsp;%s&nbsp;</td>
+<td style=mso-number-format: $0.00 >%s</td>
 <td>&nbsp;%s&nbsp;</td>
 <td >&nbsp;%s&nbsp;</td>
 <td>&nbsp;%s&nbsp;</td>

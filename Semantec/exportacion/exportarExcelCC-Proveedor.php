@@ -21,7 +21,7 @@ $nombre=" Cuenta corriente de $proveedor";
 <b><big>SEMANTEC - </big>   <?php echo date("d-m-Y H:i:s"),'  ',$nombre; ?></b>
 
 <TABLE BORDER=1 align="center" CELLPADDING=1 CELLSPACING=1>
-<TR>
+<TR bgcolor="#A9E2F3">
 
     
     <TD><b>C&oacute;digo de orden</b></TD>
@@ -38,26 +38,26 @@ $nombre=" Cuenta corriente de $proveedor";
 for($i=0;$i<count($unarray);$i++) {
 printf("<tr>
 <td>&nbsp;%s</td>
+<td>&nbsp;%s&nbsp;( %s )</td>
 <td>&nbsp;%s&nbsp;</td>
 <td>&nbsp;%s&nbsp;</td>
-<td>&nbsp;%s&nbsp;</td>
-<td>&nbsp;%s&nbsp;</td>
-<td align='right'>&nbsp;%s&nbsp;</td>
-<td align='right'>&nbsp;%s&nbsp;</td>
-<td align='right'>&nbsp;%s&nbsp;</td>
-<td align='right'>&nbsp;%s&nbsp;</td>
+<td style=mso-number-format:0.00>%s</td>
+<td style=mso-number-format:0.00>%s</td>
+<td style=mso-number-format:0.00>%s</td>
+<td style=mso-number-format:0.00>%s</td>
+<td style=mso-number-format:0.00>%s</td>
 
 
 
 </tr>", $unarray[$i]["ord_codigo"],
-       $unarray[$i]["cli_nombre"],
+       $unarray[$i]["cli_nombre"],$unarray[$i]["sucursal"],
         $unarray[$i]["ord_descripcion"],
         tfecha($unarray[$i]["fecha_recepcion_ot"]),
-        $unarray[$i]["costo"],       
-        $unarray[$i]["costo_abono"],
-        $unarray[$i]["adelantos"],
-        $unarray[$i]["saldo_a"],
-        $unarray[$i]["compras"]
+       number_format(( $unarray[$i]["costo"]), 2,',',''),       
+       number_format(( $unarray[$i]["costo_abono"]), 2,',',''),
+       number_format(( $unarray[$i]["adelantos"]), 2,',',''),
+       number_format(( $unarray[$i]["saldo_a"]), 2,',',''),
+       number_format(( $unarray[$i]["compras"]), 2,',','')
         );
 }
 //mysql_free_result($result);
