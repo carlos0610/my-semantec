@@ -316,12 +316,12 @@ height: 25px; font-size:18px; vertical-align:6px"></td>
        $facturaTotal = mysql_fetch_array($filaFactura);
        $totalFavs+=$facturaTotal["total"];
        $filaNC=mysql_fetch_array((getMontoTotalWhitFavId($CodigoFav)));
-       
+       $valorIva=$filaNC['monto']*0.21;
         if((   $filaNC['monto'] >0) and  !(in_array($filaNC['nrc_id'], $arregloNC))and (   $filaNC['codigo_nc'] != '') ){  
             
         echo "<tr bgcolor=#CDDCDA>
-            <td width=3%><input type=checkbox name=chkNC$i value=$filaNC[nrc_id] id=chkNC$i onClick= ActualizarTotalPagoFac('chkNC$i',$filaNC[monto],$cantTipoPago) > </td>  
-        <td width=17% style=text-align:right> N° NC: ",($filaNC['codigo_nc']),"</td>  <td style=text-align:right ><b>",number_format( $filaNC['monto'],2,',','.'),"</b></td> ";
+            <td width=3%><input type=checkbox name=chkNC$i value=$filaNC[nrc_id] id=chkNC$i onClick= ActualizarTotalPagoFac('chkNC$i',$filaNC[monto]+$valorIva,$cantTipoPago) > </td>  
+        <td width=17% style=text-align:right> N° NC: ",($filaNC['codigo_nc']),"</td>  <td style=text-align:right ><b>",number_format( $filaNC['monto']+$valorIva,2,',','.'),"</b></td> ";
             
         echo "<td style=text-align:right> N° Factura: ",getFacturasCodigoWhitID($CodigoFav),"</td>";
         echo "<td style=text-align:right>",number_format( $facturaTotal["total"],2,',','.'),"</td>";

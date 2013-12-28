@@ -101,6 +101,7 @@
         $i = 0;
         $colores = array("#fff","#e8f7fa");
         $cant = count($colores);
+        $iva=0.21 ;
 ?>
 <!doctype html>
 <html>  
@@ -198,13 +199,13 @@
           </tr>
   <?php
           while($fila = mysql_fetch_array($resultado)){
-              
+             $ivaDeNC=$fila["total"]*$iva;
   ?>
           <tr class="lista" bgcolor="<?php echo($colores[$i]);?>">
             <td><?php echo($fila["nrc_codigo"]);?></td>
             <td><?php echo(tfecha($fila["nrc_fecha"]));?></td>
             <td><a href="ver-alta-clientes.php?cli_id=<?php echo($fila["cli_id"]);?>&action=0"><?php echo(utf8_encode($fila["cli_nombre"]));?></a></td>
-            <td align="center"><?php echo $fila["total"]; ?></td>
+            <td align="right"><?php echo number_format($fila["total"]+$ivaDeNC,2,',','.'); ?></td>
                 <?php //echo(utf8_encode($fila_req["files_id"]));
                       $id = $fila["files_id"] ?>
             <td width="60" align="center"><?php if ($id!=null) echo "<a href=descargar.php?id=$id><img src=images/download.png title=Descargar /></a>";?></td>

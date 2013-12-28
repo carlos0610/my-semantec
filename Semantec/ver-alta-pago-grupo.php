@@ -245,11 +245,12 @@
         <?php while($fila_NC = mysql_fetch_array($NC)){
             $FilaDetalleNC=getmontoTotalWhitNCID($fila_NC["nrc_id"]);
             $montoNC=mysql_fetch_array($FilaDetalleNC);
+            $ivaNC=$montoNC["monto"]*0.21;
             ?>
             
           <tr>
             <td bgcolor="#CDDCDA">N° <?php echo $fila_NC["nrc_codigo"]?>            </td>
-            <td width="75%" bgcolor="#CDDCDA" ><?php echo number_format($montoNC["monto"],2,',','.')?> </td>
+            <td width="75%" bgcolor="#CDDCDA" ><?php echo number_format($montoNC["monto"]+$ivaNC,2,',','.')?> </td>
             </tr>          
   
         

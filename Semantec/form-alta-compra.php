@@ -139,7 +139,7 @@
    <div id="contenedor2" style="height:auto;">
 	 <table width="100%" border="0" id="dataTable">
 
-   <form name="frmGenerarFactura" method="post" enctype="multipart/form-data" action="alta-compra.php?prv_id=<?php echo $prv_id ?>&cant=<?php echo $cantOrdenesChecadas ?>" >
+   <form name="frmGenerarFactura" id="frmGenerarFactura" method="post" enctype="multipart/form-data" action="alta-compra.php?prv_id=<?php echo $prv_id ?>&cant=<?php echo $cantOrdenesChecadas ?>" >
           <tr>
             <td ></td>
             <td >
@@ -263,7 +263,7 @@
     <tr>
       <td><a href="form-seleccionar-proveedor.php?action=2"><input type="button" value="Volver" class="botones" /></a> &nbsp; &nbsp; </td>
       <td>&nbsp;</td>
-      <td><input type="submit" name="btnConfirma" id="btnConfirma" value="Confirmar" class="botones">
+      <td><input type="button" name="btnConfirma" id="btnConfirma" value="Confirmar" class="botones" onClick="return validarFacturaMonto();">
           
       </td>
       <td>&nbsp;</td>

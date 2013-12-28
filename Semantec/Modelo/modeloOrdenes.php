@@ -69,4 +69,16 @@
              
 	}
         
+        function updateOrdenesEstadoFinalizadoPendienteFac($grup_id){ //no usado aun
+            $sql = "UPDATE ordenes SET                                        
+                                        est_id = 11 ,
+                                        gru_id= NULL
+                                WHERE gru_id = $grup_id";  echo $sql;
+                 return  $abono = mysql_query($sql);
+             
+	}
+        
+        
+
+        
 ?>

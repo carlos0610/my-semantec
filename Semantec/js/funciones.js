@@ -465,9 +465,10 @@ function ActualizarTotal(cantidadDescripciones,factura){
     document.getElementById("btnConfirma").style.visibility = "visible"; 
     if (iva == 1){
          iva = 0.21;
-    }else{
+    }
+    else{
          iva = 0.105;   
-         } 
+    } 
      
     subtotal = 0;
     resta=0;
@@ -601,12 +602,9 @@ function ActualizarTotalNotaCredito(cantidadDescripciones,factura){
 // otro actualizar solo de factura compra
 
 function ActualizarTotalFacturaCompra(cantidadDescripciones,factura){
-    
-    
     iva = document.getElementById("comboIva").value;
     document.getElementById("btnConfirma").style.visibility = "visible"; 
     
-
     if (iva == 1){
          iva = 0.21;
     }else{
@@ -620,16 +618,19 @@ function ActualizarTotalFacturaCompra(cantidadDescripciones,factura){
     {
         
         numeroDescripcion++;
-        if (validarSiNumeroYComa(document.getElementById("txtTotalItem"+numeroDescripcion).value))
+        valorItemFactura=document.getElementById("txtTotalItem"+numeroDescripcion).value;
+        if (validarSiNumeroYComa(valorItemFactura))
         {
-             subtotal += parseFloat(document.getElementById("txtTotalItem"+numeroDescripcion).value); 
+             subtotal += parseFloat(valorItemFactura); 
+             document.getElementById("txtTotalItem"+numeroDescripcion).value= parseFloat(valorItemFactura).toFixed(2);
+             
         }else
         {document.getElementById("txtTotalItem"+numeroDescripcion).value="0.00";}
     }
     document.getElementById("txtSubtotal").value = subtotal.toFixed(2);
     
     total_iva = subtotal * iva;    
-    document.getElementById("txtIva_Ins").value = total_iva.toFixed(2);
+    document.getElementById("txtIva_Ins").value = total_iva.toFixed(2); 
  
     //1 = FACTURA VENTA
     //2 = FACTURA COMPRA
@@ -646,7 +647,7 @@ function ActualizarTotalFacturaCompra(cantidadDescripciones,factura){
           document.getElementById("btnConfirma").style.visibility = "hidden";}
     } else {
     percepciones = parseFloat(document.getElementById("txtPercepciones").value);
-    document.getElementById("txtTotalFactura").value =  subtotal + percepciones;      
+    document.getElementById("txtTotalFactura").value =  (subtotal + percepciones).toFixed(2);    
     }
 }
 
@@ -705,6 +706,17 @@ function mostrarMensaje(mensaje){
 function actualizarListadoAbono(id){
         nombreAbono=document.getElementById("nombre_abono").value;
         window.location="form-alta-abonos.php?idMatriz="+id+"&nombreabono="+nombreAbono;       
+
+}
+
+function validarFacturaMonto(){ 
+        montoTotal=document.getElementById("txtTotalFactura").value;  
+        if(montoTotal<=0){
+                alert('Error: Ingrese monto superior a 0 ');
+            }
+        else{ 
+            document.getElementById('frmGenerarFactura').submit();
+        }
 
 }
 

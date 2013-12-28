@@ -24,6 +24,8 @@
        //Busco Sucursal Matriz
        $SucursalMatriz=$fila_datos_cliente['sucursal_id'];
        $SucursalMatrizLocalidad=$fila_datos_cliente["provincia"];
+      //direccion fiscal de sucursal 
+       $direccionFiscal=$fila_datos_cliente["cli_direccion_fiscal"];
        if($SucursalMatriz!=null)
        {
            $sql = "SELECT  c.cli_id , c.sucursal_id, c.ubicacion_id, c.cli_nombre,c.cli_cuit, c.iva_id, c.cli_rubro, c.cli_direccion, c.cli_direccion_fiscal, c.cli_telefono, c.sucursal,
@@ -38,6 +40,8 @@
            $sucursal = mysql_query($sql); 
            $fila_sucursal_Matriz = mysql_fetch_array($sucursal); 
            $SucursalMatrizLocalidad=$fila_sucursal_Matriz['provincia']; 
+           //direccion fiscal de sucursal central
+           $direccionFiscal=$fila_sucursal_Matriz['cli_direccion_fiscal']; 
        }
        
        //+++++configuracion  de descripciones a imprimir en pantalla+++++
@@ -98,7 +102,7 @@ $pdf->Cell(25);
 $pdf->Cell(160,$interlineado,($fila_datos_cliente["cli_nombre"]),0,1);
 //Domicilio - Localidad
 $pdf->Cell(25);
-$pdf->Cell(80,$interlineado,($fila_datos_cliente["cli_direccion_fiscal"]),0);
+$pdf->Cell(80,$interlineado,($direccionFiscal),0);
 $pdf->Cell(35);// antes 40
 $pdf->Cell(40,$interlineado,($SucursalMatrizLocalidad),0,1);
 //IVA - CUIT

@@ -115,10 +115,30 @@
 		$(function() { 
 		  theTable = $("#dataTableFav");
 		  $("#q").keyup(function() { 
+                        document.getElementById('ver').style.display = 'block';
 			$.uiTableFilter(theTable, this.value); 
 		  });
 		});
   </script>
+    <script type="text/javascript">
+  
+  function mostrar(obj, trig){
+    var elDiv = document.getElementById(obj);
+    var laFlecha = document.getElementById(trig);
+    //alert( elDiv.style.display );
+
+    if( elDiv.style.display == 'none' ){
+      elDiv.style.display = 'block';
+      //laFlecha.style.background = '#fff url(../images/arrows.png) no-repeat 3px 1px';
+      laFlecha.style.backgroundPosition = '3px 1px';
+    }
+    else{
+      elDiv.style.display = 'none';
+      //laFlecha.style.background = '#fff url(../images/arrows.png) no-repeat 3px -15px';
+      laFlecha.style.backgroundPosition = '3px -15px';
+    }
+  }
+</script>
   </head>
   <body>
 	
@@ -192,13 +212,18 @@
 </form>
       </div>  
       
- <? if($cli_idMaestro!=0) { ?>     
+ <? if($cli_idMaestro!=0) { ?> 
+
      <div id="busqueda"  >
-	<h4>Buscador : <input type="text" id="q" name="q" value="" />&nbsp;&nbsp; &nbsp; 
-        <input type="checkbox" value="" id="checkbox_SelectAll" onClick="CheckboxsSeleccionarTodosFacturaVentaFav(<?php echo $cantidad ?>)" >SELECCIONAR TODO</h4> 
+         <b>Buscador de Facturas :</b> <input type="text" id="q" name="q" value="" />&nbsp;&nbsp; &nbsp; 
+   <!--     <input type="checkbox" value="" id="checkbox_SelectAll" onClick="CheckboxsSeleccionarTodosFacturaVentaFav(<?php echo $cantidad ?>)" >SELECCIONAR TODO</h4>  -->
     </div>
+            <div id="flecha" onclick="mostrar('ver', 'flecha')">  
+            <a href="#" id="botonver"><img src="images/btn_ver.png" alt="ver todo" /></a> 
+      </div>
 <form name="formNotasCredito" id="formNotasCredito" method="post" enctype="multipart/form-data" action="verificador-notas-creditos.php?cant=<?php echo $cantidad; ?>&cli_id=<?php echo $cli_idMaestro; ?>&ccc_id=<?php echo $ccte_id;?>" >      
-      <table  width="100%" id="dataTableFav" class="sortable">
+    <div id="ver" style="display:none;">   
+    <table  width="100%" id="dataTableFav" class="sortable">
           <tr class="titulo">
             <td width="70">Seleccionar</td>
             <td width="70"><a href="#" onClick="agregarOrderBy('fav_id')">Factura Nro</a></td>
@@ -244,7 +269,8 @@
   ?>
       </table>
     <input type="button" name="btnConfirmarCheckboxs" id="btnConfirmarCheckboxs" style="visibility:visible" class="botones" value="Confirmar" onClick="verificarCheckboxsDeForm(<?php echo $j; ?>,'formNotasCredito','chckCodFactura');">  
-</form>
+    </div>
+   </form>
 <? }else { echo "<div><b>Seleccionar un Cliente</b></div>  <br>
               <a href=index-admin.php>
                     <input type=button value=Volver class=botones /></a>       

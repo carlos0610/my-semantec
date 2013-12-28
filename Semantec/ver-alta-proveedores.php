@@ -1,6 +1,7 @@
 <?php
     include("validar.php");  
     include("funciones.php");
+    include("Modelo/modeloCuentaBancoProveedor.php");
     $action = $_GET["action"];
     if($action == 0){
           $titulo = "Datos de proveedor";
@@ -20,12 +21,27 @@
     }   
         include("conexion.php");
         
-        //$query = $_SESSION["query"];
-        $tienecuenta = $_SESSION["tienecuenta"];
+       //   $tienecuenta = $_SESSION["tienecuenta"];
+        $tienecuenta = haveCuentaWhitPrvId($prv_id);
+        
         //unset($_SESSION["prv_id"]);
         
         
-        $sql = "SELECT prv_nombre,sucursal, prv_cuit, iva_tipo.iva_nombre, rubros.rub_nombre, p.nombre as provincia,pa.nombre as partido,l.nombre as localidad, prv_direccion, prv_telefono,prv_fax,prv_cel,prv_alternativo,prv_urgencia,prv_web,prv_email,prv_notas 
+        $sql = "SELECT prv_nombre,sucursal, 
+                       prv_cuit, iva_tipo.iva_nombre, 
+                       rubros.rub_nombre, 
+                       p.nombre as provincia,
+                       pa.nombre as partido,
+                       l.nombre as localidad, 
+                       prv_direccion, 
+                       prv_telefono,
+                       prv_fax,
+                       prv_cel,
+                       prv_alternativo,
+                       prv_urgencia,
+                       prv_web,
+                       prv_email,prv_notas 
+                       
 		FROM proveedores,rubros,iva_tipo,ubicacion u,provincias p, partidos pa,localidades l 
 		WHERE prv_id = $prv_id
 		AND proveedores.iva_id = iva_tipo.iva_id
@@ -49,20 +65,11 @@
         $ubicacion = mysql_query($sql);
         $fila_ubicacion = mysql_fetch_array($ubicacion);
          * */
-         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+
         /* Si tiene cuenta obtenemos los datos de su cuenta de la tabla cuentabanco*/
         if ($tienecuenta){
-        $sql   =  "SELECT cue.cue_nrobancaria,cut.cut_nombre,cue.cue_cbu, b.ban_nombre AS nombreBanco FROM cuentabanco_prv cue,cuentatipo cut, banco b
+        $sql   =  "SELECT cue.cue_nrobancaria,cut.cut_nombre,cue.cue_cbu, b.ban_nombre AS nombreBanco 
+                   FROM cuentabanco_prv cue,cuentatipo cut, banco b
                   WHERE prv_id = $prv_id
                   AND cue.cut_id = cut.cut_id
                   AND cue.ban_id = b.ban_id

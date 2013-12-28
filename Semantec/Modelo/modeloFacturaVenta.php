@@ -85,5 +85,14 @@
            $sql = "select grupo_nota_credito from factura_venta Where fav_id =$fav_id ";  
            return $factura = mysql_query($sql);       
         }
+        
+        function getFavgru_idWhitID($gru_id){
+           $sql = "select gru_id from factura_venta Where fav_id =$gru_id ";  echo $sql;
+          
+            $factura = mysql_query($sql); 
+            $fila = mysql_fetch_array($factura); 
+           return $fila["gru_id"];
+           
+        }
 
 ?>

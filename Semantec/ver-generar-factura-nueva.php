@@ -75,11 +75,32 @@
   <script language="javascript">
 		$(function() {
 		  theTable = $("#dataTableOrdenes");
+                  
 		  $("#q").keyup(function() { 
+                        document.getElementById('ver').style.display = 'block';
 			$.uiTableFilter(theTable, this.value);
 		  });
 		});
   </script>
+  <script type="text/javascript">
+  
+  function mostrar(obj, trig){
+    var elDiv = document.getElementById(obj);
+    var laFlecha = document.getElementById(trig);
+    //alert( elDiv.style.display );
+
+    if( elDiv.style.display == 'none' ){
+      elDiv.style.display = 'block';
+      //laFlecha.style.background = '#fff url(../images/arrows.png) no-repeat 3px 1px';
+      laFlecha.style.backgroundPosition = '3px 1px';
+    }
+    else{
+      elDiv.style.display = 'none';
+      //laFlecha.style.background = '#fff url(../images/arrows.png) no-repeat 3px -15px';
+      laFlecha.style.backgroundPosition = '3px -15px';
+    }
+  }
+</script>
   </head>
   <body onload="cargarFecha()">
 	
@@ -186,14 +207,18 @@
         <?php if($cantOrdenes!=0){ ?> 
            <!-- Muestro tabla de ordenes a seleccionar -->  
            <?php if($ocultar=="si"){      ?> 
-           
+               <div id="flecha" onclick="mostrar('ver', 'flecha')">  
+                     <a href="#" id="botonver"><img src="images/btn_ver.png" alt="ver todo" /></a> 
+               </div>
                <div id="busqueda"  >
 			<h4>Buscador : <input type="text" id="q" name="q" value="" />&nbsp;&nbsp; &nbsp; 
                         <input type="checkbox" value="" id="checkbox_SelectAll" onClick="CheckboxsSeleccionarTodosFacturaVenta(<?php echo $cantOrdenes ?>)" >SELECCIONAR TODO</h4> 
 		</div>
                 
                <form name="formferificadorOrdenes" id="formferificadorOrdenes" method="post" enctype="multipart/form-data" action="verificador-generar-factura-nueva.php?cant=<?php echo $cantOrdenes; ?>&cli_id=<?php echo $cli_id; ?>" >
-               
+                   
+
+                   <div id="ver" style="display:none;"> 
                    <table width="100%" border="0" id="dataTableOrdenes" class="sortable">  
                       <tr>
                              <td width="5%" class="titulo"><div align="center">Selección</div></td>
@@ -201,6 +226,7 @@
                              <td width="18%" class="titulo"><div align="center">Descripción</div></td>
                              <td width="18%" class="titulo"><div align="center">Sucursal</div></td>
                       </tr>
+                      
                <?php
                $i=0;
                while ($item = mysql_fetch_array($result_ordenes)) {
@@ -233,6 +259,7 @@
                }
                ?>
                </table>  
+                   </div>
               </form>
            <!-- FIN de Muestro tabla de ordenes a seleccionar --> 
             <?php }else{ ?>

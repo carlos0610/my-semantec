@@ -5,6 +5,7 @@
     include ("Modelo/modeloAbonosDetalle.php");
     include ("Modelo/modeloOrdenes.php");
     include ("Modelo/modeloAbonoDeOrden.php");
+    include ("Modelo/modeloFacturaVenta.php");
     
     $cantidadCheckboxs = $_POST["cantidadOrdenesAceptadas"]; 
     //echo $cantidadCheckboxs;
@@ -13,6 +14,8 @@
     $nota    = $_POST["txtNota"];
     $iva     = $_POST["comboIva"];   
     $usu_id     = $_SESSION["usu_id"];
+    $totalFav =$_POST["totalOrdenVentatxt"];
+    $valorNC = $_POST["txtTotalItem1"];
     //$vencimiento = gfecha($_POST["vencimiento"]);
     
     $codNotaCredito="0001-";
@@ -79,13 +82,29 @@
                 `grupo_nota_credito`=$id_grupo_notacredito";
                  
             $sql.=" WHERE `fav_id`= $fav_id";
-            echo 'UPDATE DE FACTURAS: ',$sql;
+           // echo 'UPDATE DE FACTURAS: ',$sql;
             $result=mysql_query($sql);
             if(!$result){
                      $error=1; 
                      }
         }
-                                                   
+        echo "valor NC: ",$valorNC;
+        echo "  TOTAL FAV: ",$totalFav;
+        echo "  DIFERENCIA : ",number_format(($totalFav-$valorNC), 2);
+        echo "  cantidad de Fav: ",$cantidadCheckboxs;
+        if ((number_format(($totalFav-$valorNC), 2)) ==0)
+        {   
+            $t=0;
+            while($t<$cantidadCheckboxs)
+            {   $t++; 
+                $fav_id=$_POST["ordenCheck$t"];  echo "fav id:",$fav_id;
+                $gru_id=getFavgru_idWhitID($fav_id);
+                echo " gruID: ",$gru_id;
+                if(!(updateOrdenesEstadoFinalizadoPendienteFac($gru_id)))
+                  $error=1;
+            }
+        }   
+        
     if ($idFile != -1)
         {
         $query = "INSERT INTO nota_credito (nrc_codigo,idiva,nrc_fecha,gfn_id,nrc_nota,usu_id,files_id,cli_id) VALUES ('$codNotaCredito',$iva,'$notac_fecha',$id_grupo_notacredito,'$nota',$usu_id,$idFile,$cli_id)";       
@@ -93,7 +112,7 @@
         {
         $query = "INSERT INTO nota_credito (nrc_codigo,idiva,nrc_fecha,gfn_id,nrc_nota,usu_id,cli_id) VALUES ('$codNotaCredito',$iva,'$notac_fecha',$id_grupo_notacredito,'$nota',$usu_id,$cli_id)";  
         }
-        echo $query;
+   //     echo $query;
        $inserto = mysql_query($query); 
        
        
@@ -120,7 +139,7 @@
             $columnaPrec = "txtTotalItem".$i;
             $descripcion = $_POST[$columnaDesc];
             $precio = $_POST[$columnaPrec]; 
-            echo  $query;
+        //    echo  $query;
         };
         
         
@@ -133,8 +152,8 @@
                         } 
                         else 
                         {
-                        mysql_query("COMMIT");
-                         mysql_close();
+                          mysql_query("COMMIT");
+                          mysql_close();
                         echo "Transacción exitosa";
                               header("location:ver-alta-nota-credito.php?nrc_id=$nro_nota_credito");   
                         }
